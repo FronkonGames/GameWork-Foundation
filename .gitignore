@@ -1,0 +1,69 @@
+###############################
+# Unity.
+###############################
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Ll]ogs/
+[Ll]ibrary/
+[Bb]uilds/
+UnityGenerated/
+UnityPackageManager/
+ProBuilderPreferences.*
+[Rr]ecordings/
+sysinfo.txt
+Assets/AssetStoreTools*
+*.pidb.meta
+*.pdb.meta
+*.stackdump
+project.json
+project.lock.json
+package-lock.json
+
+###############################
+# Visual Studio.
+###############################
+[Ee]xported[Oo]bj/
+.vs/
+*.userprefs
+*.csproj
+*.pidb
+*.suo
+*.sln*
+*.user
+*.unityproj
+*.booproj
+
+###############################
+# Visual Studio Code.
+###############################
+.vscode
+
+###############################
+# JetBrains Rider.
+###############################
+.idea/
+/.idea
+JetBrains/
+Unity/.idea/
+JetBrains.*
+
+###############################
+# DocFX.
+###############################
+.cache
+/**/_site/
+Documentation/api/
+Documentation/index.*
+
+###############################
+# OS.
+###############################
+.DS_Store*
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+[Tt]humbs.db
+[Dd]esktop.ini
