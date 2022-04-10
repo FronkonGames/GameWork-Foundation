@@ -3,12 +3,22 @@
   "version": "0.0.1",
   "displayName": "Game:Work Foundation",
   "decription": "Generic code to build the basis of a framework to develop Unity based games.",
+  "references": [ ],
   "unity": "2020.3",
   "unityRelease": "26f1",
+  "optionalUnityReferences": [],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
   "dependencies":  {  },
   "keywords": [ "unity", "gamedev", "framework", "game development" ],
   "category": "Unity",
-  "repository": {
+  "repository":
+  {
     "type": "git",
     "url": "git+https://github.com/FronkonGames/GameWork-Foundation.git"
   },  
