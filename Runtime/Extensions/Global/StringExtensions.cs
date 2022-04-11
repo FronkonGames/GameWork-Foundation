@@ -125,6 +125,27 @@ namespace FronkonGames.GameWork.Foundation
     }
 
     /// <summary>
+    /// Converts hex string color (0xFF00FF, #FF00FF, ...) to color.
+    /// </summary>
+    /// <param name="self">Value</param>
+    /// <returns>Color</returns>
+    public static Color ToColor(this string self)
+    {
+      self = self.Replace("0x", ""); // 0xFFFFFF?
+      self = self.Replace("#", "");  // #FFFFFF?
+      
+      byte a = 255;
+      byte r = byte.Parse(self.Substring(0, 2), NumberStyles.HexNumber);
+      byte g = byte.Parse(self.Substring(2, 2), NumberStyles.HexNumber);
+      byte b = byte.Parse(self.Substring(4, 2), NumberStyles.HexNumber);
+      
+      if (self.Length == 8)
+        a = byte.Parse(self.Substring(6, 2), NumberStyles.HexNumber);
+
+      return new Color32(r, g, b, a);
+    }
+
+    /// <summary>
     /// To hash algorithm called MD5.
     /// </summary>
     /// <param name="self">Value</param>

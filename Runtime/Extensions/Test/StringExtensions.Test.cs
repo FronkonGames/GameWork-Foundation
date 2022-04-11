@@ -42,6 +42,9 @@ public partial class ExtensionsTests
     Assert.AreEqual("1".ToInt(), 1);
     Assert.AreEqual("1.0".ToFloat(), 1.0f);
 
+    Assert.AreEqual("0xFF00FF".ToColor(),  UnityEngine.Color.magenta);
+    Assert.AreEqual("#FF00FF".ToColor(), UnityEngine.Color.magenta);
+
     Assert.AreEqual("Hello world!".ToMD5(), "86fb269d190d2c85f6e0468ceca42a20");
 
     Assert.AreEqual("Camel case string".ToCamelCase(), "CamelCaseString");
