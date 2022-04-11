@@ -17,9 +17,8 @@
 using System.Collections;
 using NUnit.Framework;
 using UnityEngine.TestTools;
-using FronkonGames.GameWork.Foundation;
-using UnityEditor.VersionControl;
 using UnityEngine;
+using FronkonGames.GameWork.Foundation;
 
 /// <summary>
 /// Extensions test.
@@ -27,7 +26,7 @@ using UnityEngine;
 public partial class ExtensionsTests
 {
   /// <summary>
-  /// IntExtensions test.
+  /// Int extensions test.
   /// </summary>
   [UnityTest]
   public IEnumerator Int()
@@ -52,12 +51,21 @@ public partial class ExtensionsTests
     Assert.AreEqual(2.Pow(1), 2);
     Assert.AreEqual(2.Pow(2), 4);
 
-    Assert.IsTrue(0.Between(-1, 1));
-    Assert.IsTrue(1.Between(-1, 1));
-    Assert.IsTrue((-1).Between(-1, 1));
-    Assert.IsFalse(2.Between(-1, 1));
-    Assert.IsFalse((-2).Between(-1, 1));
+    Assert.IsTrue(0.IsWithin(-1, 1));
+    Assert.IsTrue(1.IsWithin(-1, 1));
+    Assert.IsTrue((-1).IsWithin(-1, 1));
+    Assert.IsFalse(2.IsWithin(-1, 1));
+    Assert.IsFalse((-2).IsWithin(-1, 1));
 
+    Assert.IsTrue(0.IsBetween(-1, 1));
+    Assert.IsFalse(1.IsBetween(-1, 1));
+    Assert.IsFalse((-1).IsBetween(-1, 1));
+    Assert.IsFalse(2.IsBetween(-1, 1));
+    Assert.IsFalse((-2).IsBetween(-1, 1));
+
+    Assert.IsTrue(0.IsEven());
+    Assert.IsFalse(1.IsEven());
+    Assert.IsTrue(2.IsEven());
     Assert.IsFalse(0.IsOdd());
     Assert.IsTrue(1.IsOdd());
     Assert.IsFalse(2.IsOdd());

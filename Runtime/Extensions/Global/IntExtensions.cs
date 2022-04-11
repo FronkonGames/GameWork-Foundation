@@ -89,7 +89,23 @@ namespace FronkonGames.GameWork.Foundation
     /// <param name="min">Minimum range (included)</param>
     /// <param name="max">Maximum range (included)</param>
     /// <returns>True/false</returns>
-    public static bool Between(this int self, int min, int max) => self >= min && self <= max;
+    public static bool IsWithin(this int self, int min, int max) => self >= min && self <= max;
+
+    /// <summary>
+    /// The value is between a range.
+    /// </summary>
+    /// <param name="self">Value</param>
+    /// <param name="min">Minimum range (not included)</param>
+    /// <param name="max">Maximum range (not included)</param>
+    /// <returns>True/false</returns>
+    public static bool IsBetween(this int self, int min, int max) => self > min && self < max;
+
+    /// <summary>
+    /// Value is even.
+    /// </summary>
+    /// <param name="self">Value</param>
+    /// <returns>True/false</returns>
+    public static bool IsEven(this int self) => self % 2 == 0;
 
     /// <summary>
     /// Value is odd.

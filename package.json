@@ -1,6 +1,6 @@
 {
-  "name": "com.fronkongames.gamework.foundation",
-  "version": "0.0.1",
+  "name": "com.frokongames.gamework.foundation",
+  "version": "0.0.2",
   "displayName": "Game:Work Foundation",
   "decription": "Generic code to build the basis of a framework to develop Unity based games.",
   "references": [ ],

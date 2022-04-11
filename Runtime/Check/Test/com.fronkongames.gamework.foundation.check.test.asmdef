@@ -1,0 +1,17 @@
+{
+  "name": "com.fronkongames.gamework.foundation.check.test",
+  "references":
+  [
+    "com.fronkongames.gamework.foundation"
+  ],    
+  "optionalUnityReferences":
+  [
+    "TestAssemblies"
+  ],
+  "includePlatforms":
+  [
+    "Editor"
+  ],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false
+}

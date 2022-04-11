@@ -1,4 +1,5 @@
-<p align="center"><img src="Documentation/banner.png" /></p>
+<p align="center"><img src="Documentation/banner.png"/></p>
+<p align="center">Generic code to build the basis of a framework to develop Unity based games</p>
 
 ## 🔧 Requisites
 

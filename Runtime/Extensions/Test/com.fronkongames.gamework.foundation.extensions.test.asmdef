@@ -1,5 +1,5 @@
 {
-  "name": "com.fronkongames.gamework.foundation.test",
+  "name": "com.fronkongames.gamework.foundation.extensions.test",
   "references": [ "com.fronkongames.gamework.foundation" ],    
   "optionalUnityReferences": [ "TestAssemblies" ],
   "includePlatforms": [ "Editor" ],

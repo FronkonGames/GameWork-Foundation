@@ -26,7 +26,7 @@ using UnityEngine;
 public partial class ExtensionsTests
 {
   /// <summary>
-  /// StringExtensions test.
+  /// String extensions test.
   /// </summary>
   [UnityTest]
   public IEnumerator String()
