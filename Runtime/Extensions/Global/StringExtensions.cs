@@ -88,19 +88,40 @@ namespace FronkonGames.GameWork.Foundation
     }
 
     /// <summary>
+    /// Try to converts to Vector2.
+    /// </summary>
+    /// <param name="self">Value</param>
+    /// <returns>Vector2</returns>
+    public static Vector2 ToVector2(this string self)
+    {
+      Vector3 result = Vector3.zero;
+      string[] args = self.Replace("f", string.Empty).Split(',');
+      if (args.Length == 2)
+      {
+        result.x = args[0].ToFloat();
+        result.y = args[1].ToFloat();
+      }
+
+      return result;
+    }
+
+    /// <summary>
     /// Try to converts to Vector3.
     /// </summary>
     /// <param name="self">Value</param>
     /// <returns>Vector3</returns>
     public static Vector3 ToVector3(this string self)
     {
-      string[] splits = self.Replace("f", "").Split(',');
-      Vector3 v = Vector3.zero;
+      Vector3 result = Vector3.zero;
+      string[] args = self.Replace("f", string.Empty).Split(',');
+      if (args.Length == 3)
+      {
+        result.x = args[0].ToFloat();
+        result.y = args[1].ToFloat();
+        result.z = args[2].ToFloat();
+      }
 
-      for (int i = 0; i < splits.Length && i < 3; ++i)
-        v[i] = float.Parse(splits[i]);
-
-      return v;
+      return result;
     }
 
     /// <summary>

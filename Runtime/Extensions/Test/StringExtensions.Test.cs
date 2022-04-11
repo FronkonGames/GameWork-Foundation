@@ -46,6 +46,8 @@ public partial class ExtensionsTests
 
     Assert.AreEqual("Camel case string".ToCamelCase(), "CamelCaseString");
     Assert.AreEqual("CamelCaseString".FromCamelCase(), "Camel case string");
+    Assert.AreEqual("0,0".ToVector2(), Vector2.zero);
+    Assert.AreEqual("1.0f,1.0".ToVector2(), Vector2.one);
     Assert.AreEqual("0,0,0".ToVector3(), Vector3.zero);
     Assert.AreEqual("1.0f,1.0,1".ToVector3(), Vector3.one);
     Assert.AreEqual("All your base are belong to us".ToBase64(), "QWxsIHlvdXIgYmFzZSBhcmUgYmVsb25nIHRvIHVz");
