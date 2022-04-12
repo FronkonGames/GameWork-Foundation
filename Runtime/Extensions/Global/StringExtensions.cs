@@ -43,7 +43,7 @@ namespace FronkonGames.GameWork.Foundation
     {
       for (int i = 0; i < TrueValues.Length; ++i)
       {
-        if (TrueValues[i].Equals(self.ToLower()) == true)
+        if (TrueValues[i].Equals(self.ToLowerInvariant()) == true)
           return true;
       }
 
@@ -216,7 +216,7 @@ namespace FronkonGames.GameWork.Foundation
       string firstLetter = camelCase.Substring(0, 1).ToUpper();
 
       if (self.Length > 1)
-        return $"{firstLetter}{camelCase.Substring(1).ToLower()}";
+        return $"{firstLetter}{camelCase.Substring(1).ToLowerInvariant()}";
 
       return firstLetter;
     }
@@ -338,14 +338,14 @@ namespace FronkonGames.GameWork.Foundation
       {
         using (GZipStream gZipStream = new GZipStream(memoryStream, CompressionMode.Compress, true))
         {
-          gZipStream.Write(bytes, 0, (int)bytes.Length);
+          gZipStream.Write(bytes, 0, bytes.Length);
         }
         memoryStream.Position = (long)0;
         byte[] numArray = new byte[checked((int)memoryStream.Length)];
-        memoryStream.Read(numArray, 0, (int)numArray.Length);
-        byte[] numArray1 = new byte[(int)numArray.Length + 4];
-        Buffer.BlockCopy(numArray, 0, numArray1, 4, (int)numArray.Length);
-        Buffer.BlockCopy(BitConverter.GetBytes((int)bytes.Length), 0, numArray1, 0, 4);
+        memoryStream.Read(numArray, 0, numArray.Length);
+        byte[] numArray1 = new byte[numArray.Length + 4];
+        Buffer.BlockCopy(numArray, 0, numArray1, 4, numArray.Length);
+        Buffer.BlockCopy(BitConverter.GetBytes(bytes.Length), 0, numArray1, 0, 4);
         compressed = Convert.ToBase64String(numArray1);
       }
 

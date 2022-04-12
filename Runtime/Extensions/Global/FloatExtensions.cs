@@ -79,8 +79,7 @@ namespace FronkonGames.GameWork.Foundation
     /// <param name="b">Value</param>
     /// <param name="epsilon">Difference range</param>
     /// <returns>True/false</returns>
-    public static bool NearlyEquals(this float a, float b, float epsilon = float.Epsilon) =>
-      (a == b) ? true : Mathf.Abs(a - b) < epsilon;
+    public static bool NearlyEquals(this float a, float b, float epsilon = float.Epsilon) => Mathf.Abs(a - b) < epsilon;
 
     /// <summary>
     /// The value is within a range.

@@ -43,13 +43,13 @@ namespace FronkonGames.GameWork.Foundation
     /// Comprueba que la cadena tenga una longitud exacta.
     /// </summary>
     /// <param name="value"></param>
-    /// <param name="length"></param>
+    /// <param name="len"></param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
     [DebuggerStepThrough, Conditional("UNITY_ASSERTIONS")]
-    public static void Length(string value, int length, [CallerMemberName]string member = "",
-                                                        [CallerFilePath]string sourceFile = "",
-                                                        [CallerLineNumber]int line = 0) =>
-      Assert(value.Length == length, $"{Path.GetFileName(sourceFile)}:{line.ToString()} {member} Expected string '{nameof(value)}' length must be {length.ToString()}.");
+    public static void Length(string value, int len, [CallerMemberName]string member = "",
+                                                     [CallerFilePath]string sourceFile = "",
+                                                     [CallerLineNumber]int line = 0) =>
+      Assert(value.Length == len, $"{Path.GetFileName(sourceFile)}:{line.ToString()} {member} Expected string '{nameof(value)}' length must be {len.ToString()}.");
 
     /// <summary>
     /// Comprueba que la cadena tenga una longitud maxima.

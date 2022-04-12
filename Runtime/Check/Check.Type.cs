@@ -28,37 +28,29 @@ namespace FronkonGames.GameWork.Foundation
   public static partial class Check
   {
     /// <summary>
-    /// Comprueba que el valor si sea null.
+    /// Check if the value is null.
     /// </summary>
     /// <param name="value"></param>
-    /// <param name="member"></param>
-    /// <param name="sourceFile"></param>
-    /// <param name="line"></param>
-    /// <typeparam name="T"></typeparam>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
     [DebuggerStepThrough, Conditional("UNITY_ASSERTIONS")]
-    public static void IsNull<T>(T value, [CallerMemberName]string member = "",
-                                        [CallerFilePath]string sourceFile = "",
-                                        [CallerLineNumber]int line = 0) =>
+    public static void IsNull(object value, [CallerMemberName]string member = "",
+                                            [CallerFilePath]string sourceFile = "",
+                                            [CallerLineNumber]int line = 0) =>
       Assert(value == null, $"{Path.GetFileName(sourceFile)}:{line.ToString()} {member} '{nameof(value)}' must be null.");
 
     /// <summary>
-    /// Comprueba que el valor no sea null.
+    /// Check that the value is not null.
     /// </summary>
     /// <param name="value"></param>
-    /// <param name="member"></param>
-    /// <param name="sourceFile"></param>
-    /// <param name="line"></param>
-    /// <typeparam name="T"></typeparam>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
     [DebuggerStepThrough, Conditional("UNITY_ASSERTIONS")]
-    public static void IsNotNull<T>(T value, [CallerMemberName]string member = "",
-                                             [CallerFilePath]string sourceFile = "",
-                                             [CallerLineNumber]int line = 0) =>
+    public static void IsNotNull(object value, [CallerMemberName]string member = "",
+                                               [CallerFilePath]string sourceFile = "",
+                                               [CallerLineNumber]int line = 0) =>
       Assert(value != null, $"{Path.GetFileName(sourceFile)}:{line.ToString()} {member} '{nameof(value)}' must not be null.");
 
     /// <summary>
-    /// Comprueba que la colección no sea null o este vacia.
+    /// Check that the collection is not null or empty.
     /// </summary>
     /// <param name="collection"></param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
@@ -69,15 +61,15 @@ namespace FronkonGames.GameWork.Foundation
       Assert(collection != null && collection.Count > 0, $"{Path.GetFileName(sourceFile)}:{line.ToString()} {member} '{nameof(collection)}' cant be null or empty.");
 
     /// <summary>
-    /// El objecto es del tipo type.
+    /// The object is of type Type.
     /// </summary>
-    /// <param name="obj"></param>
+    /// <param name="value"></param>
     /// <param name="type"></param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
     [DebuggerStepThrough, Conditional("UNITY_ASSERTIONS")]
-    public static void OfType(object obj, Type type, [CallerMemberName]string member = "",
-                                                     [CallerFilePath]string sourceFile = "",
-                                                     [CallerLineNumber]int line = 0) =>
-      Assert(type != null && obj != null && type.IsInstanceOfType(obj) == true, $"{Path.GetFileName(sourceFile)}:{line.ToString()} {member} '{nameof(obj)}' must be of type '{type?.Name}'.");
+    public static void OfType(object value, Type type, [CallerMemberName]string member = "",
+                                                       [CallerFilePath]string sourceFile = "",
+                                                       [CallerLineNumber]int line = 0) =>
+      Assert(type != null && value != null && type.IsInstanceOfType(value) == true, $"{Path.GetFileName(sourceFile)}:{line.ToString()} {member} '{nameof(value)}' must be of type '{type?.Name}'.");
   }
 }
