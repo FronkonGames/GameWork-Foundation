@@ -22,7 +22,7 @@ using FronkonGames.GameWork.Foundation;
 /// <summary>
 /// Extensions tests.
 /// </summary>
-public partial class ExtensionsTests
+public partial class ExtensionsTests //NOSONAR
 {
   /// <summary>
   /// Float extensions test.

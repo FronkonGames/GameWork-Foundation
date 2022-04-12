@@ -25,7 +25,7 @@ namespace FronkonGames.GameWork.Foundation
   /// <summary>
   /// Checks values and throws an exception if the condition is not met.
   /// </summary>
-  public static partial class Check
+  public static partial class Check //NOSONAR
   {
     /// <summary>
     /// 

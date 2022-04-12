@@ -110,7 +110,7 @@ namespace FronkonGames.GameWork.Foundation
     /// <returns>New color.</returns>
     public static Color Random()
     {
-      return new Color()
+      return new Color
       {
         r = UnityEngine.Random.Range(0.0f, 1.0f),
         g = UnityEngine.Random.Range(0.0f, 1.0f),

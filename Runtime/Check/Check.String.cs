@@ -23,7 +23,7 @@ namespace FronkonGames.GameWork.Foundation
   /// <summary>
   /// Checks values and throws an exception if the condition is not met.
   /// </summary>
-  public static partial class Check
+  public static partial class Check //NOSONAR
   {
     /// <summary>
     /// Comprueba que la cadena no sea null ni vacia.
@@ -55,30 +55,30 @@ namespace FronkonGames.GameWork.Foundation
     /// Comprueba que la cadena tenga una longitud maxima.
     /// </summary>
     /// <param name="value"></param>
-    /// <param name="maxLength"></param>
+    /// <param name="max"></param>
     /// <param name="member"></param>
     /// <param name="sourceFile"></param>
     /// <param name="line"></param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
     [DebuggerStepThrough, Conditional("UNITY_ASSERTIONS")]
-    public static void MaxLength(string value, int maxLength, [CallerMemberName]string member = "",
-                                                              [CallerFilePath]string sourceFile = "",
-                                                              [CallerLineNumber]int line = 0) =>
-      Assert(value.Length <= maxLength, $"{Path.GetFileName(sourceFile)}:{line.ToString()} {member} Expected string '{nameof(value)}' max length must be {maxLength.ToString()}.");
+    public static void MaxLength(string value, int max, [CallerMemberName]string member = "",
+                                                        [CallerFilePath]string sourceFile = "",
+                                                        [CallerLineNumber]int line = 0) =>
+      Assert(value.Length <= max, $"{Path.GetFileName(sourceFile)}:{line.ToString()} {member} Expected string '{nameof(value)}' max length must be {max.ToString()}.");
 
     /// <summary>
     /// Comprueba que la cadena tenga una longitud mimina.
     /// </summary>
     /// <param name="value"></param>
-    /// <param name="minLength"></param>
+    /// <param name="min"></param>
     /// <param name="member"></param>
     /// <param name="sourceFile"></param>
     /// <param name="line"></param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
     [DebuggerStepThrough, Conditional("UNITY_ASSERTIONS")]
-    public static void MinLength(string value, int minLength, [CallerMemberName]string member = "",
-                                                              [CallerFilePath]string sourceFile = "",
-                                                              [CallerLineNumber]int line = 0) =>
-      Assert(value.Length >= minLength, $"{Path.GetFileName(sourceFile)}:{line.ToString()} {member} Expected string '{nameof(value)}' min length must be {minLength.ToString()}.");
+    public static void MinLength(string value, int min, [CallerMemberName]string member = "",
+                                                        [CallerFilePath]string sourceFile = "",
+                                                        [CallerLineNumber]int line = 0) =>
+      Assert(value.Length >= min, $"{Path.GetFileName(sourceFile)}:{line.ToString()} {member} Expected string '{nameof(value)}' min length must be {min.ToString()}.");
   }
 }

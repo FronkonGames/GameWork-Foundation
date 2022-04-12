@@ -213,7 +213,7 @@ namespace FronkonGames.GameWork.Foundation
         return self;
 
       string camelCase = Regex.Replace(Regex.Replace(self, @"(\P{Ll})(\P{Ll}\p{Ll})", "$1 $2"), @"(\p{Ll})(\P{Ll})", "$1 $2");
-      string firstLetter = camelCase.Substring(0, 1).ToUpper();
+      string firstLetter = camelCase.Substring(0, 1).ToUpperInvariant();
 
       if (self.Length > 1)
         return $"{firstLetter}{camelCase.Substring(1).ToLowerInvariant()}";
@@ -234,7 +234,7 @@ namespace FronkonGames.GameWork.Foundation
 
       for (int i = 0; i < self.Length; ++i)
       {
-        int pos = originalChars.IndexOf(self.Substring(i, 1));
+        int pos = originalChars.IndexOf(self.Substring(i, 1), StringComparison.InvariantCulture);
 
         builder.Append((-1 != pos) ? newChars.Substring(pos, 1) : self.Substring(i, 1));
       }
@@ -342,8 +342,8 @@ namespace FronkonGames.GameWork.Foundation
         }
         memoryStream.Position = (long)0;
         byte[] numArray = new byte[checked((int)memoryStream.Length)];
-        memoryStream.Read(numArray, 0, numArray.Length);
-        byte[] numArray1 = new byte[numArray.Length + 4];
+        int length = memoryStream.Read(numArray, 0, numArray.Length);
+        byte[] numArray1 = new byte[length + 4];
         Buffer.BlockCopy(numArray, 0, numArray1, 4, numArray.Length);
         Buffer.BlockCopy(BitConverter.GetBytes(bytes.Length), 0, numArray1, 0, 4);
         compressed = Convert.ToBase64String(numArray1);
@@ -364,12 +364,12 @@ namespace FronkonGames.GameWork.Foundation
       using (MemoryStream memoryStream = new MemoryStream())
       {
         int num = BitConverter.ToInt32(numArray, 0);
-        memoryStream.Write(numArray, 4, (int)numArray.Length - 4);
+        memoryStream.Write(numArray, 4, numArray.Length - 4);
         byte[] numArray1 = new byte[num];
         memoryStream.Position = (long)0;
         using (GZipStream gZipStream = new GZipStream(memoryStream, CompressionMode.Decompress))
         {
-          gZipStream.Read(numArray1, 0, (int)numArray1.Length);
+          gZipStream.Read(numArray1, 0, numArray1.Length);
         }
 
         decompressed = Encoding.UTF8.GetString(numArray1);
@@ -392,7 +392,7 @@ namespace FronkonGames.GameWork.Foundation
       MD5CryptoServiceProvider HashProvider = new MD5CryptoServiceProvider();
       byte[] tdesKey = HashProvider.ComputeHash(UTF8.GetBytes(passphrase));
 
-      TripleDESCryptoServiceProvider tdesAlgorithm = new TripleDESCryptoServiceProvider()
+      TripleDESCryptoServiceProvider tdesAlgorithm = new TripleDESCryptoServiceProvider
       {
         Key = tdesKey,
         Mode = CipherMode.ECB,
@@ -477,8 +477,11 @@ namespace FronkonGames.GameWork.Foundation
       if (n == 0 || m == 0)
         return m;
 
-      for (int i = 0; i <= n; d[i, 0] = i++) ;
-      for (int j = 0; j <= m; d[0, j] = j++) ;
+      for (int i = 0; i <= n; d[i, 0] = i++)
+        ;
+      
+      for (int j = 0; j <= m; d[0, j] = j++)
+        ;
 
       for (int i = 1; i <= n; ++i)
       {
@@ -508,7 +511,9 @@ namespace FronkonGames.GameWork.Foundation
 
         if (letter == '\n')
         {
-          if (lineHeight == 0) lineHeight = size;
+          if (lineHeight.NearlyEquals(0) == true)
+            lineHeight = size;
+
           width = Mathf.Max(width, lineWidth);
           height += lineHeight;
           lineWidth = 0;
