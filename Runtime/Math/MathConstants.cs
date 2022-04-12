@@ -21,7 +21,7 @@ namespace FronkonGames.GameWork.Foundation
   /// <summary>
   /// Math constants.
   /// </summary>
-  public struct MathConstants
+  public static class MathConstants
   {
     public static readonly float Pi            = 3.14159265358979f;
     public static readonly float PiHalf        = Pi * 0.5f;

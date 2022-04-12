@@ -270,17 +270,6 @@ namespace FronkonGames.GameWork.Foundation
     public T[] GetData() => data;
 
     /// <summary>
-    /// Returns array of data.
-    /// </summary>
-    /// <remarks>Danger zone.</remarks>
-    public T[] GetData(out int newCount)
-    {
-      newCount = count;
-
-      return data;
-    }
-
-    /// <summary>
     /// Not supported, do not use.
     /// </summary>
     public IEnumerator<T> GetEnumerator()
@@ -317,14 +306,14 @@ namespace FronkonGames.GameWork.Foundation
     /// <summary>
     /// Delete an item.
     /// </summary>
-    public void RemoveAt(int id)
+    public void RemoveAt(int index)
     {
-      if (id < 0 || id >= count)
+      if (index < 0 || index >= count)
         return;
 
       count--;
 
-      Array.Copy(data, id + 1, data, id, count - id);
+      Array.Copy(data, index + 1, data, index, count - index);
     }
 
     /// <summary>

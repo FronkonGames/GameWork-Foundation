@@ -113,7 +113,7 @@ namespace FronkonGames.GameWork.Foundation
     /// Error message and Exception.
     /// </summary>
     /// <param name="message">Message</param>
-    /// <param name="exception">Exception</param>
+    /// <param name="e">Exception</param>
     [DebuggerStepThrough]
 #if LOGS_DEVELOPER_BUILD
     [Conditional("DEVELOPMENT_BUILD")]
@@ -121,15 +121,15 @@ namespace FronkonGames.GameWork.Foundation
 #if LOGS_EDITOR
     [Conditional("UNITY_EDITOR")]
 #endif
-    public static void Exception(string message, Exception exception = null, [CallerMemberName] string member = "", [CallerFilePath] string sourceFile = "")
+    public static void Exception(string message, Exception e = null, [CallerMemberName] string member = "", [CallerFilePath] string sourceFile = "")
     {
       Debug.LogError($"<color=red>[{Path.GetFileNameWithoutExtension(sourceFile)}:{member}] {message}</color>");
 
-      if (exception == null)
-        exception = new Exception(message);
+      if (e == null)
+        e = new Exception(message);
 
-      Debug.LogException(exception);
-      Debug.LogError(exception.StackTrace);
+      Debug.LogException(e);
+      Debug.LogError(e.StackTrace);
     }
   }
 }
