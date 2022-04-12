@@ -434,7 +434,7 @@ namespace FronkonGames.GameWork.Foundation
       MD5CryptoServiceProvider HashProvider = new MD5CryptoServiceProvider();
       byte[] tdesKey = HashProvider.ComputeHash(UTF8.GetBytes(passphrase));
 
-      TripleDESCryptoServiceProvider tdesAlgorithm = new TripleDESCryptoServiceProvider()
+      TripleDESCryptoServiceProvider tdesAlgorithm = new TripleDESCryptoServiceProvider
       {
         Key = tdesKey,
         Mode = CipherMode.ECB,
@@ -477,11 +477,8 @@ namespace FronkonGames.GameWork.Foundation
       if (n == 0 || m == 0)
         return m;
 
-      for (int i = 0; i <= n; d[i, 0] = i++)
-        ;
-      
-      for (int j = 0; j <= m; d[0, j] = j++)
-        ;
+      for (int i = 0; i <= n; d[i, 0] = i++) { ; }
+      for (int j = 0; j <= m; d[0, j] = j++) { ; }
 
       for (int i = 1; i <= n; ++i)
       {

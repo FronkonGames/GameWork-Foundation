@@ -25,12 +25,12 @@ namespace FronkonGames.GameWork.Foundation
   /// <summary>
   /// Checks values and throws an exception if the condition is not met.
   /// </summary>
-  public static partial class Check //NOSONAR
+  public static partial class Check
   {
     /// <summary>
     /// Check if the value is null.
     /// </summary>
-    /// <param name="value"></param>
+    /// <param name="value">Value</param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
     [DebuggerStepThrough, Conditional("UNITY_ASSERTIONS")]
     public static void IsNull(object value, [CallerMemberName]string member = "",
@@ -41,7 +41,7 @@ namespace FronkonGames.GameWork.Foundation
     /// <summary>
     /// Check that the value is not null.
     /// </summary>
-    /// <param name="value"></param>
+    /// <param name="value">Value</param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
     [DebuggerStepThrough, Conditional("UNITY_ASSERTIONS")]
     public static void IsNotNull(object value, [CallerMemberName]string member = "",
@@ -52,7 +52,7 @@ namespace FronkonGames.GameWork.Foundation
     /// <summary>
     /// Check that the collection is not null or empty.
     /// </summary>
-    /// <param name="collection"></param>
+    /// <param name="collection">ICollection</param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
     [DebuggerStepThrough, Conditional("UNITY_ASSERTIONS")]
     public static void IsNotNullOrEmpty<T>(ICollection<T> collection, [CallerMemberName]string member = "",
@@ -63,8 +63,8 @@ namespace FronkonGames.GameWork.Foundation
     /// <summary>
     /// The object is of type Type.
     /// </summary>
-    /// <param name="value"></param>
-    /// <param name="type"></param>
+    /// <param name="value">Value</param>
+    /// <param name="type">Type</param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
     [DebuggerStepThrough, Conditional("UNITY_ASSERTIONS")]
     public static void OfType(object value, Type type, [CallerMemberName]string member = "",

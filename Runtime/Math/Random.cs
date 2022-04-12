@@ -14,35 +14,42 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-using System.Collections;
-using NUnit.Framework;
-using UnityEngine.TestTools;
 using UnityEngine;
-using FronkonGames.GameWork.Foundation;
+using UnityRandom = UnityEngine.Random;
 
-/// <summary>
-/// Extensions test.
-/// </summary>
-public partial class ExtensionsTests
+namespace FronkonGames.GameWork.Foundation
 {
   /// <summary>
-  /// Color extensions test.
+  /// Random functions.
   /// </summary>
-  [UnityTest]
-  public IEnumerator Color()
+  public static class Random
   {
-    Assert.AreEqual(UnityEngine.Color.magenta.ToHex(), "FF00FF");
+    // 1D
+    public static float Value => UnityRandom.value;
+    public static float Sign => Value > 0.5f ? 1.0f : -1.0f;
+    public static float Direction1D => Sign;
+    public static float Range(float min, float max) => UnityRandom.Range(min, max);
 
-    Assert.IsTrue(UnityEngine.Color.black.IsApproximatelyBlack());
-    Assert.IsFalse(UnityEngine.Color.white.IsApproximatelyBlack());
-    Assert.IsTrue((UnityEngine.Color.white * MathConstants.Epsilon).IsApproximatelyBlack());
+    // 2D
+    public static Vector2 OnUnitCircle => MathUtils.AngToDir(Value * MathConstants.Tau);
+    public static Vector2 Direction2D => OnUnitCircle;
+    public static Vector2 InUnitCircle => UnityRandom.insideUnitCircle;
+    public static Vector2 InUnitSquare => new Vector2(Value, Value);
 
-    Assert.IsFalse(UnityEngine.Color.black.IsApproximatelyWhite());
-    Assert.IsTrue(UnityEngine.Color.white.IsApproximatelyWhite());
-    Assert.IsTrue((UnityEngine.Color.white * (1.0f - MathConstants.Epsilon)).IsApproximatelyWhite());
+    // 3D
+    public static Vector3 OnUnitSphere => UnityRandom.onUnitSphere;
+    public static Vector3 Direction3D => OnUnitSphere;
+    public static Vector3 InUnitSphere => UnityRandom.insideUnitSphere;
+    public static Vector3 InUnitCube => new Vector3(Value, Value, Value);
 
-    Assert.AreEqual(UnityEngine.Color.white.Invert(), UnityEngine.Color.black);
+    // 2D orientation
+    
+    /// <summary>Returns a random angle in radians from 0 to TAU</summary>
+    public static float Angle => Value * MathConstants.Tau;
 
-    yield return null;
+    // 3D Orientation
+
+    /// <summary>Returns a random uniformly distributed rotation</summary>
+    public static Quaternion Rotation => UnityRandom.rotationUniform;   
   }
 }

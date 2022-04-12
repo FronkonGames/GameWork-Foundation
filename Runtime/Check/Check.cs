@@ -20,7 +20,7 @@ using System.Diagnostics;
 namespace FronkonGames.GameWork.Foundation
 {
   /// <summary>
-  /// Comprueba valores.
+  /// Check conditions.
   /// </summary>
   [DebuggerNonUserCode]
   public static partial class Check

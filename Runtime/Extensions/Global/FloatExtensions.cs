@@ -24,6 +24,27 @@ namespace FronkonGames.GameWork.Foundation
   public static class FloatExtensions
   {
     /// <summary>
+    /// Value sign.
+    /// </summary>
+    /// <param name="self">Value</param>
+    /// <returns>1.0 if greater than or equal to 0, -1.0 if less than 0.</returns>
+    public static float Sign(this float self) => self >= 0.0f ? 1.0f : -1.0f;
+    
+    public static float Ceil(this float self) => Mathf.Ceil(self);
+    
+    public static float Round(this float self) => Mathf.Round(self);
+    
+    public static float Round(this float self, float snapInterval) => Mathf.Round(self / snapInterval) * snapInterval;
+
+    public static int ToIntFloor(this float self) => (int)Mathf.Floor(self);
+    
+    public static int ToIntCeil(float value) => (int)Mathf.Ceil(value);
+    
+    public static int ToIntRound(this float self) => (int)Mathf.Round(self);
+
+    public static float Frac(this float self) => self - Mathf.Floor(self);
+
+    /// <summary>
     /// Returns the maximum value.
     /// </summary>
     /// <param name="a">Value</param>
@@ -56,6 +77,13 @@ namespace FronkonGames.GameWork.Foundation
     public static float Clamp(this float value, float min, float max) => Mathf.Clamp(value, min, max);
 
     /// <summary>
+    /// Constrain the value to a [0 .. 1].
+    /// </summary>
+    /// <param name="self">Value</param>
+    /// <returns>Float</returns>
+    public static float Clamp01(this float value) => Mathf.Clamp01(value);
+
+    /// <summary>
     /// Constrain the angle to a range.
     /// </summary>
     /// <param name="angle">Value</param>
@@ -77,9 +105,17 @@ namespace FronkonGames.GameWork.Foundation
     /// </summary>
     /// <param name="a">Value</param>
     /// <param name="b">Value</param>
+    /// <returns>True/false</returns>
+    public static bool NearlyEquals(this float a, float b) => Mathf.Abs(a - b) < MathConstants.Epsilon;
+
+    /// <summary>
+    /// Approximately equal values.
+    /// </summary>
+    /// <param name="a">Value</param>
+    /// <param name="b">Value</param>
     /// <param name="epsilon">Difference range</param>
     /// <returns>True/false</returns>
-    public static bool NearlyEquals(this float a, float b, float epsilon = float.Epsilon) => Mathf.Abs(a - b) < epsilon;
+    public static bool NearlyEquals(this float a, float b, float epsilon) => Mathf.Abs(a - b) < epsilon;
 
     /// <summary>
     /// The value is within a range.

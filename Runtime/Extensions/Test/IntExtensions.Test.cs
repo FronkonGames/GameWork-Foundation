@@ -23,7 +23,7 @@ using FronkonGames.GameWork.Foundation;
 /// <summary>
 /// Extensions test.
 /// </summary>
-public partial class ExtensionsTests //NOSONAR
+public partial class ExtensionsTests
 {
   /// <summary>
   /// Int extensions test.
@@ -76,7 +76,6 @@ public partial class ExtensionsTests //NOSONAR
     Assert.AreEqual(3.NextPowerOfTwo(), 4);
     Assert.AreEqual(4.NextPowerOfTwo(), 4);
 
-    LayerMask layerMaskTest = LayerMask.NameToLayer("Test");
     int maskTest = LayerMask.NameToLayer("Test");
     Assert.IsTrue(maskTest.IsInLayerMask(Physics.AllLayers));
 

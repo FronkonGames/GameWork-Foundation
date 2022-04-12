@@ -24,12 +24,12 @@ namespace FronkonGames.GameWork.Foundation
   /// <summary>
   /// Checks values and throws an exception if the condition is not met.
   /// </summary>
-  public static partial class Check //NOSONAR
+  public static partial class Check
   {
     /// <summary>
-    /// Type es interface.
+    /// Type is a interface.
     /// </summary>
-    /// <param name="value"></param>
+    /// <param name="value">Value</param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
     [DebuggerStepThrough, Conditional("UNITY_ASSERTIONS")]
     public static void Interface(Type value, [CallerMemberName]string member = "",
@@ -38,9 +38,9 @@ namespace FronkonGames.GameWork.Foundation
       Assert(value.IsInterface == true, $"{Path.GetFileName(sourceFile)}:{line.ToString()} {member} '{nameof(value)}' must be an interface.");
 
     /// <summary>
-    /// Type no es interface.
+    /// Type is not a interface.
     /// </summary>
-    /// <param name="value"></param>
+    /// <param name="value">Value</param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
     [DebuggerStepThrough, Conditional("UNITY_ASSERTIONS")]
     public static void NotInterface(Type value, [CallerMemberName]string member = "",

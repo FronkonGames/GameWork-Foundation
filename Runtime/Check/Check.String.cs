@@ -23,15 +23,12 @@ namespace FronkonGames.GameWork.Foundation
   /// <summary>
   /// Checks values and throws an exception if the condition is not met.
   /// </summary>
-  public static partial class Check //NOSONAR
+  public static partial class Check
   {
     /// <summary>
-    /// Comprueba que la cadena no sea null ni vacia.
+    /// Check that the string is not null or empty.
     /// </summary>
-    /// <param name="value"></param>
-    /// <param name="member"></param>
-    /// <param name="sourceFile"></param>
-    /// <param name="line"></param>
+    /// <param name="value">Value</param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
     [DebuggerStepThrough, Conditional("UNITY_ASSERTIONS")]
     public static void IsNotNullOrEmpty(string value, [CallerMemberName]string member = "",
@@ -40,10 +37,10 @@ namespace FronkonGames.GameWork.Foundation
       Assert(string.IsNullOrEmpty(value) == false, $"{Path.GetFileName(sourceFile)}:{line.ToString()} {member} '{nameof(value)}' is null or empty.");
 
     /// <summary>
-    /// Comprueba que la cadena tenga una longitud exacta.
+    /// Check that the chain has an exact length.
     /// </summary>
-    /// <param name="value"></param>
-    /// <param name="len"></param>
+    /// <param name="value">Value</param>
+    /// <param name="len">Length</param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
     [DebuggerStepThrough, Conditional("UNITY_ASSERTIONS")]
     public static void Length(string value, int len, [CallerMemberName]string member = "",
@@ -52,13 +49,10 @@ namespace FronkonGames.GameWork.Foundation
       Assert(value.Length == len, $"{Path.GetFileName(sourceFile)}:{line.ToString()} {member} Expected string '{nameof(value)}' length must be {len.ToString()}.");
 
     /// <summary>
-    /// Comprueba que la cadena tenga una longitud maxima.
+    /// Check that the chain has a maximum length.
     /// </summary>
-    /// <param name="value"></param>
-    /// <param name="max"></param>
-    /// <param name="member"></param>
-    /// <param name="sourceFile"></param>
-    /// <param name="line"></param>
+    /// <param name="value">Value</param>
+    /// <param name="max">Max length</param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
     [DebuggerStepThrough, Conditional("UNITY_ASSERTIONS")]
     public static void MaxLength(string value, int max, [CallerMemberName]string member = "",
@@ -67,13 +61,10 @@ namespace FronkonGames.GameWork.Foundation
       Assert(value.Length <= max, $"{Path.GetFileName(sourceFile)}:{line.ToString()} {member} Expected string '{nameof(value)}' max length must be {max.ToString()}.");
 
     /// <summary>
-    /// Comprueba que la cadena tenga una longitud mimina.
+    /// Check that the chain has a minimum length.
     /// </summary>
-    /// <param name="value"></param>
-    /// <param name="min"></param>
-    /// <param name="member"></param>
-    /// <param name="sourceFile"></param>
-    /// <param name="line"></param>
+    /// <param name="value">Value</param>
+    /// <param name="min">Min length</param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
     [DebuggerStepThrough, Conditional("UNITY_ASSERTIONS")]
     public static void MinLength(string value, int min, [CallerMemberName]string member = "",

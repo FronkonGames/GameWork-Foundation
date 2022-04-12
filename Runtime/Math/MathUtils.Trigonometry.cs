@@ -1,4 +1,4 @@
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+﻿////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Copyright (c) Martin Bustos @FronkonGames <fronkongames@gmail.com>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
@@ -14,44 +14,39 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-using System.Collections;
-using NUnit.Framework;
-using UnityEngine.TestTools;
-using FronkonGames.GameWork.Foundation;
+using UnityEngine;
 
-/// <summary>
-/// Extensions tests.
-/// </summary>
-public partial class ExtensionsTests
+namespace FronkonGames.GameWork.Foundation
 {
   /// <summary>
-  /// Float extensions test.
+  /// Math utilities.
   /// </summary>
-  [UnityTest]
-  public IEnumerator Float()
+  public static partial class MathUtils
   {
-    Assert.AreEqual(0.0f.Max(1.0f), 1.0f);
-    Assert.AreEqual(1.0f.Max(0.0f), 1.0f);
-    Assert.AreEqual(1.0f.Max(-1.0f), 1.0f);
-    Assert.AreEqual(0.0f.Min(1.0f), 0.0f);
-    Assert.AreEqual(1.0f.Min(0.0f), 0.0f);
-    Assert.AreEqual(1.0f.Min(-1.0f), -1.0f);
+    public static float Sin(float angRad) => Mathf.Sin(angRad);
 
-    Assert.AreEqual(0.0f.Abs(), 0.0f);
-    Assert.AreEqual(1.0f.Abs(), 1.0f);
-    Assert.AreEqual((-1.0f).Abs(), 1.0f);
+    public static float Cos(float angRad) => Mathf.Cos(angRad);
 
-    Assert.AreEqual(1.0f.Clamp(0.0f, 2.0f), 1.0f);
-    Assert.AreEqual((-1.0f).Clamp(0.0f, 2.0f), 0.0f);
-    Assert.AreEqual(3.0f.Clamp(0.0f, 2.0f), 2.0f);
+    public static float Tan(float angRad) => Mathf.Tan(angRad);
 
-    Assert.IsTrue(1.0f.NearlyEquals(1.0f));
-    Assert.IsFalse(0.0f.NearlyEquals(0.0001f));
-    Assert.IsTrue(0.0f.NearlyEquals(MathConstants.Epsilon * 0.5f));
+    public static float Asin(float value) => Mathf.Asin(value);
 
-    Assert.IsTrue(0.0f.NearlyEquals(1.0f, 2.0f));
-    Assert.IsFalse(0.0f.NearlyEquals(2.0f, 1.0f));
+    public static float Acos(float value) => Mathf.Acos(value);
 
-    yield return null;
+    public static float Atan(float value) => Mathf.Atan(value);
+
+    public static float Atan2(float y, float x) => Mathf.Atan2(y, x);
+
+    public static float Csc(float x) => 1.0f / Mathf.Sin(x);
+
+    public static float Sec(float x) => 1.0f / Mathf.Cos(x);
+
+    public static float Cot(float x) => 1.0f / Mathf.Tan(x);
+
+    public static float Ver(float x) => 1.0f - Mathf.Cos(x);
+
+    public static float Cvs(float x) => 1.0f - Mathf.Sin(x);
+
+    public static float Crd(float x) => 2.0f * Mathf.Sin(x * 0.5f);
   }
 }
