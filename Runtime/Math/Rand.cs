@@ -22,24 +22,48 @@ namespace FronkonGames.GameWork.Foundation
   /// <summary>
   /// Random functions.
   /// </summary>
-  public static class Random
+  public static class Rand
   {
     // 1D
+    
+    /// <summary>Random float within [0 .. 1]</summary>
     public static float Value => UnityRandom.value;
+    
+    /// <summary></summary>
     public static float Sign => Value > 0.5f ? 1.0f : -1.0f;
+
+    /// <summary></summary>
     public static float Direction1D => Sign;
+    
+    /// <summary></summary>
     public static float Range(float min, float max) => UnityRandom.Range(min, max);
 
     // 2D
+    
+    /// <summary></summary>
     public static Vector2 OnUnitCircle => MathUtils.AngToDir(Value * MathConstants.Tau);
+
+    /// <summary></summary>
     public static Vector2 Direction2D => OnUnitCircle;
+
+    /// <summary></summary>
     public static Vector2 InUnitCircle => UnityRandom.insideUnitCircle;
+
+    /// <summary></summary>
     public static Vector2 InUnitSquare => new Vector2(Value, Value);
 
     // 3D
+
+    /// <summary></summary>
     public static Vector3 OnUnitSphere => UnityRandom.onUnitSphere;
+
+    /// <summary></summary>
     public static Vector3 Direction3D => OnUnitSphere;
+    
+    /// <summary></summary>
     public static Vector3 InUnitSphere => UnityRandom.insideUnitSphere;
+
+    /// <summary></summary>
     public static Vector3 InUnitCube => new Vector3(Value, Value, Value);
 
     // 2D orientation

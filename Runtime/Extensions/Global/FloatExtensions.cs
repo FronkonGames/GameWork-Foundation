@@ -30,18 +30,46 @@ namespace FronkonGames.GameWork.Foundation
     /// <returns>1.0 if greater than or equal to 0, -1.0 if less than 0.</returns>
     public static float Sign(this float self) => self >= 0.0f ? 1.0f : -1.0f;
     
+    /// <summary>
+    /// The smallest integer greater to or equal to value.
+    /// </summary>
+    /// <param name="self">Value</param>
+    /// <returns>Float</returns>
     public static float Ceil(this float self) => Mathf.Ceil(self);
     
+    /// <summary>
+    /// Value rounded to the nearest integer.
+    /// </summary>
+    /// <param name="self">Value</param>
+    /// <returns>Float</returns>
     public static float Round(this float self) => Mathf.Round(self);
     
-    public static float Round(this float self, float snapInterval) => Mathf.Round(self / snapInterval) * snapInterval;
-
+    /// <summary>
+    /// Largest integer smaller than or equal to value.
+    /// </summary>
+    /// <param name="self">Value</param>
+    /// <returns>Int</returns>
     public static int ToIntFloor(this float self) => (int)Mathf.Floor(self);
     
-    public static int ToIntCeil(float value) => (int)Mathf.Ceil(value);
+    /// <summary>
+    /// Smallest integer greater to or equal to value.
+    /// </summary>
+    /// <param name="self">Value</param>
+    /// <returns>Int</returns>
+    public static int ToIntCeil(this float value) => Mathf.CeilToInt(value);
     
-    public static int ToIntRound(this float self) => (int)Mathf.Round(self);
+    /// <summary>
+    /// Rounded to the nearest integer.
+    /// </summary>
+    /// <param name="self">Value</param>
+    /// <returns>Float</returns>
+    public static int ToIntRound(this float self) => Mathf.RoundToInt(self);
 
+    /// <summary>
+    /// Decimal part.
+    /// </summary>
+    /// <param name="self">Value</param>
+    /// <returns>Float</returns>
     public static float Frac(this float self) => self - Mathf.Floor(self);
 
     /// <summary>
@@ -82,23 +110,6 @@ namespace FronkonGames.GameWork.Foundation
     /// <param name="self">Value</param>
     /// <returns>Float</returns>
     public static float Clamp01(this float value) => Mathf.Clamp01(value);
-
-    /// <summary>
-    /// Constrain the angle to a range.
-    /// </summary>
-    /// <param name="angle">Value</param>
-    /// <param name="min">Lower angle</param>
-    /// <param name="max">Upper angle</param>
-    /// <returns>Float</returns>
-    public static float ClampAngle(this float angle, float min, float max)
-    {
-      if (angle < -360.0f)
-        angle += 360.0f;
-      else if (angle > 360.0f)
-        angle -= 360.0f;
-
-      return Mathf.Clamp(angle, min, max);
-    }
 
     /// <summary>
     /// Approximately equal values.

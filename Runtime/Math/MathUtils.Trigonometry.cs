@@ -23,30 +23,96 @@ namespace FronkonGames.GameWork.Foundation
   /// </summary>
   public static partial class MathUtils
   {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="angRad"></param>
+    /// <returns></returns>
     public static float Sin(float angRad) => Mathf.Sin(angRad);
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="angRad"></param>
+    /// <returns></returns>
     public static float Cos(float angRad) => Mathf.Cos(angRad);
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="angRad"></param>
+    /// <returns></returns>
     public static float Tan(float angRad) => Mathf.Tan(angRad);
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="value"></param>
+    /// <returns></returns>
     public static float Asin(float value) => Mathf.Asin(value);
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="value"></param>
+    /// <returns></returns>
     public static float Acos(float value) => Mathf.Acos(value);
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="value"></param>
+    /// <returns></returns>
     public static float Atan(float value) => Mathf.Atan(value);
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="y"></param>
+    /// <param name="x"></param>
+    /// <returns></returns>
     public static float Atan2(float y, float x) => Mathf.Atan2(y, x);
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="x"></param>
+    /// <returns></returns>
     public static float Csc(float x) => 1.0f / Mathf.Sin(x);
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="x"></param>
+    /// <returns></returns>
     public static float Sec(float x) => 1.0f / Mathf.Cos(x);
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="x"></param>
+    /// <returns></returns>
     public static float Cot(float x) => 1.0f / Mathf.Tan(x);
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="x"></param>
+    /// <returns></returns>
     public static float Ver(float x) => 1.0f - Mathf.Cos(x);
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="x"></param>
+    /// <returns></returns>
     public static float Cvs(float x) => 1.0f - Mathf.Sin(x);
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="x"></param>
+    /// <returns></returns>
     public static float Crd(float x) => 2.0f * Mathf.Sin(x * 0.5f);
   }
 }

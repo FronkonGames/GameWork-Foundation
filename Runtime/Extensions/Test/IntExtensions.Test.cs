@@ -31,6 +31,10 @@ public partial class ExtensionsTests
   [UnityTest]
   public IEnumerator Int()
   {
+    Assert.AreEqual(0.Sign(), 1);
+    Assert.AreEqual(1.Sign(), 1);
+    Assert.AreEqual(-1.Sign(), -1);
+    
     Assert.AreEqual(0.Max(1), 1);
     Assert.AreEqual(1.Max(0), 1);
     Assert.AreEqual(1.Max(-1), 1);

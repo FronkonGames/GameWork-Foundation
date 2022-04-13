@@ -29,6 +29,13 @@ namespace FronkonGames.GameWork.Foundation
     private const long ByteConversion = 1000;
 
     /// <summary>
+    /// Value sign.
+    /// </summary>
+    /// <param name="self">Value</param>
+    /// <returns>1 if greater than or equal to 0, -1 if less than 0.</returns>
+    public static int Sign(this int self) => self >= 0 ? 1 : -1;
+
+    /// <summary>
     /// Returns the maximum value.
     /// </summary>
     /// <param name="a">Value</param>

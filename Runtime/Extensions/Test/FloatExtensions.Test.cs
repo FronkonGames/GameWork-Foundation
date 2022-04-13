@@ -30,6 +30,42 @@ public partial class ExtensionsTests
   [UnityTest]
   public IEnumerator Float()
   {
+    Assert.AreEqual(0.0f.Sign(), 1.0f);
+    Assert.AreEqual(1.0f.Sign(), 1.0f);
+    Assert.AreEqual((-1.0f).Sign(), -1.0f);
+
+    Assert.AreEqual(0.5f.Ceil(), 1.0f);
+    Assert.AreEqual((-0.5f).Ceil(), 0.0f);
+    Assert.AreEqual(1.0f.Ceil(), 1.0f);
+    Assert.AreEqual((-1.0f).Ceil(), -1.0f);
+
+    Assert.AreEqual(0.5f.Round(), 0.0f);
+    Assert.AreEqual(0.51f.Round(), 1.0f);
+    Assert.AreEqual((-0.5f).Round(), 0.0f);
+    Assert.AreEqual((-0.51f).Round(), -1.0f);
+
+    Assert.AreEqual(0.5f.ToIntFloor(), 0);
+    Assert.AreEqual(0.9f.ToIntFloor(), 0);
+    Assert.AreEqual((-0.5f).ToIntFloor(), -1);
+    Assert.AreEqual((-0.9f).ToIntFloor(), -1);
+    Assert.AreEqual((-1.5f).ToIntFloor(), -2);
+
+    Assert.AreEqual(0.5f.ToIntCeil(), 1);
+    Assert.AreEqual(0.9f.ToIntCeil(), 1);
+    Assert.AreEqual((-0.5f).ToIntCeil(), 0);
+    Assert.AreEqual((-0.9f).ToIntCeil(), 0);
+    Assert.AreEqual((-1.5f).ToIntCeil(), -1);
+
+    Assert.AreEqual(0.5f.ToIntRound(), 0);
+    Assert.AreEqual(0.9f.ToIntRound(), 1);
+    Assert.AreEqual((-0.5f).ToIntRound(), 0);
+    Assert.AreEqual((-0.9f).ToIntRound(), -1);
+    Assert.AreEqual((-1.5f).ToIntRound(), -2);
+
+    Assert.AreEqual(0.0f.Frac(), 0.0f);
+    Assert.AreEqual(0.5f.Frac(), 0.5f);
+    Assert.AreEqual(1.5f.Frac(), 0.5f);
+
     Assert.AreEqual(0.0f.Max(1.0f), 1.0f);
     Assert.AreEqual(1.0f.Max(0.0f), 1.0f);
     Assert.AreEqual(1.0f.Max(-1.0f), 1.0f);
@@ -45,12 +81,27 @@ public partial class ExtensionsTests
     Assert.AreEqual((-1.0f).Clamp(0.0f, 2.0f), 0.0f);
     Assert.AreEqual(3.0f.Clamp(0.0f, 2.0f), 2.0f);
 
+    Assert.AreEqual(0.5f.Clamp01(), 0.5f);
+    Assert.AreEqual(2.0f.Clamp01(), 1.0f);
+    Assert.AreEqual((-1.0f).Clamp01(), 0.0f);
+
     Assert.IsTrue(1.0f.NearlyEquals(1.0f));
     Assert.IsFalse(0.0f.NearlyEquals(0.0001f));
     Assert.IsTrue(0.0f.NearlyEquals(MathConstants.Epsilon * 0.5f));
 
     Assert.IsTrue(0.0f.NearlyEquals(1.0f, 2.0f));
     Assert.IsFalse(0.0f.NearlyEquals(2.0f, 1.0f));
+
+    Assert.IsTrue(0.0f.IsWithin(0.0f, 1.0f));
+    Assert.IsTrue(1.0f.IsWithin(0.0f, 1.0f));
+    Assert.IsFalse(2.0f.IsWithin(0.0f, 1.0f));
+    Assert.IsFalse((-2.0f).IsWithin(0.0f, 1.0f));
+
+    Assert.IsTrue(0.5f.IsBetween(0.0f, 1.0f));
+    Assert.IsFalse(0.0f.IsBetween(0.0f, 1.0f));
+    Assert.IsFalse(1.0f.IsBetween(0.0f, 1.0f));
+    Assert.IsFalse(2.0f.IsBetween(0.0f, 1.0f));
+    Assert.IsFalse((-2.0f).IsBetween(0.0f, 1.0f));
 
     yield return null;
   }
