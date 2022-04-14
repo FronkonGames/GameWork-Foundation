@@ -18,13 +18,14 @@ using System.Collections;
 using NUnit.Framework;
 using UnityEngine.TestTools;
 using FronkonGames.GameWork.Foundation;
+using UnityEngine;
 
 /// <summary>
 /// Math tests.
 /// </summary>
 public partial class ExtensionsTests
 {
-  private int Tries = 1000;
+  private const int Tries = 10000;
 
   /// <summary>
   /// Random extensions test.
@@ -34,26 +35,43 @@ public partial class ExtensionsTests
   {
     // 1D
 
+    float mean = 0.0f;
     for (int i = 0; i < Tries; ++i)
     {
       float value = Rand.Value;
+      mean += value;
+      
       Assert.IsTrue(value >= 0.0f && value <= 1.0f);
     }
 
+    mean /= Tries;
+    Assert.IsTrue(mean >= 0.49f && mean <= 0.51f);
+
+    mean = 0.0f;
     for (int i = 0; i < Tries; ++i)
     {
       float sign = Rand.Sign;
-      Assert.IsTrue(sign == 1.0f || sign == -1.0f);
+      mean += sign == 1.0f ? 1.0f : 0.0f;
+      
+      Assert.IsTrue(sign.NearlyEquals(1.0f) || sign.NearlyEquals(-1.0f));
     }
+    
+    Assert.IsTrue(mean >= (Tries / 2) - (Tries / 100) && mean <= (Tries / 2) + (Tries / 100));
 
+    mean = 0.0f;
+    const float min = 0.0f;
+    const float max = 10.0f;
     for (int i = 0; i < Tries; ++i)
     {
-      const float min = 0.0f;
-      const float max = 10.0f;
-
       float value = Rand.Range(min, max);
+      mean += value;
+
       Assert.IsTrue(value >= min && value <= max);
     }
+
+    mean /= Tries;
+    const float middle = (max - min) * 0.5f;
+    Assert.IsTrue(mean >= middle - (middle / 100) && mean <= middle + (middle / 100));
 
     yield return null;
   }

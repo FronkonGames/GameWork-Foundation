@@ -48,7 +48,7 @@ namespace FronkonGames.GameWork.Foundation
   }
 
   /// <summary>
-  /// Log messages..
+  /// Log messages.
   /// </summary>
   public static class Log
   {
@@ -110,7 +110,7 @@ namespace FronkonGames.GameWork.Foundation
     }
 
     /// <summary>
-    /// Error message and Exception.
+    /// Error message, exception and stack trace.
     /// </summary>
     /// <param name="message">Message</param>
     /// <param name="e">Exception</param>

@@ -1,6 +1,6 @@
 <p align="center"><img src="Documentation/banner.png"/></p>
 
-<p align="center">Generic code to build the basis of a framework to develop Unity based games</p>
+<p align="center"><b>Generic Code To Build The Basis Of A Framework To Develop Unity Based Games</b></p>
 </br>
 <p align="center">
   <a style="text-decoration:none">
