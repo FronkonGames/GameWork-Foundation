@@ -132,8 +132,6 @@ namespace FronkonGames.GameWork.Foundation
       else
 #endif
       UnityEngine.Object.Destroy(obj);
-
-      obj = null;
     }
 
     /// <summary>

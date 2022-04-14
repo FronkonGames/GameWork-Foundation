@@ -1,4 +1,4 @@
-﻿////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Copyright (c) Martin Bustos @FronkonGames <fronkongames@gmail.com>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
@@ -14,49 +14,28 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-using System.Collections;
-using NUnit.Framework;
-using UnityEngine.TestTools;
-using FronkonGames.GameWork.Foundation;
-using UnityEngine;
+using System;
 
-/// <summary>
-/// Math tests.
-/// </summary>
-public partial class ExtensionsTests
+namespace FronkonGames.GameWork.Foundation
 {
-  private const int Tries = 10000;
-
   /// <summary>
-  /// Random extensions test.
+  /// Generic lazy singleton thread-safe.
   /// </summary>
-  [UnityTest]
-  public IEnumerator Random()
+  /// <typeparam name="T">Type</typeparam>
+  public abstract class Singleton<T> where T : class, new()
   {
-    // 1D
-    for (int i = 0; i < Tries; ++i)
-    {
-      float value = Rand.Value;
-      
-      Assert.IsTrue(value >= 0.0f && value <= 1.0f);
-    }
+    /// <summary>
+    /// Instance.
+    /// </summary>
+    public static T Instance => instance.Value;
 
-    for (int i = 0; i < Tries; ++i)
-    {
-      float sign = Rand.Sign;
-      
-      Assert.IsTrue(sign.NearlyEquals(1.0f) || sign.NearlyEquals(-1.0f));
-    }
+    /// <summary>
+    /// Already exists?
+    /// </summary>
+    public static bool Exists => instance.IsValueCreated;
 
-    const float min = 0.0f;
-    const float max = 10.0f;
-    for (int i = 0; i < Tries; ++i)
-    {
-      float value = Rand.Range(min, max);
+    private static readonly Lazy<T> instance = new Lazy<T>(() => new T());
 
-      Assert.IsTrue(value >= min && value <= max);
-    }
-
-    yield return null;
+    private Singleton() { }
   }
 }

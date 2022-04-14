@@ -1,4 +1,4 @@
-﻿////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Copyright (c) Martin Bustos @FronkonGames <fronkongames@gmail.com>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
@@ -14,49 +14,40 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-using System.Collections;
-using NUnit.Framework;
-using UnityEngine.TestTools;
-using FronkonGames.GameWork.Foundation;
+using System;
 using UnityEngine;
 
-/// <summary>
-/// Math tests.
-/// </summary>
-public partial class ExtensionsTests
+namespace FronkonGames.GameWork.Foundation
 {
-  private const int Tries = 10000;
-
   /// <summary>
-  /// Random extensions test.
+  /// Generic lazy ScriptableObject singleton thread-safe.
   /// </summary>
-  [UnityTest]
-  public IEnumerator Random()
+  /// <remarks>
+  /// The scriptable object must be placed in the Resources folder, and must have the same name as its type.
+  /// </remarks>
+  /// <typeparam name="T">Type</typeparam>
+  public abstract class ScriptableObjectSingleton<T> : ScriptableObject where T : ScriptableObject
   {
-    // 1D
-    for (int i = 0; i < Tries; ++i)
+    /// <summary>
+    /// Instance.
+    /// </summary>
+    public static T Instance => instance.Value;
+
+    /// <summary>
+    /// Already exists?
+    /// </summary>
+    public static bool Exists => instance.IsValueCreated;
+
+    [NonSerialized]
+    private static readonly Lazy<T> instance = new Lazy<T>(() =>
     {
-      float value = Rand.Value;
+      string name = typeof(T).Name;
       
-      Assert.IsTrue(value >= 0.0f && value <= 1.0f);
-    }
-
-    for (int i = 0; i < Tries; ++i)
-    {
-      float sign = Rand.Sign;
+      T instance = Resources.Load<T>(name);
+      if (instance == null)
+        Log.Exception($"No instance of '{name}' found in the Resources folder. Create one inside the Resources folder, and name the file '{name}'");
       
-      Assert.IsTrue(sign.NearlyEquals(1.0f) || sign.NearlyEquals(-1.0f));
-    }
-
-    const float min = 0.0f;
-    const float max = 10.0f;
-    for (int i = 0; i < Tries; ++i)
-    {
-      float value = Rand.Range(min, max);
-
-      Assert.IsTrue(value >= min && value <= max);
-    }
-
-    yield return null;
+      return instance;
+    });
   }
 }
