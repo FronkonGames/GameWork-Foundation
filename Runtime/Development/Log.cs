@@ -89,7 +89,11 @@ namespace FronkonGames.GameWork.Foundation
     public static void Warning(string message, [CallerMemberName]string member = "", [CallerFilePath]string sourceFile = "")
     {
       if (Level <= LogLevel.Warning)
+#if UNITY_EDITOR
         Debug.LogWarning($"<color=yellow>[{Path.GetFileNameWithoutExtension(sourceFile)}:{member}] {message}</color>");
+#else
+        Debug.LogWarning($"[{Path.GetFileNameWithoutExtension(sourceFile)}:{member}] {message}");
+#endif
     }
 
     /// <summary>
@@ -106,7 +110,11 @@ namespace FronkonGames.GameWork.Foundation
     public static void Error(string message, [CallerMemberName]string member = "", [CallerFilePath]string sourceFile = "")
     {
       if (Level <= LogLevel.Error)
+#if UNITY_EDITOR
         Debug.LogError($"<color=red>[{Path.GetFileNameWithoutExtension(sourceFile)}:{member}] {message}</color>");
+#else
+        Debug.LogError($"[{Path.GetFileNameWithoutExtension(sourceFile)}:{member}] {message}");
+#endif
     }
 
     /// <summary>
@@ -123,7 +131,11 @@ namespace FronkonGames.GameWork.Foundation
 #endif
     public static void Exception(string message, Exception e = null, [CallerMemberName] string member = "", [CallerFilePath] string sourceFile = "")
     {
+#if UNITY_EDITOR
       Debug.LogError($"<color=red>[{Path.GetFileNameWithoutExtension(sourceFile)}:{member}] {message}</color>");
+#else
+      Debug.LogError($"[{Path.GetFileNameWithoutExtension(sourceFile)}:{member}] {message}");
+#endif
 
       if (e == null)
         e = new Exception(message);

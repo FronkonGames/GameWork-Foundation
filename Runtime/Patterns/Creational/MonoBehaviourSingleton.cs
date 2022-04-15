@@ -22,18 +22,18 @@ namespace FronkonGames.GameWork.Foundation
   /// <summary>
   /// Generic lazy MonoBehaviour singleton thread-safe.
   /// </summary>
-  /// <typeparam name="T">Type</typeparam>
+  /// <typeparam name="T">Singleton type</typeparam>
   public abstract class MonoBehaviourSingleton<T> : MonoBehaviour where T : MonoBehaviour
   {
     /// <summary>Instance.</summary>
-    public static T Instance => instance.Value;
+    public static T Instance => applicationIsQuitting == true ? null : lazy.Value;
 
-    /// <summary>
-    /// Already exists?
-    /// </summary>
-    public static bool Exists => instance.IsValueCreated;
+    /// <summary>Already exists?</summary>
+    public static bool Exists => applicationIsQuitting == false && lazy.IsValueCreated == true;
 
-    private static readonly Lazy<T> instance = new Lazy<T>(() =>
+    private static bool applicationIsQuitting = false;
+
+    private static readonly Lazy<T> lazy = new Lazy<T>(() =>
     {
       T instance = FindObjectOfType<T>(true);
       if (instance == null)
@@ -44,5 +44,11 @@ namespace FronkonGames.GameWork.Foundation
 
       return instance;
     });
+
+    protected MonoBehaviourSingleton()
+    {
+    }
+
+    protected virtual void OnApplicationQuit() => applicationIsQuitting = true;
   }
 }

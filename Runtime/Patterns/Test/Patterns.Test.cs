@@ -26,10 +26,9 @@ using Object = UnityEngine.Object;
 /// </summary>
 public partial class PatternsTests
 {
-  
-  private class MonoBehaviourSingletonTest : MonoBehaviourSingleton<MonoBehaviourSingletonTest>
-  {
-  };
+  private class SingletonTest { };
+
+  private class MonoBehaviourSingletonTest : MonoBehaviourSingleton<MonoBehaviourSingletonTest> { };
   
   /// <summary>
   /// Singletons test.
@@ -37,19 +36,14 @@ public partial class PatternsTests
   [UnityTest]
   public IEnumerator Singletons()
   {
-    Assert.IsFalse(MonoBehaviourSingletonTest.Exists);
-    Assert.NotNull(MonoBehaviourSingletonTest.Instance);
-    Assert.IsTrue(MonoBehaviourSingletonTest.Exists);
+    SingletonTest singleton0 = Singleton<SingletonTest>.Instance;
+    SingletonTest singleton1 = Singleton<SingletonTest>.Instance;
+    Assert.AreEqual(singleton0, singleton1);
 
     MonoBehaviourSingletonTest monoSingleton0 = MonoBehaviourSingletonTest.Instance;
     MonoBehaviourSingletonTest monoSingleton1 = MonoBehaviourSingletonTest.Instance;
     Assert.AreEqual(monoSingleton0, monoSingleton1);
-    
-    MonoBehaviourSingletonTest[] singletons = Object.FindObjectsOfType<MonoBehaviourSingletonTest>();
-    Assert.AreEqual(1, singletons.Length);
 
     yield return null;
-    
-    Object.DestroyImmediate(MonoBehaviourSingletonTest.Instance);
   }
 }

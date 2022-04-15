@@ -21,17 +21,13 @@ namespace FronkonGames.GameWork.Foundation
   /// <summary>
   /// Generic lazy singleton thread-safe.
   /// </summary>
-  /// <typeparam name="T">Type</typeparam>
+  /// <typeparam name="T">Singleton type</typeparam>
   public abstract class Singleton<T> where T : class, new()
   {
-    /// <summary>
-    /// Instance.
-    /// </summary>
+    /// <summary>Instance.</summary>
     public static T Instance => instance.Value;
 
-    /// <summary>
-    /// Already exists?
-    /// </summary>
+    /// <summary>Already exists?</summary>
     public static bool Exists => instance.IsValueCreated;
 
     private static readonly Lazy<T> instance = new Lazy<T>(() => new T());
