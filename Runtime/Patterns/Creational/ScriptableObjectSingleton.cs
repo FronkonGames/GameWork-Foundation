@@ -25,21 +25,14 @@ namespace FronkonGames.GameWork.Foundation
   /// <remarks>
   /// The scriptable object must be placed in the Resources folder, and must have the same name as its type.
   /// </remarks>
-  /// <typeparam name="T">Type</typeparam>
+  /// <typeparam name="T">Singleton type</typeparam>
   public abstract class ScriptableObjectSingleton<T> : ScriptableObject where T : ScriptableObject
   {
-    /// <summary>
-    /// Instance.
-    /// </summary>
-    public static T Instance => instance.Value;
-
-    /// <summary>
-    /// Already exists?
-    /// </summary>
-    public static bool Exists => instance.IsValueCreated;
+    /// <summary>Instance.</summary>
+    public static T Instance => lazy.Value;
 
     [NonSerialized]
-    private static readonly Lazy<T> instance = new Lazy<T>(() =>
+    private static readonly Lazy<T> lazy = new Lazy<T>(() =>
     {
       string name = typeof(T).Name;
       

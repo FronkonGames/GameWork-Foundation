@@ -14,42 +14,57 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-using System;
 using UnityEngine;
 
 namespace FronkonGames.GameWork.Foundation
 {
   /// <summary>
-  /// MonoBehaviour singleton base.
+  /// Drawing of objects for development.
   /// </summary>
-  public abstract class MonoBehaviourSingletonBase : MonoBehaviour
+  /// <remarks>Only available in the Editor</remarks>
+  public static partial class Draw
   {
-    protected static bool IsQuitting { get; private set; } = false;
-    
-    protected MonoBehaviourSingletonBase() { }
-    
-    protected virtual void OnApplicationQuit() => IsQuitting = true;
-  }
-
-  /// <summary>
-  /// Generic lazy MonoBehaviour singleton thread-safe.
-  /// </summary>
-  /// <typeparam name="T">Singleton type</typeparam>
-  public abstract class MonoBehaviourSingleton<T> : MonoBehaviourSingletonBase where T : MonoBehaviour
-  {
-    /// <summary>Instance.</summary>
-    public static T Instance => IsQuitting == true ? null : lazy.Value;
-
-    private static readonly Lazy<T> lazy = new Lazy<T>(() =>
+    private static void EnsureNormalized(this ref Vector3 vector3)
     {
-      T instance = FindObjectOfType<T>(true);
-      if (instance == null)
-      {
-        GameObject ownerObject = new GameObject(typeof(T).Name);
-        instance = ownerObject.AddComponent<T>();
-      }
+      float sqrMag = vector3.sqrMagnitude;
+      if (Mathf.Approximately(sqrMag, 1.0f))
+        return;
 
-      return instance;
-    });
+      vector3 /= Mathf.Sqrt(sqrMag);
+    }
+
+    private static void EnsureNormalized(this ref Vector2 vector2)
+    {
+      float sqrMag = vector2.sqrMagnitude;
+      if (Mathf.Approximately(sqrMag, 1.0f))
+        return;
+
+      vector2 /= Mathf.Sqrt(sqrMag);
+    }
+
+    private static Vector3 GetAxisAlignedAlternateWhereRequired(Vector3 normal, Vector3 alternate)
+    {
+      if (Mathf.Abs(Vector3.Dot(normal, alternate)) > 0.999f)
+        alternate = GetAxisAlignedAlternate(normal);
+
+      return alternate;
+    }
+
+    private static Vector3 GetAxisAlignedAlternate(Vector3 normal)
+    {
+      Vector3 alternate = new Vector3(0.0f, 0.0f, 1.0f);
+      if (Mathf.Abs(Vector3.Dot(normal, alternate)) > 0.707f)
+        alternate = new Vector3(0.0f, 1.0f, 0.0f);
+
+      return alternate;
+    }
+
+    private static Vector3 GetAxisAlignedPerpendicular(Vector3 normal)
+    {
+      Vector3 cross = Vector3.Cross(normal, GetAxisAlignedAlternate(normal));
+      cross.EnsureNormalized();
+
+      return cross;
+    }
   }
 }

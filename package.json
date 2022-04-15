@@ -1,6 +1,6 @@
 {
   "name": "com.frokongames.gamework.foundation",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "displayName": "Game:Work Foundation",
   "decription": "Generic code to build the basis of a framework to develop Unity based games.",
   "references": [ ],
@@ -24,7 +24,7 @@
   },  
   "author":
   {
-    "name": "Fronkon Games",
+    "name": "Martin Bustos",
     "email": "fronkongames@gmail.com",
     "url": "https://fronkongames.github.io/"
   }

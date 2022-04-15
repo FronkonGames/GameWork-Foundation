@@ -14,42 +14,34 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-using System;
 using UnityEngine;
 
 namespace FronkonGames.GameWork.Foundation
 {
   /// <summary>
-  /// MonoBehaviour singleton base.
+  /// Drawing of objects for development.
   /// </summary>
-  public abstract class MonoBehaviourSingletonBase : MonoBehaviour
+  /// <remarks>Only available in the Editor</remarks>
+  public static partial class Draw
   {
-    protected static bool IsQuitting { get; private set; } = false;
-    
-    protected MonoBehaviourSingletonBase() { }
-    
-    protected virtual void OnApplicationQuit() => IsQuitting = true;
-  }
+    public delegate void LineDelegateSimple(Vector3 a, Vector3 b);
 
-  /// <summary>
-  /// Generic lazy MonoBehaviour singleton thread-safe.
-  /// </summary>
-  /// <typeparam name="T">Singleton type</typeparam>
-  public abstract class MonoBehaviourSingleton<T> : MonoBehaviourSingletonBase where T : MonoBehaviour
-  {
-    /// <summary>Instance.</summary>
-    public static T Instance => IsQuitting == true ? null : lazy.Value;
+    public delegate void LineDelegate(Vector3 a, Vector3 b, float t);
 
-    private static readonly Lazy<T> lazy = new Lazy<T>(() =>
-    {
-      T instance = FindObjectOfType<T>(true);
-      if (instance == null)
-      {
-        GameObject ownerObject = new GameObject(typeof(T).Name);
-        instance = ownerObject.AddComponent<T>();
-      }
+    public static int SegmentCount => 100;
 
-      return instance;
-    });
+    public static Color TextColor => new Color(0.22f, 0.22f, 0.22f);
+
+    public static Color LineColor => new Color(1.0f, 0.4f, 0.3f);
+
+    public static Color StartColor => new Color(1.0f, 0.4f, 0.3f);
+    public static Color EndColor => new Color(0.4f, 1.0f, 0.3f);
+
+    public static Color HitColor => new Color(1.0f, 0.1f, 0.2f);
+    public static Color RayColor => new Color(0.4f, 1.0f, 0.3f);
+
+    public static Color ColorX => new Color(1.0f, 0.1f, 0.2f);
+    public static Color ColorY => new Color(0.3f, 1.0f, 0.1f);
+    public static Color ColorZ => new Color(0.1f, 0.4f, 1.0f);    
   }
 }

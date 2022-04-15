@@ -27,9 +27,6 @@ namespace FronkonGames.GameWork.Foundation
     /// <summary>Instance.</summary>
     public static T Instance => instance.Value;
 
-    /// <summary>Already exists?</summary>
-    public static bool Exists => instance.IsValueCreated;
-
     private static readonly Lazy<T> instance = new Lazy<T>(() => new T());
 
     private Singleton() { }
