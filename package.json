@@ -2,7 +2,7 @@
   "name": "com.frokongames.gamework.foundation",
   "version": "0.0.3",
   "displayName": "Game:Work Foundation",
-  "decription": "Generic code to build the basis of a framework to develop Unity based games.",
+  "decription": "Generic code and tools to build the basis of a framework to develop Unity based games.",
   "references": [ ],
   "unity": "2020.3",
   "unityRelease": "26f1",
