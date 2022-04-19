@@ -14,6 +14,7 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+using System;
 using UnityEngine;
 using UnityRandom = UnityEngine.Random;
 
@@ -24,6 +25,11 @@ namespace FronkonGames.GameWork.Foundation
   /// </summary>
   public static class Rand
   {
+    // Int
+
+    /// <summary></summary>
+    public static int Range(int min, int max) => random.Next(min, max);
+    
     // 1D
     
     /// <summary>Random float within [0 .. 1]</summary>
@@ -74,6 +80,8 @@ namespace FronkonGames.GameWork.Foundation
     // 3D Orientation
 
     /// <summary>Returns a random uniformly distributed rotation</summary>
-    public static Quaternion Rotation => UnityRandom.rotationUniform;   
+    public static Quaternion Rotation => UnityRandom.rotationUniform;
+
+    private static readonly System.Random random = new System.Random(Guid.NewGuid().GetHashCode());
   }
 }

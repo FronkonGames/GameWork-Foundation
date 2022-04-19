@@ -34,10 +34,12 @@
 
 ```
 {
+  ...
   "dependencies":
   {
-    "com.fronkongames.gamework.foundation": "git+https://github.com/FronkonGames/GameWork-Foundation.git",
+    "com.fronkongames.gamework.foundation": "git+https://github.com/FronkonGames/GameWork-Foundation.git"
   }
+  ...
 }
 ```
 
