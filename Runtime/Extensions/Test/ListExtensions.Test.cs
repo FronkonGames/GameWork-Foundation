@@ -31,14 +31,14 @@ public partial class ExtensionsTests
   [UnityTest]
   public IEnumerator List()
   {
-    List<int> listA = new List<int>() { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+    List<int> listA = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
     List<int> listB = new List<int>(listA);
 
     listA.Shuffle();
     Assert.AreNotEqual(listA, listB);
 
-    listA = new List<int>() { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-    listB = new List<int>() { 9, 8, 7, 6, 5, 4, 3, 2, 1, 0 };
+    listA = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+    listB = new List<int> { 9, 8, 7, 6, 5, 4, 3, 2, 1, 0 };
     listA.Reverse();
     Assert.AreEqual(listA, listB);
 

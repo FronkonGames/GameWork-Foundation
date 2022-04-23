@@ -14,27 +14,42 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+using System;
 using UnityEngine;
-using Debug = UnityEngine.Debug;
 
 namespace FronkonGames.GameWork.Foundation
 {
   /// <summary>
-  /// Drawing of objects for development.
+  /// MonoBehaviour singleton base.
   /// </summary>
-  /// <remarks>Only available in the Editor</remarks>
-  public static partial class Draw
+  public abstract class MonoBehaviourSingletonBase : MonoBehaviour
   {
-    private delegate void ColouredLineDelegate(Vector3 a, Vector3 b, Color c, float duration = 0.0f);
+    protected static bool IsQuitting { get; private set; };
+    
+    protected MonoBehaviourSingletonBase() { }
+    
+    protected virtual void OnApplicationQuit() => IsQuitting = true;
+  }
 
-    private static readonly ColouredLineDelegate lineDelegate = DebugLine; // or GizmosLine.
+  /// <summary>
+  /// Generic lazy MonoBehaviour singleton thread-safe.
+  /// </summary>
+  /// <typeparam name="T">Singleton type</typeparam>
+  public abstract class MonoBehaviourSingleton<T> : MonoBehaviourSingletonBase where T : MonoBehaviour
+  {
+    /// <summary>Instance.</summary>
+    public static T Instance => IsQuitting == true ? null : lazy.Value;
 
-    private static void DebugLine(Vector3 a, Vector3 b, Color c, float duration = 0.0f) => Debug.DrawLine(a, b, c, duration);
-
-    private static void GizmosLine(Vector3 a, Vector3 b, Color c)
+    private static readonly Lazy<T> lazy = new Lazy<T>(() =>
     {
-      Gizmos.color = c;
-      Gizmos.DrawLine(a, b);
-    }    
+      T instance = FindObjectOfType<T>(true);
+      if (instance == null)
+      {
+        GameObject ownerObject = new GameObject(typeof(T).Name);
+        instance = ownerObject.AddComponent<T>();
+      }
+
+      return instance;
+    });
   }
 }

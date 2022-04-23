@@ -15,26 +15,25 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 using UnityEngine;
-using Debug = UnityEngine.Debug;
+using UnityEditor;
 
 namespace FronkonGames.GameWork.Foundation
 {
   /// <summary>
-  /// Drawing of objects for development.
+  /// .
   /// </summary>
-  /// <remarks>Only available in the Editor</remarks>
-  public static partial class Draw
+  [CustomPropertyDrawer(typeof(DisableAttribute))]
+  public abstract class DisableAttributeDrawer : PropertyDrawer
   {
-    private delegate void ColouredLineDelegate(Vector3 a, Vector3 b, Color c, float duration = 0.0f);
+    public override float GetPropertyHeight(SerializedProperty property, GUIContent label) => EditorGUI.GetPropertyHeight(property, label, true);
 
-    private static readonly ColouredLineDelegate lineDelegate = DebugLine; // or GizmosLine.
-
-    private static void DebugLine(Vector3 a, Vector3 b, Color c, float duration = 0.0f) => Debug.DrawLine(a, b, c, duration);
-
-    private static void GizmosLine(Vector3 a, Vector3 b, Color c)
+    public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
-      Gizmos.color = c;
-      Gizmos.DrawLine(a, b);
-    }    
+      GUI.enabled = false;
+
+      EditorGUI.PropertyField(position, property, label, true);
+
+      GUI.enabled = true;
+    }
   }
 }

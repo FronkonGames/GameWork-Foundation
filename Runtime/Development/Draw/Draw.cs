@@ -26,7 +26,7 @@ namespace FronkonGames.GameWork.Foundation
   public static partial class Draw
   {
     [Conditional("UNITY_EDITOR")]
-    public static void Point(Vector3 point, Color color, float duration = 0.0f, float rayLength = 0.25f, float highlightRadius = 0.05f)
+    public static void Point(Vector3 p, Color color, float duration = 0.0f, float rayLength = 0.25f, float highlightRadius = 0.05f)
     {
       Vector3 up = new Vector3(0.0f, rayLength * 0.5f, 0.0f);
       Quaternion rot = Quaternion.AngleAxis(120.0f, Vector3.right);
@@ -35,20 +35,20 @@ namespace FronkonGames.GameWork.Foundation
       Vector3 d2 = rot1 * d1;
       Vector3 d3 = rot1 * d2;
 
-      rayDelegate(point, up, color, duration);
-      rayDelegate(point, d1, color, duration);
-      rayDelegate(point, d2, color, duration);
-      rayDelegate(point, d3, color, duration);
+      rayDelegate(p, up, color, duration);
+      rayDelegate(p, d1, color, duration);
+      rayDelegate(p, d2, color, duration);
+      rayDelegate(p, d3, color, duration);
 
       Vector3 down = new Vector3(0, highlightRadius, 0);
       Vector3 p1 = rot * down;
       Vector3 p2 = rot1 * p1;
       Vector3 p3 = rot1 * p2;
 
-      down += point;
-      p1 += point;
-      p2 += point;
-      p3 += point;
+      down += p;
+      p1 += p;
+      p2 += p;
+      p3 += p;
 
       color *= 0.5f;
 
@@ -61,8 +61,8 @@ namespace FronkonGames.GameWork.Foundation
     }
 
     [Conditional("UNITY_EDITOR")]
-    public static void Point(Vector3 point, float duration = 0.0f, float rayLength = 0.3f, float highlightRadius = 0.05f)
-      => Point(point, LineColor, duration, rayLength, highlightRadius);
+    public static void Point(Vector3 p, float duration = 0.0f, float rayLength = 0.3f, float highlightRadius = 0.05f)
+      => Point(p, LineColor, duration, rayLength, highlightRadius);
 
     [Conditional("UNITY_EDITOR")]
     public static void Line(Vector3 start, Vector3 end, Color color, float duration = 0.0f) => lineDelegate(start, end, color, duration);
@@ -147,21 +147,21 @@ namespace FronkonGames.GameWork.Foundation
     public static void Box(Vector3 center, Vector3 halfExtents) => Box(center, halfExtents, Quaternion.identity, LineColor);
 
     [Conditional("UNITY_EDITOR")]
-    public static void Bounds(Bounds bounds, Color color, float duration = 0.0f)
+    public static void Bounds(Bounds b, Color color, float duration = 0.0f)
     {
-      Vector3 lbf = new Vector3(bounds.min.x, bounds.min.y, bounds.max.z);
-      Vector3 ltb = new Vector3(bounds.min.x, bounds.max.y, bounds.min.z);
-      Vector3 rbb = new Vector3(bounds.max.x, bounds.min.y, bounds.min.z);
-      lineDelegate(bounds.min, lbf, color, duration);
-      lineDelegate(bounds.min, ltb, color, duration);
-      lineDelegate(bounds.min, rbb, color, duration);
+      Vector3 lbf = new Vector3(b.min.x, b.min.y, b.max.z);
+      Vector3 ltb = new Vector3(b.min.x, b.max.y, b.min.z);
+      Vector3 rbb = new Vector3(b.max.x, b.min.y, b.min.z);
+      lineDelegate(b.min, lbf, color, duration);
+      lineDelegate(b.min, ltb, color, duration);
+      lineDelegate(b.min, rbb, color, duration);
 
-      Vector3 rtb = new Vector3(bounds.max.x, bounds.max.y, bounds.min.z);
-      Vector3 rbf = new Vector3(bounds.max.x, bounds.min.y, bounds.max.z);
-      Vector3 ltf = new Vector3(bounds.min.x, bounds.max.y, bounds.max.z);
-      lineDelegate(bounds.max, rtb, color, duration);
-      lineDelegate(bounds.max, rbf, color, duration);
-      lineDelegate(bounds.max, ltf, color, duration);
+      Vector3 rtb = new Vector3(b.max.x, b.max.y, b.min.z);
+      Vector3 rbf = new Vector3(b.max.x, b.min.y, b.max.z);
+      Vector3 ltf = new Vector3(b.min.x, b.max.y, b.max.z);
+      lineDelegate(b.max, rtb, color, duration);
+      lineDelegate(b.max, rbf, color, duration);
+      lineDelegate(b.max, ltf, color, duration);
 
       lineDelegate(rbb, rbf, color, duration);
       lineDelegate(rbb, rtb, color, duration);
@@ -189,17 +189,17 @@ namespace FronkonGames.GameWork.Foundation
     }
 
     [Conditional("UNITY_EDITOR")]
-    public static void Text(Vector3 position, object text, Camera camera = null) => Text(position, text, TextColor, camera);
+    public static void Text(Vector3 position, object t, Camera camera = null) => Text(position, t, TextColor, camera);
 
     [Conditional("UNITY_EDITOR")]
-    public static void Text(Vector3 position, object text, Color color, Camera camera = null)
+    public static void Text(Vector3 position, object t, Color color, Camera camera = null)
     {
 #if UNITY_EDITOR
       if (!Application.isPlaying)
         return;
 
       DrawManager drawManager = DrawManager.Instance;
-      DebugText debugText = new DebugText(position, text, color, camera);
+      DebugText debugText = new DebugText(position, t, color, camera);
 
       if (Time.deltaTime == Time.fixedDeltaTime)
       {
@@ -248,6 +248,8 @@ namespace FronkonGames.GameWork.Foundation
           }
         });
       }
+#else
+      throw new NotSupportedException();
 #endif
     }
 

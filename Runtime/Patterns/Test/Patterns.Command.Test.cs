@@ -1,4 +1,4 @@
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+﻿////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Copyright (c) Martin Bustos @FronkonGames <fronkongames@gmail.com>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
@@ -14,27 +14,50 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-using UnityEngine;
-using Debug = UnityEngine.Debug;
+using System;
+using System.Collections;
+using NUnit.Framework;
+using UnityEngine.TestTools;
+using FronkonGames.GameWork.Foundation;
+using Object = UnityEngine.Object;
 
-namespace FronkonGames.GameWork.Foundation
+/// <summary>
+/// Patterns tests.
+/// </summary>
+public partial class PatternsTests
 {
-  /// <summary>
-  /// Drawing of objects for development.
-  /// </summary>
-  /// <remarks>Only available in the Editor</remarks>
-  public static partial class Draw
+  private class AddCommand : ICommand
   {
-    private delegate void ColouredLineDelegate(Vector3 a, Vector3 b, Color c, float duration = 0.0f);
+    public int Value { get; set; }
 
-    private static readonly ColouredLineDelegate lineDelegate = DebugLine; // or GizmosLine.
+    public AddCommand(int value) { Value = value; }
 
-    private static void DebugLine(Vector3 a, Vector3 b, Color c, float duration = 0.0f) => Debug.DrawLine(a, b, c, duration);
+    public bool Execute() { Value++; return true; }
 
-    private static void GizmosLine(Vector3 a, Vector3 b, Color c)
-    {
-      Gizmos.color = c;
-      Gizmos.DrawLine(a, b);
-    }    
+    public void Undo() => Value--;
+
+    public void Redo() => Value++;
+  }
+
+  private CommandInvoker invoker = new CommandInvoker();
+
+  /// <summary>
+  /// Command test.
+  /// </summary>
+  [UnityTest]
+  public IEnumerator Command()
+  {
+    AddCommand command = new AddCommand(0);
+
+    invoker.Execute(command);
+    Assert.AreEqual(command.Value, 1);
+
+    invoker.Undo();
+    Assert.AreEqual(command.Value, 0);
+
+    invoker.Redo();
+    Assert.AreEqual(command.Value, 1);
+
+    yield return null;
   }
 }

@@ -31,10 +31,10 @@ public partial class PatternsTests
   private class MonoBehaviourSingletonTest : MonoBehaviourSingleton<MonoBehaviourSingletonTest> { };
   
   /// <summary>
-  /// Singletons test.
+  /// Singleton test.
   /// </summary>
   [UnityTest]
-  public IEnumerator Singletons()
+  public IEnumerator Singleton()
   {
     SingletonTest singleton0 = Singleton<SingletonTest>.Instance;
     SingletonTest singleton1 = Singleton<SingletonTest>.Instance;

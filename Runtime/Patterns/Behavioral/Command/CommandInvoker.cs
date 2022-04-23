@@ -14,42 +14,64 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-using System;
-using UnityEngine;
+using System.Collections.Generic;
 
 namespace FronkonGames.GameWork.Foundation
 {
   /// <summary>
-  /// MonoBehaviour singleton base.
+  /// .
   /// </summary>
-  public abstract class MonoBehaviourSingletonBase : MonoBehaviour
+  public class CommandInvoker
   {
-    protected static bool IsQuitting { get; private set; } = false;
-    
-    protected MonoBehaviourSingletonBase() { }
-    
-    protected virtual void OnApplicationQuit() => IsQuitting = true;
-  }
+    private Stack<ICommand> undo = new Stack<ICommand>();
+    private Stack<ICommand> redo = new Stack<ICommand>();
 
-  /// <summary>
-  /// Generic lazy MonoBehaviour singleton thread-safe.
-  /// </summary>
-  /// <typeparam name="T">Singleton type</typeparam>
-  public abstract class MonoBehaviourSingleton<T> : MonoBehaviourSingletonBase where T : MonoBehaviour
-  {
-    /// <summary>Instance.</summary>
-    public static T Instance => IsQuitting == true ? null : lazy.Value;
-
-    private static readonly Lazy<T> lazy = new Lazy<T>(() =>
+    /// <summary>
+    /// Execute a command and add it to the undo redo stack if success.
+    /// </summary>
+    /// <param name="command"></param>
+    /// <returns>True if the execution was successful.</returns>
+    public bool Execute(ICommand command)
     {
-      T instance = FindObjectOfType<T>(true);
-      if (instance == null)
+      if (command.Execute() == true)
       {
-        GameObject ownerObject = new GameObject(typeof(T).Name);
-        instance = ownerObject.AddComponent<T>();
-      }
+        undo.Push(command);
+        redo.Clear();
 
-      return instance;
-    });
+        return true;
+      }
+      
+      return false;
+    }
+
+    /// <summary>
+    /// Reverse the last command executed.
+    /// </summary>
+    public void Undo()
+    {
+      if (undo.Count > 0)
+      {
+        ICommand executed = undo.Pop();
+        executed.Undo();
+        redo.Push(executed);
+      }
+      else
+        Log.Warning("Undo stack empty.");
+    }
+
+    /// <summary>
+    /// Replay the last undone command.
+    /// </summary>
+    public void Redo()
+    {
+      if (redo.Count > 0)
+      {
+        ICommand undone = redo.Pop();
+        undone.Redo();
+        undo.Push(undone);
+      }
+      else
+        Log.Warning("Redo stack empty");
+    }
   }
 }

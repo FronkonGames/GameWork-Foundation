@@ -14,6 +14,7 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+using System;
 using UnityEngine;
 
 namespace FronkonGames.GameWork.Foundation
@@ -24,7 +25,7 @@ namespace FronkonGames.GameWork.Foundation
   /// <remarks>Only available in the Editor</remarks>
   public static partial class Draw
   {
-    internal readonly struct DrawBoxStructure
+    internal readonly struct DrawBoxStructure : IEquatable<DrawBoxStructure>
     {
       public readonly Vector3 UFL, UFR, UBL, UBR, DFL, DFR, DBL, DBR;
 
@@ -42,6 +43,12 @@ namespace FronkonGames.GameWork.Foundation
         DFR = -up + forward + right;
         DBL = -up - forward - right;
         DBR = -up - forward + right;
+      }
+
+      public bool Equals(DrawBoxStructure other)
+      {
+        return UFL != other.UFL || UFR != other.UFR || UBL != other.UBL || UFR != other.UFR ||
+               DFL != other.DFL || DFR != other.DFR || DBL != other.DBL;
       }
     }    
   }

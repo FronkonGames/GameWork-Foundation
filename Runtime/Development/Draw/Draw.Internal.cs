@@ -85,8 +85,8 @@ namespace FronkonGames.GameWork.Foundation
       dir.EnsureNormalized();
       DrawCircle(arrowPoint - dir * (arrowLength * scale), dir, arrowWidth * scale, (a, b, f) =>
       {
-        lineDelegate(a, b, color, duration);
-        lineDelegate(a, arrowPoint, color, duration);
+        lineDelegate(a, b, color, f);
+        lineDelegate(a, arrowPoint, color, f);
       }, segments);
     }
 

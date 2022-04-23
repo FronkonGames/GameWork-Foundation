@@ -14,27 +14,23 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-using UnityEngine;
-using Debug = UnityEngine.Debug;
+using System;
 
 namespace FronkonGames.GameWork.Foundation
 {
   /// <summary>
-  /// Drawing of objects for development.
+  /// .
   /// </summary>
-  /// <remarks>Only available in the Editor</remarks>
-  public static partial class Draw
+  public interface ICommand
   {
-    private delegate void ColouredLineDelegate(Vector3 a, Vector3 b, Color c, float duration = 0.0f);
+    /// <summary>
+    /// Execute the comnand.
+    /// </summary>
+    /// <returns>True if the execution was successful.</returns>
+    bool Execute();
 
-    private static readonly ColouredLineDelegate lineDelegate = DebugLine; // or GizmosLine.
+    void Undo();
 
-    private static void DebugLine(Vector3 a, Vector3 b, Color c, float duration = 0.0f) => Debug.DrawLine(a, b, c, duration);
-
-    private static void GizmosLine(Vector3 a, Vector3 b, Color c)
-    {
-      Gizmos.color = c;
-      Gizmos.DrawLine(a, b);
-    }    
+    void Redo();
   }
 }

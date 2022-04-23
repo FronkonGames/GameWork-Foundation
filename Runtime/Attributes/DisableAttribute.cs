@@ -14,27 +14,16 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+using System.Diagnostics;
 using UnityEngine;
-using Debug = UnityEngine.Debug;
 
 namespace FronkonGames.GameWork.Foundation
 {
   /// <summary>
-  /// Drawing of objects for development.
+  /// https://github.com/pirhosoft/UnityUtilities/tree/master/Assets/PiRhoSoft%20Utilities/Scripts/Engine/Attributes.
   /// </summary>
-  /// <remarks>Only available in the Editor</remarks>
-  public static partial class Draw
+  [Conditional("UNITY_EDITOR")]
+  public class DisableAttribute : PropertyAttribute
   {
-    private delegate void ColouredLineDelegate(Vector3 a, Vector3 b, Color c, float duration = 0.0f);
-
-    private static readonly ColouredLineDelegate lineDelegate = DebugLine; // or GizmosLine.
-
-    private static void DebugLine(Vector3 a, Vector3 b, Color c, float duration = 0.0f) => Debug.DrawLine(a, b, c, duration);
-
-    private static void GizmosLine(Vector3 a, Vector3 b, Color c)
-    {
-      Gizmos.color = c;
-      Gizmos.DrawLine(a, b);
-    }    
   }
 }
