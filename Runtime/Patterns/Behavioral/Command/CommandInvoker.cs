@@ -23,8 +23,8 @@ namespace FronkonGames.GameWork.Foundation
   /// </summary>
   public class CommandInvoker
   {
-    private Stack<ICommand> undo = new Stack<ICommand>();
-    private Stack<ICommand> redo = new Stack<ICommand>();
+    private readonly Stack<ICommand> undo = new Stack<ICommand>();
+    private readonly Stack<ICommand> redo = new Stack<ICommand>();
 
     /// <summary>
     /// Execute a command and add it to the undo redo stack if success.
@@ -33,7 +33,7 @@ namespace FronkonGames.GameWork.Foundation
     /// <returns>True if the execution was successful.</returns>
     public bool Execute(ICommand command)
     {
-      if (command.Execute() == true)
+      if (command.OnExecute() == true)
       {
         undo.Push(command);
         redo.Clear();
@@ -52,7 +52,7 @@ namespace FronkonGames.GameWork.Foundation
       if (undo.Count > 0)
       {
         ICommand executed = undo.Pop();
-        executed.Undo();
+        executed.OnUndo();
         redo.Push(executed);
       }
       else
@@ -67,7 +67,7 @@ namespace FronkonGames.GameWork.Foundation
       if (redo.Count > 0)
       {
         ICommand undone = redo.Pop();
-        undone.Redo();
+        undone.OnExecute();
         undo.Push(undone);
       }
       else

@@ -20,14 +20,14 @@ namespace FronkonGames.GameWork.Foundation
   /// <summary>
   /// .
   /// </summary>
-  public interface ICommand
+  public class Command : ICommand
   {
-    /// <summary>
-    /// Execute the comnand.
-    /// </summary>
-    /// <returns>True if the execution was successful.</returns>
-    bool OnExecute();
+    protected ICommandReceiver Receiver { get; set; }
 
-    void OnUndo();
+    public Command(ICommandReceiver receiver) => Receiver = receiver;
+
+    public bool OnExecute() => Receiver.DoAction();
+
+    public void OnUndo() => Receiver.UndoAction();
   }
 }

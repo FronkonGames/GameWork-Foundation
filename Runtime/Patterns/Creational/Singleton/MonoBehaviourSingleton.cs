@@ -24,7 +24,7 @@ namespace FronkonGames.GameWork.Foundation
   /// </summary>
   public abstract class MonoBehaviourSingletonBase : MonoBehaviour
   {
-    protected static bool IsQuitting { get; private set; };
+    protected static bool IsQuitting { get; private set; }
     
     protected MonoBehaviourSingletonBase() { }
     

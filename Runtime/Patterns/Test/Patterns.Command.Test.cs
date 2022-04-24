@@ -14,29 +14,34 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-using System;
 using System.Collections;
 using NUnit.Framework;
 using UnityEngine.TestTools;
 using FronkonGames.GameWork.Foundation;
-using Object = UnityEngine.Object;
 
 /// <summary>
 /// Patterns tests.
 /// </summary>
 public partial class PatternsTests
 {
+  private class CommandReceiver : ICommandReceiver
+  {
+    public int Value { get; set; }
+
+    public bool DoAction() { Value++; return true; }
+
+    public void UndoAction() => Value--;
+  }
+
   private class AddCommand : ICommand
   {
     public int Value { get; set; }
 
     public AddCommand(int value) { Value = value; }
 
-    public bool Execute() { Value++; return true; }
+    public bool OnExecute() { Value++; return true; }
 
-    public void Undo() => Value--;
-
-    public void Redo() => Value++;
+    public void OnUndo() => Value--;
   }
 
   private CommandInvoker invoker = new CommandInvoker();
@@ -47,16 +52,19 @@ public partial class PatternsTests
   [UnityTest]
   public IEnumerator Command()
   {
-    AddCommand command = new AddCommand(0);
+    CommandReceiver receiver = new CommandReceiver();
 
+    Command command = new Command(receiver);
+
+    CommandInvoker invoker = new CommandInvoker();
     invoker.Execute(command);
-    Assert.AreEqual(command.Value, 1);
+    Assert.AreEqual(receiver.Value, 1);
 
     invoker.Undo();
-    Assert.AreEqual(command.Value, 0);
+    Assert.AreEqual(receiver.Value, 0);
 
     invoker.Redo();
-    Assert.AreEqual(command.Value, 1);
+    Assert.AreEqual(receiver.Value, 1);
 
     yield return null;
   }
