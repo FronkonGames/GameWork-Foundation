@@ -19,7 +19,7 @@ using System.Collections.Generic;
 namespace FronkonGames.GameWork.Foundation
 {
   /// <summary>
-  /// .
+  /// Execute commands.
   /// </summary>
   public class CommandInvoker
   {

@@ -18,7 +18,7 @@
 namespace FronkonGames.GameWork.Foundation
 {
   /// <summary>
-  /// .
+  /// Command interface.
   /// </summary>
   public interface ICommand
   {
@@ -28,6 +28,9 @@ namespace FronkonGames.GameWork.Foundation
     /// <returns>True if the execution was successful.</returns>
     bool OnExecute();
 
+    /// <summary>
+    /// Undoe the changes of OnExecute.
+    /// </summary>
     void OnUndo();
   }
 }

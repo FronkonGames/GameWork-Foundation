@@ -33,15 +33,21 @@ public partial class PatternsTests
     public void UndoAction() => Value--;
   }
 
-  private class AddCommand : ICommand
+  private class OneParamCommandReceiver : ICommandReceiver<int>
   {
     public int Value { get; set; }
 
-    public AddCommand(int value) { Value = value; }
+    private int lastValue;
 
-    public bool OnExecute() { Value++; return true; }
+    public bool DoAction(int value)
+    {
+      lastValue = value;
+      Value += lastValue;
 
-    public void OnUndo() => Value--;
+      return true;
+    }
+
+    public void UndoAction() => Value -= lastValue;
   }
 
   private CommandInvoker invoker = new CommandInvoker();
@@ -52,11 +58,11 @@ public partial class PatternsTests
   [UnityTest]
   public IEnumerator Command()
   {
-    CommandReceiver receiver = new CommandReceiver();
+    CommandInvoker invoker = new CommandInvoker();
 
+    CommandReceiver receiver = new CommandReceiver();
     Command command = new Command(receiver);
 
-    CommandInvoker invoker = new CommandInvoker();
     invoker.Execute(command);
     Assert.AreEqual(receiver.Value, 1);
 
@@ -65,6 +71,18 @@ public partial class PatternsTests
 
     invoker.Redo();
     Assert.AreEqual(receiver.Value, 1);
+
+    OneParamCommandReceiver oneParamReceiver = new OneParamCommandReceiver();
+    Command<int> oneParamCommand = new Command<int>(oneParamReceiver, 10);
+
+    invoker.Execute(oneParamCommand);
+    Assert.AreEqual(oneParamReceiver.Value, 10);
+
+    invoker.Undo();
+    Assert.AreEqual(oneParamReceiver.Value, 0);
+
+    invoker.Redo();
+    Assert.AreEqual(oneParamReceiver.Value, 10);
 
     yield return null;
   }
