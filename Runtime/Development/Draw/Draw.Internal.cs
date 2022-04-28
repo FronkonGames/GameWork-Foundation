@@ -75,7 +75,7 @@ namespace FronkonGames.GameWork.Foundation
       }
     }
 
-    private static void DrawArrowHead(Vector3 point, Vector3 dir, Color color, float duration = 0.0f, float scale = 1.0f)
+    private static void DrawArrowHead(Vector3 point, Vector3 dir, Color color, float scale = 1.0f)
     {
       const float arrowLength = 0.075f;
       const float arrowWidth = 0.05f;

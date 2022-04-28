@@ -24,63 +24,33 @@ using FronkonGames.GameWork.Foundation;
 /// </summary>
 public partial class PatternsTests
 {
-  private class CommandReceiver : ICommandReceiver
+  private class SumDecorator : IDecorator<int, int>
   {
-    public int Value { get; set; }
-
-    public bool DoAction() { Value++; return true; }
-
-    public void UndoAction() => Value--;
+    public int Operation(int value) => value + 1;
   }
 
-  private class OneParamCommandReceiver : ICommandReceiver<int>
+  private class RestDecorator : IDecorator<int, int>
   {
-    public int Value { get; set; }
+    public int Operation(int value) => value - 1;
+  }
 
-    private int lastValue;
-
-    public bool DoAction(int value)
-    {
-      lastValue = value;
-      Value += lastValue;
-
-      return true;
-    }
-
-    public void UndoAction() => Value -= lastValue;
+  private class TestDecorable : Decorable<int, int>
+  {
   }
 
   /// <summary>
-  /// Command test.
+  /// Decorator test.
   /// </summary>
   [UnityTest]
-  public IEnumerator Command()
+  public IEnumerator Decorator()
   {
-    CommandInvoker invoker = new CommandInvoker();
+    TestDecorable test = new TestDecorable();
 
-    CommandReceiver receiver = new CommandReceiver();
-    Command command = new Command(receiver);
+    test.Decorator = new SumDecorator();
+    Assert.AreEqual(test.Operation(0), 1);
 
-    invoker.Execute(command);
-    Assert.AreEqual(receiver.Value, 1);
-
-    invoker.Undo();
-    Assert.AreEqual(receiver.Value, 0);
-
-    invoker.Redo();
-    Assert.AreEqual(receiver.Value, 1);
-
-    OneParamCommandReceiver oneParamReceiver = new OneParamCommandReceiver();
-    Command<int> oneParamCommand = new Command<int>(oneParamReceiver, 10);
-
-    invoker.Execute(oneParamCommand);
-    Assert.AreEqual(oneParamReceiver.Value, 10);
-
-    invoker.Undo();
-    Assert.AreEqual(oneParamReceiver.Value, 0);
-
-    invoker.Redo();
-    Assert.AreEqual(oneParamReceiver.Value, 10);
+    test.Decorator = new RestDecorator();
+    Assert.AreEqual(test.Operation(1), 0);
 
     yield return null;
   }

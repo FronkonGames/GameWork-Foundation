@@ -96,7 +96,7 @@ namespace FronkonGames.GameWork.Foundation
     public static void Arrow(Vector3 position, Vector3 direction, Color color, float duration = 0.0f, float arrowheadScale = 1.0f)
     {
       rayDelegate(position, direction, color, duration);
-      DrawArrowHead(position, direction, color, duration, arrowheadScale);
+      DrawArrowHead(position, direction, color, arrowheadScale);
     }
 
     [Conditional("UNITY_EDITOR")]
@@ -104,7 +104,7 @@ namespace FronkonGames.GameWork.Foundation
     {
       lineDelegate(origin, destination, color, duration);
       Vector3 direction = destination - origin;
-      DrawArrowHead(origin, direction, color, duration, arrowheadScale);
+      DrawArrowHead(origin, direction, color, arrowheadScale);
     }
 
     [Conditional("UNITY_EDITOR")]
@@ -174,7 +174,7 @@ namespace FronkonGames.GameWork.Foundation
     }
 
     [Conditional("UNITY_EDITOR")]
-    public static void Bounds(BoundsInt bounds, Color color, float duration = 0.0f) => Bounds(new Bounds(bounds.center, bounds.size), color, duration);
+    public static void Bounds(BoundsInt b, Color color, float duration = 0.0f) => Bounds(new Bounds(b.center, b.size), color, duration);
 
     [Conditional("UNITY_EDITOR")]
     public static void Capsule(Vector3 start, Vector3 end, float radius, Color color)

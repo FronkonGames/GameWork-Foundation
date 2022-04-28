@@ -18,7 +18,7 @@
 namespace FronkonGames.GameWork.Foundation
 {
   /// <summary>
-  /// Command interface.
+  /// Interface for executing an operation.
   /// </summary>
   public interface ICommand
   {

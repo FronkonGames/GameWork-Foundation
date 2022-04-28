@@ -18,76 +18,76 @@
 namespace FronkonGames.GameWork.Foundation
 {
   /// <summary>
-  /// Knows how to perform the operations associated with carrying out the request.
+  /// It allows alter dynamically behaviors.
   /// </summary>
-  public interface ICommandReceiver
+  public abstract class Decorable
   {
     /// <summary>
-    /// Perform the action of the command.
+    /// Change the behavior.
     /// </summary>
-    /// <returns>True if the execution was successful.</returns>
-    bool DoAction();
+    /// <value>Decorator component</value>
+    public IDecorator Decorator { get; set; }
 
     /// <summary>
-    /// Undoe the changes of OnExecute.
+    /// Perform the operation if there is an associated behavior.
     /// </summary>
-    void UndoAction();
+    public void Operation() => Decorator?.Operation();
   }
 
   /// <summary>
-  /// Knows how to perform the operations associated with carrying out the request.
+  /// It allows alter dynamically behaviors.
   /// </summary>
-  public interface ICommandReceiver<in T>
+  public abstract class Decorable<R>
   {
     /// <summary>
-    /// Perform the action of the command.
+    /// Change the behavior.
     /// </summary>
-    /// <param name="value">Command' parameter.</param>
-    /// <returns>True if the execution was successful.</returns>
-    bool DoAction(T value);
+    /// <value>Decorator component</value>
+    public IDecorator<R> Decorator { get; set; }
 
     /// <summary>
-    /// Undoe the changes of OnExecute.
+    /// Perform the operation if there is an associated behavior.
     /// </summary>
-    void UndoAction();
+    /// <value>Value</value>
+    public R Operation() => Decorator != null ? Decorator.Operation() : default(R);
   }
 
   /// <summary>
-  /// Knows how to perform the operations associated with carrying out the request.
+  /// It allows alter dynamically behaviors.
   /// </summary>
-  public interface ICommandReceiver<in T0, in T1>
+  public abstract class Decorable<R, T>
   {
     /// <summary>
-    /// Perform the action of the command.
+    /// Change the behavior.
     /// </summary>
-    /// <param name="value0">First parameter</param>
-    /// <param name="value1">Second parameter</param>
-    /// <returns>True if the execution was successful.</returns>
-    bool DoAction(T0 value0, T1 value1);
+    /// <value>Decorator component</value>
+    public IDecorator<R, T> Decorator { get; set; }
 
     /// <summary>
-    /// Undoe the changes of OnExecute.
+    /// Perform the operation if there is an associated behavior.
     /// </summary>
-    void UndoAction();
+    /// <param name="value">Value</param>
+    /// <returns>Value</returns>    
+    public R Operation(T value) => Decorator != null ? Decorator.Operation(value) : default(R);
   }
 
   /// <summary>
-  /// Knows how to perform the operations associated with carrying out the request.
+  /// It allows alter dynamically behaviors.
   /// </summary>
-  public interface ICommandReceiver<in T0, in T1, in T2>
+  public abstract class Decorable<R, T0, T1>
   {
     /// <summary>
-    /// Perform the action of the command.
+    /// Change the behavior.
     /// </summary>
-    /// <param name="value0">First parameter</param>
-    /// <param name="value1">Second parameter</param>
-    /// <param name="value3">Third parameter</param>
-    /// <returns>True if the execution was successful.</returns>
-    bool DoAction(T0 value0, T1 value1, T2 value2);
+    /// <value>Decorator component</value>
+    public IDecorator<R, T0, T1> Decorator { get; set; }
 
     /// <summary>
-    /// Undoe the changes of OnExecute.
+    /// Perform the operation if there is an associated behavior.
     /// </summary>
-    void UndoAction();
+    /// <param name="value0">First value</param>
+    /// <param name="value1">Second value</param>
+    /// <returns>Value</returns>    
+    public R Operation(T0 value0, T1 value1) => Decorator != null ? Decorator.Operation(value0, value1) : default(R);
   }
 }
