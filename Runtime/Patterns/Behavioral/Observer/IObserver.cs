@@ -28,7 +28,7 @@ namespace FronkonGames.GameWork.Foundation
   /// <summary>
   /// .
   /// </summary>
-  public interface IObserver<T>
+  public interface IObserver<in T>
   {
     void OnNotify(T value);
   }
@@ -36,7 +36,7 @@ namespace FronkonGames.GameWork.Foundation
   /// <summary>
   /// .
   /// </summary>
-  public interface IObserver<T0, T1>
+  public interface IObserver<in T0, in T1>
   {
     void OnNotify(T0 value0, T1 value1);
   }
@@ -44,7 +44,7 @@ namespace FronkonGames.GameWork.Foundation
   /// <summary>
   /// .
   /// </summary>
-  public interface IObserver<T0, T1, T2>
+  public interface IObserver<in T0, in T1, in T2>
   {
     void OnNotify(T0 value0, T1 value1, T2 value2);
   }

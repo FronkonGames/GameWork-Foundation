@@ -29,7 +29,7 @@ namespace FronkonGames.GameWork.Foundation
   [CustomEditor(typeof(UnityEngine.Object), true)]
   public abstract class Inspector : Editor
   {
-    private List<SerializedProperty> serializedProperties = new List<SerializedProperty>();
+    private readonly List<SerializedProperty> serializedProperties = new List<SerializedProperty>();
 
     protected virtual void OnEnable()
     {

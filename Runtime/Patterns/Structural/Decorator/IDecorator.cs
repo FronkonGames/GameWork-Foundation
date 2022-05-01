@@ -28,7 +28,7 @@ namespace FronkonGames.GameWork.Foundation
   /// <summary>
   /// Operation that can be altered by decorators.
   /// </summary>
-  public interface IDecorator<R>
+  public interface IDecorator<out R>
   {
     R Operation();
   }
@@ -36,7 +36,7 @@ namespace FronkonGames.GameWork.Foundation
   /// <summary>
   /// Operation that can be altered by decorators.
   /// </summary>
-  public interface IDecorator<R, T>
+  public interface IDecorator<out R, in T>
   {
     R Operation(T value);
   }
@@ -44,7 +44,7 @@ namespace FronkonGames.GameWork.Foundation
   /// <summary>
   /// Operation that can be altered by decorators.
   /// </summary>
-  public interface IDecorator<R, T0, T1>
+  public interface IDecorator<out R, in T0, in T1>
   {
     R Operation(T0 value0, T1 value1);
   }
