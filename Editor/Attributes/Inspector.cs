@@ -14,15 +14,57 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-using System.Diagnostics;
+using System.Collections.Generic;
+using System.Reflection;
+using System.Linq;
+using UnityEngine;
+using UnityEditor;
 
 namespace FronkonGames.GameWork.Foundation
 {
   /// <summary>
   /// .
   /// </summary>
-  [Conditional("UNITY_EDITOR")]
-  public class DisableAttribute : BaseAttribute
+  [CanEditMultipleObjects]
+  [CustomEditor(typeof(UnityEngine.Object), true)]
+  public abstract class Inspector : Editor
   {
+    private List<SerializedProperty> serializedProperties = new List<SerializedProperty>();
+
+    protected virtual void OnEnable()
+    {
+    }
+
+    protected virtual void OnDisable()
+    {
+    }
+
+    public override void OnInspectorGUI()
+    {
+      UpdateSerializedProperties();
+
+      bool anyCustomAttributes = false;//serializedProperties.Any(p => ReflectionExtensions.HasAttribute<IAttribute>(p) == true);
+      if (anyCustomAttributes == true)
+      {
+      }
+      else
+        DrawDefaultInspector();
+    }
+
+    private void UpdateSerializedProperties()
+    {
+      serializedProperties.Clear();
+      using (var iterator = serializedObject.GetIterator())
+      {
+        if (iterator.NextVisible(true) == true)
+        {
+          do
+          {
+            serializedProperties.Add(serializedObject.FindProperty(iterator.name));
+          }
+          while (iterator.NextVisible(false) == true);
+        }
+      }
+    }    
   }
 }

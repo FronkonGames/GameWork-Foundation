@@ -91,6 +91,27 @@ namespace FronkonGames.GameWork.Foundation
     /// 
     /// </summary>
     /// <param name="self"></param>
+    /// <param name="attributeName"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    public static bool HasAttribute<T>(this UnityEngine.Object self) where T : Attribute
+    {
+      const BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
+
+      List<FieldInfo> fieldInfos = new List<FieldInfo>();
+      Type type = self.GetType();
+
+      do
+        fieldInfos.AddRange(type.GetFields(bindingFlags));
+      while ((type = type.BaseType) != null && type != typeof(MonoBehaviour));
+
+      return fieldInfos.Count > 0;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="self"></param>
     /// <param name="propertyName"></param>
     /// <param name="attribute"></param>
     /// <param name="propertyInfo"></param>

@@ -14,15 +14,38 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-using System.Diagnostics;
 
 namespace FronkonGames.GameWork.Foundation
 {
   /// <summary>
   /// .
   /// </summary>
-  [Conditional("UNITY_EDITOR")]
-  public class DisableAttribute : BaseAttribute
+  public interface IObserver
   {
+    void OnNotify();
+  }
+
+  /// <summary>
+  /// .
+  /// </summary>
+  public interface IObserver<T>
+  {
+    void OnNotify(T value);
+  }
+
+  /// <summary>
+  /// .
+  /// </summary>
+  public interface IObserver<T0, T1>
+  {
+    void OnNotify(T0 value0, T1 value1);
+  }
+
+  /// <summary>
+  /// .
+  /// </summary>
+  public interface IObserver<T0, T1, T2>
+  {
+    void OnNotify(T0 value0, T1 value1, T2 value2);
   }
 }

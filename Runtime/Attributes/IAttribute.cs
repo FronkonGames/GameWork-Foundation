@@ -15,14 +15,14 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 using System.Diagnostics;
+using UnityEngine;
 
 namespace FronkonGames.GameWork.Foundation
 {
   /// <summary>
-  /// .
+  /// Attribute interface.
   /// </summary>
-  [Conditional("UNITY_EDITOR")]
-  public class DisableAttribute : BaseAttribute
+  public interface IAttribute
   {
   }
 }

@@ -1,4 +1,4 @@
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+﻿////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Copyright (c) Martin Bustos @FronkonGames <fronkongames@gmail.com>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
@@ -14,15 +14,56 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-using System.Diagnostics;
+using System.Collections;
+using NUnit.Framework;
+using UnityEngine.TestTools;
+using FronkonGames.GameWork.Foundation;
 
-namespace FronkonGames.GameWork.Foundation
+/// <summary>
+/// Patterns tests.
+/// </summary>
+public partial class PatternsTests
 {
-  /// <summary>
-  /// .
-  /// </summary>
-  [Conditional("UNITY_EDITOR")]
-  public class DisableAttribute : BaseAttribute
+  private class TestPublisher : Publisher<int>
   {
+  }
+
+  private class TestObserver : IObserver<int>
+  {
+    public int Value { get; set; }
+
+    public void OnNotify(int value) => Value += value;
+  }
+
+  /// <summary>
+  /// Observer test.
+  /// </summary>
+  [UnityTest]
+  public IEnumerator Observer()
+  {
+    TestPublisher publisher = new TestPublisher();
+    TestObserver[] observers = new TestObserver[10];
+
+    for (int i = 0; i < 10; ++i)
+      observers[i] = new TestObserver();
+
+    publisher.AddObservers(observers);
+
+    for (int i = 0; i < 10; ++i)
+      Assert.AreEqual(observers[i].Value, 0);
+
+    publisher.Notify(1);
+
+    for (int i = 0; i < 10; ++i)
+      Assert.AreEqual(observers[i].Value, 1);
+
+    publisher.RemoveObservers(observers);
+
+    publisher.Notify(1);
+
+    for (int i = 0; i < 10; ++i)
+      Assert.AreEqual(observers[i].Value, 1);
+
+    yield return null;
   }
 }

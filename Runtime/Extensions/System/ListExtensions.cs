@@ -33,6 +33,18 @@ namespace FronkonGames.GameWork.Foundation
     public static void Swap<T>(this IList<T> self, int i, int j) => (self[i], self[j]) = (self[j], self[i]);
 
     /// <summary>
+    /// Eliminate an items range.
+    /// </summary>
+    /// <param name="self"></param>
+    /// <param name="entries"></param>
+    /// <typeparam name="T"></typeparam>
+    public static void RemoveRange<T>(this IList<T> self, IEnumerable<T> entries)
+    {
+      foreach (T item in entries)
+        self.Remove(item);
+    }
+
+    /// <summary>
     /// Reverses a list of items in place.
     /// </summary>
     /// <param name="self"></param>

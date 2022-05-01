@@ -1,4 +1,4 @@
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+﻿////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Copyright (c) Martin Bustos @FronkonGames <fronkongames@gmail.com>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
@@ -14,15 +14,25 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-using System.Diagnostics;
+using System;
+using System.Collections;
+using NUnit.Framework;
+using UnityEngine.TestTools;
+using FronkonGames.GameWork.Foundation;
 
-namespace FronkonGames.GameWork.Foundation
+/// <summary>
+/// Data tests.
+/// </summary>
+public partial class DataTests
 {
   /// <summary>
-  /// .
+  /// FastList test.
   /// </summary>
-  [Conditional("UNITY_EDITOR")]
-  public class DisableAttribute : BaseAttribute
+  [UnityTest]
+  public IEnumerator FastList()
   {
+    // TODO.
+
+    yield return null;
   }
 }
