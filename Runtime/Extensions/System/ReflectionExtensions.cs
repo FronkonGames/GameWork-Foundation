@@ -33,36 +33,7 @@ namespace FronkonGames.GameWork.Foundation
     /// <param name="attributeName"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public static bool AttributeExist<T>(this UnityEngine.Object self, string attributeName) where T : Attribute
-    {
-      T attribute = null;
-
-      const BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
-
-      List<FieldInfo> fieldInfos = new List<FieldInfo>();
-      Type type = self.GetType();
-
-      do
-        fieldInfos.AddRange(type.GetFields(bindingFlags));
-      while ((type = type.BaseType) != null && type != typeof(MonoBehaviour));
-
-      for (int i = 0; i < fieldInfos.Count && attribute == null; ++i)
-      {
-        if (fieldInfos[i].Name.Equals(attributeName) == true)
-          attribute = Attribute.GetCustomAttribute(fieldInfos[i], typeof(T)) as T;
-      }
-
-      return attribute != null;
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="self"></param>
-    /// <param name="attributeName"></param>
-    /// <typeparam name="T"></typeparam>
-    /// <returns></returns>
-    public static T GetAttribute<T>(this UnityEngine.Object self, string attributeName) where T : Attribute
+    public static T GetAttribute<T>(this object self, string attributeName) where T : Attribute
     {
       T attribute = null;
 
@@ -94,18 +65,32 @@ namespace FronkonGames.GameWork.Foundation
     /// <param name="attributeName"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public static bool HasAttribute<T>(this UnityEngine.Object self) where T : Attribute
+    public static bool HasAttribute<T>(this object self) where T : Attribute
     {
-      const BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
+      FieldInfo[] fields = self.GetType().GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
+      for (int i = 0; i < fields.Length; ++i)
+      {
+        FieldInfo field = fields[i];
+        if (field.GetCustomAttributes(typeof(T), true).Length > 0)
+          return true;
+      }
 
-      List<FieldInfo> fieldInfos = new List<FieldInfo>();
-      Type type = self.GetType();
+      return false;
+    }
 
-      do
-        fieldInfos.AddRange(type.GetFields(bindingFlags));
-      while ((type = type.BaseType) != null && type != typeof(MonoBehaviour));
+    public static T[] GetAttributes<T>(this object self) where T : Attribute
+    {
+      List<T> attributes = new List<T>();
 
-      return fieldInfos.Count > 0;
+      FieldInfo[] fields = self.GetType().GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
+      for (int i = 0; i < fields.Length; ++i)
+      {
+        object[] objs = fields[i].GetCustomAttributes(typeof(T), true);
+        for (int j = 0; j < objs.Length; ++j)
+          attributes.Add(objs[j] as T);
+      }
+
+      return attributes.ToArray();
     }
 
     /// <summary>
@@ -117,7 +102,7 @@ namespace FronkonGames.GameWork.Foundation
     /// <param name="propertyInfo"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public static bool GetProperty<T>(this UnityEngine.Object self, string propertyName, out T attribute, out PropertyInfo propertyInfo) where T : PropertyAttribute
+    public static bool GetProperty<T>(this object self, string propertyName, out T attribute, out PropertyInfo propertyInfo) where T : PropertyAttribute
     {
       attribute = null;
       propertyInfo = null;

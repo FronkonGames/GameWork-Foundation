@@ -34,6 +34,9 @@ public partial class ExtensionsTests
     List<int> listA = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
     List<int> listB = new List<int>(listA);
 
+    for (int i = 0; i < listA.Count; ++i)
+      Assert.IsTrue(listA.IndexOf(listA.Random()) != -1);
+
     listA.Shuffle();
     Assert.AreNotEqual(listA, listB);
 

@@ -37,6 +37,9 @@ public partial class ExtensionsTests
     arrayA = new []{ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
     arrayB = new []{ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 
+    for (int i = 0; i < arrayA.Length; ++i)
+      Assert.IsTrue(System.Array.IndexOf(arrayA, arrayA.Random()) != -1);
+
     arrayA.Shuffle();
     Assert.AreNotEqual(arrayA, arrayB);
 

@@ -14,15 +14,29 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-using System.Diagnostics;
 using UnityEngine;
 
 namespace FronkonGames.GameWork.Foundation
 {
   /// <summary>
-  /// Base attribute.
+  /// LayerMask extensions.
   /// </summary>
-  public abstract class BaseAttribute : PropertyAttribute, IAttribute
+  public static class LayerMaskExtensions
   {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="self"></param>
+    /// <param name="other"></param>
+    /// <returns></returns>
+    public static bool CheckLayermask(this LayerMask self, GameObject other) => CheckLayermask(self, other.layer);
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="self"></param>
+    /// <param name="layer"></param>
+    /// <returns></returns>
+    public static bool CheckLayermask(this LayerMask self, int layer) => ((1 << layer) & self) != 0;
   }
 }

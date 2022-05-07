@@ -15,7 +15,6 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 using System;
-using System.Collections.Generic;
 
 namespace FronkonGames.GameWork.Foundation
 {
@@ -24,6 +23,14 @@ namespace FronkonGames.GameWork.Foundation
   /// </summary>
   public static class ArrayExtensions
   {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="self"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    public static T Random<T>(this T[] self) => self[Rand.Range(0, self.Length)];
+    
     /// <summary>
     /// 
     /// </summary>

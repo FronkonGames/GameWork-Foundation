@@ -24,6 +24,14 @@ namespace FronkonGames.GameWork.Foundation
   public static class ListExtensions
   {
     /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="self"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    public static T Random<T>(this IList<T> self) => self[Rand.Range(0, self.Count)];
+    
+    /// <summary>
     /// Swaps a pair of elements.
     /// </summary>
     /// <param name="self"></param>
