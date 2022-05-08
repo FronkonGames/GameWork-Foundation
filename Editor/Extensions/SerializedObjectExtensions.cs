@@ -150,6 +150,34 @@ namespace FronkonGames.GameWork.Foundation
       }
 
       return 0.0f;
-    }    
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="self"></param>
+    /// <param name="name"></param>
+    /// <param name="label"></param>
+    /// <returns></returns>
+    public static int EnumField(this SerializedObject self, string name, string label = "")
+    {
+      SerializedProperty property = self.FindProperty(name);
+      EnumAttribute attribute = self.targetObject.GetAttribute<EnumAttribute>(name);
+      if (property != null && attribute != null)
+      {
+        EditorGUILayout.BeginHorizontal();
+        {
+          EditorGUILayout.PropertyField(property, Inspector.NewGUIContent(label, name, attribute.tooltip));
+
+          if (Inspector.ResetButton() == true)
+            property.enumValueIndex = attribute.defaultValue;
+        }
+        EditorGUILayout.EndHorizontal();
+
+        return property.enumValueIndex;
+      }
+
+      return 0;
+    }
   }
 }

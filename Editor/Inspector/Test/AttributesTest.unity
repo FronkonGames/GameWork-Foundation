@@ -331,8 +331,11 @@ MonoBehaviour:
   boolValue: 0
   intValue: 0
   intRangedValue: 0
+  intSliderValue: 0
   floatValue: 0
   floatRangedValue: 0
+  floatSliderValue: 0
+  enumValue: 0
 --- !u!4 &1664692623
 Transform:
   m_ObjectHideFlags: 0

@@ -14,49 +14,30 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-using UnityEngine;
-using UnityEditor;
+using System;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  public class AttributesTest : MonoBehaviour
+  /// <summary>
+  /// Enum attribute.
+  /// </summary>
+  [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
+  public sealed class EnumAttribute : BaseAttribute
   {
-    [SerializeField, Bool("A boolean value.")]
-    private bool boolValue;
+    public readonly int defaultValue;
 
-    [SerializeField, Int("A int value.")]
-    private int intValue;
+    public readonly string tooltip;
 
-    [SerializeField, Int(0, 10, 0, "A int ranged value.")]
-    private int intRangedValue;
-
-    [SerializeField, Slider(0, 10, 0, "A int slider value.")]
-    private int intSliderValue;
-
-    [SerializeField, Float("A float value.")]
-    private float floatValue;
-
-    [SerializeField, Float(0.0f, 10.0f, 0.0f, "A float ranged value.")]
-    private float floatRangedValue;
-
-    [SerializeField, Slider(0.0f, 10.0f, 0.0f, "A float slider value.")]
-    private float floatSliderValue;
-  }
-
-  [CustomEditor(typeof(AttributesTest))]
-  public class AttributesTestEditor : Inspector
-  {
-    protected override void InspectorGUI()
+    public EnumAttribute(string tooltip = "")
     {
-      BoolField("boolValue", "A bool value");
-
-      IntField("intValue", "A int value");
-      IntField("intRangedValue", "A int ranged value");
-      SliderField("intSliderValue", "A int slider value");
-
-      FloatField("floatValue", "A float value");
-      FloatField("floatRangedValue", "A float ranged value");
-      SliderField("floatSliderValue", "A float value");
+      this.defaultValue = 0;
+      this.tooltip = tooltip;
     }
-  }  
+
+    public EnumAttribute(int defaultValue = 0, string tooltip = "")
+    {
+      this.defaultValue = defaultValue;
+      this.tooltip = tooltip;
+    }
+  }
 }
