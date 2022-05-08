@@ -98,6 +98,14 @@ namespace FronkonGames.GameWork.Foundation
     /// <summary>
     /// 
     /// </summary>
+    /// <param name="valueName"></param>
+    /// <param name="label"></param>
+    /// <returns></returns>
+    protected Color ColorField(string valueName, string label = "") => serializedObject.ColorField(valueName, label);
+
+    /// <summary>
+    /// 
+    /// </summary>
     /// <param name="resetValue"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>

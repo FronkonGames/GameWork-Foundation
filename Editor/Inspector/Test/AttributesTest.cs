@@ -49,6 +49,9 @@ namespace FronkonGames.GameWork.Foundation
 
     [SerializeField, Enum(0, "A enum value.")]
     private EnumTest enumValue;
+
+    [SerializeField, Color(1.0f, 0.0f, 1.0f, 1.0f, "A color value.")]
+    private Color colorValue;
   }
 
   [CustomEditor(typeof(AttributesTest))]
@@ -67,6 +70,8 @@ namespace FronkonGames.GameWork.Foundation
       SliderField("floatSliderValue", "A float value");
 
       EnumField("enumValue", "A enum value");
+
+      ColorField("colorValue", "A color value");
     }
   }  
 }
