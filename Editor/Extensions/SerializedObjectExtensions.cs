@@ -24,6 +24,13 @@ namespace FronkonGames.GameWork.Foundation
   /// </summary>
   public static class SerializedObjectExtensions
   {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="self"></param>
+    /// <param name="name"></param>
+    /// <param name="label"></param>
+    /// <returns></returns>
     public static bool BoolField(this SerializedObject self, string name, string label = "")
     {
       SerializedProperty property = self.FindProperty(name);
@@ -45,6 +52,13 @@ namespace FronkonGames.GameWork.Foundation
       return false;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="self"></param>
+    /// <param name="name"></param>
+    /// <param name="label"></param>
+    /// <returns></returns>
     public static int IntField(this SerializedObject self, string name, string label = "")
     {
       SerializedProperty property = self.FindProperty(name);
@@ -60,6 +74,37 @@ namespace FronkonGames.GameWork.Foundation
 
           if (attribute.min < attribute.max)
             property.intValue = property.intValue.Clamp(attribute.min, attribute.max);
+        }
+        EditorGUILayout.EndHorizontal();
+
+        return property.intValue;
+      }
+
+      return 0;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="self"></param>
+    /// <param name="name"></param>
+    /// <param name="label"></param>
+    /// <returns></returns>
+    public static float FloatField(this SerializedObject self, string name, string label = "")
+    {
+      SerializedProperty property = self.FindProperty(name);
+      FloatAttribute attribute = self.targetObject.GetAttribute<FloatAttribute>(name);
+      if (property != null && attribute != null)
+      {
+        EditorGUILayout.BeginHorizontal();
+        {
+          EditorGUILayout.PropertyField(property, Inspector.NewGUIContent(label, name, attribute.tooltip));
+
+          if (Inspector.ResetButton() == true)
+            property.floatValue = attribute.defaultValue;
+
+          if (attribute.min < attribute.max)
+            property.floatValue = property.floatValue.Clamp(attribute.min, attribute.max);
         }
         EditorGUILayout.EndHorizontal();
 

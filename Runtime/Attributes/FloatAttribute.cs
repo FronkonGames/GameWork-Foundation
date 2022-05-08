@@ -14,33 +14,42 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-using UnityEngine;
-using UnityEditor;
+using System;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  public class AttributesTest : MonoBehaviour
+  /// <summary>
+  /// Float attribute.
+  /// </summary>
+  [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
+  public sealed class FloatAttribute : BaseAttribute
   {
-    [SerializeField, Bool("A boolean value.")]
-    private bool boolValue;
+    public readonly float defaultValue;
+    public readonly float min;
+    public readonly float max;
 
-    [SerializeField, Int("A int value.")]
-    private int intValue;
+    public readonly string tooltip;
 
-    [SerializeField, Int(0, 10, 0, "A int ranged value.")]
-    private int intRangedValue;
-  }
-
-  [CustomEditor(typeof(AttributesTest))]
-  public class AttributesTestEditor : Inspector
-  {
-    protected override void InspectorGUI()
+    public FloatAttribute(string tooltip = "")
     {
-      BoolField("boolValue", "A bool value");
-
-      IntField("intValue", "A int value");
-
-      IntField("intRangedValue", "A int ranged value");
+      this.defaultValue = 0.0f;
+      this.min = this.max = 0.0f;
+      this.tooltip = tooltip;
     }
-  }  
+
+    public FloatAttribute(float min, float max, float defaultValue = 0.0f, string tooltip = "")
+    {
+      this.defaultValue = defaultValue;
+      this.min = min;
+      this.max = max;
+      this.tooltip = tooltip;
+    }
+
+    public FloatAttribute(float defaultValue = 0.0f, string tooltip = "")
+    {
+      this.defaultValue = defaultValue;
+      this.min = this.max = 0.0f;
+      this.tooltip = tooltip;
+    }
+  }
 }
