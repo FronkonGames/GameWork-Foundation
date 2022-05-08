@@ -14,49 +14,40 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-using UnityEngine;
-using UnityEditor;
+using System;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  public class AttributesTest : MonoBehaviour
+  /// <summary>
+  /// Slider attribute (float / int).
+  /// </summary>
+  [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
+  public sealed class SliderAttribute : BaseAttribute
   {
-    [SerializeField, Bool("A boolean value.")]
-    private bool boolValue;
+    public readonly float defaultValue;
+    public readonly float min;
+    public readonly float max;
 
-    [SerializeField, Int("A int value.")]
-    private int intValue;
+    public readonly string tooltip;
 
-    [SerializeField, Int(0, 10, 0, "A int ranged value.")]
-    private int intRangedValue;
+    public readonly bool floatSlider = true;
 
-    [SerializeField, Slider(0, 10, 0, "A int slider value.")]
-    private int intSliderValue;
-
-    [SerializeField, Float("A float value.")]
-    private float floatValue;
-
-    [SerializeField, Float(0.0f, 10.0f, 0.0f, "A float ranged value.")]
-    private float floatRangedValue;
-
-    [SerializeField, Slider(0.0f, 10.0f, 0.0f, "A float slider value.")]
-    private float floatSliderValue;
-  }
-
-  [CustomEditor(typeof(AttributesTest))]
-  public class AttributesTestEditor : Inspector
-  {
-    protected override void InspectorGUI()
+    public SliderAttribute(float min, float max, float defaultValue = 0.0f, string tooltip = "")
     {
-      BoolField("boolValue", "A bool value");
-
-      IntField("intValue", "A int value");
-      IntField("intRangedValue", "A int ranged value");
-      SliderField("intSliderValue", "A int slider value");
-
-      FloatField("floatValue", "A float value");
-      FloatField("floatRangedValue", "A float ranged value");
-      SliderField("floatSliderValue", "A float value");
+      this.defaultValue = defaultValue;
+      this.min = min;
+      this.max = max;
+      this.tooltip = tooltip;
+      this.floatSlider = true;
     }
-  }  
+
+    public SliderAttribute(int min, int max, int defaultValue = 0, string tooltip = "")
+    {
+      this.defaultValue = defaultValue;
+      this.min = min;
+      this.max = max;
+      this.tooltip = tooltip;
+      this.floatSlider = false;
+    }
+  }
 }

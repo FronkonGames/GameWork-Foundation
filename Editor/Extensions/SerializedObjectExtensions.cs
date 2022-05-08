@@ -108,10 +108,48 @@ namespace FronkonGames.GameWork.Foundation
         }
         EditorGUILayout.EndHorizontal();
 
-        return property.intValue;
+        return property.floatValue;
       }
 
-      return 0;
+      return 0.0f;
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="self"></param>
+    /// <param name="name"></param>
+    /// <param name="label"></param>
+    /// <returns></returns>
+    public static float SliderField(this SerializedObject self, string name, string label = "")
+    {
+      SerializedProperty property = self.FindProperty(name);
+      SliderAttribute attribute = self.targetObject.GetAttribute<SliderAttribute>(name);
+      if (property != null && attribute != null)
+      {
+        EditorGUILayout.BeginHorizontal();
+        {
+          if (attribute.floatSlider == true)
+          {
+            property.floatValue = EditorGUILayout.Slider(Inspector.NewGUIContent(label, name, attribute.tooltip), property.floatValue, attribute.min, attribute.max);
+
+            if (Inspector.ResetButton() == true)
+              property.floatValue = attribute.defaultValue;
+          }
+          else
+          {
+            property.intValue = EditorGUILayout.IntSlider(Inspector.NewGUIContent(label, name, attribute.tooltip), property.intValue, (int)attribute.min, (int)attribute.max);
+
+            if (Inspector.ResetButton() == true)
+              property.intValue = (int)attribute.defaultValue;
+          }
+        }
+        EditorGUILayout.EndHorizontal();
+
+        return attribute.floatSlider == true ? property.floatValue : property.intValue;
+      }
+
+      return 0.0f;
+    }    
   }
 }

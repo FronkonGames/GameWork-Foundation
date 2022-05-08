@@ -82,6 +82,14 @@ namespace FronkonGames.GameWork.Foundation
     /// <summary>
     /// 
     /// </summary>
+    /// <param name="valueName"></param>
+    /// <param name="label"></param>
+    /// <returns></returns>
+    protected float SliderField(string valueName, string label = "") => serializedObject.SliderField(valueName, label);
+
+    /// <summary>
+    /// 
+    /// </summary>
     /// <param name="resetValue"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
