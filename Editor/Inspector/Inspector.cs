@@ -106,6 +106,22 @@ namespace FronkonGames.GameWork.Foundation
     /// <summary>
     /// 
     /// </summary>
+    /// <param name="valueName"></param>
+    /// <param name="label"></param>
+    /// <returns></returns>
+    protected Vector2 Vector2Field(string valueName, string label = "") => serializedObject.Vector2Field(valueName, label);
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="valueName"></param>
+    /// <param name="label"></param>
+    /// <returns></returns>
+    protected Vector3 Vector3Field(string valueName, string label = "") => serializedObject.Vector3Field(valueName, label);
+
+    /// <summary>
+    /// 
+    /// </summary>
     /// <param name="resetValue"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>

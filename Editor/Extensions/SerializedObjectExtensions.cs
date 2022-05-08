@@ -206,6 +206,62 @@ namespace FronkonGames.GameWork.Foundation
       }
 
       return Color.black;
-    }    
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="self"></param>
+    /// <param name="name"></param>
+    /// <param name="label"></param>
+    /// <returns></returns>
+    public static Vector2 Vector2Field(this SerializedObject self, string name, string label = "")
+    {
+      SerializedProperty property = self.FindProperty(name);
+      Vector2Attribute attribute = self.targetObject.GetAttribute<Vector2Attribute>(name);
+      if (property != null && attribute != null)
+      {
+        EditorGUILayout.BeginHorizontal();
+        {
+          EditorGUILayout.PropertyField(property, Inspector.NewGUIContent(label, name, attribute.tooltip));
+
+          if (Inspector.ResetButton() == true)
+            property.vector2Value = attribute.defaultValue;
+        }
+        EditorGUILayout.EndHorizontal();
+
+        return property.vector2Value;
+      }
+
+      return default(Vector2);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="self"></param>
+    /// <param name="name"></param>
+    /// <param name="label"></param>
+    /// <returns></returns>
+    public static Vector3 Vector3Field(this SerializedObject self, string name, string label = "")
+    {
+      SerializedProperty property = self.FindProperty(name);
+      Vector3Attribute attribute = self.targetObject.GetAttribute<Vector3Attribute>(name);
+      if (property != null && attribute != null)
+      {
+        EditorGUILayout.BeginHorizontal();
+        {
+          EditorGUILayout.PropertyField(property, Inspector.NewGUIContent(label, name, attribute.tooltip));
+
+          if (Inspector.ResetButton() == true)
+            property.vector3Value = attribute.defaultValue;
+        }
+        EditorGUILayout.EndHorizontal();
+
+        return property.vector3Value;
+      }
+
+      return default(Vector3);
+    }
   }
 }

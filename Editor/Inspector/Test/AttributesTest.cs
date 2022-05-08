@@ -52,6 +52,12 @@ namespace FronkonGames.GameWork.Foundation
 
     [SerializeField, Color(1.0f, 0.0f, 1.0f, 1.0f, "A color value.")]
     private Color colorValue;
+
+    [SerializeField, Vector2("A Vector2 value.")]
+    private Vector2 vector2Value;
+
+    [SerializeField, Vector3("A Vector3 value.")]
+    private Vector3 vector3Value;
   }
 
   [CustomEditor(typeof(AttributesTest))]
@@ -71,7 +77,10 @@ namespace FronkonGames.GameWork.Foundation
 
       EnumField("enumValue", "A enum value");
 
-      ColorField("colorValue", "A color value");
+      ColorField("colorValue", "A Color value");
+      
+      Vector2Field("vector2Value", "A Vector2 value");
+      Vector3Field("vector3Value", "A Vector3 value");
     }
   }  
 }
