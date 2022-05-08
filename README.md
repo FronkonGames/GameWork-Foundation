@@ -12,9 +12,6 @@
   <a style="text-decoration:none">
     <img src="https://img.shields.io/github/languages/top/FronkonGames/GameWork-Foundation?style=flat-square" alt="top language" />
   </a>
-  <a style="text-decoration:none" href="https://gamework-foundation.docsforge.com/">
-    <img src="https://img.shields.io/badge/docs-docsforge-blue?style=flat-square" alt="documentation" />
-  </a>
   <a style="text-decoration:none">
     <img src="https://img.shields.io/codacy/grade/5ee510ac2f9d411583a0eb248744d75f?style=flat-square" alt="code quality" />
   </a>
