@@ -263,5 +263,33 @@ namespace FronkonGames.GameWork.Foundation
 
       return default(Vector3);
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="self"></param>
+    /// <param name="name"></param>
+    /// <param name="label"></param>
+    /// <returns></returns>
+    public static UnityEngine.Object ObjectReferenceField(this SerializedObject self, string name, string label = "")
+    {
+      SerializedProperty property = self.FindProperty(name);
+      ObjectReferenceAttribute attribute = self.targetObject.GetAttribute<ObjectReferenceAttribute>(name);
+      if (property != null && attribute != null)
+      {
+        EditorGUILayout.BeginHorizontal();
+        {
+          property.objectReferenceValue = EditorGUILayout.ObjectField(Inspector.NewGUIContent(label, name, attribute.tooltip),
+                                                                      property.objectReferenceValue,
+                                                                      attribute.type,
+                                                                      attribute.allowSceneObjects);          
+        }
+        EditorGUILayout.EndHorizontal();
+
+        return property.objectReferenceValue;
+      }
+
+      return null;
+    }
   }
 }

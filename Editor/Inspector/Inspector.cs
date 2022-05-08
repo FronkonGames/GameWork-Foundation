@@ -122,6 +122,14 @@ namespace FronkonGames.GameWork.Foundation
     /// <summary>
     /// 
     /// </summary>
+    /// <param name="valueName"></param>
+    /// <param name="label"></param>
+    /// <returns></returns>
+    protected UnityEngine.Object ObjectField(string valueName, string label = "") => serializedObject.ObjectReferenceField(valueName, label);
+
+    /// <summary>
+    /// 
+    /// </summary>
     /// <param name="resetValue"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>

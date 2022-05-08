@@ -58,6 +58,9 @@ namespace FronkonGames.GameWork.Foundation
 
     [SerializeField, Vector3("A Vector3 value.")]
     private Vector3 vector3Value;
+
+    [SerializeField, ObjectReference(typeof(GameObject), true, "A GameObject value.")]
+    private GameObject objectValue;
   }
 
   [CustomEditor(typeof(AttributesTest))]
@@ -81,6 +84,8 @@ namespace FronkonGames.GameWork.Foundation
       
       Vector2Field("vector2Value", "A Vector2 value");
       Vector3Field("vector3Value", "A Vector3 value");
+
+      ObjectField("objectValue", "A GameObject value");
     }
   }  
 }
