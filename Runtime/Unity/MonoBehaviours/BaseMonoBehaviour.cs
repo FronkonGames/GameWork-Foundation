@@ -68,6 +68,9 @@ namespace FronkonGames.GameWork.Foundation
     [HideInInspector, System.NonSerialized]
     private RectTransform cachedRectTransform;
 
+    /// <summary>
+    /// Clear all cached components.
+    /// </summary>
     public void ClearCachedComponents()
     {
       cachedTransform = null;

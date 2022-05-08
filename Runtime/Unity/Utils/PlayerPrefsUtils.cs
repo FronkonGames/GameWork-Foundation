@@ -22,7 +22,7 @@ namespace FronkonGames.GameWork.Foundation
   /// <summary>
   /// PlayerPrefs utilities.
   /// </summary>
-  public class PlayerPrefsUtils
+  public static class PlayerPrefsUtils
   {
     /// <summary>
     /// 
@@ -93,7 +93,7 @@ namespace FronkonGames.GameWork.Foundation
     /// </summary>
     /// <param name="key"></param>
     /// <param name="value"></param>
-    public static void SetDateTime(string key, DateTime value) => PlayerPrefs.SetString(ProductKey(key), value.ToString());
+    public static void SetDateTime(string key, DateTime value) => PlayerPrefs.SetString(ProductKey(key), value.ToString(System.Globalization.CultureInfo.InvariantCulture));
 
     /// <summary>
     /// 
