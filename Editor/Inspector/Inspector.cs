@@ -14,6 +14,7 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
@@ -22,24 +23,12 @@ namespace FronkonGames.GameWork.Foundation
   /// <summary>
   /// .
   /// </summary>
-  public abstract class Inspector : Editor
+  public abstract partial class Inspector : Editor
   {
-    /// <summary>
-    /// GUI changed?
-    /// </summary>
-    public static bool Changed
-    {
-      get => GUI.changed;
-      set => GUI.changed = value;
-    }
-
-    /// <summary>
-    /// Marks object target as dirty.
-    /// </summary>
-    public static void SetDirty(UnityEngine.Object target) => EditorUtility.SetDirty(target);
-
     public override void OnInspectorGUI()
     {
+      Reset();
+
       serializedObject.Update();
 
       InspectorGUI();
@@ -55,99 +44,65 @@ namespace FronkonGames.GameWork.Foundation
     /// </summary>
     protected abstract void InspectorGUI();
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="valueName"></param>
-    /// <param name="label"></param>
-    /// <returns></returns>
-    protected bool BoolField(string valueName, string label = "") => serializedObject.BoolField(valueName, label);
+    protected virtual void OnEnable()
+    {
+      productID = GetType().ToString().Replace("Editor", string.Empty);
+    }
+
+    public static GUIContent NewGUIContent(string label, string name, string tooltip) =>
+      new GUIContent(string.IsNullOrEmpty(label) == false ? label : name.FromCamelCase(), tooltip);
+
+    private static void Reset(int indentLevel = 0, float labelWidth = 0.0f, float fieldWidth = 0.0f, bool guiEnabled = true)
+    {
+      EditorGUI.indentLevel = 0;
+      EditorGUIUtility.labelWidth = 0.0f;
+      EditorGUIUtility.fieldWidth = 0.0f;
+      GUI.enabled = true;
+    }
+
+    private static GUIContent GetContent(string textAndTooltip)
+    {
+      if (string.IsNullOrEmpty(textAndTooltip))
+        return GUIContent.none;
+
+      GUIContent content;
+
+      if (GUIContentCache.TryGetValue(textAndTooltip, out content) == false)
+      {
+        string[] s = textAndTooltip.Split('|');
+        content = new GUIContent(s[0]);
+
+        if (s.Length > 1 && !string.IsNullOrEmpty(s[1]))
+          content.tooltip = s[1];
+
+        GUIContentCache.Add(textAndTooltip, content);
+      }
+
+      return content;
+    }
 
     /// <summary>
-    /// 
+    /// Creates a texture for use in the Editor.
     /// </summary>
-    /// <param name="valueName"></param>
-    /// <param name="label"></param>
-    /// <returns></returns>
-    protected int IntField(string valueName, string label = "") => serializedObject.IntField(valueName, label);
+    public static Texture2D MakeTexture(int width, int height, Color color)
+    {
+      Color[] pixels = new Color[width * height];
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="valueName"></param>
-    /// <param name="label"></param>
-    /// <returns></returns>
-    protected float FloatField(string valueName, string label = "") => serializedObject.FloatField(valueName, label);
+      for (int i = 0; i < pixels.Length; ++i)
+        pixels[i] = color;
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="valueName"></param>
-    /// <param name="label"></param>
-    /// <returns></returns>
-    protected float SliderField(string valueName, string label = "") => serializedObject.SliderField(valueName, label);
+      Texture2D result = new Texture2D(width, height);
+      result.SetPixels(pixels);
+      result.Apply();
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="valueName"></param>
-    /// <param name="label"></param>
-    /// <returns></returns>
-    protected float EnumField(string valueName, string label = "") => serializedObject.EnumField(valueName, label);
+      return result;
+    }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="valueName"></param>
-    /// <param name="label"></param>
-    /// <returns></returns>
-    protected Color ColorField(string valueName, string label = "") => serializedObject.ColorField(valueName, label);
+    private static void SetDirty(UnityEngine.Object target) => EditorUtility.SetDirty(target);
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="valueName"></param>
-    /// <param name="label"></param>
-    /// <returns></returns>
-    protected Vector2 Vector2Field(string valueName, string label = "") => serializedObject.Vector2Field(valueName, label);
+    private static readonly Dictionary<string, GUIContent> GUIContentCache = new Dictionary<string, GUIContent>();
+    private static Dictionary<string, bool> statesCache = new Dictionary<string, bool>();
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="valueName"></param>
-    /// <param name="label"></param>
-    /// <returns></returns>
-    protected Vector3 Vector3Field(string valueName, string label = "") => serializedObject.Vector3Field(valueName, label);
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="valueName"></param>
-    /// <param name="label"></param>
-    /// <returns></returns>
-    protected UnityEngine.Object ObjectField(string valueName, string label = "") => serializedObject.ObjectReferenceField(valueName, label);
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="resetValue"></param>
-    /// <typeparam name="T"></typeparam>
-    /// <returns></returns>
-    public static bool ResetButton<T>(T resetValue) => GUILayout.Button(new GUIContent("R", $"Reset to '{resetValue}'."), Styles.MiniLabelButton, GUILayout.Width(10.0f), GUILayout.Height(14.0f));
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
-    public static bool ResetButton() => GUILayout.Button("R", Styles.MiniLabelButton, GUILayout.Width(18.0f));
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="label"></param>
-    /// <param name="name"></param>
-    /// <param name="tooltip"></param>
-    /// <returns></returns>
-    public static GUIContent NewGUIContent(string label, string name, string tooltip) => new GUIContent(string.IsNullOrEmpty(label) == false ? label : name.FromCamelCase(), tooltip);
+    private string productID;
   }
 }

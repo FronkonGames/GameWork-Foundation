@@ -68,24 +68,40 @@ namespace FronkonGames.GameWork.Foundation
   {
     protected override void InspectorGUI()
     {
+      Header("Boolean");
+
       BoolField("boolValue", "A bool value");
+
+      Header("Int");
 
       IntField("intValue", "A int value");
       IntField("intRangedValue", "A int ranged value");
       SliderField("intSliderValue", "A int slider value");
 
+      Header("Float");
+
       FloatField("floatValue", "A float value");
       FloatField("floatRangedValue", "A float ranged value");
       SliderField("floatSliderValue", "A float value");
 
+      Header("Enum");
+
       EnumField("enumValue", "A enum value");
 
+      Header("Color");
+
       ColorField("colorValue", "A Color value");
-      
+
+      Header("Vectors");
+
       Vector2Field("vector2Value", "A Vector2 value");
       Vector3Field("vector3Value", "A Vector3 value");
 
+      Header("Object");
+
       ObjectField("objectValue", "A GameObject value");
+
+      Line();
     }
   }  
 }
