@@ -20,25 +20,13 @@ using UnityEngine;
 namespace FronkonGames.GameWork.Foundation
 {
   /// <summary>
-  /// MonoBehaviour singleton base.
-  /// </summary>
-  public abstract class MonoBehaviourSingletonBase : MonoBehaviour
-  {
-    protected static bool IsQuitting { get; private set; }
-    
-    protected MonoBehaviourSingletonBase() { }
-    
-    protected virtual void OnApplicationQuit() => IsQuitting = true;
-  }
-
-  /// <summary>
   /// Generic lazy MonoBehaviour singleton thread-safe.
   /// </summary>
   /// <typeparam name="T">Singleton type</typeparam>
-  public abstract class MonoBehaviourSingleton<T> : MonoBehaviourSingletonBase where T : MonoBehaviour
+  public abstract class MonoBehaviourSingleton<T> : BaseMonoBehaviour where T : BaseMonoBehaviour
   {
     /// <summary>Instance.</summary>
-    public static T Instance => IsQuitting == true ? null : lazy.Value;
+    public static T Instance => lazy.Value;
 
     private static readonly Lazy<T> lazy = new Lazy<T>(() =>
     {
