@@ -28,6 +28,9 @@ namespace FronkonGames.GameWork.Foundation
     /// <summary>Instance.</summary>
     public static T Instance => lazy.Value;
 
+    /// <summary>Instance created?</summary>
+    public static bool IsCreated => lazy.IsValueCreated;
+
     private static readonly Lazy<T> lazy = new Lazy<T>(() =>
     {
       T instance = FindObjectOfType<T>(true);
