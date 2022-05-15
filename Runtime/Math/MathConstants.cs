@@ -24,37 +24,37 @@ namespace FronkonGames.GameWork.Foundation
   public static class MathConstants
   {
     /// <summary></summary>
-    public static readonly float Pi            = 3.14159265358979f;
+    public const float Pi                 = 3.14159265358979f;
+
+    /// <summary></summary>     
+    public const float PiHalf             = Pi * 0.5f;
+
+    /// <summary></summary>     
+    public const float Pi2                = Pi * 2.0f;
+
+    /// <summary></summary>     
+    public const float E                  = 2.71828182846f;
+
+    /// <summary></summary>     
+    public const float Tau                = 6.28318530717959f;
+
+    /// <summary></summary>     
+    public const float GoldenRation       = 1.61803398875f;
+    
+    /// <summary></summary>
+    public const float Deg2Rad            = Tau / 360.0f;
 
     /// <summary></summary>
-    public static readonly float PiHalf        = Pi * 0.5f;
+    public const float Rad2Deg            = 360.0f / Tau;
 
     /// <summary></summary>
-    public static readonly float Pi2           = Pi * 2.0f;
+    public const float Epsilon            = float.Epsilon;
     
     /// <summary></summary>
-    public static readonly float E             = 2.71828182846f;
+    public const float Infinity           = Mathf.Infinity;
     
     /// <summary></summary>
-    public static readonly float Tau           = 6.28318530717959f;
-    
-    /// <summary></summary>
-    public static readonly float GoldenRation  = 1.61803398875f;
-    
-    /// <summary></summary>
-    public static readonly float Deg2Rad  = Tau / 360.0f;
-
-    /// <summary></summary>
-    public static readonly float Rad2Deg  = 360.0f / Tau;
-
-    /// <summary></summary>
-    public static readonly float Epsilon           = Mathf.Epsilon;
-    
-    /// <summary></summary>
-    public static readonly float Infinity          = Mathf.Infinity;
-    
-    /// <summary></summary>
-    public static readonly float NegativeInfinity  = Mathf.NegativeInfinity;
+    public const float NegativeInfinity   = Mathf.NegativeInfinity;
 
     /// <summary></summary>
     public static readonly Vector2 NaNVector2      = new Vector2(float.NaN, float.NaN);
