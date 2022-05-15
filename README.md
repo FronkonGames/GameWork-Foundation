@@ -27,14 +27,15 @@
 ### Editing your 'manifest.json'
 
 - Open the manifest.json file of your Unity project.
-- In the section "dependencies" add "com.fronkongames.gamework.foundation": "git+https://github.com/FronkonGames/GameWork-Foundation.git"
+- In the section "dependencies" add:
 
 ```
 {
   ...
   "dependencies":
   {
-    "com.fronkongames.gamework.foundation": "git+https://github.com/FronkonGames/GameWork-Foundation.git"
+    ...
+    "FronkonGames.GameWork.Foundation": "git+https://github.com/FronkonGames/GameWork-Foundation.git"
   }
   ...
 }

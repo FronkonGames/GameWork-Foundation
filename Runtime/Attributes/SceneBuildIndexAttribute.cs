@@ -14,14 +14,30 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-using UnityEngine;
+using System;
 
 namespace FronkonGames.GameWork.Foundation
 {
   /// <summary>
-  /// Attribute.
+  /// Scene build index attribute.
   /// </summary>
-  public class BaseAttribute : PropertyAttribute
+  [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
+  public sealed class SceneBuildIndexAttribute : BaseAttribute
   {
+    public readonly int defaultValue;
+
+    public readonly string tooltip;
+
+    public SceneBuildIndexAttribute(string tooltip = "")
+    {
+      this.defaultValue = 0;
+      this.tooltip = tooltip;
+    }
+
+    public SceneBuildIndexAttribute(int defaultValue = 0, string tooltip = "")
+    {
+      this.defaultValue = 0;
+      this.tooltip = tooltip;
+    }
   }
 }

@@ -14,7 +14,9 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+using System.IO;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEditor;
 
 namespace FronkonGames.GameWork.Foundation
@@ -291,5 +293,31 @@ namespace FronkonGames.GameWork.Foundation
 
       return null;
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="self"></param>
+    /// <param name="name"></param>
+    /// <param name="label"></param>
+    /// <returns></returns>
+    public static int SceneField(this SerializedObject self, string name, string label = "")
+    {
+      SerializedProperty property = self.FindProperty(name);
+      SceneBuildIndexAttribute attribute = self.targetObject.GetAttribute<SceneBuildIndexAttribute>(name);
+      if (property != null && attribute != null)
+      {
+        int count = SceneManager.sceneCountInBuildSettings;
+        GUIContent[] displayedOptions = new GUIContent[count];
+        for (int i = 0; i < count; ++i)
+          displayedOptions[i] = new GUIContent(Path.GetFileNameWithoutExtension(EditorBuildSettings.scenes[i].path));
+
+        property.intValue = EditorGUILayout.Popup(Inspector.NewGUIContent(label, name, attribute.tooltip), property.intValue, displayedOptions);
+
+        return property.intValue;
+      }
+
+      return 0;
+    }    
   }
 }
