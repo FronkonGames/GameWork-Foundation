@@ -1,8 +1,8 @@
 {
-  "name": "com.fronkongames.gamework.foundation.check.test",
+  "name": "FronkonGames.GameWork.Foundation.Check.Test",
   "references":
   [
-    "com.fronkongames.gamework.foundation"
+    "FronkonGames.GameWork.Foundation"
   ],    
   "optionalUnityReferences":
   [

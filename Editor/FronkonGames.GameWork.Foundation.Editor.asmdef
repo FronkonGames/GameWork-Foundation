@@ -1,8 +1,8 @@
 ﻿{
-  "name": "com.fronkongames.gamework.foundation.editor",
+  "name": "FronkonGames.GameWork.Foundation.Editor",
   "references":
   [
-    "com.fronkongames.gamework.foundation"
+    "FronkonGames.GameWork.Foundation"
   ],
   "optionalUnityReferences": [],
   "includePlatforms": [],

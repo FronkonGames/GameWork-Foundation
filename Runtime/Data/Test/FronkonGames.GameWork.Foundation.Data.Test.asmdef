@@ -1,6 +1,8 @@
 {
-  "name": "com.fronkongames.gamework.foundation.data.test",
-  "references": [ "com.fronkongames.gamework.foundation" ],    
+  "name": "FronkonGames.GameWork.Foundation.Data.Test",
+  "references": [
+    "FronkonGames.GameWork.Foundation"
+  ],
   "optionalUnityReferences": [ "TestAssemblies" ],
   "includePlatforms": [ "Editor" ],
   "excludePlatforms": [],
