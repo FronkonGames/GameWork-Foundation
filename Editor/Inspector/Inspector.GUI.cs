@@ -109,12 +109,12 @@ namespace FronkonGames.GameWork.Foundation
     /// <summary>
     /// Label.
     /// </summary>
-    public static void Label(string label) => Label(EditorGUIUtility.TrTextContent(label));
+    public static void Label(string text) => Label(EditorGUIUtility.TrTextContent(text));
 
     /// <summary>
     /// Label.
     /// </summary>
-    public static void Label(GUIContent label) => EditorGUILayout.LabelField(label);
+    public static void Label(GUIContent text) => EditorGUILayout.LabelField(text);
 
     /// <summary>
     /// Button.
@@ -485,7 +485,7 @@ namespace FronkonGames.GameWork.Foundation
     /// <summary>
     /// Layermask field with reset.
     /// </summary>
-    public static LayerMask LayerMask(string title, LayerMask layerMask, int resetValue) => LayerMask(EditorGUIUtility.TrTextContent(title), layerMask, resetValue);
+    public static LayerMask LayerMask(string title, LayerMask layer, int resetValue) => LayerMask(EditorGUIUtility.TrTextContent(title), layer, resetValue);
 
     /// <summary>
     /// Layermask field with reset.
