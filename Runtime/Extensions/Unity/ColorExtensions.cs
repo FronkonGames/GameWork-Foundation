@@ -23,33 +23,13 @@ namespace FronkonGames.GameWork.Foundation
   /// </summary>
   public static class ColorExtensions
   {
-    public static Color SetR(this Color self, float r)
-    {
-      self.r = r;
-      
-      return self;
-    }
+    public static Color SetR(this Color self, float r) => new Color(r, self.g, self.b, self.a);
 
-    public static Color SetG(this Color self, float g)
-    {
-      self.g = g;
+    public static Color SetG(this Color self, float g) => new Color(self.r, g, self.b, self.a);
 
-      return self;
-    }
+    public static Color SetB(this Color self, float b) => new Color(self.r, self.g, b, self.a);
 
-    public static Color SetB(this Color self, float b)
-    {
-      self.b = b;
-
-      return self;
-    }
-
-    public static Color SetA(this Color self, float a)
-    {
-      self.a = a;
-
-      return self;
-    }
+    public static Color SetA(this Color self, float a) => new Color(self.r, self.g, self.b, a);
 
     /// <summary>
     /// To hex string.
