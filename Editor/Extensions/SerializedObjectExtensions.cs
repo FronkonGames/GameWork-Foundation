@@ -16,6 +16,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 using System.IO;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEditor;
 
@@ -152,6 +153,34 @@ namespace FronkonGames.GameWork.Foundation
       }
 
       return 0.0f;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="self"></param>
+    /// <param name="name"></param>
+    /// <param name="label"></param>
+    /// <returns></returns>
+    public static string StringField(this SerializedObject self, string name, string label = "")
+    {
+      SerializedProperty property = self.FindProperty(name);
+      StringAttribute attribute = self.targetObject.GetAttribute<StringAttribute>(name);
+      if (property != null && attribute != null)
+      {
+        EditorGUILayout.BeginHorizontal();
+        {
+          EditorGUILayout.PropertyField(property, Inspector.NewGUIContent(label, name, attribute.tooltip));
+
+          if (Inspector.ResetButton() == true)
+            property.stringValue = attribute.defaultValue;
+        }
+        EditorGUILayout.EndHorizontal();
+
+        return property.stringValue;
+      }
+
+      return string.Empty;
     }
 
     /// <summary>
@@ -318,6 +347,81 @@ namespace FronkonGames.GameWork.Foundation
       }
 
       return 0;
-    }    
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="self"></param>
+    /// <param name="name"></param>
+    /// <param name="label"></param>
+    /// <returns></returns>
+    public static CanvasGroup CanvasGroupField(this SerializedObject self, string name, string label = "")
+    {
+      SerializedProperty property = self.FindProperty(name);
+      CanvasGroupAttribute attribute = self.targetObject.GetAttribute<CanvasGroupAttribute>(name);
+      if (property != null && attribute != null)
+      {
+        EditorGUILayout.BeginHorizontal();
+        {
+          EditorGUILayout.PropertyField(property, Inspector.NewGUIContent(label, name, attribute.tooltip));
+        }
+        EditorGUILayout.EndHorizontal();
+
+        return property.objectReferenceValue as CanvasGroup;
+      }
+
+      return null;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="self"></param>
+    /// <param name="name"></param>
+    /// <param name="label"></param>
+    /// <returns></returns>
+    public static Image ImageField(this SerializedObject self, string name, string label = "")
+    {
+      SerializedProperty property = self.FindProperty(name);
+      ImageAttribute attribute = self.targetObject.GetAttribute<ImageAttribute>(name);
+      if (property != null && attribute != null)
+      {
+        EditorGUILayout.BeginHorizontal();
+        {
+          EditorGUILayout.PropertyField(property, Inspector.NewGUIContent(label, name, attribute.tooltip));
+        }
+        EditorGUILayout.EndHorizontal();
+
+        return property.objectReferenceValue as Image;
+      }
+
+      return null;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="self"></param>
+    /// <param name="name"></param>
+    /// <param name="label"></param>
+    /// <returns></returns>
+    public static Text TextField(this SerializedObject self, string name, string label = "")
+    {
+      SerializedProperty property = self.FindProperty(name);
+      TextAttribute attribute = self.targetObject.GetAttribute<TextAttribute>(name);
+      if (property != null && attribute != null)
+      {
+        EditorGUILayout.BeginHorizontal();
+        {
+          EditorGUILayout.PropertyField(property, Inspector.NewGUIContent(label, name, attribute.tooltip));
+        }
+        EditorGUILayout.EndHorizontal();
+
+        return property.objectReferenceValue as Text;
+      }
+
+      return null;
+    }
   }
 }

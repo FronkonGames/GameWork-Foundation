@@ -15,6 +15,7 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEditor;
 
 namespace FronkonGames.GameWork.Foundation
@@ -55,6 +56,14 @@ namespace FronkonGames.GameWork.Foundation
     /// <param name="label"></param>
     /// <returns></returns>
     protected float SliderField(string valueName, string label = "") => serializedObject.SliderField(valueName, label);
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="valueName"></param>
+    /// <param name="label"></param>
+    /// <returns></returns>
+    protected string StringField(string valueName, string label = "") => serializedObject.StringField(valueName, label);
 
     /// <summary>
     /// 
@@ -103,6 +112,30 @@ namespace FronkonGames.GameWork.Foundation
     /// <param name="label"></param>
     /// <returns></returns>
     protected int SceneField(string valueName, string label = "") => serializedObject.SceneField(valueName, label);
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="valueName"></param>
+    /// <param name="label"></param>
+    /// <returns></returns>
+    protected CanvasGroup CanvasGroupField(string valueName, string label = "") => serializedObject.CanvasGroupField(valueName, label);
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="valueName"></param>
+    /// <param name="label"></param>
+    /// <returns></returns>
+    protected Image ImageField(string valueName, string label = "") => serializedObject.ImageField(valueName, label);
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="valueName"></param>
+    /// <param name="label"></param>
+    /// <returns></returns>
+    protected Text TextField(string valueName, string label = "") => serializedObject.TextField(valueName, label);
 
     /// <summary>
     /// 
