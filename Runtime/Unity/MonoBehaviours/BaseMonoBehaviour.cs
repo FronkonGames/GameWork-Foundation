@@ -23,104 +23,32 @@ namespace FronkonGames.GameWork.Foundation
   /// </summary>
   public abstract class BaseMonoBehaviour : MonoBehaviour
   {
-    public new Transform transform
-    {
-      get
-      {
-        if (cachedTransform == null)
-          cachedTransform = base.transform;
+    /// <summary>Transform cached.</summary>
+    public new Transform transform      => cachedTransform ?? (cachedTransform = base.transform);
 
-        return cachedTransform;
-      }
-    }
+    /// <summary>Animation cached.</summary>
+    public new Animation animation      => chachedAnimation ?? (chachedAnimation = this.GetComponent<Animation>());
 
-    public new Animation animation
-    {
-      get
-      {
-        if (chachedAnimation == null)
-          chachedAnimation = this.GetComponent<Animation>();
+    /// <summary>AudioSource cached.</summary>
+    public new AudioSource audio        => cachedAudio ?? (cachedAudio = this.GetComponent<AudioSource>());
 
-        return chachedAnimation;
-      }
-    }
+    /// <summary>Collider cached.</summary>
+    public new Collider collider        => cachedCollider ?? (cachedCollider = this.GetComponent<Collider>());
 
-    public new AudioSource audio
-    {
-      get
-      {
-        if (cachedAudio == null)
-          cachedAudio = this.GetComponent<AudioSource>();
+    /// <summary>RigidBody cached.</summary>
+    public new Rigidbody rigidbody      => cachedRigidbody ?? (cachedRigidbody = this.GetComponent<Rigidbody>());
 
-        return cachedAudio;
-      }
-    }
+    /// <summary>Animator cached.</summary>
+    public Animator animator            => cachedAnimator ?? (cachedAnimator = this.GetComponent<Animator>());
 
-    public new Collider collider
-    {
-      get
-      {
-        if (cachedCollider == null)
-          cachedCollider = this.GetComponent<Collider>();
+    /// <summary>Collider2D cached.</summary>
+    public new Collider2D collider2D    => cachedCollider2D ?? (cachedCollider2D = this.GetComponent<Collider2D>());
 
-        return cachedCollider;
-      }
-    }
+    /// <summary>Rigidbody2D cached.</summary>
+    public new Rigidbody2D rigidbody2D  => cachedRigidbody2D ?? (cachedRigidbody2D = this.GetComponent<Rigidbody2D>());
 
-    public new Rigidbody rigidbody
-    {
-      get
-      {
-        if (cachedRigidbody == null)
-          cachedRigidbody = this.GetComponent<Rigidbody>();
-
-        return cachedRigidbody;
-      }
-    }
-
-    public Animator animator
-    {
-      get
-      {
-        if (cachedAnimator == null)
-          cachedAnimator = this.GetComponent<Animator>();
-
-        return cachedAnimator;
-      }
-    }
-
-    public new Collider2D collider2D
-    {
-      get
-      {
-        if (cachedCollider2D == null)
-          cachedCollider2D = this.GetComponent<Collider2D>();
-
-        return cachedCollider2D;
-      }
-    }
-
-    public new Rigidbody2D rigidbody2D
-    {
-      get
-      {
-        if (cachedRigidbody2D == null)
-          cachedRigidbody2D = this.GetComponent<Rigidbody2D>();
-
-        return cachedRigidbody2D;
-      }
-    }
-
-    public RectTransform rectTransform
-    {
-      get
-      {
-        if (cachedRectTransform == null)
-          cachedRectTransform = this.GetComponent<RectTransform>();
-
-        return cachedRectTransform;
-      }
-    }
+    /// <summary>RectTransform cached.</summary>
+    public RectTransform rectTransform  => cachedRectTransform ?? (cachedRectTransform = this.GetComponent<RectTransform>());
 
     [HideInInspector, System.NonSerialized]
     private Transform cachedTransform;

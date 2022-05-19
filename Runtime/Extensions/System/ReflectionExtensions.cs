@@ -78,6 +78,12 @@ namespace FronkonGames.GameWork.Foundation
       return false;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="self"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
     public static T[] GetAttributes<T>(this object self) where T : Attribute
     {
       List<T> attributes = new List<T>();
