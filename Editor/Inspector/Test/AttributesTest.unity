@@ -340,6 +340,7 @@ MonoBehaviour:
   vector2Value: {x: 0, y: 0}
   vector3Value: {x: 0, y: 0, z: 0}
   objectValue: {fileID: 242340940}
+  requiredValue: {fileID: 0}
 --- !u!4 &1664692623
 Transform:
   m_ObjectHideFlags: 0

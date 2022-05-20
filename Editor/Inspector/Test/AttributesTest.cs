@@ -61,6 +61,9 @@ namespace FronkonGames.GameWork.Foundation
 
     [SerializeField, ObjectReference(typeof(GameObject), true, "A GameObject value.")]
     private GameObject objectValue;
+
+    [SerializeField, ObjectReference(typeof(GameObject), true, "A GameObject value."), NotNone]
+    private GameObject requiredValue;
   }
 
   [CustomEditor(typeof(AttributesTest))]
@@ -70,36 +73,37 @@ namespace FronkonGames.GameWork.Foundation
     {
       Header("Boolean");
 
-      BoolField("boolValue", "A bool value");
+      BoolField("boolValue", "A bool");
 
       Header("Int");
 
-      IntField("intValue", "A int value");
-      IntField("intRangedValue", "A int ranged value");
-      SliderField("intSliderValue", "A int slider value");
+      IntField("intValue", "A int");
+      IntField("intRangedValue", "A int");
+      SliderField("intSliderValue", "A int");
 
       Header("Float");
 
-      FloatField("floatValue", "A float value");
-      FloatField("floatRangedValue", "A float ranged value");
-      SliderField("floatSliderValue", "A float value");
+      FloatField("floatValue", "A float");
+      FloatField("floatRangedValue", "A float ranged");
+      SliderField("floatSliderValue", "A float");
 
       Header("Enum");
 
-      EnumField("enumValue", "A enum value");
+      EnumField("enumValue", "A enum");
 
       Header("Color");
 
-      ColorField("colorValue", "A Color value");
+      ColorField("colorValue", "A Color");
 
       Header("Vectors");
 
-      Vector2Field("vector2Value", "A Vector2 value");
-      Vector3Field("vector3Value", "A Vector3 value");
+      Vector2Field("vector2Value", "A Vector2");
+      Vector3Field("vector3Value", "A Vector3");
 
       Header("Object");
 
-      ObjectField("objectValue", "A GameObject value");
+      ObjectField("objectValue", "A GameObject");
+      ObjectField("requiredValue", "A not null GameObject");
 
       Line();
     }

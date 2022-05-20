@@ -15,6 +15,7 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 using System;
+using System.Diagnostics;
 
 namespace FronkonGames.GameWork.Foundation
 {
@@ -22,6 +23,7 @@ namespace FronkonGames.GameWork.Foundation
   /// Boolean attribute.
   /// </summary>
   [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
+  [Conditional("UNITY_EDITOR")]
   public sealed class BoolAttribute : BaseAttribute
   {
     public readonly bool defaultValue;

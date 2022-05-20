@@ -310,10 +310,16 @@ namespace FronkonGames.GameWork.Foundation
       {
         EditorGUILayout.BeginHorizontal();
         {
+          NotNoneAttribute notNoneAttribute = self.targetObject.GetAttribute<NotNoneAttribute>(name);
+          if (notNoneAttribute != null && ReferenceEquals(property.objectReferenceValue, null) == true)
+            GUI.color = Color.red;
+
           property.objectReferenceValue = EditorGUILayout.ObjectField(Inspector.NewGUIContent(label, name, attribute.tooltip),
                                                                       property.objectReferenceValue,
                                                                       attribute.type,
-                                                                      attribute.allowSceneObjects);          
+                                                                      attribute.allowSceneObjects);
+
+          GUI.color = Color.white;
         }
         EditorGUILayout.EndHorizontal();
 

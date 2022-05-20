@@ -16,31 +16,15 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 using System;
 using System.Diagnostics;
-using UnityEngine;
 
 namespace FronkonGames.GameWork.Foundation
 {
   /// <summary>
-  /// Vector3 attribute.
+  /// NotNull attribute.
   /// </summary>
   [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
   [Conditional("UNITY_EDITOR")]
-  public sealed class Vector3Attribute : BaseAttribute
+  public sealed class NotNoneAttribute : BaseAttribute
   {
-    public readonly Vector3 defaultValue;
-
-    public readonly string tooltip;
-
-    public Vector3Attribute(string tooltip = "")
-    {
-      this.defaultValue = default(Vector3);
-      this.tooltip = tooltip;
-    }
-
-    public Vector3Attribute(Vector3 defaultValue = default(Vector3), string tooltip = "")
-    {
-      this.defaultValue = defaultValue;
-      this.tooltip = tooltip;
-    }
   }
 }

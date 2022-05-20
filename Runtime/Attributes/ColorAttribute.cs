@@ -15,6 +15,7 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 using System;
+using System.Diagnostics;
 using UnityEngine;
 
 namespace FronkonGames.GameWork.Foundation
@@ -23,6 +24,7 @@ namespace FronkonGames.GameWork.Foundation
   /// Color attribute.
   /// </summary>
   [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
+  [Conditional("UNITY_EDITOR")]
   public sealed class ColorAttribute : BaseAttribute
   {
     public readonly Color defaultValue;
