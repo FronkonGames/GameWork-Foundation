@@ -19,7 +19,7 @@
 
 ## 🔧 Requisites
 
-- Unity 2020.3 or higher.
+- Unity 2021.2 or higher.
 - Test Framework 1.1.31 or higher.
 
 ## 🚀 Installation
