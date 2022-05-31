@@ -29,12 +29,15 @@ namespace FronkonGames.GameWork.Foundation
     /// <summary>
     /// Size.
     /// </summary>
-    public int Count => count;
+    public int Count { get; private set; }
 
     /// <summary>
     /// Capacity.
     /// </summary>
-    public int Capacity => capacity;
+    public int Capacity { get; private set; }
+
+    /// <summary>Cast to object to compare.</summary>
+    public bool UseObjectCastComparer { get; set; }
 
     /// <summary>
     /// Returns an item in index.
@@ -43,14 +46,14 @@ namespace FronkonGames.GameWork.Foundation
     {
       get
       {
-        Check.True(index < count);
+        Check.True(index < Count);
 
         return data[index];
       }
 
       set
       {
-        Check.True(index < count);
+        Check.True(index < Count);
 
         data[index] = value;
       }
@@ -61,17 +64,11 @@ namespace FronkonGames.GameWork.Foundation
 
     private T[] data;
 
-    private int count;
-
-    private int capacity;
-
     private const int InitialCapacity = 8;
 
     private readonly bool isNullable;
 
     private readonly EqualityComparer<T> comparer;
-
-    private bool useObjectCastComparer;
 
     /// <summary>
     /// Constructor.
@@ -93,8 +90,8 @@ namespace FronkonGames.GameWork.Foundation
       Type type = typeof(T);
 
       isNullable = !type.IsValueType || (Nullable.GetUnderlyingType(type) != null);
-      this.capacity = capacity > InitialCapacity ? capacity : InitialCapacity;
-      count = 0;
+      this.Capacity = capacity > InitialCapacity ? capacity : InitialCapacity;
+      Count = 0;
       this.comparer = comparer;
 
       data = new T[capacity];
@@ -105,22 +102,22 @@ namespace FronkonGames.GameWork.Foundation
     /// </summary>
     public void Add(T item)
     {
-      if (count == capacity)
+      if (Count == Capacity)
       {
-        if (capacity > 0)
-          capacity <<= 1;
+        if (Capacity > 0)
+          Capacity <<= 1;
         else
-          capacity = InitialCapacity;
+          Capacity = InitialCapacity;
 
-        T[] items = new T[capacity];
+        T[] items = new T[Capacity];
 
-        Array.Copy(data, items, count);
+        Array.Copy(data, items, Count);
 
         data = items;
       }
 
-      data[count] = item;
-      count++;
+      data[Count] = item;
+      Count++;
     }
 
     /// <summary>
@@ -138,8 +135,8 @@ namespace FronkonGames.GameWork.Foundation
           return;
 
         Reserve(amount, false, false);
-        casted.CopyTo(data, count);
-        count += amount;
+        casted.CopyTo(data, Count);
+        Count += amount;
       }
       else
       {
@@ -164,8 +161,8 @@ namespace FronkonGames.GameWork.Foundation
       Check.IsNotNull(newData);
 
       data = newData;
-      count = newCount >= 0 ? newCount : 0;
-      capacity = data.Length;
+      Count = newCount >= 0 ? newCount : 0;
+      Capacity = data.Length;
     }
 
     /// <summary>
@@ -180,11 +177,11 @@ namespace FronkonGames.GameWork.Foundation
     {
       if (isNullable == true || forceSetDefaultValues == true)
       {
-        for (var i = count - 1; i >= 0; i--)
+        for (var i = Count - 1; i >= 0; i--)
           data[i] = default(T);
       }
 
-      count = 0;
+      Count = 0;
     }
 
     /// <summary>
@@ -199,7 +196,7 @@ namespace FronkonGames.GameWork.Foundation
     {
       Check.GreaterOrEqual(arrayIndex, 0);
 
-      Array.Copy(data, 0, array, arrayIndex, count);
+      Array.Copy(data, 0, array, arrayIndex, Count);
     }
 
     /// <summary>
@@ -211,11 +208,11 @@ namespace FronkonGames.GameWork.Foundation
         return;
 
       if (clearCollection == true)
-        count = 0;
+        Count = 0;
 
       Reserve(amount, clearCollection, forceSetDefaultValues);
 
-      count += amount;
+      Count += amount;
     }
 
     /// <summary>
@@ -224,9 +221,9 @@ namespace FronkonGames.GameWork.Foundation
     public int IndexOf(T item)
     {
       int i = -1;
-      if (useObjectCastComparer == true && isNullable == true)
+      if (UseObjectCastComparer == true && isNullable == true)
       {
-        for (i = count - 1; i >= 0; i--)
+        for (i = Count - 1; i >= 0; i--)
         {
           if ((object)data[i] == (object)item)
             break;
@@ -236,14 +233,14 @@ namespace FronkonGames.GameWork.Foundation
       {
         if (comparer != null)
         {
-          for (i = count - 1; i >= 0; i--)
+          for (i = Count - 1; i >= 0; i--)
           {
             if (comparer.Equals(data[i], item))
               break;
           }
         }
         else
-          i = Array.IndexOf(data, item, 0, count);
+          i = Array.IndexOf(data, item, 0, Count);
       }
 
       return i;
@@ -254,13 +251,13 @@ namespace FronkonGames.GameWork.Foundation
     /// </summary>
     public void Insert(int index, T item)
     {
-      Check.True(index >= 0 && index < count, "Insert() Invalid index.");
+      Check.True(index >= 0 && index < Count, "Insert() Invalid index.");
 
       Reserve(1, false, false);
 
-      Array.Copy(data, index, data, index + 1, count - index);
+      Array.Copy(data, index, data, index + 1, Count - index);
       data[index] = item;
-      count++;
+      Count++;
     }
 
     /// <summary>
@@ -308,12 +305,12 @@ namespace FronkonGames.GameWork.Foundation
     /// </summary>
     public void RemoveAt(int index)
     {
-      if (index < 0 || index >= count)
+      if (index < 0 || index >= Count)
         return;
 
-      count--;
+      Count--;
 
-      Array.Copy(data, index + 1, data, index, count - index);
+      Array.Copy(data, index + 1, data, index, Count - index);
     }
 
     /// <summary>
@@ -321,13 +318,13 @@ namespace FronkonGames.GameWork.Foundation
     /// </summary>
     public bool RemoveLast(bool forceSetDefaultValues = true)
     {
-      if (count <= 0)
+      if (Count <= 0)
         return false;
 
-      count--;
+      Count--;
 
       if (forceSetDefaultValues == true)
-        data[count] = default(T);
+        data[Count] = default(T);
 
       return true;
     }
@@ -340,26 +337,26 @@ namespace FronkonGames.GameWork.Foundation
       if (amount <= 0)
         return;
 
-      int start = totalAmount == true ? 0 : count;
+      int start = totalAmount == true ? 0 : Count;
       int newCount = start + amount;
 
-      if (newCount > capacity)
+      if (newCount > Capacity)
       {
-        if (capacity <= 0)
-          capacity = InitialCapacity;
+        if (Capacity <= 0)
+          Capacity = InitialCapacity;
 
-        while (capacity < newCount)
-          capacity <<= 1;
+        while (Capacity < newCount)
+          Capacity <<= 1;
 
-        T[] items = new T[capacity];
+        T[] items = new T[Capacity];
 
-        Array.Copy(data, items, count);
+        Array.Copy(data, items, Count);
         data = items;
       }
 
       if (forceSetDefaultValues == true)
       {
-        for (int i = count; i < newCount; ++i)
+        for (int i = Count; i < newCount; ++i)
           data[i] = default(T);
       }
     }
@@ -369,16 +366,16 @@ namespace FronkonGames.GameWork.Foundation
     /// </summary>
     public void Reverse()
     {
-      if (count <= 0)
+      if (Count <= 0)
         return;
 
       T temp;
 
-      for (int i = 0, iMax = count >> 1; i < iMax; ++i)
+      for (int i = 0, iMax = Count >> 1; i < iMax; ++i)
       {
         temp = data[i];
-        data[i] = data[count - i - 1];
-        data[count - i - 1] = temp;
+        data[i] = data[Count - i - 1];
+        data[Count - i - 1] = temp;
       }
     }
 
@@ -387,17 +384,12 @@ namespace FronkonGames.GameWork.Foundation
     /// </summary>
     public T[] ToArray()
     {
-      T[] target = new T[count];
+      T[] target = new T[Count];
 
-      if (count > 0)
-        Array.Copy(data, target, count);
+      if (Count > 0)
+        Array.Copy(data, target, Count);
 
       return target;
     }
-
-    /// <summary>
-    /// .
-    /// </summary>
-    public void UseCastToObjectComparer(bool state) => useObjectCastComparer = state;    
   }
 }

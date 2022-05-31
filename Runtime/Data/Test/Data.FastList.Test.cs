@@ -31,7 +31,40 @@ public partial class DataTests
   [UnityTest]
   public IEnumerator FastList()
   {
-    // TODO.
+    FastList<int> fastList = new FastList<int>();
+    Assert.AreEqual(fastList.Count, 0);
+
+    fastList.Add(1);
+    Assert.AreEqual(fastList.Count, 1);
+    Assert.AreEqual(fastList[0], 1);
+
+    fastList.Clear();
+    Assert.AreEqual(fastList.Count, 0);
+
+    int[] range = { 0, 1, 3 };
+    fastList.AddRange(range);
+    Assert.AreEqual(fastList.Count, 3);
+    Assert.AreEqual(fastList[0], 0);
+    Assert.AreEqual(fastList[1], 1);
+    Assert.AreEqual(fastList[2], 3);
+    Assert.IsTrue(fastList.Contains(0));
+    Assert.IsFalse(fastList.Contains(4));
+    Assert.AreEqual(fastList.IndexOf(3), 2);
+    Assert.AreEqual(fastList.IndexOf(4), -1);
+
+    fastList.Insert(2, 2);
+    Assert.AreEqual(fastList.Count, 4);
+    Assert.AreEqual(fastList[2], 2);
+    Assert.AreEqual(fastList[3], 3);
+
+    fastList.Remove(3);
+    Assert.AreEqual(fastList.Count, 3);
+    Assert.AreEqual(fastList.IndexOf(3), -1);
+    Assert.AreEqual(fastList[2], 2);
+
+    fastList.RemoveAt(0);
+    Assert.AreEqual(fastList.Count, 2);
+    Assert.AreEqual(fastList[0], 1);
 
     yield return null;
   }
