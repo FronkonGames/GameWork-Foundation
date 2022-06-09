@@ -14,6 +14,7 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+using System;
 using System.Collections.Generic;
 
 namespace FronkonGames.GameWork.Foundation
@@ -92,6 +93,52 @@ namespace FronkonGames.GameWork.Foundation
         int k = UnityEngine.Random.Range(0, self.Count);
         (self[k], self[n]) = (self[n], self[k]);
       }
+    }
+
+    /// <summary>
+    /// Returns the maximum value in the list.
+    /// </summary>
+    /// <typeparam name="T">The type of value to check.</typeparam>
+    /// <param name="self">The values to check.</param>
+    /// <returns>The maximum value in the list.</returns>
+    public static T Max<T>(this List<T> self) where T : IComparable<T>
+    {
+      if (self == null || self.Count == 0)
+        return default(T);
+
+      T max = self[0];
+      int total = self.Count;
+      for (int i = 1; i < self.Count; ++i)
+      {
+        T element = self[i];
+        if (element.CompareTo(max) > 0)
+          max = element;
+      }
+
+      return max;
+    }
+
+    /// <summary>
+    /// Returns the minimum value in the list.
+    /// </summary>
+    /// <typeparam name="T">The type of value to check.</typeparam>
+    /// <param name="self">The values to check.</param>
+    /// <returns>The minimum value in the list.</returns>
+    public static T Min<T>(this List<T> self) where T : IComparable<T>
+    {
+      if (self == null || self.Count == 0)
+        return default(T);
+
+      T min = self[0];
+      int total = self.Count;
+      for (int i = 1; i < self.Count; ++i)
+      {
+        T element = self[i];
+        if (element.CompareTo(min) < 0)
+          min = element;
+      }
+
+      return min;
     }
   }
 }

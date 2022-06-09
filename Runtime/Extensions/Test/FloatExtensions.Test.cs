@@ -92,16 +92,17 @@ public partial class ExtensionsTests
     Assert.IsTrue(0.0f.NearlyEquals(1.0f, 2.0f));
     Assert.IsFalse(0.0f.NearlyEquals(2.0f, 1.0f));
 
-    Assert.IsTrue(0.0f.IsWithin(0.0f, 1.0f));
-    Assert.IsTrue(1.0f.IsWithin(0.0f, 1.0f));
-    Assert.IsFalse(2.0f.IsWithin(0.0f, 1.0f));
-    Assert.IsFalse((-2.0f).IsWithin(0.0f, 1.0f));
-
     Assert.IsTrue(0.5f.IsBetween(0.0f, 1.0f));
-    Assert.IsFalse(0.0f.IsBetween(0.0f, 1.0f));
-    Assert.IsFalse(1.0f.IsBetween(0.0f, 1.0f));
+    Assert.IsTrue(0.0f.IsBetween(0.0f, 1.0f));
+    Assert.IsTrue(1.0f.IsBetween(0.0f, 1.0f));
     Assert.IsFalse(2.0f.IsBetween(0.0f, 1.0f));
     Assert.IsFalse((-2.0f).IsBetween(0.0f, 1.0f));
+
+    Assert.IsTrue(0.5f.IsBetweenExclusive(0.0f, 1.0f));
+    Assert.IsFalse(0.0f.IsBetweenExclusive(0.0f, 1.0f));
+    Assert.IsFalse(1.0f.IsBetweenExclusive(0.0f, 1.0f));
+    Assert.IsFalse(2.0f.IsBetweenExclusive(0.0f, 1.0f));
+    Assert.IsFalse((-2.0f).IsBetweenExclusive(0.0f, 1.0f));
 
     yield return null;
   }

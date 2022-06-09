@@ -90,24 +90,6 @@ namespace FronkonGames.GameWork.Foundation
     }
 
     /// <summary>
-    /// The value is within a range.
-    /// </summary>
-    /// <param name="self">Value</param>
-    /// <param name="min">Minimum range (included)</param>
-    /// <param name="max">Maximum range (included)</param>
-    /// <returns>True/false</returns>
-    public static bool IsWithin(this int self, int min, int max) => self >= min && self <= max;
-
-    /// <summary>
-    /// The value is between a range.
-    /// </summary>
-    /// <param name="self">Value</param>
-    /// <param name="min">Minimum range (not included)</param>
-    /// <param name="max">Maximum range (not included)</param>
-    /// <returns>True/false</returns>
-    public static bool IsBetween(this int self, int min, int max) => self > min && self < max;
-
-    /// <summary>
     /// Value is even.
     /// </summary>
     /// <param name="self">Value</param>
@@ -207,5 +189,12 @@ namespace FronkonGames.GameWork.Foundation
     /// <param name="self">Value</param>
     /// <returns>String</returns>
     public static string SecondsToHumanReadable(this int self) => $"{self / 3600:00}:{(self / 60) % 60:00}:{self % 60:00}";
+
+    /// <summary>
+    /// Returns the number of digits in the number.
+    /// </summary>
+    /// <param name="self">Value.</param>
+    /// <returns>The number of digits in the number.</returns>
+    public static int NumDigits(this int self) => Mathf.FloorToInt(Mathf.Log10((float)self.Abs()) + 1.0f);
   }
 }

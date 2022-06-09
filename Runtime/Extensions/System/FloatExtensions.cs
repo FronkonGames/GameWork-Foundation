@@ -116,34 +116,8 @@ namespace FronkonGames.GameWork.Foundation
     /// </summary>
     /// <param name="a">Value</param>
     /// <param name="b">Value</param>
-    /// <returns>True/false</returns>
-    public static bool NearlyEquals(this float a, float b) => Mathf.Abs(a - b) < MathConstants.Epsilon;
-
-    /// <summary>
-    /// Approximately equal values.
-    /// </summary>
-    /// <param name="a">Value</param>
-    /// <param name="b">Value</param>
     /// <param name="epsilon">Difference range</param>
     /// <returns>True/false</returns>
-    public static bool NearlyEquals(this float a, float b, float epsilon) => Mathf.Abs(a - b) < epsilon;
-
-    /// <summary>
-    /// The value is within a range.
-    /// </summary>
-    /// <param name="self">Value</param>
-    /// <param name="min">Minimum range (included)</param>
-    /// <param name="max">Maximum range (included)</param>
-    /// <returns>True/false</returns>
-    public static bool IsWithin(this float self, float min, float max) => self >= min && self <= max;
-
-    /// <summary>
-    /// The value is between a range.
-    /// </summary>
-    /// <param name="self">Value</param>
-    /// <param name="min">Minimum range (not included)</param>
-    /// <param name="max">Maximum range (not included)</param>
-    /// <returns>True/false</returns>
-    public static bool IsBetween(this float self, float min, float max) => self > min && self < max;
+    public static bool NearlyEquals(this float a, float b, float epsilon = MathConstants.Epsilon) => Mathf.Abs(a - b) < epsilon;
   }
 }

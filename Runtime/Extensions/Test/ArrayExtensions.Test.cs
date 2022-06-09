@@ -55,7 +55,15 @@ public partial class ExtensionsTests
 
     arrayA.Shuffle();
     Assert.AreNotEqual(arrayA, arrayB);
-    
+
+    Assert.AreEqual(arrayA.Sum(), 45);
+
+    float[] arrayC = { 0.0f, 1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f };
+    Assert.AreEqual(arrayC.Sum(), 45.0f);
+
+    Assert.AreEqual(arrayA.Max(), 9);
+    Assert.AreEqual(arrayA.Min(), 0);
+
     yield return null;
   }
 }

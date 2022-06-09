@@ -47,9 +47,9 @@ namespace FronkonGames.GameWork.Foundation
     /// <summary></summary>
     public const float Rad2Deg            = 360.0f / Tau;
 
-    /// <summary></summary>
-    public const float Epsilon            = float.Epsilon;
-    
+    /// <summary>Using float.epsilon can cause precision problems in Unity.</summary>
+    public const float Epsilon            = 1.4E-32f;
+
     /// <summary></summary>
     public const float Infinity           = Mathf.Infinity;
     

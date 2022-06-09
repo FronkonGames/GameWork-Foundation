@@ -45,6 +45,9 @@ public partial class ExtensionsTests
     listA.Reverse();
     Assert.AreEqual(listA, listB);
 
+    Assert.AreEqual(listA.Max(), 9);
+    Assert.AreEqual(listA.Min(), 0);
+
     yield return null;
   }
 }

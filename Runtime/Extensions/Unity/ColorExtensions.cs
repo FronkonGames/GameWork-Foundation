@@ -77,18 +77,18 @@ namespace FronkonGames.GameWork.Foundation
     /// </summary>
     /// <param name="self">Value</param>
     /// <returns>True if it is almost almost black.</returns>
-    public static bool IsApproximatelyBlack(this Color self) => self.r <= Mathf.Epsilon &&
-                                                                self.g <= Mathf.Epsilon &&
-                                                                self.b <= Mathf.Epsilon;
+    public static bool IsApproximatelyBlack(this Color self) => self.r <= MathConstants.Epsilon &&
+                                                                self.g <= MathConstants.Epsilon &&
+                                                                self.b <= MathConstants.Epsilon;
 
     /// <summary>
     /// Is it almost white?
     /// </summary>
     /// <param name="self">Value</param>
     /// <returns>True if it is almost almost white.</returns>
-    public static bool IsApproximatelyWhite(this Color self) => self.r >= 1.0f - Mathf.Epsilon &&
-                                                                self.g >= 1.0f - Mathf.Epsilon &&
-                                                                self.b >= 1.0f - Mathf.Epsilon;
+    public static bool IsApproximatelyWhite(this Color self) => self.r >= 1.0f - MathConstants.Epsilon &&
+                                                                self.g >= 1.0f - MathConstants.Epsilon &&
+                                                                self.b >= 1.0f - MathConstants.Epsilon;
 
     /// <summary>
     /// Opaque version of the color.

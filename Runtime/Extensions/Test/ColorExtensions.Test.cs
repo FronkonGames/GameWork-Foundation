@@ -17,7 +17,6 @@
 using System.Collections;
 using NUnit.Framework;
 using UnityEngine.TestTools;
-using UnityEngine;
 using FronkonGames.GameWork.Foundation;
 
 /// <summary>

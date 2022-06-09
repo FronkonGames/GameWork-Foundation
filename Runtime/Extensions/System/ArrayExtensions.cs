@@ -19,7 +19,7 @@ using System;
 namespace FronkonGames.GameWork.Foundation
 {
   /// <summary>
-  /// List extensions.
+  /// Array extensions.
   /// </summary>
   public static class ArrayExtensions
   {
@@ -118,6 +118,83 @@ namespace FronkonGames.GameWork.Foundation
         int j = Rand.Range(0, i);
         self.Swap(i + index, j + index);
       }
-    }    
+    }
+
+    /// <summary>
+    /// Calculates the sum of all elements in the array.
+    /// </summary>
+    /// <param name="self">The array.</param>
+    /// <returns>The sum of all elements in the array.</returns>
+    public static int Sum(this int[] self)
+    {
+      int sum = 0, total = self.Length;
+
+      for (int i = 0; i < total; ++i)
+        sum += self[i];
+
+      return sum;
+    }
+
+    /// <summary>
+    /// Calculates the sum of all elements in the array.
+    /// </summary>
+    /// <param name="self">The array.</param>
+    /// <returns>The sum of all elements in the array.</returns>
+    public static float Sum(this float[] self)
+    {
+      float sum = 0.0f;
+      int total = self.Length;
+
+      for (int i = 0; i < total; ++i)
+        sum += self[i];
+
+      return sum;
+    }
+
+    /// <summary>
+    /// Returns the maximum value in the array.
+    /// </summary>
+    /// <typeparam name="T">The type of value to check.</typeparam>
+    /// <param name="self">Value.</param>
+    /// <returns>The maximum value in the array.</returns>
+    public static T Max<T>(this T[] self) where T : IComparable<T>
+    {
+      if (self == null || self.Length == 0)
+        return default(T);
+
+      T max = self[0];
+      int total = self.Length;
+      for (int i = 1; i < total; ++i)
+      {
+        T element = self[i];
+        if (element.CompareTo(max) > 0)
+          max = element;
+      }
+
+      return max;
+    }
+
+    /// <summary>
+    /// Returns the minimum value in the array.
+    /// </summary>
+    /// <typeparam name="T">The type of value to check.</typeparam>
+    /// <param name="self">Value.</param>
+    /// <returns>The minimum value in the array.</returns>
+    public static T Min<T>(this T[] self) where T : IComparable<T>
+    {
+      if (self == null || self.Length == 0)
+        return default(T);
+
+      T min = self[0];
+      int total = self.Length;
+      for (int i = 1; i < total; ++i)
+      {
+        T element = self[i];
+        if (element.CompareTo(min) < 0)
+          min = element;
+      }
+
+      return min;
+    }
   }
 }

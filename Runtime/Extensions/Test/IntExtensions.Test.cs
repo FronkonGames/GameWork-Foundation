@@ -55,17 +55,17 @@ public partial class ExtensionsTests
     Assert.AreEqual(2.Pow(1), 2);
     Assert.AreEqual(2.Pow(2), 4);
 
-    Assert.IsTrue(0.IsWithin(-1, 1));
-    Assert.IsTrue(1.IsWithin(-1, 1));
-    Assert.IsTrue((-1).IsWithin(-1, 1));
-    Assert.IsFalse(2.IsWithin(-1, 1));
-    Assert.IsFalse((-2).IsWithin(-1, 1));
-
     Assert.IsTrue(0.IsBetween(-1, 1));
-    Assert.IsFalse(1.IsBetween(-1, 1));
-    Assert.IsFalse((-1).IsBetween(-1, 1));
+    Assert.IsTrue(1.IsBetween(-1, 1));
+    Assert.IsTrue((-1).IsBetween(-1, 1));
     Assert.IsFalse(2.IsBetween(-1, 1));
     Assert.IsFalse((-2).IsBetween(-1, 1));
+
+    Assert.IsTrue(0.IsBetweenExclusive(-1, 1));
+    Assert.IsFalse(1.IsBetweenExclusive(-1, 1));
+    Assert.IsFalse((-1).IsBetweenExclusive(-1, 1));
+    Assert.IsFalse(2.IsBetweenExclusive(-1, 1));
+    Assert.IsFalse((-2).IsBetweenExclusive(-1, 1));
 
     Assert.IsTrue(0.IsEven());
     Assert.IsFalse(1.IsEven());
@@ -88,6 +88,11 @@ public partial class ExtensionsTests
 
     Assert.AreEqual(60.SecondsToHumanReadable(), "00:01:00");
     Assert.AreEqual(3600.SecondsToHumanReadable(), "01:00:00");
+
+    Assert.AreEqual(1.NumDigits(), 1);
+    Assert.AreEqual((-1).NumDigits(), 1);
+    Assert.AreEqual(10.NumDigits(), 2);
+    Assert.AreEqual(100.NumDigits(), 3);
 
     yield return null;
   }
