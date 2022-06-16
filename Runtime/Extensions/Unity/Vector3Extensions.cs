@@ -19,23 +19,23 @@ using UnityEngine;
 namespace FronkonGames.GameWork.Foundation
 {
   /// <summary>
-  /// Vector2 extensions.
+  /// Vector3 extensions.
   /// </summary>
-  public static class Vector2Extensions
+  public static class Vector3Extensions
   {
     /// <summary>
     /// Returns the absolute value of the vector.
     /// </summary>
     /// <param name="self">Value.</param>
     /// <returns>A new vector of the absolute value.</returns>
-    public static Vector2 Abs(this Vector2 self) => new Vector2(Mathf.Abs(self.x), Mathf.Abs(self.y));
+    public static Vector3 Abs(this Vector3 self) => new Vector3(Mathf.Abs(self.x), Mathf.Abs(self.y), Mathf.Abs(self.z));
 
     /// <summary>
     /// Rounds the vector up to the nearest whole number.
     /// </summary>
     /// <param name="value">The vector to Value.</param>
     /// <returns>A new rounded vector.</returns>
-    public static Vector2 Ceil(this Vector2 value) => new Vector2(Mathf.Ceil(value.x), Mathf.Ceil(value.y));
+    public static Vector3 Ceil(this Vector3 value) => new Vector3(Mathf.Ceil(value.x), Mathf.Ceil(value.y), Mathf.Ceil(value.z));
 
     /// <summary>
     /// Clamps the vector to the range [min..max].
@@ -44,14 +44,23 @@ namespace FronkonGames.GameWork.Foundation
     /// <param name="min">The minimum value.</param>
     /// <param name="max">The maximum value.</param>
     /// <returns>A new clamped vector.</returns>
-    public static Vector2 Clamp(this Vector2 self, Vector2 min, Vector2 max) => new Vector2(Mathf.Clamp(self.x, min.x, max.x), Mathf.Clamp(self.y, min.y, max.y));
+    public static Vector3 Clamp(this Vector3 self, Vector3 min, Vector3 max) => new Vector3(Mathf.Clamp(self.x, min.x, max.x),
+                                                                                            Mathf.Clamp(self.y, min.y, max.y),
+                                                                                            Mathf.Clamp(self.z, min.z, max.z));
+
+    /// <summary>
+    /// Clamps the vector to the range [0..1].
+    /// </summary>
+    /// <param name="self">Value.</param>
+    /// <returns>A new clamped vector.</returns>
+    public static Vector3 Clamp01(this Vector3 self) => new Vector3(Mathf.Clamp01(self.x), Mathf.Clamp01(self.y), Mathf.Clamp01(self.z));
 
     /// <summary>
     /// Rounds the vector down to the nearest whole number.
     /// </summary>
     /// <param name="self">Value.</param>
     /// <returns>A new rounded vector.</returns>
-    public static Vector2 Floor(this Vector2 self) => new Vector2(Mathf.Floor(self.x), Mathf.Floor(self.y));
+    public static Vector3 Floor(this Vector3 self) => new Vector3(Mathf.Floor(self.x), Mathf.Floor(self.y), Mathf.Floor(self.z));
 
     /// <summary>
     /// Checks for equality with another vector given a margin of error specified by an epsilon.
@@ -59,13 +68,15 @@ namespace FronkonGames.GameWork.Foundation
     /// <param name="a">The left-hand side of the equality check.</param>
     /// <param name="b">The right-hand side of the equality check.</param>
     /// <returns>True if the values are equal.</returns>
-    public static bool NearlyEquals(this Vector2 a, Vector2 b, float epsilon = MathConstants.Epsilon) => a.x.NearlyEquals(b.x, epsilon) && a.y.NearlyEquals(b.y, epsilon);
+    public static bool NearlyEquals(this Vector3 a, Vector3 b, float epsilon = MathConstants.Epsilon) => a.x.NearlyEquals(b.x, epsilon) &&
+                                                                                                         a.y.NearlyEquals(b.y, epsilon) &&
+                                                                                                         a.z.NearlyEquals(b.z, epsilon);
 
     /// <summary>
     /// Rounds the vector to the nearest whole number.
     /// </summary>
     /// <param name="self">Value.</param>
     /// <returns>A new rounded vector.</returns>
-    public static Vector2 Rounded(this Vector2 self) => new Vector2(Mathf.Round(self.x), Mathf.Round(self.y));
+    public static Vector3 Rounded(this Vector3 self) => new Vector3(Mathf.Round(self.x), Mathf.Round(self.y), Mathf.Round(self.z));
   }
 }
