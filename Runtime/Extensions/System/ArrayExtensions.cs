@@ -30,7 +30,7 @@ namespace FronkonGames.GameWork.Foundation
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
     public static T Random<T>(this T[] self) => self[Rand.Range(0, self.Length)];
-    
+
     /// <summary>
     /// 
     /// </summary>
