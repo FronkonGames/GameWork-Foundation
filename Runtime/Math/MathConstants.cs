@@ -47,6 +47,15 @@ namespace FronkonGames.GameWork.Foundation
     /// <summary></summary>
     public const float Rad2Deg            = 360.0f / Tau;
 
+    /// <summary>1.0 / 3.0</summary>
+    public const float OneThird           = 0.333333333333333f;
+
+    /// <summary>2.0 / 3.0</summary>
+    public const float TwoThirds          = 0.666666666666667f;
+
+    /// <summary>1.0 / 6.0</summary>
+    public const float OneSixth           = 0.166666666666667f;
+
     /// <summary>Using float.epsilon can cause precision problems in Unity.</summary>
     public const float Epsilon            = 1.4E-32f;
 
