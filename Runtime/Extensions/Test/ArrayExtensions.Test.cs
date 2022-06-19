@@ -34,6 +34,9 @@ public partial class ExtensionsTests
     int[] arrayB = arrayA.Copy();
     Assert.AreEqual(arrayA, arrayB);
 
+    int[] subArrayA = { 5, 6, 7, 8, 9 };
+    Assert.AreEqual(arrayA.Sub(5, 5), subArrayA);
+
     arrayA = new []{ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
     arrayB = new []{ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 

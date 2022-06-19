@@ -59,7 +59,17 @@ namespace FronkonGames.GameWork.Foundation
       Array.Copy(self, result, self.Length);
 
       return result;
-    }    
+    }
+
+    /// <summary>
+    /// Get a subarray.
+    /// </summary>
+    /// <param name="self"></param>
+    /// <param name="offset"></param>
+    /// <param name="length"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    public static T[] Sub<T>(this T[] self, int offset, int length) => new ArraySegment<T>(self, offset, length).ToArray();
 
     /// <summary>
     /// Swaps a pair of elements.
