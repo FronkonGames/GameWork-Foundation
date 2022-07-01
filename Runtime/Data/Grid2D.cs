@@ -96,11 +96,11 @@ namespace FronkonGames.GameWork.Foundation
     /// </summary>
     /// <param name="width"></param>
     /// <param name="height"></param>
-    /// <param name="inDefault"></param>
-    public Grid2D(int width, int height, T inDefault) : this(width, height)
+    /// <param name="value"></param>
+    public Grid2D(int width, int height, T value) : this(width, height)
     {
       for (int i = 0; i < data.Length; ++i)
-        data[i] = inDefault;
+        data[i] = value;
     }
 
     /// <summary>
@@ -233,11 +233,11 @@ namespace FronkonGames.GameWork.Foundation
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="defaultValue"></param>
-    public void Clear(T defaultValue)
+    /// <param name="value"></param>
+    public void Clear(T value)
     {
       for (int i = 0; i < data.Length; ++i)
-        data[i] = defaultValue;
+        data[i] = value;
     }
     
     /// <summary>

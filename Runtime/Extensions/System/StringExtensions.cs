@@ -326,6 +326,13 @@ namespace FronkonGames.GameWork.Foundation
     }
 
     /// <summary>
+    /// Remove illegal characters for files.
+    /// </summary>
+    /// <param name="self">Value</param>
+    /// <returns>Valid file / path</returns>
+    public static string RemoveInvalidFileCharacters(this string self) => string.Concat(self.Split(Path.GetInvalidFileNameChars())).Trim();
+
+    /// <summary>
     /// Compress the text, using gzip.
     /// </summary>
     /// <param name="self">Value</param>
