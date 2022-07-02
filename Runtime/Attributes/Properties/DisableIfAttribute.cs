@@ -1,4 +1,4 @@
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+﻿////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Copyright (c) Martin Bustos @FronkonGames <fronkongames@gmail.com>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
@@ -14,49 +14,24 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+using System;
+using System.Diagnostics;
 using UnityEngine;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  public class DrawersTest : MonoBehaviour
+  /// <summary>
+  /// Attribute.
+  /// </summary>
+  [Conditional("UNITY_EDITOR")]
+  [AttributeUsage(AttributeTargets.Field |
+                  AttributeTargets.Property |
+                  AttributeTargets.Class |
+                  AttributeTargets.Struct, Inherited = true)]
+  public class DisableIfAttribute : PropertyAttribute
   {
-    [Title("Edit only in Play/Editor modes")]
+    public readonly string conditional;
 
-    [SerializeField, OnlyEnableInEdit, Indent()]
-    private string onlyEditInEditor;
-
-    [SerializeField, OnlyEnableInPlay, Indent()]
-    private string onlyEditInPlay;
-
-    [Title("Show/Hide Enable/Disable Ifs")]
-
-    [SerializeField, Indent()]
-    private bool enable;
-
-    [SerializeField, EnableIf("enable"), Indent(2)]
-    private string enableText;
-
-    [SerializeField, Indent()]
-    private bool disable;
-
-    [SerializeField, EnableIf("disable"), Indent(2)]
-    private string disableText;
-
-    [SerializeField, Indent()]
-    private bool show;
-
-    [SerializeField, ShowIf("show"), Indent(2)]
-    private string showText;
-
-    [SerializeField, Indent()]
-    private bool hide;
-
-    [SerializeField, HideIf("hide"), Indent(2)]
-    private string hideText;
-
-    [Title("Required")]
-    
-    [SerializeField, NotNull, Indent()]
-    private GameObject cantBeNull;
+    public DisableIfAttribute(string conditional) => this.conditional = conditional;
   }
 }

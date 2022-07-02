@@ -14,26 +14,19 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+using System;
+using System.Diagnostics;
 using UnityEngine;
-using UnityEditor;
 
 namespace FronkonGames.GameWork.Foundation
 {
   /// <summary>
-  /// .
+  /// Attribute.
   /// </summary>
-  [CustomPropertyDrawer(typeof(EditOnlyAttribute), true)]
-  public sealed class EditOnlyPropertyDrawer : PropertyDrawer
-  {
-    public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
-    {
-      GUI.enabled = !EditorApplication.isPlayingOrWillChangePlaymode; 
-
-      label = EditorGUI.BeginProperty(position, label, property);
-      EditorGUI.PropertyField(position, property, label, true);
-      EditorGUI.EndProperty();
-
-      GUI.enabled = true;
-    }
-  }
+  [Conditional("UNITY_EDITOR")]
+  [AttributeUsage(AttributeTargets.Field | 
+                  AttributeTargets.Property |
+                  AttributeTargets.Class |
+                  AttributeTargets.Struct, Inherited = true)]
+  public class OnlyEnableInPlayAttribute : PropertyAttribute { }
 }

@@ -345,7 +345,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6670db7d2905bf4bb1ef3151cc1c834, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  label: Hi, you cant change me in Play mode.
-  cantBeNull: {fileID: 0}
-  hide: 0
+  onlyEditInEditor: 
+  onlyEditInPlay: 
+  enable: 0
+  enableText: Enable if 'Enable' is true.
+  disable: 0
+  disableText: Disable if 'Disable' is true.
+  show: 0
+  showText: Show if 'Show' is true.
+  hide: 1
   hideText: Hide if 'Hide' is true.
+  cantBeNull: {fileID: 0}

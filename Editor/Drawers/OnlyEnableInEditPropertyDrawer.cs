@@ -1,4 +1,4 @@
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+﻿////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Copyright (c) Martin Bustos @FronkonGames <fronkongames@gmail.com>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
@@ -15,48 +15,25 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 using UnityEngine;
+using UnityEditor;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  public class DrawersTest : MonoBehaviour
+  /// <summary>
+  /// .
+  /// </summary>
+  [CustomPropertyDrawer(typeof(OnlyEnableInEditAttribute), true)]
+  public sealed class OnlyEnableInEditPropertyDrawer : PropertyDrawer
   {
-    [Title("Edit only in Play/Editor modes")]
+    public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+    {
+      GUI.enabled = !EditorApplication.isPlayingOrWillChangePlaymode; 
 
-    [SerializeField, OnlyEnableInEdit, Indent()]
-    private string onlyEditInEditor;
+      label = EditorGUI.BeginProperty(position, label, property);
+      EditorGUI.PropertyField(position, property, label, true);
+      EditorGUI.EndProperty();
 
-    [SerializeField, OnlyEnableInPlay, Indent()]
-    private string onlyEditInPlay;
-
-    [Title("Show/Hide Enable/Disable Ifs")]
-
-    [SerializeField, Indent()]
-    private bool enable;
-
-    [SerializeField, EnableIf("enable"), Indent(2)]
-    private string enableText;
-
-    [SerializeField, Indent()]
-    private bool disable;
-
-    [SerializeField, EnableIf("disable"), Indent(2)]
-    private string disableText;
-
-    [SerializeField, Indent()]
-    private bool show;
-
-    [SerializeField, ShowIf("show"), Indent(2)]
-    private string showText;
-
-    [SerializeField, Indent()]
-    private bool hide;
-
-    [SerializeField, HideIf("hide"), Indent(2)]
-    private string hideText;
-
-    [Title("Required")]
-    
-    [SerializeField, NotNull, Indent()]
-    private GameObject cantBeNull;
+      GUI.enabled = true;
+    }
   }
 }
