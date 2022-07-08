@@ -333,6 +333,20 @@ namespace FronkonGames.GameWork.Foundation
     public static string RemoveInvalidFileCharacters(this string self) => string.Concat(self.Split(Path.GetInvalidFileNameChars())).Trim();
 
     /// <summary>
+    /// Relative to project path to absolute path.
+    /// </summary>
+    /// <param name="self">Value</param>
+    /// <returns>Absolute path</returns>
+    public static string ToAbsolutePath(this string self) => $"{Application.dataPath.Substring( 0, Application.dataPath.Length - "Assets".Length)}{self}";
+
+    /// <summary>
+    /// Absolute path to relative to project path.
+    /// </summary>
+    /// <param name="self">Value</param>
+    /// <returns>Relative path</returns>
+    public static string ToRelativePath(this string self) => self.Substring(Application.dataPath.Length - "Assets".Length);
+
+    /// <summary>
     /// Compress the text, using gzip.
     /// </summary>
     /// <param name="self">Value</param>

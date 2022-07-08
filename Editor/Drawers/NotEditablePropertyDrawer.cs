@@ -1,4 +1,4 @@
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+﻿////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Copyright (c) Martin Bustos @FronkonGames <fronkongames@gmail.com>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
@@ -14,44 +14,28 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-using System;
-using System.Diagnostics;
+using UnityEngine;
+using UnityEditor;
+using FronkonGames.GameWork.Foundation;
 
 namespace FronkonGames.GameWork.Foundation
 {
   /// <summary>
-  /// Float attribute.
+  /// .
   /// </summary>
-  [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
-  [Conditional("UNITY_EDITOR")]
-  public sealed class FloatAttribute : BaseAttribute
+  [CustomPropertyDrawer(typeof(NotEditableAttribute), true)]
+  public sealed class NotEditablePropertyDrawer : PropertyDrawer
   {
-    public readonly float defaultValue;
-    public readonly float min;
-    public readonly float max;
-
-    public readonly string tooltip;
-
-    public FloatAttribute(string tooltip = "")
+    public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
-      this.defaultValue = 0.0f;
-      this.min = this.max = 0.0f;
-      this.tooltip = tooltip;
-    }
+      bool previous = GUI.enabled;
+      GUI.enabled = false;
 
-    public FloatAttribute(float min, float max, float defaultValue = 0.0f, string tooltip = "")
-    {
-      this.defaultValue = defaultValue;
-      this.min = min;
-      this.max = max;
-      this.tooltip = tooltip;
-    }
+      label = EditorGUI.BeginProperty(position, label, property);
+      EditorGUI.PropertyField(position, property, label, true);
+      EditorGUI.EndProperty();
 
-    public FloatAttribute(float defaultValue = 0.0f, string tooltip = "")
-    {
-      this.defaultValue = defaultValue;
-      this.min = this.max = 0.0f;
-      this.tooltip = tooltip;
+      GUI.enabled = previous;
     }
   }
 }

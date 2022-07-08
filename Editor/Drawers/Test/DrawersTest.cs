@@ -22,41 +22,63 @@ namespace FronkonGames.GameWork.Foundation
   {
     [Title("Edit only in Play/Editor modes")]
 
-    [SerializeField, OnlyEnableInEdit, Indent()]
+    [SerializeField, OnlyEnableInEdit, Indent]
     private string onlyEditInEditor;
 
-    [SerializeField, OnlyEnableInPlay, Indent()]
+    [SerializeField, OnlyEnableInPlay, Indent]
     private string onlyEditInPlay;
 
     [Title("Show/Hide Enable/Disable Ifs")]
 
-    [SerializeField, Indent()]
+    [SerializeField, NotEditable, Indent]
+    private string notEditableText;
+
+    [SerializeField, Indent]
     private bool enable;
 
-    [SerializeField, EnableIf("enable"), Indent(2)]
+    [SerializeField, EnableIf(nameof(enable)), Indent(2)]
     private string enableText;
 
-    [SerializeField, Indent()]
+    [SerializeField, Indent]
     private bool disable;
 
-    [SerializeField, EnableIf("disable"), Indent(2)]
+    [SerializeField, EnableIf(nameof(disable)), Indent(2)]
     private string disableText;
 
-    [SerializeField, Indent()]
+    [SerializeField, Indent]
     private bool show;
 
-    [SerializeField, ShowIf("show"), Indent(2)]
+    [SerializeField, ShowIf(nameof(show)), Indent(2)]
     private string showText;
 
-    [SerializeField, Indent()]
+    [SerializeField, Indent]
     private bool hide;
 
-    [SerializeField, HideIf("hide"), Indent(2)]
+    [SerializeField, HideIf(nameof(hide)), Indent(2)]
     private string hideText;
 
     [Title("Required")]
     
-    [SerializeField, NotNull, Indent()]
+    [SerializeField, NotNull, Indent]
     private GameObject cantBeNull;
+    
+    [Title("Scenes")]
+
+    [SerializeField, Scene, Indent]
+    private int scene;
+
+    [Title("Files")]
+
+    [SerializeField, Folder, Indent]
+    private string relativeFolder;
+
+    [SerializeField, Folder(false), Indent]
+    private string absoluteFolder;
+    
+    [SerializeField, File, Indent]
+    private string relativeFile;
+    
+    [SerializeField, File(false), Indent]
+    private string absoluteFile;
   }
 }

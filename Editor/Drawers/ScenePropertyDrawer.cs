@@ -14,19 +14,36 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-using System;
-using System.Diagnostics;
+using System.IO;
 using UnityEngine;
+using UnityEditor;
 
 namespace FronkonGames.GameWork.Foundation
 {
   /// <summary>
-  /// Attribute.
+  /// .
   /// </summary>
-  [Conditional("UNITY_EDITOR")]
-  [AttributeUsage(AttributeTargets.Field | 
-                  AttributeTargets.Property |
-                  AttributeTargets.Class |
-                  AttributeTargets.Struct, Inherited = true)]
-  public class NotNullAttribute : PropertyAttribute { }
+  [CustomPropertyDrawer(typeof(SceneAttribute), true)]
+  public sealed class ScenePropertyDrawer : PropertyDrawer
+  {
+    private string[] scenesInBuild;
+
+    public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+    {
+      if (property.propertyType == SerializedPropertyType.Integer)
+      {
+        int index = property.intValue;
+
+        scenesInBuild = new string[EditorBuildSettings.scenes.Length];
+        for (var i = 0; i < EditorBuildSettings.scenes.Length; ++i)
+          scenesInBuild[i] = $"{Path.GetFileNameWithoutExtension(EditorBuildSettings.scenes[i].path)} [{i}]";
+
+        label = EditorGUI.BeginProperty(position, label, property);
+        property.intValue = EditorGUI.Popup(position, label.text, index, scenesInBuild);
+        EditorGUI.EndProperty();
+      }
+      else
+        EditorGUI.PropertyField(position, property, label);
+    }
+  }
 }

@@ -16,53 +16,53 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 using UnityEngine;
 using UnityEditor;
+using FronkonGames.GameWork.Foundation;
 
 namespace FronkonGames.GameWork.Foundation
 {
   /// <summary>
   /// .
   /// </summary>
-  [CustomPropertyDrawer(typeof(TitleAttribute), true)]
-  public sealed class TitlePropertyDrawer : PropertyDrawer
+  [CustomPropertyDrawer(typeof(FileAttribute), true)]
+  public sealed class FilePropertyDrawer : PropertyDrawer
   {
-    private const int SpaceBeforeTitle = 8;
-    private const int SpaceBeforeLine = 2;
-    private const int LineHeight = 2;
-    private const int SpaceBeforeContent = 3;
+    private readonly Texture2D folderButtonTexture;
+    private const float buttonWidth = 20.0f;
+    private const float padding = 4.0f;
+
+    public FilePropertyDrawer()
+    {
+      folderButtonTexture = EditorGUIUtility.FindTexture("Project");
+    }
 
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
-      TitleAttribute titleAttribute = (TitleAttribute)attribute;
-
-      Rect rectTitle = new(position)
+      FileAttribute fileAttribute = (FileAttribute)attribute;
+      if (property.propertyType == SerializedPropertyType.String)
       {
-        y = position.y + SpaceBeforeTitle,
-        height = EditorGUIUtility.singleLineHeight
-      };
-      GUI.Label(rectTitle, titleAttribute.label, EditorStyles.boldLabel);
+        position.width -= buttonWidth + padding;
+        
+        label = EditorGUI.BeginProperty(position, label, property);
+        EditorGUI.PropertyField(position, property, label, true);
+       
+        position.x += position.width + padding;
+        position.width = buttonWidth;
 
-      Rect rectLine = new(position)
-      {
-        y = rectTitle.yMax + SpaceBeforeLine,
-        height = LineHeight
-      };
-      EditorGUI.DrawRect(rectLine, Color.gray);
-
-      Rect rectContent = new(position)
-      {
-        yMin = rectLine.yMax + SpaceBeforeContent
-      };
-      label = EditorGUI.BeginProperty(rectContent, label, property);
-      EditorGUI.PropertyField(rectContent, property, label, true);
-      EditorGUI.EndProperty();
+        if (GUI.Button(position, folderButtonTexture, GUIStyle.none) == true)
+        {
+          string path = property.stringValue;
+          path = EditorUtility.OpenFilePanel("Select file", fileAttribute.relativeToProject == true ? path.ToAbsolutePath() : path, string.Empty);
+          if (string.IsNullOrEmpty(path) == false)
+            property.stringValue = fileAttribute.relativeToProject == true ? path.ToRelativePath() : path;
+        }
+        
+        EditorGUI.EndProperty();
+      }
+      else
+        EditorGUI.PropertyField(position, property, label);
     }
 
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label) =>
-      EditorGUI.GetPropertyHeight(property, label) +
-      SpaceBeforeTitle +
-      EditorGUIUtility.singleLineHeight +
-      SpaceBeforeLine +
-      LineHeight +
-      SpaceBeforeContent;
+      Mathf.Max(base.GetPropertyHeight(property, label), folderButtonTexture.height);
   }
 }

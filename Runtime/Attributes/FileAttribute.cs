@@ -1,4 +1,4 @@
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+﻿////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Copyright (c) Martin Bustos @FronkonGames <fronkongames@gmail.com>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
@@ -16,18 +16,22 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 using System;
 using System.Diagnostics;
+using UnityEngine;
 
 namespace FronkonGames.GameWork.Foundation
 {
   /// <summary>
-  /// Image attribute.
+  /// Attribute.
   /// </summary>
-  [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
   [Conditional("UNITY_EDITOR")]
-  public sealed class ImageAttribute : BaseAttribute
+  [AttributeUsage(AttributeTargets.Field |
+                  AttributeTargets.Property |
+                  AttributeTargets.Class |
+                  AttributeTargets.Struct, Inherited = true)]
+  public class FileAttribute : PropertyAttribute
   {
-    public readonly string tooltip;
+    public readonly bool relativeToProject;
 
-    public ImageAttribute(string tooltip = "") => this.tooltip = tooltip;
+    public FileAttribute(bool relativeToProject = true) => this.relativeToProject = relativeToProject;
   }
 }

@@ -1,4 +1,4 @@
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+﻿////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Copyright (c) Martin Bustos @FronkonGames <fronkongames@gmail.com>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
@@ -21,26 +21,14 @@ using UnityEngine;
 namespace FronkonGames.GameWork.Foundation
 {
   /// <summary>
-  /// Vector3 attribute.
+  /// Attribute.
   /// </summary>
-  [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
   [Conditional("UNITY_EDITOR")]
-  public sealed class Vector3Attribute : BaseAttribute
+  [AttributeUsage(AttributeTargets.Field |
+                  AttributeTargets.Property |
+                  AttributeTargets.Class |
+                  AttributeTargets.Struct, Inherited = true)]
+  public class NotEditableAttribute : PropertyAttribute
   {
-    public readonly Vector3 defaultValue;
-
-    public readonly string tooltip;
-
-    public Vector3Attribute(string tooltip = "")
-    {
-      this.defaultValue = default(Vector3);
-      this.tooltip = tooltip;
-    }
-
-    public Vector3Attribute(Vector3 defaultValue = default(Vector3), string tooltip = "")
-    {
-      this.defaultValue = defaultValue;
-      this.tooltip = tooltip;
-    }
   }
 }

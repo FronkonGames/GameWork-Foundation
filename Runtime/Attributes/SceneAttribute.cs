@@ -1,4 +1,4 @@
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+﻿////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Copyright (c) Martin Bustos @FronkonGames <fronkongames@gmail.com>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
@@ -21,26 +21,14 @@ using UnityEngine;
 namespace FronkonGames.GameWork.Foundation
 {
   /// <summary>
-  /// Vector2 attribute.
+  /// Attribute.
   /// </summary>
-  [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
   [Conditional("UNITY_EDITOR")]
-  public sealed class Vector2Attribute : BaseAttribute
+  [AttributeUsage(AttributeTargets.Field |
+                  AttributeTargets.Property |
+                  AttributeTargets.Class |
+                  AttributeTargets.Struct, Inherited = true)]
+  public class SceneAttribute : PropertyAttribute
   {
-    public readonly Vector2 defaultValue;
-
-    public readonly string tooltip;
-
-    public Vector2Attribute(string tooltip = "")
-    {
-      this.defaultValue = default(Vector2);
-      this.tooltip = tooltip;
-    }
-
-    public Vector2Attribute(Vector2 defaultValue = default(Vector2), string tooltip = "")
-    {
-      this.defaultValue = defaultValue;
-      this.tooltip = tooltip;
-    }
   }
 }

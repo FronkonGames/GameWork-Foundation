@@ -347,12 +347,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onlyEditInEditor: 
   onlyEditInPlay: 
+  notEditableText: 
   enable: 0
-  enableText: Enable if 'Enable' is true.
+  enableText: 
   disable: 0
-  disableText: Disable if 'Disable' is true.
+  disableText: 
   show: 0
-  showText: Show if 'Show' is true.
-  hide: 1
-  hideText: Hide if 'Hide' is true.
+  showText: 
+  hide: 0
+  hideText: 
   cantBeNull: {fileID: 0}
+  scene: 0
+  relativeFolder: 
+  absoluteFolder: 
+  relativeFile: 
+  absoluteFile: 

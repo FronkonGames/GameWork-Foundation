@@ -1,4 +1,4 @@
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+﻿////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Copyright (c) Martin Bustos @FronkonGames <fronkongames@gmail.com>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
@@ -14,6 +14,8 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+using System;
+using System.Diagnostics;
 using UnityEngine;
 
 namespace FronkonGames.GameWork.Foundation
@@ -21,7 +23,17 @@ namespace FronkonGames.GameWork.Foundation
   /// <summary>
   /// Attribute.
   /// </summary>
-  public class BaseAttribute : PropertyAttribute
+  [Conditional("UNITY_EDITOR")]
+  [AttributeUsage(AttributeTargets.Field |
+                  AttributeTargets.Property |
+                  AttributeTargets.Class |
+                  AttributeTargets.Struct, Inherited = true)]
+  public class FolderAttribute : PropertyAttribute
   {
+    public readonly bool relativeToProject;
+
+    public FolderAttribute(bool relativeToProject = true) => this.relativeToProject = relativeToProject;
   }
+  
+  public class OpenLocalFolderAttribute : PropertyAttribute { }
 }

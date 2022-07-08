@@ -1,4 +1,4 @@
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+﻿////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Copyright (c) Martin Bustos @FronkonGames <fronkongames@gmail.com>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
@@ -16,15 +16,17 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 using System;
 using System.Diagnostics;
+using UnityEngine;
 
 namespace FronkonGames.GameWork.Foundation
 {
   /// <summary>
-  /// NotNull attribute.
+  /// Attribute.
   /// </summary>
-  [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
   [Conditional("UNITY_EDITOR")]
-  public sealed class NotNoneAttribute : BaseAttribute
-  {
-  }
+  [AttributeUsage(AttributeTargets.Field | 
+                  AttributeTargets.Property |
+                  AttributeTargets.Class |
+                  AttributeTargets.Struct, Inherited = true)]
+  public class NotNullAttribute : PropertyAttribute { }
 }
