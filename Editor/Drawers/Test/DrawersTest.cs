@@ -42,7 +42,7 @@ namespace FronkonGames.GameWork.Foundation
     [SerializeField, Indent]
     private bool disable;
 
-    [SerializeField, EnableIf(nameof(disable)), Indent(2)]
+    [SerializeField, DisableIf(nameof(disable)), Indent(2)]
     private string disableText;
 
     [SerializeField, Indent]
@@ -67,7 +67,7 @@ namespace FronkonGames.GameWork.Foundation
     [SerializeField, Scene, Indent]
     private int scene;
 
-    [Title("Files")]
+    [Title("Files & folders")]
 
     [SerializeField, Folder, Indent]
     private string relativeFolder;

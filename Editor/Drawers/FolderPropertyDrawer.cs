@@ -50,12 +50,7 @@ namespace FronkonGames.GameWork.Foundation
         position.width = buttonWidth;
 
         if (GUI.Button(position, folderButtonTexture, GUIStyle.none) == true)
-        {
-          string path = property.stringValue;
-          path = EditorUtility.OpenFolderPanel("Select Folder",folderAttribute.relativeToProject == true ? path.ToAbsolutePath() : path, String.Empty);
-          if (string.IsNullOrEmpty(path) == false)
-            property.stringValue = folderAttribute.relativeToProject == true ? path.ToRelativePath() : path;
-        }
+          SetFolderPath(property, folderAttribute);
         
         EditorGUI.EndProperty();
       }
@@ -63,6 +58,19 @@ namespace FronkonGames.GameWork.Foundation
         EditorGUI.PropertyField(position, property, label);
     }
     
+    private static void SetFolderPath(SerializedProperty property, FolderAttribute folderAttribute)
+    {
+      string path = property.stringValue;
+      path = EditorUtility.OpenFolderPanel("Select Folder",folderAttribute.relativeToProject == true ? path.ToAbsolutePath() : path, String.Empty);
+
+      if (string.IsNullOrEmpty(path) == false)
+        property.stringValue = folderAttribute.relativeToProject == true ? path.ToRelativePath() : path;
+
+      property.stringValue = path;
+      property.serializedObject.ApplyModifiedProperties();
+      GUIUtility.ExitGUI();      
+    }
+
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label) =>
       Mathf.Max(base.GetPropertyHeight(property, label), folderButtonTexture.height);
   }

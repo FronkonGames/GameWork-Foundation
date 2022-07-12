@@ -337,14 +337,14 @@ namespace FronkonGames.GameWork.Foundation
     /// </summary>
     /// <param name="self">Value</param>
     /// <returns>Absolute path</returns>
-    public static string ToAbsolutePath(this string self) => $"{Application.dataPath.Substring( 0, Application.dataPath.Length - "Assets".Length)}{self}";
+    public static string ToAbsolutePath(this string self) => $"{Application.dataPath[..^"Assets".Length]}{self}";
 
     /// <summary>
     /// Absolute path to relative to project path.
     /// </summary>
     /// <param name="self">Value</param>
     /// <returns>Relative path</returns>
-    public static string ToRelativePath(this string self) => self.Substring(Application.dataPath.Length - "Assets".Length);
+    public static string ToRelativePath(this string self) => self[(Application.dataPath.Length - "Assets".Length)..];
 
     /// <summary>
     /// Compress the text, using gzip.

@@ -49,17 +49,25 @@ namespace FronkonGames.GameWork.Foundation
         position.width = buttonWidth;
 
         if (GUI.Button(position, folderButtonTexture, GUIStyle.none) == true)
-        {
-          string path = property.stringValue;
-          path = EditorUtility.OpenFilePanel("Select file", fileAttribute.relativeToProject == true ? path.ToAbsolutePath() : path, string.Empty);
-          if (string.IsNullOrEmpty(path) == false)
-            property.stringValue = fileAttribute.relativeToProject == true ? path.ToRelativePath() : path;
-        }
+          SetFilePath(property, fileAttribute);
         
         EditorGUI.EndProperty();
       }
       else
         EditorGUI.PropertyField(position, property, label);
+    }
+
+    private static void SetFilePath(SerializedProperty property, FileAttribute fileAttribute)
+    {
+      string path = property.stringValue;
+      path = EditorUtility.OpenFilePanel("Select file", fileAttribute.relativeToProject == true ? path.ToAbsolutePath() : path, string.Empty);
+      
+      if (string.IsNullOrEmpty(path) == false)
+        path = fileAttribute.relativeToProject == true ? path.ToRelativePath() : path;
+
+      property.stringValue = path;
+      property.serializedObject.ApplyModifiedProperties();
+      GUIUtility.ExitGUI();      
     }
 
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label) =>

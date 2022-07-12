@@ -345,20 +345,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6670db7d2905bf4bb1ef3151cc1c834, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onlyEditInEditor: 
-  onlyEditInPlay: 
-  notEditableText: 
+  onlyEditInEditor: Cant edit in Play mode.
+  onlyEditInPlay: Cant edit in Editor.
+  notEditableText: "U Can\u2019t Touch This"
   enable: 0
-  enableText: 
-  disable: 0
-  disableText: 
-  show: 0
-  showText: 
-  hide: 0
-  hideText: 
+  enableText: Click Enable to edit this.
+  disable: 1
+  disableText: Uncheck Disable to edit this.
+  show: 1
+  showText: Hide when Show is false.
+  hide: 1
+  hideText: Hide when Hide is true.
   cantBeNull: {fileID: 0}
   scene: 0
-  relativeFolder: 
-  absoluteFolder: 
-  relativeFile: 
-  absoluteFile: 
+  relativeFolder: GameWork/Assets/FronkonGames
+  absoluteFolder: E:/GameWork/Assets/FronkonGames
+  relativeFile: Assets/FronkonGames/GameWork/Core.meta
+  absoluteFile: E:/GameWork/Assets/FronkonGames/GameWork.meta
