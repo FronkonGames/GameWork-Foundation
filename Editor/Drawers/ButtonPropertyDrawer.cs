@@ -14,24 +14,31 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-using System;
-using System.Diagnostics;
+using System.Reflection;
 using UnityEngine;
+using UnityEditor;
 
 namespace FronkonGames.GameWork.Foundation
 {
   /// <summary>
-  /// Attribute.
+  /// .
   /// </summary>
-  [Conditional("UNITY_EDITOR")]
-  [AttributeUsage(AttributeTargets.Field |
-                  AttributeTargets.Property |
-                  AttributeTargets.Class |
-                  AttributeTargets.Struct)]
-  public class HideIfAttribute : PropertyAttribute
+  [CustomPropertyDrawer(typeof(ButtonAttribute), true)]
+  public sealed class ButtonPropertyDrawer : PropertyDrawer
   {
-    public readonly string conditional;
-
-    public HideIfAttribute(string conditional) => this.conditional = conditional;
+    public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+    {
+      ButtonAttribute button = (ButtonAttribute)attribute; 
+      
+      Object target = property.serializedObject.targetObject;
+      MethodInfo method = target.GetType().GetMethod(button.methodName, BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
+      
+      if (method == null)
+        GUI.Label(position, $"Method '{button.methodName}' could not be found.");
+      else if (method.GetParameters().Length > 0)
+        GUI.Label(position, $"Method '{button.methodName}' cannot have parameters.");
+      else if (GUI.Button(position, button.label) == true)
+        method.Invoke(target, null);
+    }
   }
 }

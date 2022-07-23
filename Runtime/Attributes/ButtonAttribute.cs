@@ -28,10 +28,18 @@ namespace FronkonGames.GameWork.Foundation
                   AttributeTargets.Property |
                   AttributeTargets.Class |
                   AttributeTargets.Struct)]
-  public class HideIfAttribute : PropertyAttribute
+  public class ButtonAttribute : PropertyAttribute
   {
-    public readonly string conditional;
+    public readonly string label;
+    
+    public readonly string methodName;
 
-    public HideIfAttribute(string conditional) => this.conditional = conditional;
+    public ButtonAttribute(string methodName) => label = this.methodName = methodName; 
+
+    public ButtonAttribute(string label, string methodName)
+    {
+      this.label = label;
+      this.methodName = methodName; 
+    }
   }
 }

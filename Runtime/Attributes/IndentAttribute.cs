@@ -27,7 +27,7 @@ namespace FronkonGames.GameWork.Foundation
   [AttributeUsage(AttributeTargets.Field |
                   AttributeTargets.Property |
                   AttributeTargets.Class |
-                  AttributeTargets.Struct, Inherited = true)]
+                  AttributeTargets.Struct)]
   public class IndentAttribute : PropertyAttribute
   {
     public readonly int level;

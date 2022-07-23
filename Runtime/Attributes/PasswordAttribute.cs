@@ -28,10 +28,18 @@ namespace FronkonGames.GameWork.Foundation
                   AttributeTargets.Property |
                   AttributeTargets.Class |
                   AttributeTargets.Struct)]
-  public class HideIfAttribute : PropertyAttribute
+  public class PasswordAttribute : PropertyAttribute
   {
-    public readonly string conditional;
+    public readonly int minLength = 6;
+    public readonly int maxLength = 32;
 
-    public HideIfAttribute(string conditional) => this.conditional = conditional;
+    public PasswordAttribute(int minLength = 6, int maxLength = 32)
+    {
+      Check.Greater(minLength, 0);
+      Check.Greater(maxLength, 0);
+
+      this.minLength = minLength;
+      this.maxLength = maxLength;
+    }
   }
 }

@@ -14,24 +14,41 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-using System;
-using System.Diagnostics;
+using System.IO;
 using UnityEngine;
+using UnityEditor;
 
 namespace FronkonGames.GameWork.Foundation
 {
   /// <summary>
-  /// Attribute.
+  /// .
   /// </summary>
-  [Conditional("UNITY_EDITOR")]
-  [AttributeUsage(AttributeTargets.Field |
-                  AttributeTargets.Property |
-                  AttributeTargets.Class |
-                  AttributeTargets.Struct)]
-  public class HideIfAttribute : PropertyAttribute
+  [CustomPropertyDrawer(typeof(PasswordAttribute), true)]
+  public sealed class PasswordPropertyDrawer : PropertyDrawer
   {
-    public readonly string conditional;
+    public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+    {
+      if (property.propertyType == SerializedPropertyType.String)
+      {
+        PasswordAttribute passwordAttribute = (PasswordAttribute)attribute;
+        string password = property.stringValue;
 
-    public HideIfAttribute(string conditional) => this.conditional = conditional;
+        if (property.stringValue.Length > passwordAttribute.maxLength)
+          password = password[..passwordAttribute.maxLength];
+
+        Color color = GUI.color;
+
+        GUI.color = IsValid(password) ? Color.white : Color.red;
+
+        property.stringValue = EditorGUI.PasswordField(position, label, password);
+
+        GUI.color = color;
+      }
+      else
+        EditorGUI.PropertyField(position, property, label);
+    }
+
+    private bool IsValid(string password) => password.Length >= ((PasswordAttribute)attribute).minLength &&
+                                             password.Length <= ((PasswordAttribute)attribute).maxLength;
   }
 }
