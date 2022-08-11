@@ -18,21 +18,19 @@
   </a>
 </p>
 
-<p align="center"><b>⚠️Still In Early Development ⚠️<b/></p>
-
-## 🔧 Requisites
+## Requisites 🔧
 
 - Unity 2021.2 or higher.
 - Test Framework 1.1.31 or higher.
 
-## 🚀 Installation
+## Installation ⚙️
 
 ### Editing your 'manifest.json'
 
 - Open the manifest.json file of your Unity project.
 - In the section "dependencies" add:
 
-```
+```c#
 {
   ...
   "dependencies":
@@ -44,6 +42,46 @@
 }
 ```
 
-## 📜 License
+### Git
+
+Just clone the repository into your Assets folder:
+
+```c#
+git clone https://github.com/FronkonGames/GameWork-Foundation.git 
+```
+
+## Use 🚀
+
+The functionality is divided into folders, this is its structure:
+
+```
+|
+|\_Runtime......................... Utilities for the game.
+|   |\_Attributes.................. Attributes for fields and class properties.
+|   |\_Data........................ Useful data structures.
+|   |\_Development................. Developer utilities.
+|   |   |\_Check................... Assert extension.
+|   |   |\_Draw.................... Utilities for drawing gameplay information.
+|   |    \_Profiling............... To find bottlenecks.
+|   |\_Extensions.................. Utility extensions.
+|   |   |\_System.................. C# extensions.
+|   |    \_Unity................... Unity extensions.
+|   |\_Math........................ Mathematical utilities.
+|   |\_Patterns.................... Design patterns.
+|   |   |\_Behavioral.............. Behavioural patterns.
+|   |   |\_Creational.............. Creation patterns.
+|   |    \_Structural.............. Structure patterns.
+|    \_Unity....................... Utilities for Unity.
+|       |\_MonoBehaviours.......... MonoBehaviours utilities.
+|        \_Utils................... Misc.
+|
+ \_Editor.......................... Editor utilities.
+    |\_Drawers..................... Custom attribute viewers.
+     \_Inspector................... Editor appearance utilities.
+```
+
+Check the comments for each function for more information.
+
+## License 📜
 
 Code released under [MIT License](https://github.com/FronkonGames/GameWork-Foundation/blob/main/LICENSE.md).
