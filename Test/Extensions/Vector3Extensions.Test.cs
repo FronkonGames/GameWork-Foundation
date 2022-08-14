@@ -25,11 +25,13 @@ using FronkonGames.GameWork.Foundation;
 public partial class ExtensionsTests
 {
   /// <summary>
-  /// Vector2 extensions test.
+  /// Vector3 extensions test.
   /// </summary>
   [UnityTest]
-  public IEnumerator Vector2Float()
+  public IEnumerator Vector3Float()
   {
+    // @TODO.
+    
     yield return null;
   }
 }

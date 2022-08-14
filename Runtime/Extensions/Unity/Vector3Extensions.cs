@@ -14,6 +14,8 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 namespace FronkonGames.GameWork.Foundation
@@ -23,6 +25,30 @@ namespace FronkonGames.GameWork.Foundation
   /// </summary>
   public static class Vector3Extensions
   {
+    /// <summary>
+    /// Add value to X axis.
+    /// </summary>
+    /// <param name="self">Value.</param>
+    /// <param name="value">X</param>
+    /// <returns>A new vector with X added.</returns>
+    public static Vector3 AddX(this Vector3 self, float value) => new Vector3(self.x + value, self.y, self.z);
+
+    /// <summary>
+    /// Add value to Y axis.
+    /// </summary>
+    /// <param name="self">Value.</param>
+    /// <param name="value">Y</param>
+    /// <returns>A new vector with Y added.</returns>
+    public static Vector3 AddY(this Vector3 self, float value) => new Vector3(self.x, self.y + value, self.z);
+
+    /// <summary>
+    /// Add value to Z axis.
+    /// </summary>
+    /// <param name="self">Value.</param>
+    /// <param name="value">Z</param>
+    /// <returns>A new vector with Z added.</returns>
+    public static Vector3 AddZ(this Vector3 self, float value) => new Vector3(self.x, self.y, self.z + value);
+
     /// <summary>
     /// Returns the absolute value of the vector.
     /// </summary>
