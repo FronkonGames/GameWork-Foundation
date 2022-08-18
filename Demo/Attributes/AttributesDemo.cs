@@ -15,19 +15,15 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 using UnityEngine;
-using UnityEditor;
+using FronkonGames.GameWork.Foundation;
 
-namespace FronkonGames.GameWork.Foundation.Editor
+/// <summary>
+/// Attributes test.
+/// </summary>
+public sealed class AttributesDemo : MonoBehaviour
 {
-  /// <summary>
-  /// Foundation menus.
-  /// </summary>
-  public static class FoundationMenus
-  {
-    /// <summary>
-    /// Open the repository.
-    /// </summary>
-    [MenuItem("Help/Game:Work/Foundation/Open repository")]
-    public static void OpenRepository() => Application.OpenURL("https://github.com/FronkonGames/GameWork-Foundation");
-  }
+  [Title("Attributes Demo")]
+
+  [Label("Nice name")]
+  public string badName;
 }

@@ -1,4 +1,4 @@
-<p align="center"><img src="Documentation/banner.png"/></p>
+<p align="center"><img src="Media/banner.png"/></p>
 
 <p align="center"><b>Generic Code And Tools To Build The Basis Of A Framework To Develop Unity Based Games</b></p>
 
@@ -80,7 +80,19 @@ The functionality is divided into folders, this is its structure:
      \_Inspector................... Editor appearance utilities.
 ```
 
-Check the comments for each function for more information.
+Check the comments for each file for more information.
+
+### Attributes
+
+<table>
+<tr><th>
+
+```c#
+[Title("Attributes Demo")]
+```
+</th><th><img src="Media/attributes.title.png"/></th></tr>
+</table>
+
 
 ## License 📜
 
