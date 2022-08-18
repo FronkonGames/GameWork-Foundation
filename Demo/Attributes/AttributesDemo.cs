@@ -26,4 +26,18 @@ public sealed class AttributesDemo : MonoBehaviour
 
   [Label("Nice name")]
   public string badName;
+  
+  [Indent(0)]
+  public string noIndent;
+  
+  [Indent(1)]
+  public string indented;
+
+  [Space]
+
+  [NotNull, Label("Cant be Null")]
+  public GameObject cantBeNull1;
+
+  [NotNull, Label("Cant Be Null")]
+  public GameObject cantBeNull2;
 }
