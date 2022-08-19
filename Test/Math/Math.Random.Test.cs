@@ -14,24 +14,48 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-using System;
 using System.Collections;
 using NUnit.Framework;
 using UnityEngine.TestTools;
 using FronkonGames.GameWork.Foundation;
+using UnityEngine;
 
 /// <summary>
-/// Data tests.
+/// Math tests.
 /// </summary>
-public partial class DataTests
+public partial class MathTests
 {
+  private const int Tries = 10000;
+
   /// <summary>
-  /// FastStack test.
+  /// Random extensions test.
   /// </summary>
   [UnityTest]
-  public IEnumerator FastStack()
+  public IEnumerator Random()
   {
-    // @TODO.
+    // 1D
+    for (int i = 0; i < Tries; ++i)
+    {
+      float value = Rand.Value;
+      
+      Assert.IsTrue(value >= 0.0f && value <= 1.0f);
+    }
+
+    for (int i = 0; i < Tries; ++i)
+    {
+      float sign = Rand.Sign;
+      
+      Assert.IsTrue(sign.NearlyEquals(1.0f) || sign.NearlyEquals(-1.0f));
+    }
+
+    const float min = 0.0f;
+    const float max = 10.0f;
+    for (int i = 0; i < Tries; ++i)
+    {
+      float value = Rand.Range(min, max);
+
+      Assert.IsTrue(value >= min && value <= max);
+    }
 
     yield return null;
   }

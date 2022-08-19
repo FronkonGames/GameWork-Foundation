@@ -58,7 +58,6 @@ The functionality is divided into folders, this is its structure:
 |
 |\_Runtime......................... Utilities for the game.
 |   |\_Attributes.................. Attributes for fields and class properties.
-|   |\_Data........................ Useful data structures.
 |   |\_Development................. Developer utilities.
 |   |   |\_Check................... Assert extension.
 |   |   |\_Draw.................... Utilities for drawing gameplay information.
@@ -195,51 +194,6 @@ public string hideIf;
 
 </table>
 
-### Data
-
-[FastList](repo/blob/main/Runtime/Data/FastList.cs), a faster list without checks and with access to the internal array.
-
-<table>
-<tr>
-<th align="left">
-Add (.Net): 4.0ms
-
-```c#
-for (int i = 0; i < 1000000; ++i)
-  list.Add(i);
-```
-</th><th align="left">
-Add (FastList): 3.4ms <b style="color:green">+17%</b>
-
-```c#
-for (int i = 0; i < 1000000; ++i)
-  fastList.Add(i);
-```
-</th>
-</tr>
-
-<tr>
-<th align="left">
-Random access (.Net): 17.56ms
-
-```c#
-for (int i = 0; i < 1000000; ++i)
-    value = list[Rand.Range(0, loops - 1)];
-```
-</th><th align="left">
-Random access (FastList): 15.98ms <b style="color:green">+10%</b>
-
-```c#
-for (int i = 0; i < 1000000; ++i)
-    value = fastList[Rand.Range(0, loops - 1)];
-```
-</th>
-</tr>
-</table>
-
-
-[FastStack](repo/blob/main/Runtime/Data/FastStack.cs), with custom EqualityCompare and fast comparison.
-
 ### Check
 
 🚧
@@ -250,7 +204,23 @@ for (int i = 0; i < 1000000; ++i)
 
 ### Profiling
 
-🚧
+```c#
+using (Profiling.Time("Some slow code"))
+{
+    ...
+}
+```
+
+Output the message: "**Task 'Some slow code' took 27.66ms (0 frames)**"
+
+```c#
+using (Profiling.Memory("Some hungry code"))
+{
+    ...
+}
+```
+
+Output the message: "**Task 'Some hungry code' consume 4.00 kb**". 
 
 ### Patterns
 
