@@ -22,7 +22,7 @@ using FronkonGames.GameWork.Foundation;
 /// </summary>
 public sealed class AttributesDemo : MonoBehaviour
 {
-  [Title("Test")]
+  [Title("Text")]
 
   [Indent, Label("Nice name")]
   public string badName;
@@ -31,6 +31,9 @@ public sealed class AttributesDemo : MonoBehaviour
   public string password;
 
   [Title("Files")]
+
+  [Indent, Scene]
+  public int sceneIndex;
 
   [Indent, File]
   public string filePath;
@@ -48,7 +51,24 @@ public sealed class AttributesDemo : MonoBehaviour
   
   [Indent, OnlyEditableInPlay]
   public string editableInPlay;
-  
+
+  [Title("Visibility")]
+
+  [Indent]
+  public bool toggle;
+
+  [Indent, EnableIf(nameof(toggle))]
+  public string enableIf;
+
+  [Indent, DisableIf(nameof(toggle))]
+  public string disableIf;
+
+  [Indent, ShowIf(nameof(toggle))]
+  public string showIf;
+
+  [Indent, HideIf(nameof(toggle))]
+  public string hideIf;
+
   [Title("Check")]
   
   [Indent, NotNull]

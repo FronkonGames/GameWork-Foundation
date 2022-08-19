@@ -141,6 +141,14 @@ public string folderPath;
 <tr><th align="left">
 
 ```c#
+[Scene]
+public int sceneIndex;
+```
+</th><th><img src="Media/attributes.scene.png"/></th></tr>
+
+<tr><th align="left">
+
+```c#
 [NotEditable]
 public string notEditable;
 
@@ -151,6 +159,39 @@ public string editableInEdit;
 public string editableInPlay;
 ```
 </th><th><img src="Media/attributes.noteditable.png"/></th></tr>
+
+<tr><th align="left">
+
+```c#
+public bool toggle;
+
+[EnableIf(nameof(toggle))]
+public string enableIf;
+
+[DisableIf(nameof(toggle))]
+public string disableIf;
+```
+</th><th><img src="Media/attributes.enableif.png"/></th></tr>
+
+<tr><th align="left">
+
+```c#
+public bool toggle;
+
+[ShowIf(nameof(toggle))]
+public string showIf;
+```
+</th><th><img src="Media/attributes.showif.png"/></th></tr>
+
+<tr><th align="left">
+
+```c#
+public bool toggle;
+
+[HideIf(nameof(toggle))]
+public string hideIf;
+```
+</th><th><img src="Media/attributes.hideif.png"/></th></tr>
 
 </table>
 

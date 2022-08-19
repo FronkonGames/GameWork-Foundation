@@ -153,10 +153,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   badName: 
-  cantBeNull: {fileID: 0}
+  password: password
+  sceneIndex: 0
   filePath: 
   folderPath: 
   notEditable: U can't touch this
+  editableInEdit: 
+  editableInPlay: 
+  toggle: 1
+  enableIf: Enable if Toogle is true.
+  disableIf: Enable if Toogle is false.
+  showIf: Shows if Toogle is true.
+  hideIf: Hide if Toogle is true.
+  cantBeNull: {fileID: 0}
 --- !u!4 &692872481
 Transform:
   m_ObjectHideFlags: 0
