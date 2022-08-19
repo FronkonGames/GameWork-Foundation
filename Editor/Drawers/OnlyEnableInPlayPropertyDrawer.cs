@@ -22,7 +22,7 @@ namespace FronkonGames.GameWork.Foundation
   /// <summary>
   /// .
   /// </summary>
-  [CustomPropertyDrawer(typeof(OnlyEnableInPlayAttribute), true)]
+  [CustomPropertyDrawer(typeof(OnlyEditableInPlayAttribute), true)]
   public sealed class OnlyEnableInPlayPropertyDrawer : PropertyDrawer
   {
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)

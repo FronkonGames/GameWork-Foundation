@@ -22,10 +22,10 @@ namespace FronkonGames.GameWork.Foundation
   {
     [Title("Edit only in Play/Editor modes")]
 
-    [SerializeField, OnlyEnableInEdit, Indent]
+    [SerializeField, OnlyEditableInEditor, Indent]
     private string onlyEditInEditor;
 
-    [SerializeField, OnlyEnableInPlay, Indent]
+    [SerializeField, OnlyEditableInPlay, Indent]
     private string onlyEditInPlay;
 
     [Title("Show/Hide Enable/Disable Ifs")]

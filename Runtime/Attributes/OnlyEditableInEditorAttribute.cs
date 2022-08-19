@@ -28,5 +28,5 @@ namespace FronkonGames.GameWork.Foundation
                   AttributeTargets.Property |
                   AttributeTargets.Class |
                   AttributeTargets.Struct)]
-  public class OnlyEnableInEditAttribute : PropertyAttribute { }
+  public class OnlyEditableInEditorAttribute : PropertyAttribute { }
 }

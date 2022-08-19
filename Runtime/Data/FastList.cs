@@ -46,14 +46,14 @@ namespace FronkonGames.GameWork.Foundation
     {
       get
       {
-        Check.True(index < Count);
+        //Check.True(index < Count);
 
         return data[index];
       }
 
       set
       {
-        Check.True(index < Count);
+        //Check.True(index < Count);
 
         data[index] = value;
       }

@@ -1,4 +1,4 @@
-﻿////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Copyright (c) Martin Bustos @FronkonGames <fronkongames@gmail.com>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
@@ -14,19 +14,43 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-using System;
-using System.Diagnostics;
 using UnityEngine;
+using FronkonGames.GameWork.Foundation;
 
-namespace FronkonGames.GameWork.Foundation
+/// <summary>
+/// Attributes test.
+/// </summary>
+public sealed class AttributesDemo : MonoBehaviour
 {
-  /// <summary>
-  /// Attribute.
-  /// </summary>
-  [Conditional("UNITY_EDITOR")]
-  [AttributeUsage(AttributeTargets.Field | 
-                  AttributeTargets.Property |
-                  AttributeTargets.Class |
-                  AttributeTargets.Struct)]
-  public class OnlyEnableInPlayAttribute : PropertyAttribute { }
+  [Title("Test")]
+
+  [Indent, Label("Nice name")]
+  public string badName;
+
+  [Indent, Password]
+  public string password;
+
+  [Title("Files")]
+
+  [Indent, File]
+  public string filePath;
+
+  [Indent, Folder]
+  public string folderPath;
+  
+  [Title("Editable")]
+  
+  [Indent, NotEditable]
+  public string notEditable;
+  
+  [Indent, OnlyEditableInEditor]
+  public string editableInEdit;
+  
+  [Indent, OnlyEditableInPlay]
+  public string editableInPlay;
+  
+  [Title("Check")]
+  
+  [Indent, NotNull]
+  public GameObject cantBeNull;
 }

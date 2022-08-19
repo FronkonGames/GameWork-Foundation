@@ -152,7 +152,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81f9bc2803ec4514eac5c1d73be91be9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BadName: 
+  badName: 
+  cantBeNull: {fileID: 0}
+  filePath: 
+  folderPath: 
+  notEditable: U can't touch this
 --- !u!4 &692872481
 Transform:
   m_ObjectHideFlags: 0

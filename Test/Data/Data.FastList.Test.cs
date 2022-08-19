@@ -15,6 +15,8 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 using System.Collections;
+using System.Collections.Generic;
+using System.Diagnostics;
 using NUnit.Framework;
 using UnityEngine.TestTools;
 using FronkonGames.GameWork.Foundation;
@@ -64,6 +66,71 @@ public partial class DataTests
     fastList.RemoveAt(0);
     Assert.AreEqual(fastList.Count, 2);
     Assert.AreEqual(fastList[0], 1);
+
+    const int loops = 1000000;
+    Stopwatch stopwatch = new Stopwatch();
+    long listTime = 0, fastListTime = 0;
+
+    List<int> list = new List<int>();
+
+    stopwatch.Start();
+    {
+      for (int i = 0; i < loops; ++i)
+        list.Add(i);
+    }
+    stopwatch.Stop();
+    listTime = stopwatch.ElapsedMilliseconds;
+
+    fastList.Clear();
+    stopwatch.Start();
+    {
+      for (int i = 0; i < loops; ++i)
+        fastList.Add(i);
+    }
+    stopwatch.Stop();
+    fastListTime = stopwatch.ElapsedMilliseconds;
+
+    Log.Info($"Add: FastList is {((listTime / fastListTime) * 100.0f) - 100.0f:00}% faster (List: {listTime}ms FastList: {fastListTime}ms).");
+
+    stopwatch.Start();
+    {
+      int value = 0;
+      for (int i = 0; i < loops; ++i)
+        value = list[Rand.Range(0, loops - 1)];
+    }
+    stopwatch.Stop();
+    listTime = stopwatch.ElapsedMilliseconds;
+
+    stopwatch.Start();
+    {
+      int value = 0;
+      for (int i = 0; i < loops; ++i)
+        value = fastList[Rand.Range(0, loops - 1)];
+    }
+    stopwatch.Stop();
+    fastListTime = stopwatch.ElapsedMilliseconds;
+
+    Log.Info($"Rand Access: FastList is {((listTime / fastListTime) * 100.0f) - 100.0f:00}% faster (List: {listTime}ms FastList: {fastListTime}ms).");
+
+    stopwatch.Start();
+    {
+      bool value = false;
+      for (int i = 0; i < 1000; ++i)
+        value = list.Contains(Rand.Range(0, loops - 1));
+    }
+    stopwatch.Stop();
+    listTime = stopwatch.ElapsedMilliseconds;
+
+    stopwatch.Start();
+    {
+      bool value = false;
+      for (int i = 0; i < 1000; ++i)
+        value = fastList.Contains(Rand.Range(0, loops - 1));
+    }
+    stopwatch.Stop();
+    fastListTime = stopwatch.ElapsedMilliseconds;
+
+    Log.Info($"Contains: FastList is {((listTime / fastListTime) * 100.0f) - 100.0f:0.0}% faster (List: {listTime}ms FastList: {fastListTime}ms).");
 
     yield return null;
   }

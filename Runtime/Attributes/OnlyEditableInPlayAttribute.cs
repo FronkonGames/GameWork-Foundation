@@ -1,4 +1,4 @@
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+﻿////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Copyright (c) Martin Bustos @FronkonGames <fronkongames@gmail.com>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
@@ -14,30 +14,19 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+using System;
+using System.Diagnostics;
 using UnityEngine;
-using FronkonGames.GameWork.Foundation;
 
-/// <summary>
-/// Attributes test.
-/// </summary>
-public sealed class AttributesDemo : MonoBehaviour
+namespace FronkonGames.GameWork.Foundation
 {
-  [Title("Attributes Demo")]
-
-  [Label("Nice name")]
-  public string badName;
-  
-  [Indent(0)]
-  public string noIndent;
-  
-  [Indent(1)]
-  public string indented;
-
-  [Space]
-
-  [NotNull, Label("Cant be Null")]
-  public GameObject cantBeNull1;
-
-  [NotNull, Label("Cant Be Null")]
-  public GameObject cantBeNull2;
+  /// <summary>
+  /// Attribute.
+  /// </summary>
+  [Conditional("UNITY_EDITOR")]
+  [AttributeUsage(AttributeTargets.Field | 
+                  AttributeTargets.Property |
+                  AttributeTargets.Class |
+                  AttributeTargets.Struct)]
+  public class OnlyEditableInPlayAttribute : PropertyAttribute { }
 }

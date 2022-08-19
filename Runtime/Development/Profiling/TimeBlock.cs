@@ -29,6 +29,15 @@ namespace FronkonGames.GameWork.Foundation
     private readonly Stopwatch stopwatch;
     private readonly int frameStart;
 
+    public float Duration => (float)stopwatch.ElapsedTicks / Stopwatch.Frequency * 1000;
+
+    public TimeBlock()
+    {
+      title = string.Empty;
+      stopwatch = Stopwatch.StartNew();
+      frameStart = Time.frameCount;
+    }
+    
     public TimeBlock(string title)
     {
       this.title = title ?? "Unknown";
@@ -41,7 +50,8 @@ namespace FronkonGames.GameWork.Foundation
       stopwatch.Stop();
       double duration = (double)stopwatch.ElapsedTicks / Stopwatch.Frequency * 1000;
 
-      Log.Info($"[Profiling] Task '{title}' took {duration:0.00}ms ({Time.frameCount - frameStart} frames)");
+      if (string.IsNullOrEmpty(title) == false)
+        Log.Info($"[Profiling] Task '{title}' took {duration:0.00}ms ({Time.frameCount - frameStart} frames)");
     }
   }
 }
