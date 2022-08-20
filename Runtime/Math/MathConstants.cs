@@ -24,46 +24,46 @@ namespace FronkonGames.GameWork.Foundation
   public static class MathConstants
   {
     /// <summary></summary>
-    public const float Pi                 = 3.14159265358979f;
+    public static readonly float Pi                 = 3.14159265358979f;
 
     /// <summary></summary>     
-    public const float PiHalf             = Pi * 0.5f;
+    public static readonly float PiHalf             = Pi * 0.5f;
 
     /// <summary></summary>     
-    public const float Pi2                = Pi * 2.0f;
+    public static readonly float Pi2                = Pi * 2.0f;
 
     /// <summary></summary>     
-    public const float E                  = 2.71828182846f;
+    public static readonly float E                  = 2.71828182846f;
 
     /// <summary></summary>     
-    public const float Tau                = 6.28318530717959f;
+    public static readonly float Tau                = 6.28318530717959f;
 
     /// <summary></summary>     
-    public const float GoldenRation       = 1.61803398875f;
+    public static readonly float GoldenRation       = 1.61803398875f;
     
     /// <summary></summary>
-    public const float Deg2Rad            = Tau / 360.0f;
+    public static readonly float Deg2Rad            = Tau / 360.0f;
 
     /// <summary></summary>
-    public const float Rad2Deg            = 360.0f / Tau;
+    public static readonly float Rad2Deg  = 360.0f / Tau;
 
     /// <summary>1.0 / 3.0</summary>
-    public const float OneThird           = 0.333333333333333f;
+    public static readonly float OneThird           = 0.333333333333333f;
 
     /// <summary>2.0 / 3.0</summary>
-    public const float TwoThirds          = 0.666666666666667f;
+    public static readonly float TwoThirds          = 0.666666666666667f;
 
     /// <summary>1.0 / 6.0</summary>
-    public const float OneSixth           = 0.166666666666667f;
+    public static readonly float OneSixth           = 0.166666666666667f;
 
     /// <summary>Using float.epsilon can cause precision problems in Unity.</summary>
-    public const float Epsilon            = 1.4E-32f;
+    public const float Epsilon                      = 1.4E-32f;
 
     /// <summary></summary>
-    public const float Infinity           = Mathf.Infinity;
+    public static readonly float Infinity           = Mathf.Infinity;
     
     /// <summary></summary>
-    public const float NegativeInfinity   = Mathf.NegativeInfinity;
+    public static readonly float NegativeInfinity   = Mathf.NegativeInfinity;
 
     /// <summary></summary>
     public static readonly Vector2 NaNVector2      = new Vector2(float.NaN, float.NaN);

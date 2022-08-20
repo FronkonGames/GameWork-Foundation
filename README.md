@@ -192,11 +192,41 @@ public string hideIf;
 ```
 </th><th><img src="Media/attributes.hideif.png"/></th></tr>
 
+<tr><th align="left">
+
+```c#
+[NotEditable]
+public int counter;
+
+[Button(nameof(Increase))]
+public string buttonInc;
+
+[Button(nameof(Reset))]
+public string buttonReset;
+
+public void Increase() => counter++;
+public void Reset()    => counter = 0;
+```
+</th><th><img src="Media/attributes.button.gif"/></th></tr>
+
 </table>
 
 ### Check
 
-🚧
+Checks the values of the variables that a function receives. If the condition is not met, **an exception is thrown**. Only active when '**UNITY_ASSERTIONS**' is defined (default only in the Editor).
+
+```c#
+public void GetImpact(GameObject gameObject, float damage, Vector3 impact)
+{
+    Check.IsNotNull(gameObject);
+    Check.IsWithin(damage, 0.0f, 100.0f);
+    Check.Greater(impact, Vector3.zero);
+    
+    ...
+}
+```
+
+Take a look at the [Check class folder](https://github.com/FronkonGames/GameWork-Foundation/tree/main/Runtime/Development/Check).
 
 ### Draw
 

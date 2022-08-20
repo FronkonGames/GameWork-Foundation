@@ -26,15 +26,13 @@ namespace FronkonGames.GameWork.Foundation
   [CustomPropertyDrawer(typeof(SceneAttribute), true)]
   public sealed class ScenePropertyDrawer : PropertyDrawer
   {
-    private string[] scenesInBuild;
-
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
       if (property.propertyType == SerializedPropertyType.Integer)
       {
         int index = property.intValue;
 
-        scenesInBuild = new string[EditorBuildSettings.scenes.Length];
+        string[] scenesInBuild = new string[EditorBuildSettings.scenes.Length];
         for (var i = 0; i < EditorBuildSettings.scenes.Length; ++i)
           scenesInBuild[i] = $"{Path.GetFileNameWithoutExtension(EditorBuildSettings.scenes[i].path)} [{i}]";
 

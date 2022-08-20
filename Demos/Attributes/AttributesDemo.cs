@@ -52,7 +52,7 @@ public sealed class AttributesDemo : MonoBehaviour
   [Indent, OnlyEditableInPlay]
   public string editableInPlay;
 
-  [Title("Visibility")]
+  [Title("Toogle")]
 
   [Indent]
   public bool toggle;
@@ -73,4 +73,19 @@ public sealed class AttributesDemo : MonoBehaviour
   
   [Indent, NotNull]
   public GameObject cantBeNull;
+  
+  [Title("Misc")]
+  
+  [Indent, NotEditable]
+  public int counter;
+  
+  [Button(nameof(Increase))]
+  public string buttonInc;
+
+  [Button(nameof(Reset))]
+  public string buttonReset;
+
+  public void Increase() => counter++;
+  
+  public void Reset() => counter = 0;
 }
