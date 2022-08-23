@@ -1,7 +1,5 @@
 <p align="center"><img src="Media/banner.png"/></p>
 
-<p align="center"><b>Generic Code And Tools To Build The Basis Of A Framework To Develop Unity Based Games</b></p>
-
 <br>
 <p align="center">
   <a style="text-decoration:none">
@@ -17,6 +15,12 @@
     <img src="https://img.shields.io/codacy/grade/5ee510ac2f9d411583a0eb248744d75f?style=flat-square" alt="code quality" />
   </a>
 </p>
+
+## About
+
+A set of code useful for developing Unity based games. It is independent of any architecture, so you can use it together with your favorite framework.
+
+These are the foundations on which [Game:Work Core](https://github.com/FronkonGames/GameWork-Core) is built.
 
 ## Requisites 🔧
 
@@ -234,6 +238,8 @@ Take a look at the [Check class folder](https://github.com/FronkonGames/GameWork
 
 ### Profiling
 
+It measures in a simple way the time it takes for a block of code to execute, or the memory it consumes.
+
 ```c#
 using (Profiling.Time("Some slow code"))
 {
@@ -259,3 +265,5 @@ Output the message: "**Task 'Some hungry code' consume 4.00 kb**".
 ## License 📜
 
 Code released under [MIT License](https://github.com/FronkonGames/GameWork-Foundation/blob/main/LICENSE.md).
+
+'[Prototype Textures](https://www.kenney.nl/assets/prototype-textures)' by [Kenney](https://www.kenney.nl/).  

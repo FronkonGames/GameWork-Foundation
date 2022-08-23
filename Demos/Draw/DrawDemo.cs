@@ -14,41 +14,26 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+using System;
 using UnityEngine;
+using FronkonGames.GameWork.Foundation;
 
-namespace FronkonGames.GameWork.Foundation
+/// <summary>
+/// Draw test.
+/// </summary>
+[ExecuteInEditMode]
+public sealed class DrawDemo : MonoBehaviour
 {
-  /// <summary>
-  /// Drawing of objects for development.
-  /// </summary>
-  /// <remarks>Only available in the Editor</remarks>
-  public static partial class Draw
+  [SerializeField]
+  private GameObject player;
+
+  private void OnDrawGizmos()
   {
-    /// <summary>
-    /// 
-    /// </summary>
-    public static float OccludeColorFactor = 0.5f;
+    Draw.Point(Vector3.zero);
 
-    public static int Segments = 32;
+    Draw.DottedLine(player.transform.position, Vector3.zero);
     
-    public static float DashSize = 1.0f;
-
-    public static Color TextColor => new Color(0.22f, 0.22f, 0.22f);
-
-    public static Color PointColor => new Color(1.0f, 0.8f, 0.0f);
-    
-    public static Color LineColor => new Color(1.0f, 0.4f, 0.3f);
-
-    public static Color DiscColor => new Color(0.8f, 0.4f, 0.8f);
-    
-    public static Color StartColor => new Color(1.0f, 0.4f, 0.3f);
-    public static Color EndColor => new Color(0.4f, 1.0f, 0.3f);
-
-    public static Color HitColor => new Color(1.0f, 0.1f, 0.2f);
-    public static Color RayColor => new Color(0.4f, 1.0f, 0.3f);
-
-    public static Color ColorX => new Color(1.0f, 0.1f, 0.2f);
-    public static Color ColorY => new Color(0.3f, 1.0f, 0.1f);
-    public static Color ColorZ => new Color(0.1f, 0.4f, 1.0f);
+    Draw.SolidDisc(player.transform.position, 1.0f, player.transform.rotation);
+    Draw.Disc(player.transform.position, 1.5f, player.transform.rotation);
   }
 }

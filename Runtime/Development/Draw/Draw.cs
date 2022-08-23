@@ -26,58 +26,43 @@ namespace FronkonGames.GameWork.Foundation
   public static partial class Draw
   {
     [Conditional("UNITY_EDITOR")]
-    public static void Point(Vector3 p, Color color, float duration = 0.0f, float rayLength = 0.25f, float highlightRadius = 0.05f)
-    {
-      Vector3 up = new Vector3(0.0f, rayLength * 0.5f, 0.0f);
-      Quaternion rot = Quaternion.AngleAxis(120.0f, Vector3.right);
-      Vector3 d1 = rot * up * 0.5f;
-      Quaternion rot1 = Quaternion.AngleAxis(120.0f, up);
-      Vector3 d2 = rot1 * d1;
-      Vector3 d3 = rot1 * d2;
-
-      rayDelegate(p, up, color, duration);
-      rayDelegate(p, d1, color, duration);
-      rayDelegate(p, d2, color, duration);
-      rayDelegate(p, d3, color, duration);
-
-      Vector3 down = new Vector3(0, highlightRadius, 0);
-      Vector3 p1 = rot * down;
-      Vector3 p2 = rot1 * p1;
-      Vector3 p3 = rot1 * p2;
-
-      down += p;
-      p1 += p;
-      p2 += p;
-      p3 += p;
-
-      color *= 0.5f;
-
-      lineDelegate(down, p1, color, duration);
-      lineDelegate(down, p2, color, duration);
-      lineDelegate(down, p3, color, duration);
-      lineDelegate(p1, p2, color, duration);
-      lineDelegate(p2, p3, color, duration);
-      lineDelegate(p3, p1, color, duration);
-    }
+    public static void Point(Vector3 p, Color color, float size = 0.05f) => DrawPoint(p, color, size);
 
     [Conditional("UNITY_EDITOR")]
-    public static void Point(Vector3 p, float duration = 0.0f, float rayLength = 0.3f, float highlightRadius = 0.05f)
-      => Point(p, LineColor, duration, rayLength, highlightRadius);
+    public static void Point(Vector3 p, float size = 0.05f) => DrawPoint(p, PointColor, size);
 
     [Conditional("UNITY_EDITOR")]
-    public static void Line(Vector3 start, Vector3 end, Color color, float duration = 0.0f) => lineDelegate(start, end, color, duration);
+    public static void Line(Vector3 start, Vector3 end, Color color) => DrawLine(start, end, color);
 
     [Conditional("UNITY_EDITOR")]
-    public static void Line(Vector3 start, Vector3 end, float duration = 0.0f) => lineDelegate(start, end, LineColor, duration);
+    public static void Line(Vector3 start, Vector3 end) => DrawLine(start, end, LineColor);
 
     [Conditional("UNITY_EDITOR")]
-    public static void Circle(Vector3 center, Vector3 normal, float radius, Color color) =>
-      DrawCircle(center, normal, radius, (a, b, v) => lineDelegate(a, b, color), SegmentCount);
+    public static void DottedLine(Vector3 start, Vector3 end, Color color) => DrawDottedLine(start, end, color);
 
     [Conditional("UNITY_EDITOR")]
-    public static void Arc(Vector3 center, Vector3 normal, Vector3 forward, float radius, float totalAngle, Color color) =>
-      DrawArc(center, normal, Quaternion.AngleAxis(-totalAngle / 2.0f, normal) * forward, radius, totalAngle, (a, b, v) => lineDelegate(a, b, color), SegmentCount / 2);
+    public static void DottedLine(Vector3 start, Vector3 end) => DrawDottedLine(start, end, LineColor);
 
+    [Conditional("UNITY_EDITOR")]
+    public static void Disc(Vector3 center, float radius, Quaternion rotation, Color color) =>
+      DrawDisc(center, radius, rotation, color);
+
+    [Conditional("UNITY_EDITOR")]
+    public static void Disc(Vector3 center, float radius, Quaternion rotation = default) =>
+      DrawDisc(center, radius, rotation, DiscColor);
+
+    [Conditional("UNITY_EDITOR")]
+    public static void SolidDisc(Vector3 center, float radius, Quaternion rotation, Color color) =>
+      DrawSolidDisc(center, radius, rotation, color);
+
+    [Conditional("UNITY_EDITOR")]
+    public static void SolidDisc(Vector3 center, float radius, Quaternion rotation = default) =>
+      DrawSolidDisc(center, radius, rotation, DiscColor);
+    
+    [Conditional("UNITY_EDITOR")]
+    public static void Arc(Vector3 center, Vector3 normal, Vector3 from, float radius, float angle, Color color) =>
+      DrawArc(center, normal, from, radius, angle, color);
+/*
     [Conditional("UNITY_EDITOR")]
     public static void Sphere(Vector3 position, float radius, Color color)
     {
@@ -199,7 +184,7 @@ namespace FronkonGames.GameWork.Foundation
         return;
 
       DrawManager drawManager = DrawManager.Instance;
-      DebugText debugText = new DebugText(position, t, color, camera);
+      DebugText debugText = new(position, t, color, camera);
 
       if (Time.deltaTime == Time.fixedDeltaTime)
       {
@@ -354,6 +339,7 @@ namespace FronkonGames.GameWork.Foundation
 
       void DrawLine(Vector3 a, Vector3 b, float f) =>
         lineDelegate(a, b, new Color(color.r, color.g, color.b, Mathf.Pow(1.0f - Mathf.Abs(f - 0.5f) * 2.0f, 2.0f) * color.a));
-    }      
+    }
+*/    
   }
 }
