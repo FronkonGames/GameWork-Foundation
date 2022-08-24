@@ -25,43 +25,6 @@ namespace FronkonGames.GameWork.Foundation
   /// <remarks>Only available in the Editor</remarks>
   public static partial class Draw
   {
-    private static MethodInfo applyWireMaterial = null;
-
-    private static void DrawPoint(Vector3 a, Color color, float size)
-    {
-      DrawPointGL(a, color, size);
-    }
-
-    private static void DrawDisc(Vector3 center, float radius, Quaternion rotation, Color color)
-    {
-      float current = 0.0f;
-      float grad = MathConstants.Pi2 / Segments;
-
-      for (int i = 0; i < Segments; ++i)
-      {
-        Line(rotation * new Vector3(Mathf.Sin(current) * radius, 0.0f, Mathf.Cos(current) * radius) + center,
-          i == Segments - 1 ? rotation * new Vector3(0f, 0f, radius) + center
-                            : rotation * new Vector3(Mathf.Sin(current + grad) * radius, 0.0f, Mathf.Cos(current + grad) * radius) + center,
-          color);
-        current += grad;
-      }
-    }
-
-    private static void DrawSolidDisc(Vector3 center, float radius, Quaternion rotation, Color color)
-    {
-      float current = 0.0f;
-      float grad = MathConstants.Pi2 / Segments;
-
-      for (int i = 0; i < Segments; ++i)
-      {
-        Triangle(center, rotation * new Vector3(Mathf.Sin(current) * radius, 0.0f, Mathf.Cos(current) * radius) + center,
-          i == Segments - 1 ? rotation * new Vector3(0.0f, 0.0f, radius) + center
-                              : rotation * new Vector3(Mathf.Sin(current + grad) * radius, 0.0f, Mathf.Cos(current + grad) * radius) + center,
-          color);
-        current += grad;
-      }
-    }
-    
     private static void DrawArc(Vector3 center, Vector3 normal, Vector3 from, float radius, float angle, Color color)
     {
     }
@@ -180,31 +143,6 @@ namespace FronkonGames.GameWork.Foundation
       cross.EnsureNormalized();
 
       return cross;
-    }
-
-    private static void DrawPointGL(Vector3 p, Color color, float size)
-    {
-      GL.PushMatrix();
-      GL.Begin(GL.QUADS);
-      GL.Color(color);
-
-      GL.Vertex3(p.x + size, p.y + size, p.z);
-      GL.Vertex3(p.x + size, p.y - size, p.z);
-      GL.Vertex3(p.x - size, p.y - size, p.z);
-      GL.Vertex3(p.x - size, p.y + size, p.z);
-
-      GL.Vertex3(p.x, p.y + size, p.z + size);
-      GL.Vertex3(p.x, p.y - size, p.z + size);
-      GL.Vertex3(p.x, p.y - size, p.z - size);
-      GL.Vertex3(p.x, p.y + size, p.z - size);
-
-      GL.Vertex3(p.x + size, p.y, p.z + size);
-      GL.Vertex3(p.x + size, p.y, p.z - size);
-      GL.Vertex3(p.x - size, p.y, p.z - size);
-      GL.Vertex3(p.x - size, p.y, p.z + size);
-      
-      GL.End();
-      GL.PopMatrix();
     }
   }
 }

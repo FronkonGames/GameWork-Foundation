@@ -28,10 +28,20 @@ namespace FronkonGames.GameWork.Foundation
   public static partial class Draw
   {
     [Conditional("UNITY_EDITOR")]
-    public static void Point(Vector3 p, Color color, float size = 0.05f) => DrawPoint(p, color, size);
+    public static void Point(Vector3 p, Color color, float size = 0.5f)
+    {
+      Line(p + Vector3.right * (size * 0.5f), -Vector3.right * size, color);
+      Line(p + Vector3.up * (size * 0.5f), -Vector3.up * size, color);
+      Line(p + Vector3.forward * (size * 0.5f), -Vector3.forward * size, color);
+    }
 
     [Conditional("UNITY_EDITOR")]
-    public static void Point(Vector3 p, float size = 0.05f) => DrawPoint(p, PointColor, size);
+    public static void Point(Vector3 p, float size = 0.5f)
+    {
+      Line(p + Vector3.right * (size * 0.5f), -Vector3.right * size, ColorX);
+      Line(p + Vector3.up * (size * 0.5f), -Vector3.up * size, ColorY);
+      Line(p + Vector3.forward * (size * 0.5f), -Vector3.forward * size, ColorZ);
+    }
 
     [Conditional("UNITY_EDITOR")]
     public static void Line(Vector3 start, Vector3 end, Color color) => solidLines.Add(new LineGL(start, end, color));
@@ -69,38 +79,52 @@ namespace FronkonGames.GameWork.Foundation
     public static void Triangle(Vector3 a, Vector3 b, Vector3 c, Color color) => triangles.Add(new TriangleGL(a, b, c, color));
     
     [Conditional("UNITY_EDITOR")]
-    public static void Disc(Vector3 center, float radius, Quaternion rotation, Color color) =>
-      DrawDisc(center, radius, rotation, color);
+    public static void Disc(Vector3 center, float radius, Quaternion rotation, Color color)
+    {
+      float current = 0.0f;
+      float grad = MathConstants.Pi2 / Segments;
+
+      for (int i = 0; i < Segments; ++i)
+      {
+        Line(rotation * new Vector3(Mathf.Sin(current) * radius, 0.0f, Mathf.Cos(current) * radius) + center,
+          i == Segments - 1 ? rotation * new Vector3(0f, 0f, radius) + center
+            : rotation * new Vector3(Mathf.Sin(current + grad) * radius, 0.0f, Mathf.Cos(current + grad) * radius) + center,
+          color);
+        current += grad;
+      }
+    }
 
     [Conditional("UNITY_EDITOR")]
     public static void Disc(Vector3 center, float radius, Quaternion rotation = default) =>
-      DrawDisc(center, radius, rotation, DiscColor);
+      Disc(center, radius, rotation, DiscColor);
 
     [Conditional("UNITY_EDITOR")]
-    public static void SolidDisc(Vector3 center, float radius, Quaternion rotation, Color color) =>
-      DrawSolidDisc(center, radius, rotation, color);
+    public static void SolidDisc(Vector3 center, float radius, Quaternion rotation, Color color)
+    {
+      float current = 0.0f;
+      float grad = MathConstants.Pi2 / Segments;
+
+      for (int i = 0; i < Segments; ++i)
+      {
+        Triangle(center, rotation * new Vector3(Mathf.Sin(current) * radius, 0.0f, Mathf.Cos(current) * radius) + center,
+          i == Segments - 1 ? rotation * new Vector3(0.0f, 0.0f, radius) + center
+            : rotation * new Vector3(Mathf.Sin(current + grad) * radius, 0.0f, Mathf.Cos(current + grad) * radius) + center,
+          color);
+        current += grad;
+      }
+    }
 
     [Conditional("UNITY_EDITOR")]
     public static void SolidDisc(Vector3 center, float radius, Quaternion rotation = default) =>
-      DrawSolidDisc(center, radius, rotation, DiscColor);
+      SolidDisc(center, radius, rotation, DiscColor);
+
+    [Conditional("UNITY_EDITOR")]
+    public static void Sphere(Vector3 position, float radius, Color color) => spheres.Add(new SphereGL(position, radius, color));
     
     [Conditional("UNITY_EDITOR")]
     public static void Arc(Vector3 center, Vector3 normal, Vector3 from, float radius, float angle, Color color) =>
       DrawArc(center, normal, from, radius, angle, color);
 /*
-    [Conditional("UNITY_EDITOR")]
-    public static void Sphere(Vector3 position, float radius, Color color)
-    {
-      Vector3 up = Vector3.up;
-      Vector3 right = Vector3.right;
-      Vector3 forward = Vector3.forward;
-
-      DrawCircleFast(position, up, right, radius, DrawLine);
-      DrawCircleFast(position, right, up, radius, DrawLine);
-      DrawCircleFast(position, forward, right, radius, DrawLine);
-
-      void DrawLine(Vector3 a, Vector3 b, float f) => lineDelegate(a, b, color);
-    }
 
     [Conditional("UNITY_EDITOR")]
     public static void Arrow(Vector3 position, Vector3 direction, Color color, float duration = 0.0f, float arrowheadScale = 1.0f)

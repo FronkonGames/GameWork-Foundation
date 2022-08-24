@@ -30,13 +30,6 @@ namespace FronkonGames.GameWork.Foundation
 #endif
   public static partial class Draw
   {
-    private struct PointGL
-    {
-      public Vector3 a;
-      public Color color;
-      public float duration;
-    }
-    
     private readonly struct LineGL
     {
       public readonly Vector3 a;
@@ -71,10 +64,26 @@ namespace FronkonGames.GameWork.Foundation
       }
     }
 
-    private static List<PointGL> points;
+    private readonly struct SphereGL
+    {
+      public readonly Vector3 p;
+      public readonly float radius;
+      public readonly Color color;
+      public readonly float duration;
+      
+      public SphereGL(Vector3 p, float radius, Color color, float duration = 0.0f)
+      {
+        this.p = p;
+        this.radius = radius;
+        this.color = color;
+        this.duration = Mathf.Max(0.0f, duration);
+      }
+    }
+
     private static readonly List<LineGL> solidLines;
     private static readonly List<LineGL> dottedLines;
     private static readonly List<TriangleGL> triangles;
+    private static readonly List<SphereGL> spheres;
 
     private static bool playing;
     private static readonly Material material;
@@ -82,10 +91,10 @@ namespace FronkonGames.GameWork.Foundation
 #if UNITY_EDITOR
     static Draw()
     {
-      points = new(Capacity);
       solidLines = new(Capacity);
       dottedLines = new(Capacity);
       triangles = new(Capacity);
+      spheres = new(Capacity);
       
       material = new Material(Shader.Find("Hidden/Internal-Colored"))
       {
@@ -118,10 +127,12 @@ namespace FronkonGames.GameWork.Foundation
       material.SetPass(0);
 
       GL.PushMatrix();
-
+      
       GL.Begin(GL.TRIANGLES);
       SendTriangles();
       GL.End();
+
+      SendSpheres();
       
       GL.Begin(GL.LINES);
       SendSolidLines();
@@ -132,11 +143,13 @@ namespace FronkonGames.GameWork.Foundation
       {
         material.SetInt("_ZTest",  (int)CompareFunction.Greater);
         material.SetPass(0);
-        
+
         GL.Begin(GL.TRIANGLES);
         SendTriangles(OcclusionColorFactor);
         GL.End();
-      
+
+        SendSpheres(OcclusionColorFactor);
+        
         GL.Begin(GL.LINES);
         SendSolidLines(OcclusionColorFactor);
         SendDottedLines(OcclusionColorFactor);
@@ -150,8 +163,7 @@ namespace FronkonGames.GameWork.Foundation
 
     private static void SendSolidLines(float colorFactor = 1.0f)
     {
-      int i = 0;
-      for (; i < solidLines.Count; ++i)
+      for (int i = 0; i < solidLines.Count; ++i)
       {
         GL.Color(solidLines[i].color * colorFactor);
         GL.Vertex(solidLines[i].a);
@@ -161,8 +173,7 @@ namespace FronkonGames.GameWork.Foundation
 
     private static void SendDottedLines(float colorFactor = 1.0f)
     {
-      int i = 0;
-      for (; i < dottedLines.Count; ++i)
+      for (int i = 0; i < dottedLines.Count; ++i)
       {
         float length = Vector3.Distance(dottedLines[i].a, dottedLines[i].b);
       
@@ -178,13 +189,48 @@ namespace FronkonGames.GameWork.Foundation
 
     private static void SendTriangles(float colorFactor = 1.0f)
     {
-      int i = 0;
-      for (; i < triangles.Count; ++i)
+      for (int i = 0; i < triangles.Count; ++i)
       {
         GL.Color(triangles[i].color * colorFactor);
         GL.Vertex(triangles[i].a);
         GL.Vertex(triangles[i].b);
         GL.Vertex(triangles[i].c);
+      }
+    }
+
+    private static void SendSpheres(float colorFactor = 1.0f)
+    {
+      for (int i = 0; i < spheres.Count; ++i)
+      {
+        float x, y, z, j, k;
+        float pi2 = (Mathf.PI * 2f) + 0.01f;
+        for (k = 0; k < Mathf.PI; k += Mathf.PI / ((Segments / 2) + 1))
+        {
+          GL.Begin(GL.LINE_STRIP);
+          GL.Color(spheres[i].color * colorFactor);
+          y = (spheres[i].radius * Mathf.Cos(k));
+          for (j = 0; j <= pi2; j += (Mathf.PI / (Segments / 4)))
+          {
+            x = spheres[i].radius * Mathf.Cos(j) * Mathf.Sin(k);
+            z = spheres[i].radius * Mathf.Sin(j) * Mathf.Sin(k);
+            GL.Vertex3(spheres[i].p.x + x, spheres[i].p.y + y, spheres[i].p.z + z);
+          }
+          GL.End();
+        }
+
+        for (k = 0; k < Mathf.PI; k += Mathf.PI / (Segments / 2))
+        {
+          GL.Begin(GL.LINE_STRIP);
+          GL.Color(spheres[i].color * colorFactor);
+          for (j = 0; j <= pi2; j += (Mathf.PI / (Segments / 4)))
+          {
+            x = spheres[i].radius * Mathf.Sin(j) * Mathf.Cos(k);
+            y = spheres[i].radius * Mathf.Cos(j);
+            z = spheres[i].radius * Mathf.Sin(k) * Mathf.Sin(j);
+            GL.Vertex3(spheres[i].p.x + x, spheres[i].p.y + y, spheres[i].p.z + z);
+          }
+          GL.End();
+        }
       }
     }
     
@@ -193,6 +239,7 @@ namespace FronkonGames.GameWork.Foundation
       solidLines.Clear();
       dottedLines.Clear();
       triangles.Clear();
+      spheres.Clear();
     }
   }
 }
