@@ -14,6 +14,8 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
 
@@ -32,17 +34,40 @@ namespace FronkonGames.GameWork.Foundation
     public static void Point(Vector3 p, float size = 0.05f) => DrawPoint(p, PointColor, size);
 
     [Conditional("UNITY_EDITOR")]
-    public static void Line(Vector3 start, Vector3 end, Color color) => DrawLine(start, end, color);
+    public static void Line(Vector3 start, Vector3 end, Color color) => solidLines.Add(new LineGL(start, end, color));
 
     [Conditional("UNITY_EDITOR")]
-    public static void Line(Vector3 start, Vector3 end) => DrawLine(start, end, LineColor);
+    public static void Line(Vector3 start, Vector3 end) => solidLines.Add(new LineGL(start, end, LineColor));
 
     [Conditional("UNITY_EDITOR")]
-    public static void DottedLine(Vector3 start, Vector3 end, Color color) => DrawDottedLine(start, end, color);
+    private static void Lines(IReadOnlyList<Vector3> segments, Color color)
+    {
+      if (segments.Count > 1)
+      {
+        for (int i = 0; i < segments.Count - 1; ++i)
+          Line(segments[i], segments[i + 1], color);
+      }
+    }
+    
+    [Conditional("UNITY_EDITOR")]
+    public static void DottedLine(Vector3 start, Vector3 end, Color color) => dottedLines.Add(new LineGL(start, end, color));
 
     [Conditional("UNITY_EDITOR")]
-    public static void DottedLine(Vector3 start, Vector3 end) => DrawDottedLine(start, end, LineColor);
+    public static void DottedLine(Vector3 start, Vector3 end) => dottedLines.Add(new LineGL(start, end, LineColor));
 
+    [Conditional("UNITY_EDITOR")]
+    private static void DrawDottedLines(IReadOnlyList<Vector3> segments, Color color)
+    {
+      if (segments.Count > 1)
+      {
+        for (int i = 0; i < segments.Count - 1; ++i)
+          DottedLine(segments[i], segments[i + 1], color);
+      }
+    }
+    
+    [Conditional("UNITY_EDITOR")]
+    public static void Triangle(Vector3 a, Vector3 b, Vector3 c, Color color) => triangles.Add(new TriangleGL(a, b, c, color));
+    
     [Conditional("UNITY_EDITOR")]
     public static void Disc(Vector3 center, float radius, Quaternion rotation, Color color) =>
       DrawDisc(center, radius, rotation, color);

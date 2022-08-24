@@ -24,31 +24,32 @@ namespace FronkonGames.GameWork.Foundation
   /// <remarks>Only available in the Editor</remarks>
   public static partial class Draw
   {
-    /// <summary>
-    /// 
-    /// </summary>
-    public static float OccludeColorFactor = 0.5f;
-
-    public static int Segments = 32;
+    private static int Capacity = 100;
     
-    public static float DashSize = 1.0f;
-
-    public static Color TextColor => new Color(0.22f, 0.22f, 0.22f);
-
-    public static Color PointColor => new Color(1.0f, 0.8f, 0.0f);
+    private static int Segments = 32;
     
-    public static Color LineColor => new Color(1.0f, 0.4f, 0.3f);
+    private static float DashSize = 1.0f;
 
-    public static Color DiscColor => new Color(0.8f, 0.4f, 0.8f);
+    private static float OcclusionColorFactor = 0.5f;
     
-    public static Color StartColor => new Color(1.0f, 0.4f, 0.3f);
-    public static Color EndColor => new Color(0.4f, 1.0f, 0.3f);
+    private static float Transparency = 0.75f;
 
-    public static Color HitColor => new Color(1.0f, 0.1f, 0.2f);
-    public static Color RayColor => new Color(0.4f, 1.0f, 0.3f);
+    private static Color TextColor => new Color(0.22f, 0.22f, 0.22f);
 
-    public static Color ColorX => new Color(1.0f, 0.1f, 0.2f);
-    public static Color ColorY => new Color(0.3f, 1.0f, 0.1f);
-    public static Color ColorZ => new Color(0.1f, 0.4f, 1.0f);
+    private static Color PointColor => new Color(1.0f, 0.8f, 0.0f, Transparency);
+    
+    private static Color LineColor => new Color(1.0f, 0.4f, 0.3f, Transparency);
+
+    private static Color DiscColor => new Color(0.8f, 0.4f, 0.8f, Transparency);
+    
+    private static Color StartColor => new Color(1.0f, 0.4f, 0.3f);
+    private static Color EndColor => new Color(0.4f, 1.0f, 0.3f);
+
+    private static Color HitColor => new Color(1.0f, 0.1f, 0.2f);
+    private static Color RayColor => new Color(0.4f, 1.0f, 0.3f);
+
+    private static Color ColorX => new Color(1.0f, 0.1f, 0.2f);
+    private static Color ColorY => new Color(0.3f, 1.0f, 0.1f);
+    private static Color ColorZ => new Color(0.1f, 0.4f, 1.0f);
   }
 }

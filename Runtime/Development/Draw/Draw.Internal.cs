@@ -14,10 +14,8 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 namespace FronkonGames.GameWork.Foundation
 {
@@ -31,100 +29,7 @@ namespace FronkonGames.GameWork.Foundation
 
     private static void DrawPoint(Vector3 a, Color color, float size)
     {
-      if (OccludeColorFactor <= 0.0f)
-      {
-        ApplyWireMaterial();
-
-        GLPoint(a, color, size);
-      }
-      else
-      {
-        ApplyWireMaterial(CompareFunction.Less);
-
-        GLPoint(a, color, size);
-
-        ApplyWireMaterial(CompareFunction.Greater);
-
-        GLPoint(a, color * OccludeColorFactor, size);
-      }
-    }
-    
-    private static void DrawTriangle(Vector3 a, Vector3 b, Vector3 c, Color color)
-    {
-      if (OccludeColorFactor <= 0.0f)
-      {
-        ApplyWireMaterial();
-
-        GLTriangle(a, b, c, color);
-      }
-      else
-      {
-        ApplyWireMaterial(CompareFunction.Less);
-
-        GLTriangle(a, b, c, color);
-
-        ApplyWireMaterial(CompareFunction.Greater);
-
-        GLTriangle(a, b, c, color * OccludeColorFactor);
-      }
-    }
-
-    private static void DrawLine(Vector3 a, Vector3 b, Color color)
-    {
-      if (OccludeColorFactor <= 0.0f)
-      {
-        ApplyWireMaterial();
-
-        GLLine(a, b, color);
-      }
-      else
-      {
-        ApplyWireMaterial(CompareFunction.Less);
-
-        GLLine(a, b, color);
-
-        ApplyWireMaterial(CompareFunction.Greater);
-
-        GLLine(a, b, color * OccludeColorFactor);
-      }
-    }
-
-    private static void DrawDottedLine(Vector3 a, Vector3 b, Color color)
-    {
-      if (OccludeColorFactor <= 0.0f)
-      {
-        ApplyWireMaterial();
-
-        GLDottedLine(a, b, color);
-      }
-      else
-      {
-        ApplyWireMaterial(CompareFunction.Less);
-
-        GLDottedLine(a, b, color);
-
-        ApplyWireMaterial(CompareFunction.Greater);
-
-        GLDottedLine(a, b, color * OccludeColorFactor);
-      }
-    }
-
-    private static void DrawLines(IReadOnlyList<Vector3> segments, Color color)
-    {
-      if (segments.Count > 1)
-      {
-        for (int i = 0; i < segments.Count - 1; ++i)
-          DrawLine(segments[i], segments[i + 1], color);
-      }
-    }
-
-    private static void DrawDottedLines(IReadOnlyList<Vector3> segments, Color color)
-    {
-      if (segments.Count > 1)
-      {
-        for (int i = 0; i < segments.Count - 1; ++i)
-          DrawDottedLine(segments[i], segments[i + 1], color);
-      }
+      DrawPointGL(a, color, size);
     }
 
     private static void DrawDisc(Vector3 center, float radius, Quaternion rotation, Color color)
@@ -134,7 +39,7 @@ namespace FronkonGames.GameWork.Foundation
 
       for (int i = 0; i < Segments; ++i)
       {
-        DrawLine(rotation * new Vector3(Mathf.Sin(current) * radius, 0.0f, Mathf.Cos(current) * radius) + center,
+        Line(rotation * new Vector3(Mathf.Sin(current) * radius, 0.0f, Mathf.Cos(current) * radius) + center,
           i == Segments - 1 ? rotation * new Vector3(0f, 0f, radius) + center
                             : rotation * new Vector3(Mathf.Sin(current + grad) * radius, 0.0f, Mathf.Cos(current + grad) * radius) + center,
           color);
@@ -149,7 +54,7 @@ namespace FronkonGames.GameWork.Foundation
 
       for (int i = 0; i < Segments; ++i)
       {
-        DrawTriangle(center, rotation * new Vector3(Mathf.Sin(current) * radius, 0.0f, Mathf.Cos(current) * radius) + center,
+        Triangle(center, rotation * new Vector3(Mathf.Sin(current) * radius, 0.0f, Mathf.Cos(current) * radius) + center,
           i == Segments - 1 ? rotation * new Vector3(0.0f, 0.0f, radius) + center
                               : rotation * new Vector3(Mathf.Sin(current + grad) * radius, 0.0f, Mathf.Cos(current + grad) * radius) + center,
           color);
@@ -277,7 +182,7 @@ namespace FronkonGames.GameWork.Foundation
       return cross;
     }
 
-    private static void GLPoint(Vector3 p, Color color, float size)
+    private static void DrawPointGL(Vector3 p, Color color, float size)
     {
       GL.PushMatrix();
       GL.Begin(GL.QUADS);
@@ -300,67 +205,6 @@ namespace FronkonGames.GameWork.Foundation
       
       GL.End();
       GL.PopMatrix();
-    }
-
-    private static void GLLine(Vector3 a, Vector3 b, Color color)
-    {
-      GL.PushMatrix();
-      GL.Begin(GL.LINES);
-      GL.Color(color);
-      GL.Vertex(a);
-      GL.Vertex(b);      
-      GL.End();
-      GL.PopMatrix();
-    }
-
-    private static void GLDottedLine(Vector3 a, Vector3 b, Color color)
-    {
-      GL.PushMatrix();
-      GL.Begin(GL.LINES);
-      GL.Color(color);
-      
-      float length = Vector3.Distance(a, b);
-      
-      int count = Mathf.CeilToInt(length / DashSize);
-      for (int i = 0; i < count; i += 2)
-      {
-        GL.Vertex((Vector3.Lerp(a, b, i * DashSize / length)));
-
-        GL.Vertex((Vector3.Lerp(a, b, (i + 1) * DashSize / length)));
-      }
-
-      GL.End();
-      GL.PopMatrix();
-    }
-
-    private static void GLTriangle(Vector3 a, Vector3 b, Vector3 c, Color color)
-    {
-      GL.PushMatrix();
-      GL.Begin(GL.TRIANGLES);
-      GL.Color(color);
-      GL.Vertex(a);
-      GL.Vertex(b);      
-      GL.Vertex(c);      
-      GL.End();
-      GL.PopMatrix();
-    }
-
-    private static void ApplyWireMaterial(CompareFunction zTest = CompareFunction.Always)
-    {
-      if (applyWireMaterial == null)
-      {
-        MethodInfo[] methodInfos = typeof(UnityEditor.HandleUtility).GetMethods(BindingFlags.Static | BindingFlags.NonPublic);
-        for (int i = 0; i < methodInfos.Length; ++i)
-        {
-          if (methodInfos[i].Name == "ApplyWireMaterial" && methodInfos[i].GetParameters().Length == 1)
-          {
-            applyWireMaterial = methodInfos[i];
-            break;
-          }
-        }
-      }
-
-      applyWireMaterial?.Invoke(null, new object[] { zTest });
     }
   }
 }
