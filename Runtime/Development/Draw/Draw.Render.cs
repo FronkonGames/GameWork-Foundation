@@ -35,17 +35,15 @@ namespace FronkonGames.GameWork.Foundation
       public readonly Vector3 a;
       public readonly Vector3 b;
       public readonly Color color;
-      public readonly float duration;
 
-      public LineGL(Vector3 a, Vector3 b, Color color, float duration = 0.0f)
+      public LineGL(Vector3 a, Vector3 b, Color color)
       {
         this.a = a;
         this.b = b;
         this.color = color;
-        this.duration = Mathf.Max(0.0f, duration);
       }
     }
-    
+
     private readonly struct TriangleGL
     {
       public readonly Vector3 a;
@@ -164,11 +162,7 @@ namespace FronkonGames.GameWork.Foundation
     private static void SendSolidLines(float colorFactor = 1.0f)
     {
       for (int i = 0; i < solidLines.Count; ++i)
-      {
-        GL.Color(solidLines[i].color * colorFactor);
-        GL.Vertex(solidLines[i].a);
-        GL.Vertex(solidLines[i].b);
-      }
+        DrawLineGL(solidLines[i].a, solidLines[i].b, solidLines[i].color * colorFactor);
     }
 
     private static void SendDottedLines(float colorFactor = 1.0f)
@@ -180,9 +174,9 @@ namespace FronkonGames.GameWork.Foundation
         int count = Mathf.CeilToInt(length / DashSize);
         for (int j = 0; j < count; j += 2)
         {
-          GL.Color(dottedLines[i].color * colorFactor);
-          GL.Vertex((Vector3.Lerp(dottedLines[i].a, dottedLines[i].b, j * DashSize / length)));
-          GL.Vertex((Vector3.Lerp(dottedLines[i].a, dottedLines[i].b, (j + 1) * DashSize / length)));
+          DrawLineGL(Vector3.Lerp(dottedLines[i].a, dottedLines[i].b, j * DashSize / length),
+                     Vector3.Lerp(dottedLines[i].a, dottedLines[i].b, (j + 1) * DashSize / length),
+                     solidLines[i].color * colorFactor);
         }
       }
     }
@@ -232,6 +226,13 @@ namespace FronkonGames.GameWork.Foundation
           GL.End();
         }
       }
+    }
+
+    private static void DrawLineGL(Vector3 a, Vector3 b, Color color)
+    {
+      GL.Color(color);
+      GL.Vertex(a);
+      GL.Vertex(b);
     }
     
     private static void Clear()

@@ -32,6 +32,8 @@ public sealed class DrawDemo : MonoBehaviour
     Draw.Point(Vector3.zero);
 
     Draw.DottedLine(player.transform.position, Vector3.zero);
+
+    Draw.Arrow(player.transform.position, player.transform.rotation, 5.0f);
     
     Draw.SolidDisc(player.transform.position, 1.0f, player.transform.rotation);
     Draw.Disc(player.transform.position, 1.5f, player.transform.rotation);

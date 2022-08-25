@@ -28,6 +28,9 @@ namespace FronkonGames.GameWork.Foundation
     
     private static int Segments = 32;
     
+    private static float ArrowHeadLength = 0.2f;
+    private static float ArrowHeadWidth = 0.05f;
+    
     private static float DashSize = 1.0f;
 
     private static float OcclusionColorFactor = 0.5f;
@@ -41,6 +44,8 @@ namespace FronkonGames.GameWork.Foundation
     private static Color LineColor => new Color(1.0f, 0.4f, 0.3f, Transparency);
 
     private static Color DiscColor => new Color(0.8f, 0.4f, 0.8f, Transparency);
+
+    private static Color ArrowColor => new Color(0.4f, 0.7f, 0.8f, Transparency);
     
     private static Color StartColor => new Color(1.0f, 0.4f, 0.3f);
     private static Color EndColor => new Color(0.4f, 1.0f, 0.3f);

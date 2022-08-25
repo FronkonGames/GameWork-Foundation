@@ -66,7 +66,7 @@ namespace FronkonGames.GameWork.Foundation
     public static void DottedLine(Vector3 start, Vector3 end) => dottedLines.Add(new LineGL(start, end, LineColor));
 
     [Conditional("UNITY_EDITOR")]
-    private static void DrawDottedLines(IReadOnlyList<Vector3> segments, Color color)
+    public static void DottedLines(IReadOnlyList<Vector3> segments, Color color)
     {
       if (segments.Count > 1)
       {
@@ -74,6 +74,22 @@ namespace FronkonGames.GameWork.Foundation
           DottedLine(segments[i], segments[i + 1], color);
       }
     }
+
+    [Conditional("UNITY_EDITOR")]
+    public static void Arrow(Vector3 start, Quaternion rotation, float size, Color color)
+    {
+      Vector3 direction = rotation * Vector3.forward;
+      Vector3 end = start + direction * size;
+      Vector3 stepBack = direction.normalized * (size * -ArrowHeadLength);
+      Vector3 stepSide = Vector3.Cross(end - start, Vector3.up).normalized * size * ArrowHeadWidth;
+
+      Line(start, start + direction * size * (1.0f - ArrowHeadLength), color);
+      Triangle(end, end + stepBack + stepSide, start + direction * size * (1.0f - ArrowHeadLength), color);
+      Triangle(end, end + stepBack - stepSide, start + direction * size * (1.0f - ArrowHeadLength), color);
+    }
+
+    [Conditional("UNITY_EDITOR")]
+    public static void Arrow(Vector3 start, Quaternion rotation, float size) => Arrow(start, rotation, size, ArrowColor);
     
     [Conditional("UNITY_EDITOR")]
     public static void Triangle(Vector3 a, Vector3 b, Vector3 c, Color color) => triangles.Add(new TriangleGL(a, b, c, color));
@@ -120,11 +136,9 @@ namespace FronkonGames.GameWork.Foundation
 
     [Conditional("UNITY_EDITOR")]
     public static void Sphere(Vector3 position, float radius, Color color) => spheres.Add(new SphereGL(position, radius, color));
-    
+/*    
     [Conditional("UNITY_EDITOR")]
-    public static void Arc(Vector3 center, Vector3 normal, Vector3 from, float radius, float angle, Color color) =>
-      DrawArc(center, normal, from, radius, angle, color);
-/*
+    public static void Arc(Vector3 center, Vector3 normal, Vector3 from, float radius, float angle, Color color) => DrawArc(center, normal, from, radius, angle, color);
 
     [Conditional("UNITY_EDITOR")]
     public static void Arrow(Vector3 position, Vector3 direction, Color color, float duration = 0.0f, float arrowheadScale = 1.0f)
