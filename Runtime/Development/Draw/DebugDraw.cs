@@ -14,7 +14,6 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
@@ -25,32 +24,40 @@ namespace FronkonGames.GameWork.Foundation
   /// Drawing of objects for development.
   /// </summary>
   /// <remarks>Only available in the Editor</remarks>
-  public static partial class Draw
+  public static partial class DebugDraw
   {
     [Conditional("UNITY_EDITOR")]
-    public static void Point(Vector3 p, Color color, float size = 0.5f)
+    public static void Point(Vector3 position, float size, string color = PointColor)
     {
-      Line(p + Vector3.right * (size * 0.5f), -Vector3.right * size, color);
-      Line(p + Vector3.up * (size * 0.5f), -Vector3.up * size, color);
-      Line(p + Vector3.forward * (size * 0.5f), -Vector3.forward * size, color);
+      float halfSize = size * 0.5f;
+      
+      Line(position + Vector3.right * halfSize, position - Vector3.right * halfSize, color);
+      Line(position + Vector3.up * halfSize, position - Vector3.up * halfSize, color);
+      Line(position + Vector3.forward * halfSize, position - Vector3.forward * halfSize, color);
     }
 
     [Conditional("UNITY_EDITOR")]
-    public static void Point(Vector3 p, float size = 0.5f)
+    public static void Point(Vector3 position, float size = PointSize)
     {
-      Line(p + Vector3.right * (size * 0.5f), -Vector3.right * size, ColorX);
-      Line(p + Vector3.up * (size * 0.5f), -Vector3.up * size, ColorY);
-      Line(p + Vector3.forward * (size * 0.5f), -Vector3.forward * size, ColorZ);
+      float halfSize = size * 0.5f;
+
+      Line(position + Vector3.right * halfSize, position - Vector3.right * halfSize, ColorX);
+      Line(position + Vector3.up * halfSize, position - Vector3.up * halfSize, ColorY);
+      Line(position + Vector3.forward * halfSize, position - Vector3.forward * halfSize, ColorZ);
     }
 
     [Conditional("UNITY_EDITOR")]
-    public static void Line(Vector3 start, Vector3 end, Color color) => solidLines.Add(new LineGL(start, end, color));
+    public static void Points(IEnumerable<Vector3> positions, float size = PointSize, string color = PointColor)
+    {
+      foreach(Vector3 point in positions)
+        Point(point, size, color);
+    }
 
     [Conditional("UNITY_EDITOR")]
-    public static void Line(Vector3 start, Vector3 end) => solidLines.Add(new LineGL(start, end, LineColor));
-
+    private static void Line(Vector3 a, Vector3 b, string color = LineColor) => solidLines.Add(new LineGL(a, b, color));
+    
     [Conditional("UNITY_EDITOR")]
-    private static void Lines(IReadOnlyList<Vector3> segments, Color color)
+    private static void Lines(IReadOnlyList<Vector3> segments, string color = LineColor)
     {
       if (segments.Count > 1)
       {
@@ -58,15 +65,12 @@ namespace FronkonGames.GameWork.Foundation
           Line(segments[i], segments[i + 1], color);
       }
     }
-    
-    [Conditional("UNITY_EDITOR")]
-    public static void DottedLine(Vector3 start, Vector3 end, Color color) => dottedLines.Add(new LineGL(start, end, color));
 
     [Conditional("UNITY_EDITOR")]
-    public static void DottedLine(Vector3 start, Vector3 end) => dottedLines.Add(new LineGL(start, end, LineColor));
+    public static void DottedLine(Vector3 start, Vector3 end, string color = LineColor) => dottedLines.Add(new LineGL(start, end, color));
 
     [Conditional("UNITY_EDITOR")]
-    public static void DottedLines(IReadOnlyList<Vector3> segments, Color color)
+    public static void DottedLines(IReadOnlyList<Vector3> segments, string color)
     {
       if (segments.Count > 1)
       {
@@ -76,7 +80,7 @@ namespace FronkonGames.GameWork.Foundation
     }
 
     [Conditional("UNITY_EDITOR")]
-    public static void Arrow(Vector3 start, Quaternion rotation, float size, Color color)
+    public static void Arrow(Vector3 start, Quaternion rotation, float size = ArrowSize, string color = ArrowColor)
     {
       Vector3 direction = rotation * Vector3.forward;
       Vector3 end = start + direction * size;
@@ -89,13 +93,10 @@ namespace FronkonGames.GameWork.Foundation
     }
 
     [Conditional("UNITY_EDITOR")]
-    public static void Arrow(Vector3 start, Quaternion rotation, float size) => Arrow(start, rotation, size, ArrowColor);
+    public static void Triangle(Vector3 a, Vector3 b, Vector3 c, string color) => triangles.Add(new TriangleGL(a, b, c, color));
     
     [Conditional("UNITY_EDITOR")]
-    public static void Triangle(Vector3 a, Vector3 b, Vector3 c, Color color) => triangles.Add(new TriangleGL(a, b, c, color));
-    
-    [Conditional("UNITY_EDITOR")]
-    public static void Disc(Vector3 center, float radius, Quaternion rotation, Color color)
+    public static void Disc(Vector3 center, float radius, Quaternion rotation = default, string color = DiscColor)
     {
       float current = 0.0f;
       float grad = MathConstants.Pi2 / Segments;
@@ -111,11 +112,7 @@ namespace FronkonGames.GameWork.Foundation
     }
 
     [Conditional("UNITY_EDITOR")]
-    public static void Disc(Vector3 center, float radius, Quaternion rotation = default) =>
-      Disc(center, radius, rotation, DiscColor);
-
-    [Conditional("UNITY_EDITOR")]
-    public static void SolidDisc(Vector3 center, float radius, Quaternion rotation, Color color)
+    public static void SolidDisc(Vector3 center, float radius, Quaternion rotation = default, string color = DiscColor)
     {
       float current = 0.0f;
       float grad = MathConstants.Pi2 / Segments;
@@ -131,11 +128,38 @@ namespace FronkonGames.GameWork.Foundation
     }
 
     [Conditional("UNITY_EDITOR")]
-    public static void SolidDisc(Vector3 center, float radius, Quaternion rotation = default) =>
-      SolidDisc(center, radius, rotation, DiscColor);
+    public static void Sphere(Vector3 center, float radius, string color = SphereColor)
+    {
+      if (SphereRadialSegments > 2)
+      {
+        for (int i = 0; i < SphereRadialSegments; ++i)
+        {
+          Vector3 normal = new Vector3(Mathf.Sin((i * Mathf.PI) / SphereRadialSegments), 0, Mathf.Cos((i * Mathf.PI) / SphereRadialSegments));
 
-    [Conditional("UNITY_EDITOR")]
-    public static void Sphere(Vector3 position, float radius, Color color) => spheres.Add(new SphereGL(position, radius, color));
+          Disc(center, radius, Quaternion.LookRotation(normal), color);
+        }
+      }
+      else
+      {
+        Disc(center, radius, Quaternion.LookRotation(Vector3.forward), color);
+        Disc(center, radius, Quaternion.LookRotation(Vector3.right), color);
+      }
+
+      if (SphereVerticalSegments > 1)
+      {
+        for (int i = 1; i < SphereVerticalSegments; i++)
+        {
+          Vector3 c = center + Vector3.up * (-radius + (i * 2 * (radius / (SphereVerticalSegments))));
+
+          float height = ((float)i / SphereVerticalSegments) * radius * 2;
+          float ra = Mathf.Sqrt(height * (2 * radius - height));
+
+          Disc(c, ra, Quaternion.LookRotation(Vector3.up), color);
+        }
+      }
+      else
+        Disc(center, radius, Quaternion.LookRotation(Vector3.up), color);
+    }
 /*    
     [Conditional("UNITY_EDITOR")]
     public static void Arc(Vector3 center, Vector3 normal, Vector3 from, float radius, float angle, Color color) => DrawArc(center, normal, from, radius, angle, color);
@@ -403,6 +427,6 @@ namespace FronkonGames.GameWork.Foundation
       void DrawLine(Vector3 a, Vector3 b, float f) =>
         lineDelegate(a, b, new Color(color.r, color.g, color.b, Mathf.Pow(1.0f - Mathf.Abs(f - 0.5f) * 2.0f, 2.0f) * color.a));
     }
-*/    
+*/
   }
 }

@@ -28,7 +28,7 @@ namespace FronkonGames.GameWork.Foundation
 #if UNITY_EDITOR
   [UnityEditor.InitializeOnLoad]
 #endif
-  public static partial class Draw
+  public static partial class DebugDraw
   {
     private readonly struct LineGL
     {
@@ -36,11 +36,12 @@ namespace FronkonGames.GameWork.Foundation
       public readonly Vector3 b;
       public readonly Color color;
 
-      public LineGL(Vector3 a, Vector3 b, Color color)
+      public LineGL(Vector3 a, Vector3 b, string color)
       {
         this.a = a;
         this.b = b;
-        this.color = color;
+        ColorUtility.TryParseHtmlString(color, out this.color);
+        this.color.a = Transparency;
       }
     }
 
@@ -50,49 +51,30 @@ namespace FronkonGames.GameWork.Foundation
       public readonly Vector3 b;
       public readonly Vector3 c;
       public readonly Color color;
-      public readonly float duration;
       
-      public TriangleGL(Vector3 a, Vector3 b, Vector3 c, Color color, float duration = 0.0f)
+      public TriangleGL(Vector3 a, Vector3 b, Vector3 c, string color)
       {
         this.a = a;
         this.b = b;
         this.c = c;
-        this.color = color;
-        this.duration = Mathf.Max(0.0f, duration);
-      }
-    }
-
-    private readonly struct SphereGL
-    {
-      public readonly Vector3 p;
-      public readonly float radius;
-      public readonly Color color;
-      public readonly float duration;
-      
-      public SphereGL(Vector3 p, float radius, Color color, float duration = 0.0f)
-      {
-        this.p = p;
-        this.radius = radius;
-        this.color = color;
-        this.duration = Mathf.Max(0.0f, duration);
+        ColorUtility.TryParseHtmlString(color, out this.color);
+        this.color.a = Transparency;
       }
     }
 
     private static readonly List<LineGL> solidLines;
     private static readonly List<LineGL> dottedLines;
     private static readonly List<TriangleGL> triangles;
-    private static readonly List<SphereGL> spheres;
 
     private static bool playing;
     private static readonly Material material;
 
 #if UNITY_EDITOR
-    static Draw()
+    static DebugDraw()
     {
       solidLines = new(Capacity);
       dottedLines = new(Capacity);
       triangles = new(Capacity);
-      spheres = new(Capacity);
       
       material = new Material(Shader.Find("Hidden/Internal-Colored"))
       {
@@ -101,7 +83,7 @@ namespace FronkonGames.GameWork.Foundation
       material.SetInt("_SrcBlend", (int)BlendMode.SrcAlpha);
       material.SetInt("_DstBlend", (int)BlendMode.OneMinusSrcAlpha);
       material.SetInt("_Cull", (int)CullMode.Off);
-      material.SetInt("_ZWrite", 0);
+      material.SetInt("_ZWrite", (int)CompareFunction.Always);
 
       UnityEditor.SceneView.duringSceneGui += (_) =>
       {
@@ -130,8 +112,6 @@ namespace FronkonGames.GameWork.Foundation
       SendTriangles();
       GL.End();
 
-      SendSpheres();
-      
       GL.Begin(GL.LINES);
       SendSolidLines();
       SendDottedLines();
@@ -146,8 +126,6 @@ namespace FronkonGames.GameWork.Foundation
         SendTriangles(OcclusionColorFactor);
         GL.End();
 
-        SendSpheres(OcclusionColorFactor);
-        
         GL.Begin(GL.LINES);
         SendSolidLines(OcclusionColorFactor);
         SendDottedLines(OcclusionColorFactor);
@@ -184,48 +162,7 @@ namespace FronkonGames.GameWork.Foundation
     private static void SendTriangles(float colorFactor = 1.0f)
     {
       for (int i = 0; i < triangles.Count; ++i)
-      {
-        GL.Color(triangles[i].color * colorFactor);
-        GL.Vertex(triangles[i].a);
-        GL.Vertex(triangles[i].b);
-        GL.Vertex(triangles[i].c);
-      }
-    }
-
-    private static void SendSpheres(float colorFactor = 1.0f)
-    {
-      for (int i = 0; i < spheres.Count; ++i)
-      {
-        float x, y, z, j, k;
-        float pi2 = (Mathf.PI * 2f) + 0.01f;
-        for (k = 0; k < Mathf.PI; k += Mathf.PI / ((Segments / 2) + 1))
-        {
-          GL.Begin(GL.LINE_STRIP);
-          GL.Color(spheres[i].color * colorFactor);
-          y = (spheres[i].radius * Mathf.Cos(k));
-          for (j = 0; j <= pi2; j += (Mathf.PI / (Segments / 4)))
-          {
-            x = spheres[i].radius * Mathf.Cos(j) * Mathf.Sin(k);
-            z = spheres[i].radius * Mathf.Sin(j) * Mathf.Sin(k);
-            GL.Vertex3(spheres[i].p.x + x, spheres[i].p.y + y, spheres[i].p.z + z);
-          }
-          GL.End();
-        }
-
-        for (k = 0; k < Mathf.PI; k += Mathf.PI / (Segments / 2))
-        {
-          GL.Begin(GL.LINE_STRIP);
-          GL.Color(spheres[i].color * colorFactor);
-          for (j = 0; j <= pi2; j += (Mathf.PI / (Segments / 4)))
-          {
-            x = spheres[i].radius * Mathf.Sin(j) * Mathf.Cos(k);
-            y = spheres[i].radius * Mathf.Cos(j);
-            z = spheres[i].radius * Mathf.Sin(k) * Mathf.Sin(j);
-            GL.Vertex3(spheres[i].p.x + x, spheres[i].p.y + y, spheres[i].p.z + z);
-          }
-          GL.End();
-        }
-      }
+        DrawTriangleGL(triangles[i].a, triangles[i].b, triangles[i].c, triangles[i].color * colorFactor);
     }
 
     private static void DrawLineGL(Vector3 a, Vector3 b, Color color)
@@ -234,13 +171,20 @@ namespace FronkonGames.GameWork.Foundation
       GL.Vertex(a);
       GL.Vertex(b);
     }
-    
+
+    private static void DrawTriangleGL(Vector3 a, Vector3 b, Vector3 c, Color color)
+    {
+      GL.Color(color);
+      GL.Vertex(a);
+      GL.Vertex(b);
+      GL.Vertex(c);
+    }
+
     private static void Clear()
     {
       solidLines.Clear();
       dottedLines.Clear();
       triangles.Clear();
-      spheres.Clear();
     }
   }
 }

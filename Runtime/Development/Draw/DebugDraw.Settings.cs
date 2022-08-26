@@ -15,50 +15,43 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 using UnityEngine;
-using FronkonGames.GameWork.Foundation;
 
-/// <summary>
-/// Draw test.
-/// </summary>
-[ExecuteInEditMode]
-public sealed class DrawDemo : MonoBehaviour
+namespace FronkonGames.GameWork.Foundation
 {
-  [SerializeField]
-  private GameObject player;
-
-  private readonly Vector3[] points = new Vector3[100];
-
-  private void OnEnable()
+  /// <summary>
+  /// Drawing of objects for development.
+  /// </summary>
+  /// <remarks>Only available in the Editor</remarks>
+  public static partial class DebugDraw
   {
-    const float size = 10.0f;
-    for (int i = 0; i < points.Length; ++i)
-    {
-      points[i].x = Random.Range(-size, size);
-      points[i].y = Random.Range(0.0f, size * 0.5f);
-      points[i].z = Random.Range(-size, size);
-    }
-  }
-
-  private void OnDrawGizmos()
-  {
-    // Points.
-    DebugDraw.Point(new Vector3(0.0f, 0.5f, 0.0f), 0.4f, "#FFFFFF");
-    DebugDraw.Point(new Vector3(0.5f, 0.5f, 0.0f), 0.4f);
-    DebugDraw.Point(new Vector3(0.0f, 0.5f, 0.5f), 0.4f);
-    DebugDraw.Point(new Vector3(-0.5f, 0.5f, 0.0f), 0.4f);
-    DebugDraw.Point(new Vector3(0.0f, 0.5f, -0.5f), 0.4f);
-
-    points.Draw(0.1f);
+    private const int Capacity = 100;
     
-    // Lines.
-    
-    DebugDraw.Sphere(player.transform.position + Vector3.up * 3.0f, 0.25f);
+    private const int Segments = 32;
 
-    DebugDraw.DottedLine(player.transform.position, Vector3.zero);
-
-    player.transform.Draw();
+    private const float OcclusionColorFactor = 0.5f;
     
-    DebugDraw.SolidDisc(player.transform.position, 1.0f, player.transform.rotation);
-    DebugDraw.Disc(player.transform.position, 1.5f, player.transform.rotation);
+    private const float Transparency = 0.75f;
+
+    private const string PointColor = "#64b5f6";
+    private const float PointSize = 0.5f;
+
+    private const int SphereVerticalSegments = 3;
+    private const int SphereRadialSegments = 3;
+    
+    private const string ArrowColor = "#8e24aa";
+    private const float ArrowSize = 2.0f;
+    private const float ArrowHeadLength = 0.2f;
+    private const float ArrowHeadWidth = 0.05f;
+    
+    private const string LineColor = "#fff8e1";
+    private const float DashSize = 1.0f;
+
+    private const string DiscColor = "#ffeb3b";
+
+    private const string SphereColor = "#fb8c00";
+
+    private const string ColorX = "#FF0000";
+    private const string ColorY = "#00FF00";
+    private const string ColorZ = "#0000FF";
   }
 }

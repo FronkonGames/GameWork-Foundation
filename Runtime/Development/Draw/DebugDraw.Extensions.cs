@@ -14,6 +14,7 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace FronkonGames.GameWork.Foundation
@@ -22,39 +23,21 @@ namespace FronkonGames.GameWork.Foundation
   /// Drawing of objects for development.
   /// </summary>
   /// <remarks>Only available in the Editor</remarks>
-  public static partial class Draw
+  public static partial class DebugDraw
   {
-    private static int Capacity = 100;
+    public static void Draw(this Vector3 self, float size = PointSize, string color = PointColor)
+      => Point(self, size, color);
     
-    private static int Segments = 32;
+    public static void Draw(this IEnumerable<Vector3> self, float size = PointSize, string color = PointColor)
+      => Points(self, size, color);
+
+    public static void Draw(this IReadOnlyList<Vector3> self, string color = LineColor)
+      => Lines(self, color);
+
+    public static void DrawDotted(this IReadOnlyList<Vector3> self, string color = LineColor)
+      => DottedLines(self, color);
     
-    private static float ArrowHeadLength = 0.2f;
-    private static float ArrowHeadWidth = 0.05f;
-    
-    private static float DashSize = 1.0f;
-
-    private static float OcclusionColorFactor = 0.5f;
-    
-    private static float Transparency = 0.75f;
-
-    private static Color TextColor => new Color(0.22f, 0.22f, 0.22f);
-
-    private static Color PointColor => new Color(1.0f, 0.8f, 0.0f, Transparency);
-    
-    private static Color LineColor => new Color(1.0f, 0.4f, 0.3f, Transparency);
-
-    private static Color DiscColor => new Color(0.8f, 0.4f, 0.8f, Transparency);
-
-    private static Color ArrowColor => new Color(0.4f, 0.7f, 0.8f, Transparency);
-    
-    private static Color StartColor => new Color(1.0f, 0.4f, 0.3f);
-    private static Color EndColor => new Color(0.4f, 1.0f, 0.3f);
-
-    private static Color HitColor => new Color(1.0f, 0.1f, 0.2f);
-    private static Color RayColor => new Color(0.4f, 1.0f, 0.3f);
-
-    private static Color ColorX => new Color(1.0f, 0.1f, 0.2f);
-    private static Color ColorY => new Color(0.3f, 1.0f, 0.1f);
-    private static Color ColorZ => new Color(0.1f, 0.4f, 1.0f);
+    public static void Draw(this Transform self, float size = ArrowSize, string color = ArrowColor)
+      => Arrow(self.position, self.rotation, size, color);
   }
 }
