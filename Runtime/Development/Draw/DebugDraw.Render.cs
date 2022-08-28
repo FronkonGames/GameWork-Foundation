@@ -16,8 +16,13 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Numerics;
 using UnityEngine;
 using UnityEngine.Rendering;
+using Matrix4x4 = UnityEngine.Matrix4x4;
+using Quaternion = UnityEngine.Quaternion;
+using Vector3 = UnityEngine.Vector3;
 
 namespace FronkonGames.GameWork.Foundation
 {
@@ -30,41 +35,7 @@ namespace FronkonGames.GameWork.Foundation
 #endif
   public static partial class DebugDraw
   {
-    private readonly struct LineGL
-    {
-      public readonly Vector3 a;
-      public readonly Vector3 b;
-      public readonly Color color;
-
-      public LineGL(Vector3 a, Vector3 b, string color)
-      {
-        this.a = a;
-        this.b = b;
-        ColorUtility.TryParseHtmlString(color, out this.color);
-        this.color.a = Transparency;
-      }
-    }
-
-    private readonly struct TriangleGL
-    {
-      public readonly Vector3 a;
-      public readonly Vector3 b;
-      public readonly Vector3 c;
-      public readonly Color color;
-      
-      public TriangleGL(Vector3 a, Vector3 b, Vector3 c, string color)
-      {
-        this.a = a;
-        this.b = b;
-        this.c = c;
-        ColorUtility.TryParseHtmlString(color, out this.color);
-        this.color.a = Transparency;
-      }
-    }
-
-    private static readonly List<LineGL> solidLines;
-    private static readonly List<LineGL> dottedLines;
-    private static readonly List<TriangleGL> triangles;
+    private static readonly List<JobGL> jobs;
 
     private static bool playing;
     private static readonly Material material;
@@ -72,9 +43,7 @@ namespace FronkonGames.GameWork.Foundation
 #if UNITY_EDITOR
     static DebugDraw()
     {
-      solidLines = new(Capacity);
-      dottedLines = new(Capacity);
-      triangles = new(Capacity);
+      jobs = new(Capacity);
       
       material = new Material(Shader.Find("Hidden/Internal-Colored"))
       {
@@ -90,7 +59,7 @@ namespace FronkonGames.GameWork.Foundation
         if (Event.current.type == EventType.Repaint)
           Render(UnityEditor.SceneView.currentDrawingSceneView.camera);
         else
-          Clear();
+          jobs.Clear();
       };
       UnityEditor.EditorApplication.playModeStateChanged += playMode => (playMode switch
       {
@@ -106,85 +75,111 @@ namespace FronkonGames.GameWork.Foundation
       material.SetInt("_ZTest",  OcclusionColorFactor < 1.0f ? (int)CompareFunction.Less : (int)CompareFunction.Always);
       material.SetPass(0);
 
-      GL.PushMatrix();
-      
-      GL.Begin(GL.TRIANGLES);
-      SendTriangles();
-      GL.End();
+      //GL.PushMatrix();
 
-      GL.Begin(GL.LINES);
-      SendSolidLines();
-      SendDottedLines();
-      GL.End();
+      SubmitJobs();
 
       if (OcclusionColorFactor < 1.0f)
       {
         material.SetInt("_ZTest",  (int)CompareFunction.Greater);
         material.SetPass(0);
 
-        GL.Begin(GL.TRIANGLES);
-        SendTriangles(OcclusionColorFactor);
-        GL.End();
-
-        GL.Begin(GL.LINES);
-        SendSolidLines(OcclusionColorFactor);
-        SendDottedLines(OcclusionColorFactor);
-        GL.End();
+        SubmitJobs(OcclusionColorFactor);
       }
       
-      GL.PopMatrix();
+      //GL.PopMatrix();
       
-      Clear();
+      jobs.Clear();
     }
 
-    private static void SendSolidLines(float colorFactor = 1.0f)
+    private static void SubmitJobs(float colorFactor = 1.0f)
     {
-      for (int i = 0; i < solidLines.Count; ++i)
-        DrawLineGL(solidLines[i].a, solidLines[i].b, solidLines[i].color * colorFactor);
-    }
-
-    private static void SendDottedLines(float colorFactor = 1.0f)
-    {
-      for (int i = 0; i < dottedLines.Count; ++i)
+      // Line.
+      GL.Begin(GL.LINES);
       {
-        float length = Vector3.Distance(dottedLines[i].a, dottedLines[i].b);
-      
-        int count = Mathf.CeilToInt(length / DashSize);
-        for (int j = 0; j < count; j += 2)
+        for (int i = 0; i < jobs.Count; ++i)
         {
-          DrawLineGL(Vector3.Lerp(dottedLines[i].a, dottedLines[i].b, j * DashSize / length),
-                     Vector3.Lerp(dottedLines[i].a, dottedLines[i].b, (j + 1) * DashSize / length),
-                     solidLines[i].color * colorFactor);
+          if (jobs[i].matrix != Matrix4x4.identity)
+          {
+            GL.PushMatrix();
+            GL.MultMatrix(jobs[i].matrix);
+          }
+        
+          GL.Color(jobs[i].color * colorFactor);
+
+          if (jobs[i].mode == JobGLMode.Line)
+          {
+            GL.Vertex(jobs[i].vertices[0]);
+            GL.Vertex(jobs[i].vertices[1]);
+          }
+          else if (jobs[i].mode == JobGLMode.DottedLine)
+          {
+            float length = Vector3.Distance(jobs[i].vertices[0], jobs[i].vertices[1]);
+      
+            int count = Mathf.CeilToInt(length / DashSize);
+            for (int j = 0; j < count; j += 2)
+            {
+              GL.Vertex(Vector3.Lerp(jobs[i].vertices[0], jobs[i].vertices[1], j * DashSize / length));
+              GL.Vertex(Vector3.Lerp(jobs[i].vertices[0], jobs[i].vertices[1], (j + 1) * DashSize / length));
+            }
+          }
+          
+          if (jobs[i].matrix != Matrix4x4.identity)
+            GL.PopMatrix();
         }
       }
-    }
+      GL.End();
 
-    private static void SendTriangles(float colorFactor = 1.0f)
-    {
-      for (int i = 0; i < triangles.Count; ++i)
-        DrawTriangleGL(triangles[i].a, triangles[i].b, triangles[i].c, triangles[i].color * colorFactor);
-    }
+      // Lines.
+      GL.Begin(GL.LINE_STRIP);
+      {
+        for (int i = 0; i < jobs.Count; ++i)
+        {
+          if (jobs[i].matrix != Matrix4x4.identity)
+          {
+            GL.PushMatrix();
+            GL.MultMatrix(jobs[i].matrix);
+          }
+        
+          GL.Color(jobs[i].color * colorFactor);
 
-    private static void DrawLineGL(Vector3 a, Vector3 b, Color color)
-    {
-      GL.Color(color);
-      GL.Vertex(a);
-      GL.Vertex(b);
-    }
+          if (jobs[i].mode == JobGLMode.Lines)
+          {
+            for (int j = 0; j < jobs[i].vertices.Length; ++j)
+              GL.Vertex(jobs[i].vertices[j]);
+          }
+          
+          if (jobs[i].matrix != Matrix4x4.identity)
+            GL.PopMatrix();
+        }
+      }
+      GL.End();
+      
+      // Triangles.
+      GL.Begin(GL.TRIANGLES);
+      {
+        for (int i = 0; i < jobs.Count; ++i)
+        {
+          if (jobs[i].matrix != Matrix4x4.identity)
+          {
+            GL.PushMatrix();
+            GL.MultMatrix(jobs[i].matrix);
+          }
+        
+          GL.Color(jobs[i].color * colorFactor);
 
-    private static void DrawTriangleGL(Vector3 a, Vector3 b, Vector3 c, Color color)
-    {
-      GL.Color(color);
-      GL.Vertex(a);
-      GL.Vertex(b);
-      GL.Vertex(c);
-    }
-
-    private static void Clear()
-    {
-      solidLines.Clear();
-      dottedLines.Clear();
-      triangles.Clear();
+          if (jobs[i].mode == JobGLMode.Triangle)
+          {
+            GL.Vertex(jobs[i].vertices[0]);
+            GL.Vertex(jobs[i].vertices[1]);
+            GL.Vertex(jobs[i].vertices[2]);
+          }
+          
+          if (jobs[i].matrix != Matrix4x4.identity)
+            GL.PopMatrix();
+        }
+      }
+      GL.End();
     }
   }
 }

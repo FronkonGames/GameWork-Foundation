@@ -32,6 +32,18 @@ namespace FronkonGames.GameWork.Foundation
     public static Color SetA(this Color self, float a) => new Color(self.r, self.g, self.b, a);
 
     /// <summary>
+    /// From hex string.
+    /// </summary>
+    /// <param name="text">HTML color, ie '#FF00FF'</param>
+    /// <returns>String</returns>
+    public static Color FromHex(this string text)
+    {
+      ColorUtility.TryParseHtmlString(text, out Color color);
+
+      return color;    
+    }
+    
+    /// <summary>
     /// To hex string.
     /// </summary>
     /// <param name="self">Value</param>

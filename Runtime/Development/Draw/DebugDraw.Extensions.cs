@@ -25,19 +25,19 @@ namespace FronkonGames.GameWork.Foundation
   /// <remarks>Only available in the Editor</remarks>
   public static partial class DebugDraw
   {
-    public static void Draw(this Vector3 self, float size = PointSize, string color = PointColor)
+    public static void Draw(this Vector3 self, float size = PointSize, Color? color = null)
       => Point(self, size, color);
     
-    public static void Draw(this IEnumerable<Vector3> self, float size = PointSize, string color = PointColor)
+    public static void Draw(this IEnumerable<Vector3> self, float size = PointSize, Color? color = null)
       => Points(self, size, color);
 
-    public static void Draw(this IReadOnlyList<Vector3> self, string color = LineColor)
+    public static void Draw(this IReadOnlyList<Vector3> self, Color? color = null)
       => Lines(self, color);
 
-    public static void DrawDotted(this IReadOnlyList<Vector3> self, string color = LineColor)
+    public static void DrawDotted(this IReadOnlyList<Vector3> self, Color? color = null)
       => DottedLines(self, color);
     
-    public static void Draw(this Transform self, float size = ArrowSize, string color = ArrowColor)
+    public static void Draw(this Transform self, float size = ArrowSize, Color? color = null)
       => Arrow(self.position, self.rotation, size, color);
   }
 }

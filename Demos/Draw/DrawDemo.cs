@@ -26,6 +26,9 @@ public sealed class DrawDemo : MonoBehaviour
   [SerializeField]
   private GameObject player;
 
+  [SerializeField, Range(0.0f, 360.0f)]
+  private float arcAngle = 40.0f;
+
   private readonly Vector3[] points = new Vector3[100];
 
   private void OnEnable()
@@ -42,23 +45,29 @@ public sealed class DrawDemo : MonoBehaviour
   private void OnDrawGizmos()
   {
     // Points.
-    DebugDraw.Point(new Vector3(0.0f, 0.5f, 0.0f), 0.4f, "#FFFFFF");
-    DebugDraw.Point(new Vector3(0.5f, 0.5f, 0.0f), 0.4f);
-    DebugDraw.Point(new Vector3(0.0f, 0.5f, 0.5f), 0.4f);
-    DebugDraw.Point(new Vector3(-0.5f, 0.5f, 0.0f), 0.4f);
-    DebugDraw.Point(new Vector3(0.0f, 0.5f, -0.5f), 0.4f);
-
-    points.Draw(0.1f);
-    
-    // Lines.
-    
-    DebugDraw.Sphere(player.transform.position + Vector3.up * 3.0f, 0.25f);
+    DebugDraw.Point(new Vector3(0.0f, 0.5f, 0.0f), 0.4f, Color.white);
+    DebugDraw.Point(new Vector3(0.5f, 0.5f, 0.0f));
+    DebugDraw.Point(new Vector3(0.0f, 0.5f, 0.5f));
+    DebugDraw.Point(new Vector3(-0.5f, 0.5f, 0.0f));
+    DebugDraw.Point(new Vector3(0.0f, 0.5f, -0.5f));
 
     DebugDraw.DottedLine(player.transform.position, Vector3.zero);
-
+    
+    points.Draw(0.1f, Color.cyan);
+    
+    // Lines.
+/*
+    // Spheres.
+    DebugDraw.Sphere(player.transform.position + Vector3.up * 3.0f, 0.25f);
+    
+    // Arcs.
+    DebugDraw.Arc(player.transform.position, player.transform.forward, 4.0f, arcAngle);
+    
+    // Extensions.
+*/
     player.transform.Draw();
     
-    DebugDraw.SolidDisc(player.transform.position, 1.0f, player.transform.rotation);
-    DebugDraw.Disc(player.transform.position, 1.5f, player.transform.rotation);
+    //DebugDraw.SolidDisc(player.transform.position, 1.0f, player.transform.rotation);
+    //DebugDraw.Disc(player.transform.position, 1.5f, player.transform.rotation);*/
   }
 }

@@ -24,7 +24,7 @@ namespace FronkonGames.GameWork.Foundation
   /// <remarks>Only available in the Editor</remarks>
   public static partial class DebugDraw
   {
-    private const int Capacity = 100;
+    private const int Capacity = 1000;
     
     private const int Segments = 32;
 
@@ -32,26 +32,29 @@ namespace FronkonGames.GameWork.Foundation
     
     private const float Transparency = 0.75f;
 
-    private const string PointColor = "#64b5f6";
+    private static readonly Color PointColor = "#8cc6eb".FromHex();
     private const float PointSize = 0.5f;
 
-    private const int SphereVerticalSegments = 3;
-    private const int SphereRadialSegments = 3;
+    private const int SphereRadialSegments = 4;
+
+    private static readonly Color TriangleColor = "#8b9bf6".FromHex();
     
-    private const string ArrowColor = "#8e24aa";
+    private static readonly Color ArrowColor = "#b8ffce".FromHex();
     private const float ArrowSize = 2.0f;
     private const float ArrowHeadLength = 0.2f;
     private const float ArrowHeadWidth = 0.05f;
     
-    private const string LineColor = "#fff8e1";
+    private static readonly Color LineColor = "#f0cbc9".FromHex();
     private const float DashSize = 1.0f;
 
-    private const string DiscColor = "#ffeb3b";
+    private static readonly Color DiscColor = "#affff1".FromHex();
 
-    private const string SphereColor = "#fb8c00";
+    private static readonly Color SphereColor = "#f5df8c".FromHex();
 
-    private const string ColorX = "#FF0000";
-    private const string ColorY = "#00FF00";
-    private const string ColorZ = "#0000FF";
+    private static readonly Color ArcColor = "#90d3be".FromHex();
+    
+    private static readonly Color ColorX = Color.red;
+    private static readonly Color ColorY = Color.green;
+    private static readonly Color ColorZ = Color.blue;
   }
 }

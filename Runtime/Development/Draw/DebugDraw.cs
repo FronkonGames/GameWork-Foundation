@@ -27,76 +27,70 @@ namespace FronkonGames.GameWork.Foundation
   public static partial class DebugDraw
   {
     [Conditional("UNITY_EDITOR")]
-    public static void Point(Vector3 position, float size, string color = PointColor)
+    public static void Point(Vector3 position, float size = PointSize, Color? color = null, Quaternion? rotation = null)
     {
       float halfSize = size * 0.5f;
       
-      Line(position + Vector3.right * halfSize, position - Vector3.right * halfSize, color);
-      Line(position + Vector3.up * halfSize, position - Vector3.up * halfSize, color);
-      Line(position + Vector3.forward * halfSize, position - Vector3.forward * halfSize, color);
+      Line(position + Vector3.right * halfSize, position - Vector3.right * halfSize, color ?? ColorX, rotation);
+      Line(position + Vector3.up * halfSize, position - Vector3.up * halfSize, color ?? ColorY, rotation);
+      Line(position + Vector3.forward * halfSize, position - Vector3.forward * halfSize, color ?? ColorZ, rotation);
     }
 
     [Conditional("UNITY_EDITOR")]
-    public static void Point(Vector3 position, float size = PointSize)
-    {
-      float halfSize = size * 0.5f;
-
-      Line(position + Vector3.right * halfSize, position - Vector3.right * halfSize, ColorX);
-      Line(position + Vector3.up * halfSize, position - Vector3.up * halfSize, ColorY);
-      Line(position + Vector3.forward * halfSize, position - Vector3.forward * halfSize, ColorZ);
-    }
-
-    [Conditional("UNITY_EDITOR")]
-    public static void Points(IEnumerable<Vector3> positions, float size = PointSize, string color = PointColor)
+    public static void Points(IEnumerable<Vector3> positions, float size = PointSize, Color? color = null, Quaternion? rotation = null)
     {
       foreach(Vector3 point in positions)
-        Point(point, size, color);
+        Point(point, size, color, rotation);
     }
 
     [Conditional("UNITY_EDITOR")]
-    private static void Line(Vector3 a, Vector3 b, string color = LineColor) => solidLines.Add(new LineGL(a, b, color));
+    private static void Line(Vector3 a, Vector3 b, Color? color = null, Quaternion? rotation = null) => JobGL.AddLine(a, b, color ?? LineColor, rotation);
     
     [Conditional("UNITY_EDITOR")]
-    private static void Lines(IReadOnlyList<Vector3> segments, string color = LineColor)
+    private static void Lines(IReadOnlyList<Vector3> segments, Color? color = null, Quaternion? rotation = null)
+    {
+      if (segments.Count > 2)
+        JobGL.AddLines(segments, color ?? LineColor, rotation);
+      else if (segments.Count == 2)
+        JobGL.AddLine(segments[0], segments[1], color ?? LineColor, rotation);
+    }
+
+    [Conditional("UNITY_EDITOR")]
+    public static void DottedLine(Vector3 start, Vector3 end, Color? color = null, Quaternion? rotation = null) =>
+      JobGL.AddDottedLine(start, end, color ?? LineColor, rotation);
+
+    [Conditional("UNITY_EDITOR")]
+    public static void DottedLines(IReadOnlyList<Vector3> segments, Color? color = null, Quaternion? rotation = null)
     {
       if (segments.Count > 1)
       {
         for (int i = 0; i < segments.Count - 1; ++i)
-          Line(segments[i], segments[i + 1], color);
+          DottedLine(segments[i], segments[i + 1], color, rotation);
       }
     }
 
     [Conditional("UNITY_EDITOR")]
-    public static void DottedLine(Vector3 start, Vector3 end, string color = LineColor) => dottedLines.Add(new LineGL(start, end, color));
-
-    [Conditional("UNITY_EDITOR")]
-    public static void DottedLines(IReadOnlyList<Vector3> segments, string color)
-    {
-      if (segments.Count > 1)
-      {
-        for (int i = 0; i < segments.Count - 1; ++i)
-          DottedLine(segments[i], segments[i + 1], color);
-      }
-    }
-
-    [Conditional("UNITY_EDITOR")]
-    public static void Arrow(Vector3 start, Quaternion rotation, float size = ArrowSize, string color = ArrowColor)
+    public static void Arrow(Vector3 start, Quaternion rotation, float size = ArrowSize, Color? color = null)
     {
       Vector3 direction = rotation * Vector3.forward;
       Vector3 end = start + direction * size;
       Vector3 stepBack = direction.normalized * (size * -ArrowHeadLength);
       Vector3 stepSide = Vector3.Cross(end - start, Vector3.up).normalized * size * ArrowHeadWidth;
 
-      Line(start, start + direction * size * (1.0f - ArrowHeadLength), color);
-      Triangle(end, end + stepBack + stepSide, start + direction * size * (1.0f - ArrowHeadLength), color);
-      Triangle(end, end + stepBack - stepSide, start + direction * size * (1.0f - ArrowHeadLength), color);
+      Line(start, start + direction * size * (1.0f - ArrowHeadLength), color ?? ArrowColor, rotation);
+      SolidTriangle(end, end + stepBack - stepSide, end + stepBack + stepSide, color ?? ArrowColor, rotation);
     }
 
     [Conditional("UNITY_EDITOR")]
-    public static void Triangle(Vector3 a, Vector3 b, Vector3 c, string color) => triangles.Add(new TriangleGL(a, b, c, color));
+    public static void Triangle(Vector3 a, Vector3 b, Vector3 c, Color? color = null, Quaternion? rotation = null) =>
+      JobGL.AddLines(new[] { a, b, c, a }, color ?? TriangleColor, rotation);
     
     [Conditional("UNITY_EDITOR")]
-    public static void Disc(Vector3 center, float radius, Quaternion rotation = default, string color = DiscColor)
+    public static void SolidTriangle(Vector3 a, Vector3 b, Vector3 c, Color? color = null, Quaternion? rotation = null) =>
+      JobGL.AddTriangle(a, b, c, color ?? TriangleColor, rotation);
+/*    
+    [Conditional("UNITY_EDITOR")]
+    public static void Disc(Vector3 center, float radius, Color? color = null, Quaternion? rotation = null)
     {
       float current = 0.0f;
       float grad = MathConstants.Pi2 / Segments;
@@ -106,13 +100,13 @@ namespace FronkonGames.GameWork.Foundation
         Line(rotation * new Vector3(Mathf.Sin(current) * radius, 0.0f, Mathf.Cos(current) * radius) + center,
           i == Segments - 1 ? rotation * new Vector3(0f, 0f, radius) + center
             : rotation * new Vector3(Mathf.Sin(current + grad) * radius, 0.0f, Mathf.Cos(current + grad) * radius) + center,
-          color);
+          rotation, color);
         current += grad;
       }
     }
 
     [Conditional("UNITY_EDITOR")]
-    public static void SolidDisc(Vector3 center, float radius, Quaternion rotation = default, string color = DiscColor)
+    public static void SolidDisc(Vector3 center, float radius, Color? color = null, Quaternion? rotation = null)
     {
       float current = 0.0f;
       float grad = MathConstants.Pi2 / Segments;
@@ -122,88 +116,40 @@ namespace FronkonGames.GameWork.Foundation
         Triangle(center, rotation * new Vector3(Mathf.Sin(current) * radius, 0.0f, Mathf.Cos(current) * radius) + center,
           i == Segments - 1 ? rotation * new Vector3(0.0f, 0.0f, radius) + center
             : rotation * new Vector3(Mathf.Sin(current + grad) * radius, 0.0f, Mathf.Cos(current + grad) * radius) + center,
-          color);
+          rotation, color);
         current += grad;
       }
     }
 
     [Conditional("UNITY_EDITOR")]
-    public static void Sphere(Vector3 center, float radius, string color = SphereColor)
+    public static void Sphere(Vector3 center, float radius, Color? color = null, Quaternion? rotation = null)
     {
-      if (SphereRadialSegments > 2)
-      {
-        for (int i = 0; i < SphereRadialSegments; ++i)
-        {
-          Vector3 normal = new Vector3(Mathf.Sin((i * Mathf.PI) / SphereRadialSegments), 0, Mathf.Cos((i * Mathf.PI) / SphereRadialSegments));
-
-          Disc(center, radius, Quaternion.LookRotation(normal), color);
-        }
-      }
-      else
-      {
-        Disc(center, radius, Quaternion.LookRotation(Vector3.forward), color);
-        Disc(center, radius, Quaternion.LookRotation(Vector3.right), color);
-      }
-
-      if (SphereVerticalSegments > 1)
-      {
-        for (int i = 1; i < SphereVerticalSegments; i++)
-        {
-          Vector3 c = center + Vector3.up * (-radius + (i * 2 * (radius / (SphereVerticalSegments))));
-
-          float height = ((float)i / SphereVerticalSegments) * radius * 2;
-          float ra = Mathf.Sqrt(height * (2 * radius - height));
-
-          Disc(c, ra, Quaternion.LookRotation(Vector3.up), color);
-        }
-      }
-      else
-        Disc(center, radius, Quaternion.LookRotation(Vector3.up), color);
-    }
-/*    
-    [Conditional("UNITY_EDITOR")]
-    public static void Arc(Vector3 center, Vector3 normal, Vector3 from, float radius, float angle, Color color) => DrawArc(center, normal, from, radius, angle, color);
-
-    [Conditional("UNITY_EDITOR")]
-    public static void Arrow(Vector3 position, Vector3 direction, Color color, float duration = 0.0f, float arrowheadScale = 1.0f)
-    {
-      rayDelegate(position, direction, color, duration);
-      DrawArrowHead(position, direction, color, arrowheadScale);
+      Disc(center, radius, Quaternion.identity, color);
+      
+      float step = 180.0f / SphereRadialSegments; 
+      for (int i = 0; i < SphereRadialSegments; ++i)
+        Disc(center, radius, Quaternion.Euler(90.0f, 0.0f, i * step) * rotation, color);
     }
 
     [Conditional("UNITY_EDITOR")]
-    public static void ArrowLine(Vector3 origin, Vector3 destination, Color color, float duration = 0.0f, float arrowheadScale = 1.0f)
+    public static void Arc(Vector3 center, Vector3 forward, float radius, float angle, Color? color = null, Quaternion? rotation = null)
     {
-      lineDelegate(origin, destination, color, duration);
-      Vector3 direction = destination - origin;
-      DrawArrowHead(origin, direction, color, arrowheadScale);
+      Vector3 N = forward.normalized * radius;
+      Vector3 pL = Quaternion.AngleAxis(-angle * 0.5f, Vector3.up) * N;
+      Vector3 pR = Quaternion.AngleAxis(angle * 0.5f, Vector3.up) * N;
+      
+      Line(center, center + pL, rotation, color);
+      Line(center, center + pR, rotation, color);
+
+      for (float i= (-angle * 0.5f); i < angle * 0.5f - 11.0f; i += 12.0f)
+        Line(center + (Quaternion.AngleAxis(i, Vector3.up) * N),
+             center + (Quaternion.AngleAxis(i+12, Vector3.up) * N),
+             rotation, color);
+      
+      Vector3 pM = Quaternion.AngleAxis(angle*0.5f-12, Vector3.up) * N;
+      Line(center + pM, center + pR, rotation, color);
     }
-
-    [Conditional("UNITY_EDITOR")]
-    public static void Axis(Vector3 point, bool arrowHeads = false, float scale = 1.0f)
-      => Axis(point, Quaternion.identity, arrowHeads, scale);
-
-    [Conditional("UNITY_EDITOR")]
-    public static void Axis(Vector3 point, Quaternion rotation, bool arrowHeads = false, float scale = 1.0f)
-    {
-      Vector3 right = rotation * new Vector3(scale, 0, 0);
-      Vector3 up = rotation * new Vector3(0, scale, 0);
-      Vector3 forward = rotation * new Vector3(0, 0, scale);
-      Color colorRight = ColorX;
-      rayDelegate(point, right, colorRight);
-      Color colorUp = ColorY;
-      rayDelegate(point, up, colorUp);
-      Color colorForward = ColorZ;
-      rayDelegate(point, forward, colorForward);
-
-      if (arrowHeads == false)
-        return;
-
-      DrawArrowHead(point, right, colorRight, scale: scale);
-      DrawArrowHead(point, up, colorUp, scale: scale);
-      DrawArrowHead(point, forward, colorForward, scale: scale);
-    }
-
+/*
     [Conditional("UNITY_EDITOR")]
     public static void Box(Vector3 center, Vector3 halfExtents, Quaternion orientation, Color color)
     {
