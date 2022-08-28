@@ -47,11 +47,14 @@ namespace FronkonGames.GameWork.Foundation
     private static readonly Color LineColor = "#f0cbc9".FromHex();
     private const float DashSize = 1.0f;
 
-    private static readonly Color DiscColor = "#affff1".FromHex();
+    private static readonly Color CircleColor = "#affff1".FromHex();
 
     private static readonly Color SphereColor = "#f5df8c".FromHex();
 
     private static readonly Color ArcColor = "#90d3be".FromHex();
+
+    private static readonly Color DiamondColor = "#f5d59a".FromHex();
+    private const float DiamondSize = 0.5f;
     
     private static readonly Color ColorX = Color.red;
     private static readonly Color ColorY = Color.green;

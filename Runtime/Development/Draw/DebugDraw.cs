@@ -88,35 +88,37 @@ namespace FronkonGames.GameWork.Foundation
     [Conditional("UNITY_EDITOR")]
     public static void SolidTriangle(Vector3 a, Vector3 b, Vector3 c, Color? color = null, Quaternion? rotation = null) =>
       JobGL.AddTriangle(a, b, c, color ?? TriangleColor, rotation);
-/*    
+    
     [Conditional("UNITY_EDITOR")]
-    public static void Disc(Vector3 center, float radius, Color? color = null, Quaternion? rotation = null)
+    public static void Circle(Vector3 center, float radius, Color? color = null, Quaternion? rotation = null)
     {
       float current = 0.0f;
       float grad = MathConstants.Pi2 / Segments;
 
+      Quaternion rot = rotation ?? Quaternion.identity;
       for (int i = 0; i < Segments; ++i)
       {
-        Line(rotation * new Vector3(Mathf.Sin(current) * radius, 0.0f, Mathf.Cos(current) * radius) + center,
-          i == Segments - 1 ? rotation * new Vector3(0f, 0f, radius) + center
-            : rotation * new Vector3(Mathf.Sin(current + grad) * radius, 0.0f, Mathf.Cos(current + grad) * radius) + center,
-          rotation, color);
+        Line(rot * new Vector3(Mathf.Sin(current) * radius, 0.0f, Mathf.Cos(current) * radius) + center,
+          i == Segments - 1 ? rot * new Vector3(0f, 0f, radius) + center
+            : rot * new Vector3(Mathf.Sin(current + grad) * radius, 0.0f, Mathf.Cos(current + grad) * radius) + center,
+          color ?? CircleColor, rotation);
         current += grad;
       }
     }
 
     [Conditional("UNITY_EDITOR")]
-    public static void SolidDisc(Vector3 center, float radius, Color? color = null, Quaternion? rotation = null)
+    public static void SolidCircle(Vector3 center, float radius, Color? color = null, Quaternion? rotation = null)
     {
       float current = 0.0f;
       float grad = MathConstants.Pi2 / Segments;
 
+      Quaternion rot = rotation ?? Quaternion.identity;
       for (int i = 0; i < Segments; ++i)
       {
-        Triangle(center, rotation * new Vector3(Mathf.Sin(current) * radius, 0.0f, Mathf.Cos(current) * radius) + center,
-          i == Segments - 1 ? rotation * new Vector3(0.0f, 0.0f, radius) + center
-            : rotation * new Vector3(Mathf.Sin(current + grad) * radius, 0.0f, Mathf.Cos(current + grad) * radius) + center,
-          rotation, color);
+        SolidTriangle(center, rot * new Vector3(Mathf.Sin(current) * radius, 0.0f, Mathf.Cos(current) * radius) + center,
+          i == Segments - 1 ? rot * new Vector3(0.0f, 0.0f, radius) + center
+            : rot * new Vector3(Mathf.Sin(current + grad) * radius, 0.0f, Mathf.Cos(current + grad) * radius) + center,
+          color ?? CircleColor, rotation);
         current += grad;
       }
     }
@@ -124,31 +126,79 @@ namespace FronkonGames.GameWork.Foundation
     [Conditional("UNITY_EDITOR")]
     public static void Sphere(Vector3 center, float radius, Color? color = null, Quaternion? rotation = null)
     {
-      Disc(center, radius, Quaternion.identity, color);
-      
+      Circle(center, radius, color ?? SphereColor);
+
       float step = 180.0f / SphereRadialSegments; 
       for (int i = 0; i < SphereRadialSegments; ++i)
-        Disc(center, radius, Quaternion.Euler(90.0f, 0.0f, i * step) * rotation, color);
+        Circle(center, radius, color ?? SphereColor, Quaternion.Euler(90.0f, 0.0f, i * step) * (rotation ?? Quaternion.identity));
     }
 
     [Conditional("UNITY_EDITOR")]
     public static void Arc(Vector3 center, Vector3 forward, float radius, float angle, Color? color = null, Quaternion? rotation = null)
     {
-      Vector3 N = forward.normalized * radius;
-      Vector3 pL = Quaternion.AngleAxis(-angle * 0.5f, Vector3.up) * N;
-      Vector3 pR = Quaternion.AngleAxis(angle * 0.5f, Vector3.up) * N;
-      
-      Line(center, center + pL, rotation, color);
-      Line(center, center + pR, rotation, color);
+      Vector3[] vertices = new Vector3[Segments];
+      Quaternion rot = Quaternion.AngleAxis(angle / (Segments - 1), Vector3.up) * (rotation ?? Quaternion.identity);
+      Vector3 surfacePoint = forward.normalized * radius;
+      surfacePoint = Quaternion.Euler(0.0f, angle * -0.5f, 0.0f) * surfacePoint;
 
-      for (float i= (-angle * 0.5f); i < angle * 0.5f - 11.0f; i += 12.0f)
-        Line(center + (Quaternion.AngleAxis(i, Vector3.up) * N),
-             center + (Quaternion.AngleAxis(i+12, Vector3.up) * N),
-             rotation, color);
+      for (int i = 0; i < Segments; ++i)
+      {
+        vertices[i] = center + surfacePoint;
+        surfacePoint = rot * surfacePoint;
+      }      
+
+      for (int i = 1; i < Segments; ++i)
+        Line(vertices[i - 1], vertices[i], color ?? ArcColor, rotation);
       
-      Vector3 pM = Quaternion.AngleAxis(angle*0.5f-12, Vector3.up) * N;
-      Line(center + pM, center + pR, rotation, color);
+      Line(center, vertices[0], color ?? ArcColor, rotation);
+      Line(center, vertices[Segments - 1], color ?? ArcColor, rotation);
     }
+
+    [Conditional("UNITY_EDITOR")]
+    public static void SolidArc(Vector3 center, Vector3 forward, float radius, float angle, Color? color = null, Quaternion? rotation = null)
+    {
+      Vector3[] vertices = new Vector3[Segments];
+      Quaternion rot = Quaternion.AngleAxis(angle / (Segments - 1), Vector3.up) * (rotation ?? Quaternion.identity);
+      Vector3 surfacePoint = forward.normalized * radius;
+      surfacePoint = Quaternion.Euler(0.0f, angle * -0.5f, 0.0f) * surfacePoint;
+
+      for (int i = 0; i < Segments; ++i)
+      {
+        vertices[i] = center + surfacePoint;
+        surfacePoint = rot * surfacePoint;
+      }      
+
+      for (int i = 1; i < Segments; ++i)
+        SolidTriangle(center, vertices[i - 1], vertices[i], color ?? ArcColor, rotation);
+    }
+
+    [Conditional("UNITY_EDITOR")]
+    public static void Diamond(Vector3 center, float size = DiamondSize, Color? color = null, Quaternion? rotation = null)
+    {
+      Vector3 u = center + Vector3.up * size;
+      Vector3 d = center + Vector3.down * size;
+      Vector3 r = center + Vector3.right * size;
+      Vector3 l = center + Vector3.left * size;
+      Vector3 f = center + Vector3.forward * size;
+      Vector3 b = center + Vector3.back * size;
+      
+      Lines(new[]
+      {
+        u, r, f,
+        u, f, l,
+        u, l, b,
+        u, b, r
+      }, color ?? DiamondColor, rotation);
+
+      Lines(new[]
+      {
+        d, f, r,
+        d, r, b,
+        d, b, l,
+        d, l, f
+      }, color ?? DiamondColor, rotation);
+    }
+ 
 /*
     [Conditional("UNITY_EDITOR")]
     public static void Box(Vector3 center, Vector3 halfExtents, Quaternion orientation, Color color)

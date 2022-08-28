@@ -375,7 +375,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 948967880}
   m_LocalRotation: {x: -0.0247635, y: -0.32998544, z: 0.14047347, w: 0.93314713}
-  m_LocalPosition: {x: 7.19, y: 0.27, z: 0.07999999}
+  m_LocalPosition: {x: 7.152, y: 0.188, z: 0.215}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -560,7 +560,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 948967880}
-  arcAngle: 54
+  arcAngle: 94
 --- !u!4 &1357154396
 Transform:
   m_ObjectHideFlags: 0

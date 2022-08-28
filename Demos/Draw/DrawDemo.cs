@@ -44,30 +44,25 @@ public sealed class DrawDemo : MonoBehaviour
 
   private void OnDrawGizmos()
   {
-    // Points.
     DebugDraw.Point(new Vector3(0.0f, 0.5f, 0.0f), 0.4f, Color.white);
     DebugDraw.Point(new Vector3(0.5f, 0.5f, 0.0f));
     DebugDraw.Point(new Vector3(0.0f, 0.5f, 0.5f));
     DebugDraw.Point(new Vector3(-0.5f, 0.5f, 0.0f));
     DebugDraw.Point(new Vector3(0.0f, 0.5f, -0.5f));
 
+    DebugDraw.Diamond(new Vector3(0.0f, 0.5f, 0.0f));
+
+    DebugDraw.Sphere(new Vector3(0.0f, 1.25f, 0.0f), 0.25f);
+    
     DebugDraw.DottedLine(player.transform.position, Vector3.zero);
     
     points.Draw(0.1f, Color.cyan);
     
-    // Lines.
-/*
-    // Spheres.
-    DebugDraw.Sphere(player.transform.position + Vector3.up * 3.0f, 0.25f);
+    DebugDraw.SolidArc(player.transform.position, player.transform.forward, 4.0f, arcAngle);
     
-    // Arcs.
-    DebugDraw.Arc(player.transform.position, player.transform.forward, 4.0f, arcAngle);
-    
-    // Extensions.
-*/
     player.transform.Draw();
     
-    //DebugDraw.SolidDisc(player.transform.position, 1.0f, player.transform.rotation);
-    //DebugDraw.Disc(player.transform.position, 1.5f, player.transform.rotation);*/
+    DebugDraw.SolidCircle(player.transform.position, 1.0f, null, player.transform.rotation);
+    DebugDraw.Circle(player.transform.position, 1.5f, null, player.transform.rotation);
   }
 }

@@ -78,7 +78,7 @@ namespace FronkonGames.GameWork.Foundation
 
       public static void AddDottedLine(Vector3 a, Vector3 b, Color color, Quaternion? rotation = null, float scale = 1.0f)
       {
-        JobGL job = new(JobGLMode.DottedLine, new[] {a, b}, color,
+        JobGL job = new(JobGLMode.DottedLine, new[] { a, b }, color,
           rotation == null && scale == 1.0f
             ? Matrix4x4.identity
             : Matrix4x4.TRS(Vector3.zero, (Quaternion)rotation, scale * Vector3.one));
@@ -88,7 +88,7 @@ namespace FronkonGames.GameWork.Foundation
       
       public static void AddTriangle(Vector3 a, Vector3 b, Vector3 c, Color color, Quaternion? rotation = null, float scale = 1.0f)
       {
-        JobGL job = new(JobGLMode.Triangle, new[] {a, b, c}, color,
+        JobGL job = new(JobGLMode.Triangle, new[] { a, b, c }, color,
           rotation == null && scale == 1.0f
             ? Matrix4x4.identity
             : Matrix4x4.TRS(Vector3.zero, (Quaternion)rotation, scale * Vector3.one));
