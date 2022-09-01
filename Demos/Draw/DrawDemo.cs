@@ -56,10 +56,10 @@ public sealed class DrawDemo : MonoBehaviour
 
     DebugDraw.Cube(new Vector3(0.0f, 1.0f, 0.0f), 2.5f, Color.red);
 
-    DebugDraw.DottedLine(player.transform.position, Vector3.zero);
+    //DebugDraw.DottedLine(player.transform.position, Vector3.zero);
 
     points.Draw(0.1f, Color.cyan);
-    
+
     DebugDraw.SolidArc(player.transform.position, player.transform.forward, 4.0f, arcAngle);
     
     player.transform.Draw();

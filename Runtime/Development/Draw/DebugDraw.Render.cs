@@ -74,20 +74,20 @@ namespace FronkonGames.GameWork.Foundation
       material.SetInt("_ZTest",  OcclusionColorFactor < 1.0f ? (int)CompareFunction.Less : (int)CompareFunction.Always);
       material.SetPass(0);
 
-      SubmitJobs();
+      Submit();
 
       if (OcclusionColorFactor < 1.0f)
       {
         material.SetInt("_ZTest",  (int)CompareFunction.Greater);
         material.SetPass(0);
 
-        SubmitJobs(OcclusionColorFactor);
+        Submit(OcclusionColorFactor);
       }
       
       jobs.Clear();
     }
 
-    private static void SubmitJobs(float colorFactor = 1.0f)
+    private static void Submit(float colorFactor = 1.0f)
     {
       for (int i = 0; i < jobs.Count; ++i)
       {

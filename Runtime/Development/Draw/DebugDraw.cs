@@ -77,8 +77,8 @@ namespace FronkonGames.GameWork.Foundation
       Vector3 stepBack = direction.normalized * (size * -ArrowHeadLength);
       Vector3 stepSide = Vector3.Cross(end - start, Vector3.up).normalized * size * ArrowHeadWidth;
 
-      Line(start, start + direction * size * (1.0f - ArrowHeadLength), color ?? ArrowColor, rotation);
-      SolidTriangle(end, end + stepBack - stepSide, end + stepBack + stepSide, color ?? ArrowColor, rotation);
+      Line(start, start + direction * size * (1.0f - ArrowHeadLength), color ?? ArrowColor);
+      SolidTriangle(end, end + stepBack - stepSide, end + stepBack + stepSide, color ?? ArrowColor);
     }
 
     [Conditional("UNITY_EDITOR")]
@@ -90,36 +90,19 @@ namespace FronkonGames.GameWork.Foundation
       JobGL.AddTriangle(a, b, c, color ?? TriangleColor, rotation);
     
     [Conditional("UNITY_EDITOR")]
-    public static void Circle(Vector3 center, float radius, Color? color = null, Quaternion? rotation = null)
-    {
-      jobs.Add(new JobGL(GL.LINE_STRIP, circle, color ?? CubeColor, Matrix4x4.TRS(center, rotation ?? Quaternion.identity, Vector3.one * radius)));
-    }
+    public static void Circle(Vector3 center, float radius, Color? color = null, Quaternion? rotation = null) =>
+      jobs.Add(new JobGL(GL.LINE_STRIP, circle, color ?? CircleColor, Matrix4x4.TRS(center, rotation ?? Quaternion.identity, Vector3.one * radius)));
 
     [Conditional("UNITY_EDITOR")]
-    public static void SolidCircle(Vector3 center, float radius, Color? color = null, Quaternion? rotation = null)
-    {
-      float current = 0.0f;
-      float grad = MathConstants.Pi2 / Segments;
-
-      Quaternion rot = rotation ?? Quaternion.identity;
-      for (int i = 0; i < Segments; ++i)
-      {
-        SolidTriangle(center, rot * new Vector3(Mathf.Sin(current) * radius, 0.0f, Mathf.Cos(current) * radius) + center,
-          i == Segments - 1 ? rot * new Vector3(0.0f, 0.0f, radius) + center
-            : rot * new Vector3(Mathf.Sin(current + grad) * radius, 0.0f, Mathf.Cos(current + grad) * radius) + center,
-          color ?? CircleColor, rotation);
-        current += grad;
-      }
-    }
+    public static void SolidCircle(Vector3 center, float radius, Color? color = null, Quaternion? rotation = null) =>
+      jobs.Add(new JobGL(GL.TRIANGLE_STRIP, solidCircle, color ?? CircleColor, Matrix4x4.TRS(center, rotation ?? Quaternion.identity, Vector3.one * radius)));
 
     [Conditional("UNITY_EDITOR")]
     public static void Sphere(Vector3 center, float radius, Color? color = null, Quaternion? rotation = null)
     {
-      Circle(center, radius, color ?? SphereColor);
-
-      float step = 180.0f / SphereRadialSegments; 
-      for (int i = 0; i < SphereRadialSegments; ++i)
-        Circle(center, radius, color ?? SphereColor, Quaternion.Euler(0.0f, 0.0f, 0.0f) * (rotation ?? Quaternion.identity));
+      Circle(center, radius, color ?? SphereColor, rotation);
+      Circle(center, radius, color ?? SphereColor, Quaternion.Euler(0.0f, 0.0f, 90.0f) * (rotation ?? Quaternion.identity));
+      Circle(center, radius, color ?? SphereColor, Quaternion.Euler(0.0f, 90.0f, 90.0f) * (rotation ?? Quaternion.identity));
     }
 
     [Conditional("UNITY_EDITOR")]

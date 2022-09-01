@@ -25,20 +25,35 @@ namespace FronkonGames.GameWork.Foundation
   public static partial class DebugDraw
   {
     private static Vector3[] circle;
+    private static Vector3[] solidCircle;
     private static Vector3[] cube;
 
     private static void CreateMeshes()
     {
-      circle = new Vector3[Segments + 1];
-     
-      float current = 0.0f;
-      float grad = MathConstants.Pi2 / Segments;
-      for (int i = 0; i <= Segments; ++i)
+      circle = new Vector3[Segments + 2];
+
+      int deg = 360 / Segments;
+      for (int i = 0; i <= 360; i += 2 * deg)
       {
-        circle[i] = new Vector3(Mathf.Sin(current), 0.0f, Mathf.Cos(current));
-        current += grad;
+        float x = Mathf.Sin(Mathf.Deg2Rad * i);
+        float z = Mathf.Cos(Mathf.Deg2Rad * i);
+
+        float x2 = Mathf.Sin(Mathf.Deg2Rad * (i + deg));
+        float z2 = Mathf.Cos(Mathf.Deg2Rad * (i + deg));
+
+        circle[i / deg] = new Vector3(x, 0.0f, z);
+        circle[i / deg + 1] = new Vector3(x2, 0.0f, z2);
       }
-      
+
+      solidCircle = new Vector3[Segments + 2];
+      for (int i = 0; i <= 360; i += 2 * deg)
+      {
+        float x = Mathf.Sin(Mathf.Deg2Rad * i);
+        float z = Mathf.Cos(Mathf.Deg2Rad * i);
+
+        solidCircle[i / deg] = new Vector3(x, 0.0f, z);
+      }
+
       cube = new[]
       {
         new Vector3(0.5f, -0.5f, 0.5f), new Vector3(0.5f, -0.5f, -0.5f),

@@ -25,8 +25,9 @@ namespace FronkonGames.GameWork.Foundation
   public static partial class DebugDraw
   {
     private const int Capacity = 1000;
-    
-    private const int Segments = 32;
+
+    // It must be divisible by 360.
+    private const int Segments = 360 / 4;
 
     private const float OcclusionColorFactor = 0.5f;
     
