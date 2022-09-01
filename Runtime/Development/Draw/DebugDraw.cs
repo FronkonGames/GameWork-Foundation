@@ -30,7 +30,7 @@ namespace FronkonGames.GameWork.Foundation
     public static void Point(Vector3 position, float size = PointSize, Color? color = null, Quaternion? rotation = null)
     {
       float halfSize = size * 0.5f;
-      
+
       Line(position + Vector3.right * halfSize, position - Vector3.right * halfSize, color ?? ColorX, rotation);
       Line(position + Vector3.up * halfSize, position - Vector3.up * halfSize, color ?? ColorY, rotation);
       Line(position + Vector3.forward * halfSize, position - Vector3.forward * halfSize, color ?? ColorZ, rotation);
@@ -57,7 +57,7 @@ namespace FronkonGames.GameWork.Foundation
 
     [Conditional("UNITY_EDITOR")]
     public static void DottedLine(Vector3 start, Vector3 end, Color? color = null, Quaternion? rotation = null) =>
-      JobGL.AddDottedLine(start, end, color ?? LineColor, rotation);
+      JobGL.AddLine(start, end, color ?? LineColor, rotation, 1.0f, true);
 
     [Conditional("UNITY_EDITOR")]
     public static void DottedLines(IReadOnlyList<Vector3> segments, Color? color = null, Quaternion? rotation = null)
@@ -92,18 +92,7 @@ namespace FronkonGames.GameWork.Foundation
     [Conditional("UNITY_EDITOR")]
     public static void Circle(Vector3 center, float radius, Color? color = null, Quaternion? rotation = null)
     {
-      float current = 0.0f;
-      float grad = MathConstants.Pi2 / Segments;
-
-      Quaternion rot = rotation ?? Quaternion.identity;
-      for (int i = 0; i < Segments; ++i)
-      {
-        Line(rot * new Vector3(Mathf.Sin(current) * radius, 0.0f, Mathf.Cos(current) * radius) + center,
-          i == Segments - 1 ? rot * new Vector3(0f, 0f, radius) + center
-            : rot * new Vector3(Mathf.Sin(current + grad) * radius, 0.0f, Mathf.Cos(current + grad) * radius) + center,
-          color ?? CircleColor, rotation);
-        current += grad;
-      }
+      jobs.Add(new JobGL(GL.LINE_STRIP, circle, color ?? CubeColor, Matrix4x4.TRS(center, rotation ?? Quaternion.identity, Vector3.one * radius)));
     }
 
     [Conditional("UNITY_EDITOR")]
@@ -130,7 +119,7 @@ namespace FronkonGames.GameWork.Foundation
 
       float step = 180.0f / SphereRadialSegments; 
       for (int i = 0; i < SphereRadialSegments; ++i)
-        Circle(center, radius, color ?? SphereColor, Quaternion.Euler(90.0f, 0.0f, i * step) * (rotation ?? Quaternion.identity));
+        Circle(center, radius, color ?? SphereColor, Quaternion.Euler(0.0f, 0.0f, 0.0f) * (rotation ?? Quaternion.identity));
     }
 
     [Conditional("UNITY_EDITOR")]
@@ -172,6 +161,16 @@ namespace FronkonGames.GameWork.Foundation
         SolidTriangle(center, vertices[i - 1], vertices[i], color ?? ArcColor, rotation);
     }
 
+    [Conditional("UNITY_EDITOR")]
+    public static void Cube(Vector3 center, Vector3 size, Color? color = null, Quaternion? rotation = null)
+    {
+      jobs.Add(new JobGL(GL.LINES, cube, color ?? CubeColor, Matrix4x4.TRS(center, rotation ?? Quaternion.identity, size)));
+    }
+
+    [Conditional("UNITY_EDITOR")]
+    public static void Cube(Vector3 center, float size, Color? color = null, Quaternion? rotation = null) =>
+      Cube(center, Vector3.one * size, color ?? CubeColor, rotation);
+    
     [Conditional("UNITY_EDITOR")]
     public static void Diamond(Vector3 center, float size = DiamondSize, Color? color = null, Quaternion? rotation = null)
     {

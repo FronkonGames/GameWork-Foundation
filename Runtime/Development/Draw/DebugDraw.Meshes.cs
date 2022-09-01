@@ -24,42 +24,38 @@ namespace FronkonGames.GameWork.Foundation
   /// <remarks>Only available in the Editor</remarks>
   public static partial class DebugDraw
   {
-    private const int Capacity = 1000;
-    
-    private const int Segments = 32;
+    private static Vector3[] circle;
+    private static Vector3[] cube;
 
-    private const float OcclusionColorFactor = 0.5f;
-    
-    private const float Transparency = 0.75f;
-
-    private static readonly Color PointColor = "#8cc6eb".FromHex();
-    private const float PointSize = 0.5f;
-
-    private const int SphereRadialSegments = 4;
-
-    private static readonly Color TriangleColor = "#8b9bf6".FromHex();
-
-    private static readonly Color CubeColor = "#bee6e4".FromHex();
-
-    private static readonly Color ArrowColor = "#b8ffce".FromHex();
-    private const float ArrowSize = 2.0f;
-    private const float ArrowHeadLength = 0.2f;
-    private const float ArrowHeadWidth = 0.05f;
-    
-    private static readonly Color LineColor = "#f0cbc9".FromHex();
-    private const float LineDashSize = 0.1f;
-
-    private static readonly Color CircleColor = "#affff1".FromHex();
-
-    private static readonly Color SphereColor = "#f5df8c".FromHex();
-
-    private static readonly Color ArcColor = "#90d3be".FromHex();
-
-    private static readonly Color DiamondColor = "#f5d59a".FromHex();
-    private const float DiamondSize = 0.5f;
-    
-    private static readonly Color ColorX = Color.red;
-    private static readonly Color ColorY = Color.green;
-    private static readonly Color ColorZ = Color.blue;
+    private static void CreateMeshes()
+    {
+      circle = new Vector3[Segments + 1];
+     
+      float current = 0.0f;
+      float grad = MathConstants.Pi2 / Segments;
+      for (int i = 0; i <= Segments; ++i)
+      {
+        circle[i] = new Vector3(Mathf.Sin(current), 0.0f, Mathf.Cos(current));
+        current += grad;
+      }
+      
+      cube = new[]
+      {
+        new Vector3(0.5f, -0.5f, 0.5f), new Vector3(0.5f, -0.5f, -0.5f),
+        new Vector3(0.5f, -0.5f, 0.5f), new Vector3(-0.5f, -0.5f, 0.5f),
+        new Vector3(-0.5f, -0.5f, 0.5f), new Vector3(-0.5f, -0.5f, -0.5f),
+        new Vector3(-0.5f, -0.5f, -0.5f), new Vector3(0.5f, -0.5f, -0.5f),
+        
+        new Vector3(0.5f, 0.5f, 0.5f), new Vector3(0.5f, 0.5f, -0.5f),
+        new Vector3(0.5f, 0.5f, 0.5f), new Vector3(-0.5f, 0.5f, 0.5f),
+        new Vector3(-0.5f, 0.5f, 0.5f), new Vector3(-0.5f, 0.5f, -0.5f),
+        new Vector3(-0.5f, 0.5f, -0.5f), new Vector3(0.5f, 0.5f, -0.5f),
+        
+        new Vector3(0.5f, -0.5f, 0.5f), new Vector3(0.5f, 0.5f, 0.5f),
+        new Vector3(0.5f, -0.5f, -0.5f), new Vector3(0.5f, 0.5f, -0.5f),
+        new Vector3(-0.5f, -0.5f, 0.5f), new Vector3(-0.5f, 0.5f, 0.5f),
+        new Vector3(-0.5f, -0.5f, -0.5f), new Vector3(-0.5f, 0.5f, -0.5f)
+      };
+    }
   }
 }

@@ -14,12 +14,9 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Numerics;
 using UnityEngine;
-using UnityEngine.Rendering;
 using Matrix4x4 = UnityEngine.Matrix4x4;
 using Quaternion = UnityEngine.Quaternion;
 using Vector3 = UnityEngine.Vector3;
@@ -32,66 +29,51 @@ namespace FronkonGames.GameWork.Foundation
   /// <remarks>Only available in the Editor</remarks>
   public static partial class DebugDraw
   {
-    private enum JobGLMode
-    {
-      Line,
-      DottedLine,
-      Lines,
-      Triangle,
-    }
-
     private readonly struct JobGL
     {
-      public readonly JobGLMode mode;
+      public readonly int mode;
       public readonly Vector3[] vertices;
       public readonly Color color;
       public readonly Matrix4x4 matrix;
+      public readonly bool dotted;
 
-      private JobGL(JobGLMode mode, Vector3[] vertices, Color? color, Matrix4x4 matrix)
+      public JobGL(int mode, Vector3[] vertices, Color color, Matrix4x4 matrix, bool dotted = false)
       {
         this.mode = mode;
         this.vertices = vertices;
-        this.color = (Color)color;
+        this.color = color;
         this.color.a = Transparency;
         this.matrix = matrix;
+        this.dotted = dotted;
       }
 
-      public static void AddLine(Vector3 a, Vector3 b, Color color, Quaternion? rotation = null, float scale = 1.0f)
+      public static void AddLine(Vector3 a, Vector3 b, Color color, Quaternion? rotation = null, float scale = 1.0f, bool dotted = false)
       {
-        JobGL job = new(JobGLMode.Line, new[] {a, b}, color,
+        JobGL job = new(GL.LINES, new[] {a, b}, color,
           rotation == null && scale == 1.0f
             ? Matrix4x4.identity
-            : Matrix4x4.TRS(Vector3.zero, Quaternion.identity, scale * Vector3.one));
+            : Matrix4x4.TRS(Vector3.zero, rotation ?? Quaternion.identity, scale * Vector3.one),
+          dotted);
 
         jobs.Add(job);
       }
 
       public static void AddLines(IEnumerable<Vector3> points, Color color, Quaternion? rotation = null, float scale = 1.0f)
       {
-        JobGL job = new(JobGLMode.Lines, points.ToArray(), color,
+        JobGL job = new(GL.LINE_STRIP, points.ToArray(), color,
           rotation == null && scale == 1.0f
             ? Matrix4x4.identity
-            : Matrix4x4.TRS(Vector3.zero, (Quaternion)rotation, scale * Vector3.one));
+            : Matrix4x4.TRS(Vector3.zero, rotation ?? Quaternion.identity, scale * Vector3.one));
           
-        jobs.Add(job);
-      }
-
-      public static void AddDottedLine(Vector3 a, Vector3 b, Color color, Quaternion? rotation = null, float scale = 1.0f)
-      {
-        JobGL job = new(JobGLMode.DottedLine, new[] { a, b }, color,
-          rotation == null && scale == 1.0f
-            ? Matrix4x4.identity
-            : Matrix4x4.TRS(Vector3.zero, (Quaternion)rotation, scale * Vector3.one));
-        
         jobs.Add(job);
       }
       
       public static void AddTriangle(Vector3 a, Vector3 b, Vector3 c, Color color, Quaternion? rotation = null, float scale = 1.0f)
       {
-        JobGL job = new(JobGLMode.Triangle, new[] { a, b, c }, color,
+        JobGL job = new(GL.TRIANGLES, new[] { a, b, c }, color,
           rotation == null && scale == 1.0f
             ? Matrix4x4.identity
-            : Matrix4x4.TRS(Vector3.zero, (Quaternion)rotation, scale * Vector3.one));
+            : Matrix4x4.TRS(Vector3.zero, rotation ?? Quaternion.identity, scale * Vector3.one));
 
         jobs.Add(job);
       }

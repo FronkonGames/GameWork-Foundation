@@ -16,12 +16,9 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
 using UnityEngine;
 using UnityEngine.Rendering;
 using Matrix4x4 = UnityEngine.Matrix4x4;
-using Quaternion = UnityEngine.Quaternion;
 using Vector3 = UnityEngine.Vector3;
 
 namespace FronkonGames.GameWork.Foundation
@@ -44,6 +41,8 @@ namespace FronkonGames.GameWork.Foundation
     static DebugDraw()
     {
       jobs = new(Capacity);
+      
+      CreateMeshes();
       
       material = new Material(Shader.Find("Hidden/Internal-Colored"))
       {
@@ -75,8 +74,6 @@ namespace FronkonGames.GameWork.Foundation
       material.SetInt("_ZTest",  OcclusionColorFactor < 1.0f ? (int)CompareFunction.Less : (int)CompareFunction.Always);
       material.SetPass(0);
 
-      //GL.PushMatrix();
-
       SubmitJobs();
 
       if (OcclusionColorFactor < 1.0f)
@@ -87,99 +84,48 @@ namespace FronkonGames.GameWork.Foundation
         SubmitJobs(OcclusionColorFactor);
       }
       
-      //GL.PopMatrix();
-      
       jobs.Clear();
     }
 
     private static void SubmitJobs(float colorFactor = 1.0f)
     {
-      // Line.
-      GL.Begin(GL.LINES);
+      for (int i = 0; i < jobs.Count; ++i)
       {
-        for (int i = 0; i < jobs.Count; ++i)
+        JobGL job = jobs[i];
+
+        bool identity = job.matrix.Equals(Matrix4x4.identity); 
+        if (identity == false)
         {
-          if (jobs[i].matrix != Matrix4x4.identity)
-          {
-            GL.PushMatrix();
-            GL.MultMatrix(jobs[i].matrix);
-          }
-        
-          GL.Color(jobs[i].color * colorFactor);
-
-          if (jobs[i].mode == JobGLMode.Line)
-          {
-            GL.Vertex(jobs[i].vertices[0]);
-            GL.Vertex(jobs[i].vertices[1]);
-          }
-          else if (jobs[i].mode == JobGLMode.DottedLine)
-          {
-            float length = Vector3.Distance(jobs[i].vertices[0], jobs[i].vertices[1]);
-      
-            int count = Mathf.CeilToInt(length / DashSize);
-            for (int j = 0; j < count; j += 2)
-            {
-              GL.Vertex(Vector3.Lerp(jobs[i].vertices[0], jobs[i].vertices[1], j * DashSize / length));
-              GL.Vertex(Vector3.Lerp(jobs[i].vertices[0], jobs[i].vertices[1], (j + 1) * DashSize / length));
-            }
-          }
-          
-          if (jobs[i].matrix != Matrix4x4.identity)
-            GL.PopMatrix();
+          GL.PushMatrix();
+          GL.MultMatrix(job.matrix);
         }
-      }
-      GL.End();
 
-      // Lines.
-      GL.Begin(GL.LINE_STRIP);
-      {
-        for (int i = 0; i < jobs.Count; ++i)
+        GL.Begin(job.mode);
+
+        GL.Color(job.color * colorFactor);
+
+        if (job.dotted == true)
         {
-          if (jobs[i].matrix != Matrix4x4.identity)
+          float length = Vector3.Distance(job.vertices[0], job.vertices[1]);
+    
+          int count = Mathf.CeilToInt(length / LineDashSize);
+          for (int j = 0; j < count; j += 2)
           {
-            GL.PushMatrix();
-            GL.MultMatrix(jobs[i].matrix);
+            GL.Vertex(Vector3.Lerp(job.vertices[0], job.vertices[1], j * LineDashSize / length));
+            GL.Vertex(Vector3.Lerp(job.vertices[0], job.vertices[1], (j + 1) * LineDashSize / length));
           }
-        
-          GL.Color(jobs[i].color * colorFactor);
-
-          if (jobs[i].mode == JobGLMode.Lines)
-          {
-            for (int j = 0; j < jobs[i].vertices.Length; ++j)
-              GL.Vertex(jobs[i].vertices[j]);
-          }
-          
-          if (jobs[i].matrix != Matrix4x4.identity)
-            GL.PopMatrix();
         }
-      }
-      GL.End();
-      
-      // Triangles.
-      GL.Begin(GL.TRIANGLES);
-      {
-        for (int i = 0; i < jobs.Count; ++i)
+        else
         {
-          if (jobs[i].matrix != Matrix4x4.identity)
-          {
-            GL.PushMatrix();
-            GL.MultMatrix(jobs[i].matrix);
-          }
-        
-          GL.Color(jobs[i].color * colorFactor);
-
-          if (jobs[i].mode == JobGLMode.Triangle)
-          {
-            GL.Vertex(jobs[i].vertices[0]);
-            GL.Vertex(jobs[i].vertices[1]);
-            GL.Vertex(jobs[i].vertices[2]);
-          }
-          
-          if (jobs[i].matrix != Matrix4x4.identity)
-            GL.PopMatrix();
+          for (int j = 0; j < jobs[i].vertices.Length; ++j)
+            GL.Vertex(job.vertices[j]);
         }
+        
+        GL.End();
+        
+        if (identity == false)
+          GL.PopMatrix();
       }
-      GL.End();
     }
   }
 }
