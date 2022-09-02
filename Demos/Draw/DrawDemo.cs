@@ -14,8 +14,11 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+using System;
 using UnityEngine;
 using FronkonGames.GameWork.Foundation;
+using Random = UnityEngine.Random;
 
 /// <summary>
 /// Draw test.
@@ -31,8 +34,6 @@ public sealed class DrawDemo : MonoBehaviour
 
   private readonly Vector3[] points = new Vector3[100];
 
-  private Renderer renderer;
-
   private void OnEnable()
   {
     const float size = 10.0f;
@@ -42,35 +43,32 @@ public sealed class DrawDemo : MonoBehaviour
       points[i].y = Random.Range(0.0f, size * 0.5f);
       points[i].z = Random.Range(-size, size);
     }
-
-    renderer = player.GetComponent<Renderer>();
   }
-  
-  private void OnDrawGizmos()
+
+  private void Update()
   {
+    DebugDraw.DottedLine(player.transform.position, new Vector3(0.0f, 0.5f, 0.0f));
+    
     DebugDraw.Point(new Vector3(0.0f, 0.5f, 0.0f), 0.4f, Color.white);
     DebugDraw.Point(new Vector3(0.5f, 0.5f, 0.0f));
     DebugDraw.Point(new Vector3(0.0f, 0.5f, 0.5f));
     DebugDraw.Point(new Vector3(-0.5f, 0.5f, 0.0f));
     DebugDraw.Point(new Vector3(0.0f, 0.5f, -0.5f));
 
+    DebugDraw.Sphere(new Vector3(0.0f, 0.5f, 0.0f), 0.5f);
     DebugDraw.Diamond(new Vector3(0.0f, 0.5f, 0.0f));
-    DebugDraw.Sphere(new Vector3(0.0f, 1.25f, 0.0f), 0.25f);
-    DebugDraw.Cube(new Vector3(0.0f, 0.0f, 0.0f), 1.0f);
+    DebugDraw.Cube(new Vector3(0.0f, 0.5f, 0.0f), 1.0f);
 
-    DebugDraw.Cube(new Vector3(0.0f, 1.0f, 0.0f), 2.5f, Color.red);
-
-    DebugDraw.DottedLine(player.transform.position, Vector3.zero);
-
+    DebugDraw.SolidCircle(new Vector3(0.0f, 0.5f, 0.0f), 0.2f, null, player.transform.rotation);
+    DebugDraw.Circle(new Vector3(0.0f, 0.5f, 0.0f), 0.21f, null, player.transform.rotation);
+    DebugDraw.Cone(new Vector3(0.0f, 1.0f, 0.0f), Quaternion.Euler(-90.0f, 0.0f, 0.0f), arcAngle / 10.0f);
+    
     points.Draw(0.1f, Color.cyan);
 
-    DebugDraw.SolidArc(player.transform.position, player.transform.forward, 3.0f, arcAngle);
-    
-    player.DrawName(Color.yellow);
+    DebugDraw.SolidArc(player.transform.position, player.transform.rotation, 2.0f, arcAngle);
+
+    player.DrawName();
     player.transform.Draw(4.0f);
-    renderer.bounds.Draw();
-    
-    DebugDraw.SolidCircle(player.transform.position, 1.0f, null, player.transform.rotation);
-    DebugDraw.Circle(player.transform.position, 1.5f, null, player.transform.rotation);
+    player.GetComponent<Renderer>().bounds.Draw();
   }
 }

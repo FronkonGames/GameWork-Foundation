@@ -14,10 +14,8 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 namespace FronkonGames.GameWork.Foundation
 {
@@ -29,10 +27,7 @@ namespace FronkonGames.GameWork.Foundation
   [UnityEditor.InitializeOnLoad]
   public static partial class DebugDraw
   {
-    private static readonly List<RenderGL> jobsGL;
-    private static readonly List<RenderText> jobsText;
-
-    private static readonly Material material;
+    private static readonly List<IHandleDraw> handles;
 
     private static GUIStyle TextStyle
     {
@@ -51,109 +46,42 @@ namespace FronkonGames.GameWork.Foundation
     }
 
     private static GUIStyle textStyle;
+    private static GUIContent guiContent;
+
+    private static int lastFrame;
     
     static DebugDraw()
     {
-      jobsGL = new(Capacity);
-      jobsText = new(Capacity / 4);
-      
-      CreateMeshes();
-      
-      material = new Material(Shader.Find("Hidden/Internal-Colored"))
-      {
-        hideFlags = HideFlags.HideAndDontSave
-      };      
-      material.SetInt("_SrcBlend", (int)BlendMode.SrcAlpha);
-      material.SetInt("_DstBlend", (int)BlendMode.OneMinusSrcAlpha);
-      material.SetInt("_Cull", (int)CullMode.Off);
-      material.SetInt("_ZWrite", (int)CompareFunction.Always);
+      handles = new(Capacity);
 
       UnityEditor.SceneView.duringSceneGui += (_) =>
       {
-        if (Event.current.type == EventType.Repaint)
-          Render();
-        else
+        using (UnityEditor.Handles.DrawingScope scope = new UnityEditor.Handles.DrawingScope())
         {
-          jobsText.Clear();
-          jobsGL.Clear();
+          for (int i = 0; i < handles.Count; ++i)
+            handles[i].Draw();
         }
+
+        CheckFrameChange();
       };
     }
-    
-    private static void Render()
+
+    private static void CheckFrameChange()
     {
-      SubmitText();
-
-      material.SetInt("_ZTest",  OcclusionColorFactor < 1.0f ? (int)CompareFunction.Less : (int)CompareFunction.Always);
-      material.SetPass(0);
-      
-      SubmitGL();
-
-      if (OcclusionColorFactor < 1.0f)
+      int currentFrame = Time.frameCount;
+      if (lastFrame != currentFrame)
       {
-        material.SetInt("_ZTest",  (int)CompareFunction.Greater);
-        material.SetPass(0);
+        handles.Clear();
 
-        SubmitGL(OcclusionColorFactor);
+        lastFrame = currentFrame;
       }
-      
-      jobsGL.Clear();
-      jobsText.Clear();
     }
 
-    private static void SubmitText()
+    private static void DrawHandle(IHandleDraw handle)
     {
-      UnityEditor.Handles.BeginGUI();
+      CheckFrameChange();
 
-      for (int i = 0; i < jobsText.Count; ++i)
-      {
-        RenderText render = jobsText[i];
-        
-        GUI.Label(render.textArea, render.content, TextStyle);        
-      }
-      
-      UnityEditor.Handles.EndGUI();
-    }
-
-    private static void SubmitGL(float colorFactor = 1.0f)
-    {
-      for (int i = 0; i < jobsGL.Count; ++i)
-      {
-        RenderGL render = jobsGL[i];
-
-        bool identity = render.matrix.Equals(Matrix4x4.identity); 
-        if (identity == false)
-        {
-          GL.PushMatrix();
-          GL.MultMatrix(render.matrix);
-        }
-
-        GL.Begin(render.mode);
-
-        GL.Color(render.color * colorFactor);
-
-        if (render.dotted == true)
-        {
-          float length = Vector3.Distance(render.vertices[0], render.vertices[1]);
-    
-          int count = Mathf.CeilToInt(length / LineDashSize);
-          for (int j = 0; j < count; j += 2)
-          {
-            GL.Vertex(Vector3.Lerp(render.vertices[0], render.vertices[1], j * LineDashSize / length));
-            GL.Vertex(Vector3.Lerp(render.vertices[0], render.vertices[1], (j + 1) * LineDashSize / length));
-          }
-        }
-        else
-        {
-          for (int j = 0; j < jobsGL[i].vertices.Length; ++j)
-            GL.Vertex(render.vertices[j]);
-        }
-        
-        GL.End();
-        
-        if (identity == false)
-          GL.PopMatrix();
-      }
+      handles.Add(handle);
     }
 #endif
   }

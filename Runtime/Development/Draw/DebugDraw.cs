@@ -16,6 +16,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 using System.Diagnostics;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 
 namespace FronkonGames.GameWork.Foundation
 {
@@ -44,122 +45,135 @@ namespace FronkonGames.GameWork.Foundation
 
     [Conditional("UNITY_EDITOR")]
     private static void Line(Vector3 a, Vector3 b, Color? color = null, Quaternion? rotation = null) =>
-      jobsGL.Add(new RenderGL(GL.LINES, new[] {a, b}, color ?? LineColor, rotation == null
-        ? Matrix4x4.identity
-        : Matrix4x4.TRS(Vector3.zero, (Quaternion)rotation, Vector3.one)));
-    
+      DrawHandle(new LineHandle
+      {
+        a = rotation == null ? a : (Quaternion)rotation * a,
+        b = rotation == null ? b : (Quaternion)rotation * b,
+        color = color ?? LineColor,
+        solid = true
+      });
+
     [Conditional("UNITY_EDITOR")]
     private static void Lines(Vector3[] lines, Color? color = null, Quaternion? rotation = null)
     {
-      if (lines.Length > 2)
-        jobsGL.Add(new RenderGL(GL.LINES, lines, color ?? LineColor, rotation == null
-            ? Matrix4x4.identity
-            : Matrix4x4.TRS(Vector3.zero, (Quaternion)rotation, Vector3.one)));
-      else if (lines.Length == 2)
-        Line(lines[0], lines[1], color ?? LineColor, rotation);
+      for (int i = 0; i < lines.Length - 1; i += 1)
+        Line(lines[i], lines[i + 1], color, rotation);
     }
 
     [Conditional("UNITY_EDITOR")]
     public static void DottedLine(Vector3 a, Vector3 b, Color? color = null, Quaternion? rotation = null) =>
-      jobsGL.Add(new RenderGL(GL.LINES, new[] {a, b}, color ?? LineColor, rotation == null
-        ? Matrix4x4.identity
-        : Matrix4x4.TRS(Vector3.zero, (Quaternion)rotation, Vector3.one), true));
+      DrawHandle(new LineHandle
+      {
+        a = rotation == null ? a : (Quaternion)rotation * a,
+        b = rotation == null ? b : (Quaternion)rotation * b,
+        color = color ?? LineColor,
+        solid = false
+      });
 
     [Conditional("UNITY_EDITOR")]
     public static void DottedLines(Vector3[] lines, Color? color = null, Quaternion? rotation = null)
     {
-      if (lines.Length > 1)
-      {
-        for (int i = 0; i < lines.Length - 1; ++i)
-          DottedLine(lines[i], lines[i + 1], color, rotation);
-      }
+      for (int i = 0; i < lines.Length - 1; i += 1)
+        DottedLine(lines[i], lines[i + 1], color, rotation);
     }
 
     [Conditional("UNITY_EDITOR")]
-    public static void Arrow(Vector3 start, Quaternion rotation, float size = ArrowSize, Color? color = null)
+    public static void Arrow(Vector3 position, Quaternion rotation, float length = 1.0f, float size = ArrowTipSize, float width = ArrowWidth, Color? color = null)
     {
       Vector3 direction = rotation * Vector3.forward;
-      Vector3 end = start + direction * size;
-      Vector3 stepBack = direction.normalized * (size * -ArrowHeadLength);
-      Vector3 stepSide = Vector3.Cross(end - start, Vector3.up).normalized * size * ArrowHeadWidth;
+      float sideLen = length - length * size;
+      Vector3 widthOffset = Vector3.Cross(direction, Vector3.up) * width;
+      Vector3 tip = position + direction * length;
+      Vector3 upCornerInRight = position - widthOffset * 0.3f + direction * sideLen;
+      Vector3 upCornerInLeft = position + widthOffset * 0.3f + direction * sideLen;
+      Vector3 upCornerOutRight = position - widthOffset * 0.5f + direction * sideLen;
+      Vector3 upCornerOutLeft = position + widthOffset * 0.5f + direction * sideLen;
 
-      Line(start, start + direction * size * (1.0f - ArrowHeadLength), color ?? ArrowColor);
-      SolidTriangle(end, end + stepBack - stepSide, end + stepBack + stepSide, color ?? ArrowColor);
+      Line(position, upCornerInRight, color ?? ArrowColor);
+      Line(upCornerInRight, upCornerOutRight, color ?? ArrowColor);
+      Line(upCornerOutRight, tip, color ?? ArrowColor);
+      Line(tip, upCornerOutLeft, color ?? ArrowColor);
+      Line(upCornerOutLeft, upCornerInLeft, color ?? ArrowColor);
+      Line(upCornerInLeft, position, color ?? ArrowColor);
     }
 
     [Conditional("UNITY_EDITOR")]
-    public static void Triangle(Vector3 a, Vector3 b, Vector3 c, Color? color = null, Quaternion? rotation = null) =>
-      Lines(new[] { a, b, c, a }, color ?? TriangleColor, rotation);
-
-    [Conditional("UNITY_EDITOR")]
-    public static void SolidTriangle(Vector3 a, Vector3 b, Vector3 c, Color? color = null, Quaternion? rotation = null) =>
-      jobsGL.Add(new RenderGL(GL.TRIANGLES, new[] { a, b, c }, color ?? TriangleColor, rotation == null
-        ? Matrix4x4.identity
-        : Matrix4x4.TRS(Vector3.zero, (Quaternion)rotation, Vector3.one)));
+    public static void Circle(Vector3 center, float radius, Color? color = null, Quaternion? rotation = null) =>
+      DrawHandle(new CircleHandle
+      {
+        center = center,
+        normal = rotation == null ? Vector3.up : (Quaternion)rotation * Vector3.up,
+        radius = radius,
+        color = color ?? CircleColor
+      });
     
     [Conditional("UNITY_EDITOR")]
-    public static void Circle(Vector3 center, float radius, Color? color = null, Quaternion? rotation = null) =>
-      jobsGL.Add(new RenderGL(GL.LINE_STRIP, circle, color ?? CircleColor, Matrix4x4.TRS(center, rotation ?? Quaternion.identity, Vector3.one * radius)));
-
-    [Conditional("UNITY_EDITOR")]
     public static void SolidCircle(Vector3 center, float radius, Color? color = null, Quaternion? rotation = null) =>
-      jobsGL.Add(new RenderGL(GL.TRIANGLE_STRIP, solidCircle, color ?? CircleColor, Matrix4x4.TRS(center, rotation ?? Quaternion.identity, Vector3.one * radius)));
+      DrawHandle(new CircleHandle
+      {
+        center = center,
+        normal = rotation == null ? Vector3.up : (Quaternion)rotation * Vector3.up,
+        radius = radius,
+        color = color ?? CircleColor,
+        solid = true
+      });
 
     [Conditional("UNITY_EDITOR")]
     public static void Sphere(Vector3 center, float radius, Color? color = null, Quaternion? rotation = null)
     {
-      Circle(center, radius, color ?? SphereColor, rotation);
-      Circle(center, radius, color ?? SphereColor, Quaternion.Euler(0.0f, 0.0f, 90.0f) * (rotation ?? Quaternion.identity));
-      Circle(center, radius, color ?? SphereColor, Quaternion.Euler(0.0f, 90.0f, 90.0f) * (rotation ?? Quaternion.identity));
+      Circle(center, radius, color ?? AxisY, rotation);
+      Circle(center, radius, color ?? AxisX, (rotation ?? Quaternion.identity) * Quaternion.Euler(0.0f, 0.0f, 90.0f));
+      Circle(center, radius, color ?? AxisZ, (rotation ?? Quaternion.identity) * Quaternion.Euler(0.0f, 90.0f, 90.0f));
     }
 
     [Conditional("UNITY_EDITOR")]
-    public static void Arc(Vector3 center, Vector3 forward, float radius, float angle, Color? color = null, Quaternion? rotation = null)
-    {
-      Vector3[] vertices = new Vector3[Segments];
-      Quaternion rot = Quaternion.AngleAxis(angle / (Segments - 1), Vector3.up) * (rotation ?? Quaternion.identity);
-      Vector3 surfacePoint = forward.normalized * radius;
-      surfacePoint = Quaternion.Euler(0.0f, angle * -0.5f, 0.0f) * surfacePoint;
-
-      for (int i = 0; i < Segments; ++i)
+    public static void SolidSphere(Vector3 center, float radius, Color? color = null, Quaternion? rotation = null) =>
+      DrawHandle(new SphereHandle
       {
-        vertices[i] = center + surfacePoint;
-        surfacePoint = rot * surfacePoint;
-      }      
-
-      for (int i = 1; i < Segments; ++i)
-        Line(vertices[i - 1], vertices[i], color ?? ArcColor, rotation);
-      
-      Line(center, vertices[0], color ?? ArcColor, rotation);
-      Line(center, vertices[Segments - 1], color ?? ArcColor, rotation);
-    }
+        center = center,
+        radius = radius,
+        color = color ?? SphereColor,
+        rotation = rotation ?? Quaternion.identity
+      });
 
     [Conditional("UNITY_EDITOR")]
-    public static void SolidArc(Vector3 center, Vector3 forward, float radius, float angle, Color? color = null, Quaternion? rotation = null)
-    {
-      Vector3[] vertices = new Vector3[Segments];
-      Quaternion rot = Quaternion.AngleAxis(angle / (Segments - 1), Vector3.up) * (rotation ?? Quaternion.identity);
-      Vector3 surfacePoint = forward.normalized * radius;
-      surfacePoint = Quaternion.Euler(0.0f, angle * -0.5f, 0.0f) * surfacePoint;
-
-      for (int i = 0; i < Segments; ++i)
+    public static void Arc(Vector3 center, Quaternion rotation, float radius, float angle, Color? color = null) =>
+      DrawHandle(new ArcHandle
       {
-        vertices[i] = center + surfacePoint;
-        surfacePoint = rot * surfacePoint;
-      }      
-
-      for (int i = 1; i < Segments; ++i)
-        SolidTriangle(center, vertices[i - 1], vertices[i], color ?? ArcColor, rotation);
-    }
-
-    [Conditional("UNITY_EDITOR")]
-    public static void Cube(Vector3 center, Vector3 size, Color? color = null, Quaternion? rotation = null) =>
-      jobsGL.Add(new RenderGL(GL.LINES, cube, color ?? CubeColor, Matrix4x4.TRS(center, rotation ?? Quaternion.identity, size)));
+        center = center,
+        normal = rotation * Vector3.up,
+        from = (rotation * Quaternion.Euler(-angle * 0.5f, 0.0f, 0.0f)) * Vector3.forward,
+        angle = angle,
+        radius = radius,
+        color = color ?? ArcColor
+      });
 
     [Conditional("UNITY_EDITOR")]
-    public static void Cube(Vector3 center, float size, Color? color = null, Quaternion? rotation = null) =>
-      Cube(center, Vector3.one * size, color ?? CubeColor, rotation);
-    
+    public static void SolidArc(Vector3 center, Quaternion rotation, float radius, float angle, Color? color = null) =>
+      DrawHandle(new ArcHandle
+      {
+        center = center,
+        normal = rotation * Vector3.up,
+        from = (rotation * Quaternion.Euler(0.0f, -angle * 0.5f, 0.0f)) * Vector3.forward,
+        angle = angle,
+        radius = radius,
+        color = color ?? ArcColor,
+        solid = true
+      });
+
+    [Conditional("UNITY_EDITOR")]
+    public static void Cube(Vector3 center, Vector3 size, Color? color = null) =>
+      DrawHandle(new CubeHandle
+      {
+        center = center,
+        size = size,
+        color = color ?? CubeColor
+      });
+
+    [Conditional("UNITY_EDITOR")]
+    public static void Cube(Vector3 center, float size, Color? color = null) =>
+      Cube(center, Vector3.one * size, color ?? CubeColor);
+
     [Conditional("UNITY_EDITOR")]
     public static void Diamond(Vector3 center, float size = DiamondSize, Color? color = null, Quaternion? rotation = null)
     {
@@ -188,6 +202,35 @@ namespace FronkonGames.GameWork.Foundation
     }
 
     [Conditional("UNITY_EDITOR")]
+    public static void Cone(Vector3 position, Quaternion rotation, float angle, Color? color = null)
+    {
+      Vector3 direction = rotation * Vector3.forward;
+      float length = direction.magnitude;
+
+      Vector3 forward = direction;
+      Vector3 up = Vector3.Slerp(forward, -forward, 0.5f);
+      Vector3 right = Vector3.Cross(forward, up).normalized * length;
+
+      direction = direction.normalized;
+
+      Vector3 slerpedVector = Vector3.Slerp(forward, up, angle / 90.0f);
+
+      float dist;
+      var farPlane = new UnityEngine.Plane(-direction, position + forward);
+      var distRay = new Ray(position, slerpedVector);
+
+      farPlane.Raycast(distRay, out dist);
+
+      Debug.DrawRay(position, slerpedVector.normalized * dist, color ?? ConeColor);
+      Debug.DrawRay(position, Vector3.Slerp(forward, -up, angle / 90.0f).normalized * dist, color ?? ConeColor);
+      Debug.DrawRay(position, Vector3.Slerp(forward, right, angle / 90.0f).normalized * dist, color ?? ConeColor);
+      Debug.DrawRay(position, Vector3.Slerp(forward, -right, angle / 90.0f).normalized * dist, color ?? ConeColor);
+
+      Circle(position + forward, (forward - (slerpedVector.normalized * dist)).magnitude, color ?? ConeColor, rotation * Quaternion.Euler(0.0f, 90.0f, 90.0f));
+      Circle(position + (forward * 0.5f), ((forward * 0.5f) - (slerpedVector.normalized * (dist * 0.5f))).magnitude, color ?? ConeColor, rotation * Quaternion.Euler(0.0f, 90.0f, 90.0f));      
+    }
+    
+    [Conditional("UNITY_EDITOR")]
     public static void Bounds(Bounds b, Color? color)
     {
       Vector3 lbf = new Vector3(b.min.x, b.min.y, b.max.z);
@@ -196,7 +239,7 @@ namespace FronkonGames.GameWork.Foundation
       Line(b.min, lbf, color);
       Line(b.min, ltb, color);
       Line(b.min, rbb, color);
-
+      
       Vector3 rtb = new Vector3(b.max.x, b.max.y, b.min.z);
       Vector3 rbf = new Vector3(b.max.x, b.min.y, b.max.z);
       Vector3 ltf = new Vector3(b.min.x, b.max.y, b.max.z);
@@ -218,74 +261,14 @@ namespace FronkonGames.GameWork.Foundation
     public static void Bounds(BoundsInt b, Color color) => Bounds(new Bounds(b.center, b.size), color);
 
     [Conditional("UNITY_EDITOR")]
-    public static void Text(Vector3 position, string text, Color? color = null, Vector2 offset = default) =>
-      RenderText.Add(position, text, color ?? TextColor, offset);
+    public static void Text(Vector3 position, string text, Color? color = null) =>
+      DrawHandle(new TextHandle
+      {
+        position = position,
+        text = text,
+        color = color ?? TextColor
+      });
 /*
-    [Conditional("UNITY_EDITOR")]
-    public static void Text(Vector3 position, object t, Camera camera = null) => Text(position, t, TextColor, camera);
-
-    [Conditional("UNITY_EDITOR")]
-    public static void Text(Vector3 position, object t, Color color, Camera camera = null)
-    {
-#if UNITY_EDITOR
-      if (!Application.isPlaying)
-        return;
-
-      DrawManager drawManager = DrawManager.Instance;
-      DebugText debugText = new(position, t, color, camera);
-
-      if (Time.deltaTime == Time.fixedDeltaTime)
-      {
-        if (!subscribedFixed)
-        {
-          subscribedFixed = true;
-          UnityEditor.SceneView.duringSceneGui += SceneViewGUIFixed;
-          drawManager.RegisterFixedUpdateAction(WaitForNextFixed);
-          RegisterGUI();
-        }
-
-        debugTextFixed.Add(debugText);
-      }
-      else
-      {
-        if (!subscribedUpdate)
-        {
-          subscribedUpdate = true;
-          UnityEditor.SceneView.duringSceneGui += SceneViewGUIUpdate;
-          drawManager.RegisterUpdateAction(WaitForNextUpdate);
-          RegisterGUI();
-        }
-
-        debugTextUpdate.Add(debugText);
-      }
-
-      void RegisterGUI()
-      {
-        drawManager.RegisterOnGUIAction(() =>
-        {
-          if (!GameViewGizmosEnabled) return;
-          foreach (DebugText t in debugTextUpdate)
-          {
-            if (t.Camera == null)
-              continue;
-
-            DoDrawText(t.Position, t.Text, t.Color, t.Camera);
-          }
-
-          foreach (DebugText t in debugTextFixed)
-          {
-            if (t.Camera == null)
-              continue;
-
-            DoDrawText(t.Position, t.Text, t.Color, t.Camera);
-          }
-        });
-      }
-#else
-      throw new NotSupportedException();
-#endif
-    }
-
     [Conditional("UNITY_EDITOR")]
     public static void Raycast(Ray ray, float distance, Color rayColor, float duration = 0.0f)
     {

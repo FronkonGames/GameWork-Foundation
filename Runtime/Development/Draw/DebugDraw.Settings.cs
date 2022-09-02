@@ -26,10 +26,7 @@ namespace FronkonGames.GameWork.Foundation
   {
     private const int Capacity = 1000;
 
-    // It must be divisible by 360.
-    private const int Segments = 360 / 4;
-
-    private const float OcclusionColorFactor = 0.5f;
+    private const bool DepthTest = true;
     
     private const float Transparency = 0.75f;
 
@@ -38,19 +35,17 @@ namespace FronkonGames.GameWork.Foundation
     private static readonly Color AxisY = Color.green;
     private static readonly Color AxisZ = Color.blue;
 
-    private static readonly Color TriangleColor = "#8b9bf6".FromHex();
-
-    private static readonly Color CubeColor = "#bee6e4".FromHex();
+    private static readonly Color LineColor = "#f0cbc9".FromHex();
+    private const float LineGapSize = 4.0f;
+    private const float LineThickness = 0.0f;
     
     private static readonly Color ArrowColor = "#b8ffce".FromHex();
-    private const float ArrowSize = 2.0f;
-    private const float ArrowHeadLength = 0.2f;
-    private const float ArrowHeadWidth = 0.05f;
-    
-    private static readonly Color LineColor = "#f0cbc9".FromHex();
-    private const float LineDashSize = 0.1f;
+    private const float ArrowTipSize = 0.25f;
+    private const float ArrowWidth = 0.5f;
 
     private static readonly Color CircleColor = "#affff1".FromHex();
+    
+    private static readonly Color CubeColor = "#bee6e4".FromHex();
 
     private static readonly Color SphereColor = "#f5df8c".FromHex();
 
@@ -58,9 +53,10 @@ namespace FronkonGames.GameWork.Foundation
 
     private static readonly Color DiamondColor = "#f5d59a".FromHex();
     private const float DiamondSize = 0.5f;
-    
+
+    private static readonly Color ConeColor = "#f3ed80".FromHex();
+
     private static readonly Color TextColor = "#f5f5f5".FromHex();
-    private static readonly Color TextBackgroundColor = "#15151590".FromHex();
-    private const int TextSize = 18;
+    private const int TextSize = 24;
   }
 }

@@ -36,14 +36,13 @@ namespace FronkonGames.GameWork.Foundation
     public static void DrawDotted(this Vector3[] self, Color? color = null)
       => DottedLines(self, color);
     
-    public static void Draw(this Transform self, float size = ArrowSize, Color? color = null)
-      => Arrow(self.position, self.rotation, size, color);
+    public static void Draw(this Transform self, float length = 1.0f, Color? color = null)
+      => Arrow(self.position, self.rotation, length, ArrowTipSize, ArrowWidth, color);
     
     public static void Draw(this Bounds self, Color? color = null) => Bounds(self, color);
 
     public static void Draw(this BoundsInt self, Color? color = null) => Bounds(new Bounds(self.center, self.size), color);
     
-    public static void DrawName(this GameObject self, Color? color = null, Vector2 offset = default)
-      => Text(self.transform.position, self.name, color ?? TextColor, offset);
+    public static void DrawName(this GameObject self, Color? color = null) => Text(self.transform.position, self.name, color);
   }
 }
