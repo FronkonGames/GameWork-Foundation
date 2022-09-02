@@ -24,26 +24,28 @@ namespace FronkonGames.GameWork.Foundation
   /// <remarks>Only available in the Editor</remarks>
   public static partial class DebugDraw
   {
-    public static void Draw(this Vector3 self, float size = PointSize, Color? color = null)
-      => Point(self, size, color);
-    
-    public static void Draw(this Vector3[] self, float size = PointSize, Color? color = null)
-      => Points(self, size, color);
+    private readonly struct RenderText
+    {
+      public readonly GUIContent content;
+      public readonly Rect textArea;
 
-    public static void Draw(this Vector3[] self, Color? color = null)
-      => Lines(self, color);
+      private RenderText(Vector3 position, string text, Color color, Vector2 offset = default)
+      {
+#if UNITY_EDITOR
+        content = new($"<color=#{color.ToHex()}{(int)(Transparency * 255.0f):X}>{text}</color>");
+        textArea = UnityEditor.HandleUtility.WorldPointToSizedRect(position, content, TextStyle);
+        textArea.x += 1.0f;
+        textArea.position += offset;
+#endif
+      }
 
-    public static void DrawDotted(this Vector3[] self, Color? color = null)
-      => DottedLines(self, color);
-    
-    public static void Draw(this Transform self, float size = ArrowSize, Color? color = null)
-      => Arrow(self.position, self.rotation, size, color);
-    
-    public static void Draw(this Bounds self, Color? color = null) => Bounds(self, color);
-
-    public static void Draw(this BoundsInt self, Color? color = null) => Bounds(new Bounds(self.center, self.size), color);
-    
-    public static void DrawName(this GameObject self, Color? color = null, Vector2 offset = default)
-      => Text(self.transform.position, self.name, color ?? TextColor, offset);
+      public static void Add(Vector3 position, string text, Color? color, Vector2 offset = default)
+      {
+#if UNITY_EDITOR
+        if (UnityEditor.HandleUtility.WorldToGUIPointWithDepth(position).z >= 0.0f)
+          jobsText.Add(new RenderText(position, text, color ?? TextColor, offset));
+#endif
+      }
+    }
   }
 }

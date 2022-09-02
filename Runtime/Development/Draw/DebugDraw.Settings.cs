@@ -33,15 +33,15 @@ namespace FronkonGames.GameWork.Foundation
     
     private const float Transparency = 0.75f;
 
-    private static readonly Color PointColor = "#8cc6eb".FromHex();
     private const float PointSize = 0.5f;
-
-    private const int SphereRadialSegments = 4;
+    private static readonly Color AxisX = Color.red;
+    private static readonly Color AxisY = Color.green;
+    private static readonly Color AxisZ = Color.blue;
 
     private static readonly Color TriangleColor = "#8b9bf6".FromHex();
 
     private static readonly Color CubeColor = "#bee6e4".FromHex();
-
+    
     private static readonly Color ArrowColor = "#b8ffce".FromHex();
     private const float ArrowSize = 2.0f;
     private const float ArrowHeadLength = 0.2f;
@@ -59,8 +59,8 @@ namespace FronkonGames.GameWork.Foundation
     private static readonly Color DiamondColor = "#f5d59a".FromHex();
     private const float DiamondSize = 0.5f;
     
-    private static readonly Color ColorX = Color.red;
-    private static readonly Color ColorY = Color.green;
-    private static readonly Color ColorZ = Color.blue;
+    private static readonly Color TextColor = "#f5f5f5".FromHex();
+    private static readonly Color TextBackgroundColor = "#15151590".FromHex();
+    private const int TextSize = 18;
   }
 }

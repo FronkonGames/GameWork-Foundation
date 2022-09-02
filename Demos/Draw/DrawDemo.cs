@@ -31,6 +31,8 @@ public sealed class DrawDemo : MonoBehaviour
 
   private readonly Vector3[] points = new Vector3[100];
 
+  private Renderer renderer;
+
   private void OnEnable()
   {
     const float size = 10.0f;
@@ -40,8 +42,10 @@ public sealed class DrawDemo : MonoBehaviour
       points[i].y = Random.Range(0.0f, size * 0.5f);
       points[i].z = Random.Range(-size, size);
     }
-  }
 
+    renderer = player.GetComponent<Renderer>();
+  }
+  
   private void OnDrawGizmos()
   {
     DebugDraw.Point(new Vector3(0.0f, 0.5f, 0.0f), 0.4f, Color.white);
@@ -56,13 +60,15 @@ public sealed class DrawDemo : MonoBehaviour
 
     DebugDraw.Cube(new Vector3(0.0f, 1.0f, 0.0f), 2.5f, Color.red);
 
-    //DebugDraw.DottedLine(player.transform.position, Vector3.zero);
+    DebugDraw.DottedLine(player.transform.position, Vector3.zero);
 
     points.Draw(0.1f, Color.cyan);
 
-    DebugDraw.SolidArc(player.transform.position, player.transform.forward, 4.0f, arcAngle);
+    DebugDraw.SolidArc(player.transform.position, player.transform.forward, 3.0f, arcAngle);
     
-    player.transform.Draw();
+    player.DrawName(Color.yellow);
+    player.transform.Draw(4.0f);
+    renderer.bounds.Draw();
     
     DebugDraw.SolidCircle(player.transform.position, 1.0f, null, player.transform.rotation);
     DebugDraw.Circle(player.transform.position, 1.5f, null, player.transform.rotation);

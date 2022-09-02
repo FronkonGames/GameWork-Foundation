@@ -18,8 +18,6 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
-using Matrix4x4 = UnityEngine.Matrix4x4;
-using Vector3 = UnityEngine.Vector3;
 
 namespace FronkonGames.GameWork.Foundation
 {
@@ -29,18 +27,35 @@ namespace FronkonGames.GameWork.Foundation
   /// <remarks>Only available in the Editor</remarks>
 #if UNITY_EDITOR
   [UnityEditor.InitializeOnLoad]
-#endif
   public static partial class DebugDraw
   {
-    private static readonly List<JobGL> jobs;
+    private static readonly List<RenderGL> jobsGL;
+    private static readonly List<RenderText> jobsText;
 
-    private static bool playing;
     private static readonly Material material;
 
-#if UNITY_EDITOR
+    private static GUIStyle TextStyle
+    {
+      get
+      {
+        if (textStyle == null)
+          textStyle = new(UnityEditor.EditorStyles.whiteMiniLabel)
+          {
+            richText = true,
+            fontSize = TextSize,
+            alignment = TextAnchor.MiddleCenter
+          };
+
+        return textStyle;
+      }
+    }
+
+    private static GUIStyle textStyle;
+    
     static DebugDraw()
     {
-      jobs = new(Capacity);
+      jobsGL = new(Capacity);
+      jobsText = new(Capacity / 4);
       
       CreateMeshes();
       
@@ -56,69 +71,82 @@ namespace FronkonGames.GameWork.Foundation
       UnityEditor.SceneView.duringSceneGui += (_) =>
       {
         if (Event.current.type == EventType.Repaint)
-          Render(UnityEditor.SceneView.currentDrawingSceneView.camera);
+          Render();
         else
-          jobs.Clear();
+        {
+          jobsText.Clear();
+          jobsGL.Clear();
+        }
       };
-      UnityEditor.EditorApplication.playModeStateChanged += playMode => (playMode switch
-      {
-        UnityEditor.PlayModeStateChange.EnteredPlayMode => () => playing = true,
-        UnityEditor.PlayModeStateChange.ExitingPlayMode => () => playing = false,
-        _ => (Action)(() => { })
-      })();      
     }
-#endif
     
-    private static void Render(Camera camera)
+    private static void Render()
     {
+      SubmitText();
+
       material.SetInt("_ZTest",  OcclusionColorFactor < 1.0f ? (int)CompareFunction.Less : (int)CompareFunction.Always);
       material.SetPass(0);
-
-      Submit();
+      
+      SubmitGL();
 
       if (OcclusionColorFactor < 1.0f)
       {
         material.SetInt("_ZTest",  (int)CompareFunction.Greater);
         material.SetPass(0);
 
-        Submit(OcclusionColorFactor);
+        SubmitGL(OcclusionColorFactor);
       }
       
-      jobs.Clear();
+      jobsGL.Clear();
+      jobsText.Clear();
     }
 
-    private static void Submit(float colorFactor = 1.0f)
+    private static void SubmitText()
     {
-      for (int i = 0; i < jobs.Count; ++i)
-      {
-        JobGL job = jobs[i];
+      UnityEditor.Handles.BeginGUI();
 
-        bool identity = job.matrix.Equals(Matrix4x4.identity); 
+      for (int i = 0; i < jobsText.Count; ++i)
+      {
+        RenderText render = jobsText[i];
+        
+        GUI.Label(render.textArea, render.content, TextStyle);        
+      }
+      
+      UnityEditor.Handles.EndGUI();
+    }
+
+    private static void SubmitGL(float colorFactor = 1.0f)
+    {
+      for (int i = 0; i < jobsGL.Count; ++i)
+      {
+        RenderGL render = jobsGL[i];
+
+        bool identity = render.matrix.Equals(Matrix4x4.identity); 
         if (identity == false)
         {
           GL.PushMatrix();
-          GL.MultMatrix(job.matrix);
+          GL.MultMatrix(render.matrix);
         }
 
-        GL.Begin(job.mode);
+        GL.Begin(render.mode);
 
-        GL.Color(job.color * colorFactor);
+        GL.Color(render.color * colorFactor);
 
-        if (job.dotted == true)
+        if (render.dotted == true)
         {
-          float length = Vector3.Distance(job.vertices[0], job.vertices[1]);
+          float length = Vector3.Distance(render.vertices[0], render.vertices[1]);
     
           int count = Mathf.CeilToInt(length / LineDashSize);
           for (int j = 0; j < count; j += 2)
           {
-            GL.Vertex(Vector3.Lerp(job.vertices[0], job.vertices[1], j * LineDashSize / length));
-            GL.Vertex(Vector3.Lerp(job.vertices[0], job.vertices[1], (j + 1) * LineDashSize / length));
+            GL.Vertex(Vector3.Lerp(render.vertices[0], render.vertices[1], j * LineDashSize / length));
+            GL.Vertex(Vector3.Lerp(render.vertices[0], render.vertices[1], (j + 1) * LineDashSize / length));
           }
         }
         else
         {
-          for (int j = 0; j < jobs[i].vertices.Length; ++j)
-            GL.Vertex(job.vertices[j]);
+          for (int j = 0; j < jobsGL[i].vertices.Length; ++j)
+            GL.Vertex(render.vertices[j]);
         }
         
         GL.End();
@@ -127,5 +155,6 @@ namespace FronkonGames.GameWork.Foundation
           GL.PopMatrix();
       }
     }
+#endif
   }
 }

@@ -14,7 +14,6 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
 
@@ -31,41 +30,48 @@ namespace FronkonGames.GameWork.Foundation
     {
       float halfSize = size * 0.5f;
 
-      Line(position + Vector3.right * halfSize, position - Vector3.right * halfSize, color ?? ColorX, rotation);
-      Line(position + Vector3.up * halfSize, position - Vector3.up * halfSize, color ?? ColorY, rotation);
-      Line(position + Vector3.forward * halfSize, position - Vector3.forward * halfSize, color ?? ColorZ, rotation);
+      Line(position + Vector3.right * halfSize, position - Vector3.right * halfSize, color ?? AxisX, rotation);
+      Line(position + Vector3.up * halfSize, position - Vector3.up * halfSize, color ?? AxisY, rotation);
+      Line(position + Vector3.forward * halfSize, position - Vector3.forward * halfSize, color ?? AxisZ, rotation);
     }
 
     [Conditional("UNITY_EDITOR")]
-    public static void Points(IEnumerable<Vector3> positions, float size = PointSize, Color? color = null, Quaternion? rotation = null)
+    public static void Points(Vector3[] points, float size = PointSize, Color? color = null, Quaternion? rotation = null)
     {
-      foreach(Vector3 point in positions)
-        Point(point, size, color, rotation);
+      for (int i = 0; i < points.Length; ++i)
+        Point(points[i], size, color, rotation);
     }
 
     [Conditional("UNITY_EDITOR")]
-    private static void Line(Vector3 a, Vector3 b, Color? color = null, Quaternion? rotation = null) => JobGL.AddLine(a, b, color ?? LineColor, rotation);
+    private static void Line(Vector3 a, Vector3 b, Color? color = null, Quaternion? rotation = null) =>
+      jobsGL.Add(new RenderGL(GL.LINES, new[] {a, b}, color ?? LineColor, rotation == null
+        ? Matrix4x4.identity
+        : Matrix4x4.TRS(Vector3.zero, (Quaternion)rotation, Vector3.one)));
     
     [Conditional("UNITY_EDITOR")]
-    private static void Lines(IReadOnlyList<Vector3> segments, Color? color = null, Quaternion? rotation = null)
+    private static void Lines(Vector3[] lines, Color? color = null, Quaternion? rotation = null)
     {
-      if (segments.Count > 2)
-        JobGL.AddLines(segments, color ?? LineColor, rotation);
-      else if (segments.Count == 2)
-        JobGL.AddLine(segments[0], segments[1], color ?? LineColor, rotation);
+      if (lines.Length > 2)
+        jobsGL.Add(new RenderGL(GL.LINES, lines, color ?? LineColor, rotation == null
+            ? Matrix4x4.identity
+            : Matrix4x4.TRS(Vector3.zero, (Quaternion)rotation, Vector3.one)));
+      else if (lines.Length == 2)
+        Line(lines[0], lines[1], color ?? LineColor, rotation);
     }
 
     [Conditional("UNITY_EDITOR")]
-    public static void DottedLine(Vector3 start, Vector3 end, Color? color = null, Quaternion? rotation = null) =>
-      JobGL.AddLine(start, end, color ?? LineColor, rotation, 1.0f, true);
+    public static void DottedLine(Vector3 a, Vector3 b, Color? color = null, Quaternion? rotation = null) =>
+      jobsGL.Add(new RenderGL(GL.LINES, new[] {a, b}, color ?? LineColor, rotation == null
+        ? Matrix4x4.identity
+        : Matrix4x4.TRS(Vector3.zero, (Quaternion)rotation, Vector3.one), true));
 
     [Conditional("UNITY_EDITOR")]
-    public static void DottedLines(IReadOnlyList<Vector3> segments, Color? color = null, Quaternion? rotation = null)
+    public static void DottedLines(Vector3[] lines, Color? color = null, Quaternion? rotation = null)
     {
-      if (segments.Count > 1)
+      if (lines.Length > 1)
       {
-        for (int i = 0; i < segments.Count - 1; ++i)
-          DottedLine(segments[i], segments[i + 1], color, rotation);
+        for (int i = 0; i < lines.Length - 1; ++i)
+          DottedLine(lines[i], lines[i + 1], color, rotation);
       }
     }
 
@@ -83,19 +89,21 @@ namespace FronkonGames.GameWork.Foundation
 
     [Conditional("UNITY_EDITOR")]
     public static void Triangle(Vector3 a, Vector3 b, Vector3 c, Color? color = null, Quaternion? rotation = null) =>
-      JobGL.AddLines(new[] { a, b, c, a }, color ?? TriangleColor, rotation);
-    
+      Lines(new[] { a, b, c, a }, color ?? TriangleColor, rotation);
+
     [Conditional("UNITY_EDITOR")]
     public static void SolidTriangle(Vector3 a, Vector3 b, Vector3 c, Color? color = null, Quaternion? rotation = null) =>
-      JobGL.AddTriangle(a, b, c, color ?? TriangleColor, rotation);
+      jobsGL.Add(new RenderGL(GL.TRIANGLES, new[] { a, b, c }, color ?? TriangleColor, rotation == null
+        ? Matrix4x4.identity
+        : Matrix4x4.TRS(Vector3.zero, (Quaternion)rotation, Vector3.one)));
     
     [Conditional("UNITY_EDITOR")]
     public static void Circle(Vector3 center, float radius, Color? color = null, Quaternion? rotation = null) =>
-      jobs.Add(new JobGL(GL.LINE_STRIP, circle, color ?? CircleColor, Matrix4x4.TRS(center, rotation ?? Quaternion.identity, Vector3.one * radius)));
+      jobsGL.Add(new RenderGL(GL.LINE_STRIP, circle, color ?? CircleColor, Matrix4x4.TRS(center, rotation ?? Quaternion.identity, Vector3.one * radius)));
 
     [Conditional("UNITY_EDITOR")]
     public static void SolidCircle(Vector3 center, float radius, Color? color = null, Quaternion? rotation = null) =>
-      jobs.Add(new JobGL(GL.TRIANGLE_STRIP, solidCircle, color ?? CircleColor, Matrix4x4.TRS(center, rotation ?? Quaternion.identity, Vector3.one * radius)));
+      jobsGL.Add(new RenderGL(GL.TRIANGLE_STRIP, solidCircle, color ?? CircleColor, Matrix4x4.TRS(center, rotation ?? Quaternion.identity, Vector3.one * radius)));
 
     [Conditional("UNITY_EDITOR")]
     public static void Sphere(Vector3 center, float radius, Color? color = null, Quaternion? rotation = null)
@@ -145,10 +153,8 @@ namespace FronkonGames.GameWork.Foundation
     }
 
     [Conditional("UNITY_EDITOR")]
-    public static void Cube(Vector3 center, Vector3 size, Color? color = null, Quaternion? rotation = null)
-    {
-      jobs.Add(new JobGL(GL.LINES, cube, color ?? CubeColor, Matrix4x4.TRS(center, rotation ?? Quaternion.identity, size)));
-    }
+    public static void Cube(Vector3 center, Vector3 size, Color? color = null, Quaternion? rotation = null) =>
+      jobsGL.Add(new RenderGL(GL.LINES, cube, color ?? CubeColor, Matrix4x4.TRS(center, rotation ?? Quaternion.identity, size)));
 
     [Conditional("UNITY_EDITOR")]
     public static void Cube(Vector3 center, float size, Color? color = null, Quaternion? rotation = null) =>
@@ -180,64 +186,41 @@ namespace FronkonGames.GameWork.Foundation
         d, l, f
       }, color ?? DiamondColor, rotation);
     }
- 
-/*
-    [Conditional("UNITY_EDITOR")]
-    public static void Box(Vector3 center, Vector3 halfExtents, Quaternion orientation, Color color)
-    {
-      DrawBox(center, halfExtents, orientation, DrawLine);
-
-      void DrawLine(Vector3 a, Vector3 b) => lineDelegate(a, b, color);
-    }
 
     [Conditional("UNITY_EDITOR")]
-    public static void Box(Vector3 center, Vector3 halfExtents, Color color) => Box(center, halfExtents, Quaternion.identity, color);
-    
-    [Conditional("UNITY_EDITOR")]
-    public static void Box(Vector3 center, Vector3 halfExtents) => Box(center, halfExtents, Quaternion.identity, LineColor);
-
-    [Conditional("UNITY_EDITOR")]
-    public static void Bounds(Bounds b, Color color, float duration = 0.0f)
+    public static void Bounds(Bounds b, Color? color)
     {
       Vector3 lbf = new Vector3(b.min.x, b.min.y, b.max.z);
       Vector3 ltb = new Vector3(b.min.x, b.max.y, b.min.z);
       Vector3 rbb = new Vector3(b.max.x, b.min.y, b.min.z);
-      lineDelegate(b.min, lbf, color, duration);
-      lineDelegate(b.min, ltb, color, duration);
-      lineDelegate(b.min, rbb, color, duration);
+      Line(b.min, lbf, color);
+      Line(b.min, ltb, color);
+      Line(b.min, rbb, color);
 
       Vector3 rtb = new Vector3(b.max.x, b.max.y, b.min.z);
       Vector3 rbf = new Vector3(b.max.x, b.min.y, b.max.z);
       Vector3 ltf = new Vector3(b.min.x, b.max.y, b.max.z);
-      lineDelegate(b.max, rtb, color, duration);
-      lineDelegate(b.max, rbf, color, duration);
-      lineDelegate(b.max, ltf, color, duration);
+      Line(b.max, rtb, color);
+      Line(b.max, rbf, color);
+      Line(b.max, ltf, color);
 
-      lineDelegate(rbb, rbf, color, duration);
-      lineDelegate(rbb, rtb, color, duration);
+      Line(rbb, rbf, color);
+      Line(rbb, rtb, color);
 
-      lineDelegate(lbf, rbf, color, duration);
-      lineDelegate(lbf, ltf, color, duration);
+      Line(lbf, rbf, color);
+      Line(lbf, ltf, color);
 
-      lineDelegate(ltb, rtb, color, duration);
-      lineDelegate(ltb, ltf, color, duration);
+      Line(ltb, rtb, color);
+      Line(ltb, ltf, color);
     }
+    
+    [Conditional("UNITY_EDITOR")]
+    public static void Bounds(BoundsInt b, Color color) => Bounds(new Bounds(b.center, b.size), color);
 
     [Conditional("UNITY_EDITOR")]
-    public static void Bounds(BoundsInt b, Color color, float duration = 0.0f) => Bounds(new Bounds(b.center, b.size), color, duration);
-
-    [Conditional("UNITY_EDITOR")]
-    public static void Capsule(Vector3 start, Vector3 end, float radius, Color color)
-    {
-      Vector3 alignment = (start - end).normalized;
-      Vector3 crossA = GetAxisAlignedPerpendicular(alignment);
-      Vector3 crossB = Vector3.Cross(crossA, alignment);
-
-      DrawCapsuleFast(start, end, radius, alignment, crossA, crossB, DrawLine);
-
-      void DrawLine(Vector3 a, Vector3 b, float f) => lineDelegate(a, b, color);
-    }
-
+    public static void Text(Vector3 position, string text, Color? color = null, Vector2 offset = default) =>
+      RenderText.Add(position, text, color ?? TextColor, offset);
+/*
     [Conditional("UNITY_EDITOR")]
     public static void Text(Vector3 position, object t, Camera camera = null) => Text(position, t, TextColor, camera);
 
