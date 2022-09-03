@@ -29,6 +29,9 @@ public sealed class DrawDemo : MonoBehaviour
   [SerializeField]
   private GameObject player;
 
+  [SerializeField]
+  private GameObject[] enemies;
+
   [SerializeField, Range(0.0f, 360.0f)]
   private float arcAngle = 40.0f;
 
@@ -65,10 +68,15 @@ public sealed class DrawDemo : MonoBehaviour
     
     points.Draw(0.1f, Color.cyan);
 
-    DebugDraw.SolidArc(player.transform.position, player.transform.rotation, 2.0f, arcAngle);
-
     player.DrawName();
-    player.transform.Draw(4.0f);
+    player.transform.Draw(3.0f);
     player.GetComponent<Renderer>().bounds.Draw();
+
+    for (int i = 0; i < enemies.Length; ++i)
+    {
+      enemies[i].DrawName();
+      DebugDraw.SolidArc(enemies[i].transform.position, enemies[i].transform.rotation, 3.0f, arcAngle);
+      player.GetComponent<Renderer>().bounds.Draw();
+    }
   }
 }

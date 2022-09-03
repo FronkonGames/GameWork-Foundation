@@ -16,11 +16,19 @@
   </a>
 </p>
 
-## About
-
 A set of code useful for developing Unity based games. It is independent of any architecture, so you can use it together with your favorite framework.
 
 These are the foundations on which [Game:Work Core](https://github.com/FronkonGames/GameWork-Core) is built.
+
+## Features 🎇
+
+- Architecture agnostic, use it in any code.
+- Many attributes to make your classes more usable in the editor (without having to write a custom Editor).
+- Multiple utilities to improve your developments: checkers, debug draw, profiling and a console with custom commands.
+- A lot of .Net and Unity extensions.
+- The most used design patterns, in generic versions so that they are easy to adapt to your needs.
+- Tested in real projects.
+- Commented code with test units.
 
 ## Requisites 🔧
 
@@ -234,7 +242,17 @@ Take a look at the [Check class folder](https://github.com/FronkonGames/GameWork
 
 ### Draw
 
-🚧
+Visualize in the Editor Scene window the useful information of your game, in a simple way and without affecting the final performance of the game.
+
+<p align="center"><img src="Media/DebugDraw.png"/></p>
+
+```c#
+// Displays the player's direction.
+player.transform.Draw();
+
+// Displays the name of the GameObject.
+player.DrawName();
+```
 
 ### Profiling
 
@@ -260,7 +278,13 @@ Output the message: "**Task 'Some hungry code' consume 4.00 kb**".
 
 ### Patterns
 
-🚧
+The most used design patterns:
+
+- Behavioral: [Command](https://github.com/FronkonGames/GameWork-Foundation/tree/main/Runtime/Patterns/Behavioral/Command), [Observer](https://github.com/FronkonGames/GameWork-Foundation/tree/main/Runtime/Patterns/Behavioral/Observer).
+- Creational: [Singleton](https://github.com/FronkonGames/GameWork-Foundation/tree/main/Runtime/Patterns/Creational/Singleton).
+- Structural: [Decorator](https://github.com/FronkonGames/GameWork-Foundation/tree/main/Runtime/Patterns/Structural/Decorator).
+
+All using generics.
 
 ## License 📜
 

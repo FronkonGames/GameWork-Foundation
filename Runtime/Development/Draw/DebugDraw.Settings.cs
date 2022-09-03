@@ -25,10 +25,8 @@ namespace FronkonGames.GameWork.Foundation
   public static partial class DebugDraw
   {
     private const int Capacity = 1000;
-
-    private const bool DepthTest = true;
     
-    private const float Transparency = 0.75f;
+    private const float Transparency = 0.7f;
 
     private const float PointSize = 0.5f;
     private static readonly Color AxisX = Color.red;
