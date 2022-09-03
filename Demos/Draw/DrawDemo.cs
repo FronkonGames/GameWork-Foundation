@@ -14,8 +14,6 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-using System;
 using UnityEngine;
 using FronkonGames.GameWork.Foundation;
 using Random = UnityEngine.Random;
@@ -37,9 +35,13 @@ public sealed class DrawDemo : MonoBehaviour
 
   private readonly Vector3[] points = new Vector3[100];
 
+  private const int MaxHits = 10;
+  private Ray playerRay;
+  private RaycastHit[] playerHits;
+
   private void OnEnable()
   {
-    const float size = 10.0f;
+    const float size = 5.0f;
     for (int i = 0; i < points.Length; ++i)
     {
       points[i].x = Random.Range(-size, size);
@@ -71,12 +73,25 @@ public sealed class DrawDemo : MonoBehaviour
     player.DrawName();
     player.transform.Draw(3.0f);
     player.GetComponent<Renderer>().bounds.Draw();
-
+    
     for (int i = 0; i < enemies.Length; ++i)
     {
       enemies[i].DrawName();
       DebugDraw.SolidArc(enemies[i].transform.position, enemies[i].transform.rotation, 3.0f, arcAngle);
       player.GetComponent<Renderer>().bounds.Draw();
     }
+
+    PlayerRaycast();
+  }
+
+  private void PlayerRaycast()
+  {
+    playerRay.origin = player.transform.position + new Vector3(0.0f, 0.5f, 0.0f);
+    playerRay.direction = player.transform.forward;
+
+    playerHits = new RaycastHit[MaxHits];
+    int hits = Physics.RaycastNonAlloc(playerRay, playerHits, 100.0f);
+    if (hits > 0)
+      playerRay.Draw(playerHits);
   }
 }

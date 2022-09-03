@@ -14,7 +14,11 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+using System.Numerics;
 using UnityEngine;
+using Quaternion = UnityEngine.Quaternion;
+using Vector3 = UnityEngine.Vector3;
 
 namespace FronkonGames.GameWork.Foundation
 {
@@ -42,6 +46,26 @@ namespace FronkonGames.GameWork.Foundation
     public static void Draw(this Bounds self, Color? color = null) => Bounds(self, color);
 
     public static void Draw(this BoundsInt self, Color? color = null) => Bounds(new Bounds(self.center, self.size), color);
+
+    public static void Draw(this Ray self, Color? color = null) => Ray(self.origin, Quaternion.LookRotation(self.direction), color);
+
+    public static void Draw(this Ray self, RaycastHit[] hits, int maxHits = 0, Color? color = null)
+    {
+      if (hits.Length > 0)
+      {
+        if (maxHits <= 0)
+          maxHits = hits.Length;
+
+        self.Draw(color);
+
+        for (int i = 0; i < maxHits; ++i)
+        {
+          Circle(hits[i].point, HitRadius * 0.5f, color ?? HitColor, hits[i].normal);
+          Circle(hits[i].point, HitRadius, color ?? HitColor, hits[i].normal);
+          Line(hits[i].point, hits[i].point + (hits[i].normal * HitLength), color ?? HitColor);
+        }
+      }
+    }
     
     public static void DrawName(this GameObject self, Color? color = null) => Text(self.transform.position, self.name, color);
   }

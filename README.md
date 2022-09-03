@@ -252,6 +252,11 @@ player.transform.Draw();
 
 // Displays the name of the GameObject.
 player.DrawName();
+
+// RaycastHits.
+int hits = Physics.RaycastNonAlloc(playerRay, playerHits, 100.0f);
+if (hits > 0)
+  playerHits.Draw();
 ```
 
 ### Profiling

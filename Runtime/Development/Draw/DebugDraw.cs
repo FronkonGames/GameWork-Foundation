@@ -98,11 +98,29 @@ namespace FronkonGames.GameWork.Foundation
     }
 
     [Conditional("UNITY_EDITOR")]
+    public static void Ray(Vector3 position, Quaternion rotation, Color? color = null) =>
+      Line(position, (rotation * Vector3.forward) * RayLength, color ?? RayColor);
+
+    [Conditional("UNITY_EDITOR")]
+    public static void Ray(Vector3 position, Vector3 direction, Color? color = null) =>
+      Line(position, direction * RayLength, color ?? RayColor);
+    
+    [Conditional("UNITY_EDITOR")]
     public static void Circle(Vector3 center, float radius, Color? color = null, Quaternion? rotation = null) =>
       DrawHandle(new CircleHandle
       {
         center = center,
-        normal = rotation == null ? Vector3.up : (Quaternion)rotation * Vector3.up,
+        normal = rotation == null ? Vector3.up : (Quaternion)rotation * Vector3.forward,
+        radius = radius,
+        color = color ?? CircleColor
+      });
+
+    [Conditional("UNITY_EDITOR")]
+    public static void Circle(Vector3 center, float radius, Color? color = null, Vector3? normal = null) =>
+      DrawHandle(new CircleHandle
+      {
+        center = center,
+        normal = normal ?? Vector3.up,
         radius = radius,
         color = color ?? CircleColor
       });
@@ -112,7 +130,7 @@ namespace FronkonGames.GameWork.Foundation
       DrawHandle(new CircleHandle
       {
         center = center,
-        normal = rotation == null ? Vector3.up : (Quaternion)rotation * Vector3.up,
+        normal = rotation == null ? Vector3.up : (Quaternion)rotation * Vector3.forward,
         radius = radius,
         color = color ?? CircleColor,
         solid = true
@@ -216,7 +234,7 @@ namespace FronkonGames.GameWork.Foundation
       Vector3 slerpedVector = Vector3.Slerp(forward, up, angle / 90.0f);
 
       float dist;
-      var farPlane = new UnityEngine.Plane(-direction, position + forward);
+      var farPlane = new Plane(-direction, position + forward);
       var distRay = new Ray(position, slerpedVector);
 
       farPlane.Raycast(distRay, out dist);
@@ -226,8 +244,8 @@ namespace FronkonGames.GameWork.Foundation
       Debug.DrawRay(position, Vector3.Slerp(forward, right, angle / 90.0f).normalized * dist, color ?? ConeColor);
       Debug.DrawRay(position, Vector3.Slerp(forward, -right, angle / 90.0f).normalized * dist, color ?? ConeColor);
 
-      Circle(position + forward, (forward - (slerpedVector.normalized * dist)).magnitude, color ?? ConeColor, rotation * Quaternion.Euler(0.0f, 90.0f, 90.0f));
-      Circle(position + (forward * 0.5f), ((forward * 0.5f) - (slerpedVector.normalized * (dist * 0.5f))).magnitude, color ?? ConeColor, rotation * Quaternion.Euler(0.0f, 90.0f, 90.0f));      
+      Circle(position + forward, (forward - (slerpedVector.normalized * dist)).magnitude, color ?? ConeColor, rotation);
+      Circle(position + (forward * 0.5f), ((forward * 0.5f) - (slerpedVector.normalized * (dist * 0.5f))).magnitude, color ?? ConeColor, rotation);      
     }
     
     [Conditional("UNITY_EDITOR")]
@@ -270,18 +288,6 @@ namespace FronkonGames.GameWork.Foundation
       });
 /*
     [Conditional("UNITY_EDITOR")]
-    public static void Raycast(Ray ray, float distance, Color rayColor, float duration = 0.0f)
-    {
-      if (float.IsInfinity(distance) == true)
-        distance = 10000000.0f;
-
-      rayDelegate(ray.origin, ray.direction * distance, rayColor, duration);
-    }
-
-    [Conditional("UNITY_EDITOR")]
-    public static void Raycast(Ray ray, float duration = 0.0f) => rayDelegate(ray.origin, ray.direction, RayColor, duration);
-
-    [Conditional("UNITY_EDITOR")]
     public static void SphereCast(Ray ray, float radius, float distance, Color colorStart, Color colorEnd, int iterationCount = 10)
       => SphereCast(ray.origin, radius, ray.direction, distance, colorStart, colorEnd, iterationCount);
 
@@ -311,20 +317,6 @@ namespace FronkonGames.GameWork.Foundation
 
       void DrawLine(Vector3 a, Vector3 b, float f) => lineDelegate(a, b, color);
     }
-
-    [Conditional("UNITY_EDITOR")]
-    public static void RaycastHits(RaycastHit[] hits, Color color, int maxCount = -1, float rayLength = 1, float duration = 0.0f)
-    {
-      if (maxCount < 0)
-        maxCount = hits.Length;
-
-      for (int i = 0; i < maxCount; ++i)
-        rayDelegate(hits[i].point, hits[i].normal * rayLength, color, duration);
-    }
-
-    [Conditional("UNITY_EDITOR")]
-    public static void RaycastHits(RaycastHit[] hits, int maxCount = -1, float rayLength = 1.0f, float duration = 0.0f)
-      => RaycastHits(hits, RayColor, maxCount, rayLength, duration);
 
     [Conditional("UNITY_EDITOR")]
     public static void SphereCastHits(RaycastHit[] hits, Ray ray, float radius, Color color, int maxCount = -1)

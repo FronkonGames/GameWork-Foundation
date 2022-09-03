@@ -41,6 +41,13 @@ namespace FronkonGames.GameWork.Foundation
     private const float ArrowTipSize = 0.25f;
     private const float ArrowWidth = 0.5f;
 
+    private static readonly Color RayColor = "#a94241".FromHex();
+    private const float RayLength = 1000.0f;
+
+    private static readonly Color HitColor = "#C91211".FromHex();
+    private const float HitRadius = 0.1f;
+    private const float HitLength = 0.25f;
+
     private static readonly Color CircleColor = "#affff1".FromHex();
     
     private static readonly Color CubeColor = "#bee6e4".FromHex();
