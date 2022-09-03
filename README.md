@@ -23,10 +23,10 @@ These are the foundations on which [Game:Work Core](https://github.com/FronkonGa
 ## Features 🎇
 
 - Architecture agnostic, use it in any code.
-- Many attributes to make your classes more usable in the editor (without having to write a custom Editor).
-- Multiple utilities to improve your developments: checkers, debug draw, profiling and a console with custom commands.
-- A lot of .Net and Unity extensions.
-- The most used design patterns, in generic versions so that they are easy to adapt to your needs.
+- Many [attributes](https://github.com/FronkonGames/GameWork-Foundation/tree/main/Runtime/Attributes) to make your classes more usable in the editor (without having to write a custom Editor).
+- Multiple utilities to improve your developments: [checkers](https://github.com/FronkonGames/GameWork-Foundation/tree/main/Runtime/Development/Check), [debug draw](https://github.com/FronkonGames/GameWork-Foundation/tree/main/Runtime/Development/Draw), [profiling](https://github.com/FronkonGames/GameWork-Foundation/tree/main/Runtime/Development/Profiling) and a console with custom commands.
+- A lot of .Net and Unity [extensions](https://github.com/FronkonGames/GameWork-Foundation/tree/main/Runtime/Extensions).
+- The most used [design patterns](https://github.com/FronkonGames/GameWork-Foundation/tree/main/Runtime/Patterns), in generic versions so that they are easy to adapt to your needs.
 - Tested in real projects.
 - Commented code with test units.
 
