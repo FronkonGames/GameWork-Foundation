@@ -25,14 +25,13 @@ These are the foundations on which [Game:Work Core](https://github.com/FronkonGa
 - Architecture agnostic, use it in any code.
 - Many [attributes](https://github.com/FronkonGames/GameWork-Foundation/tree/main/Runtime/Attributes) to make your classes more usable in the editor (without having to write a custom Editor).
 - Multiple utilities to improve your developments: [checkers](https://github.com/FronkonGames/GameWork-Foundation/tree/main/Runtime/Development/Check), [debug draw](https://github.com/FronkonGames/GameWork-Foundation/tree/main/Runtime/Development/Draw), [profiling](https://github.com/FronkonGames/GameWork-Foundation/tree/main/Runtime/Development/Profiling) and a console with custom commands.
-- A lot of .Net and Unity [extensions](https://github.com/FronkonGames/GameWork-Foundation/tree/main/Runtime/Extensions).
+- A lot of .Net and Unity types [extensions](https://github.com/FronkonGames/GameWork-Foundation/tree/main/Runtime/Extensions).
 - The most used [design patterns](https://github.com/FronkonGames/GameWork-Foundation/tree/main/Runtime/Patterns), in generic versions so that they are easy to adapt to your needs.
-- Tested in real projects.
 - Commented code with test units.
 
 ## Requisites 🔧
 
-- Unity 2021.2 or higher.
+- Unity 2021.3 or higher.
 - Test Framework 1.1.31 or higher.
 
 ## Installation ⚙️
@@ -247,16 +246,19 @@ Visualize in the Editor Scene window the useful information of your game, in a s
 <p align="center"><img src="Media/DebugDraw.png"/></p>
 
 ```c#
+// Displays an array of points.
+points.Draw();
+
 // Displays the player's direction.
 player.transform.Draw();
 
 // Displays the name of the GameObject.
 player.DrawName();
 
-// RaycastHits.
+// Displays RaycastHits.
 int hits = Physics.RaycastNonAlloc(playerRay, playerHits, 100.0f);
 if (hits > 0)
-  playerHits.Draw();
+  playerHits.Draw(playerRay);
 ```
 
 ### Profiling

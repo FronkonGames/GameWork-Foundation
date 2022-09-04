@@ -61,6 +61,8 @@ namespace FronkonGames.GameWork.Foundation
 
     private static readonly Color ConeColor = "#f3ed80".FromHex();
 
+    private static readonly Color BoundsColor = "#f1c59c".FromHex();
+    
     private static readonly Color TextColor = "#f5f5f5".FromHex();
     private const int TextSize = 24;
   }

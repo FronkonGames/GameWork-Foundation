@@ -26,6 +26,14 @@ namespace FronkonGames.GameWork.Foundation
   /// <remarks>Only available in the Editor</remarks>
   public static partial class DebugDraw
   {
+    /// <summary>
+    /// Draw a point with a three-axis cross.
+    /// </summary>
+    /// <remarks>Only available in the Editor</remarks>
+    /// <param name="position">Position</param>
+    /// <param name="size">Cross size</param>
+    /// <param name="color">Color</param>
+    /// <param name="rotation">Rotation</param>
     [Conditional("UNITY_EDITOR")]
     public static void Point(Vector3 position, float size = PointSize, Color? color = null, Quaternion? rotation = null)
     {
@@ -36,6 +44,14 @@ namespace FronkonGames.GameWork.Foundation
       Line(position + Vector3.forward * halfSize, position - Vector3.forward * halfSize, color ?? AxisZ, rotation);
     }
 
+    /// <summary>
+    /// Draw an array of points using three-axis crosshairs.
+    /// </summary>
+    /// <remarks>Only available in the Editor</remarks>
+    /// <param name="points">Point array</param>
+    /// <param name="size">Cross size</param>
+    /// <param name="color">Color</param>
+    /// <param name="rotation">Rotation</param>
     [Conditional("UNITY_EDITOR")]
     public static void Points(Vector3[] points, float size = PointSize, Color? color = null, Quaternion? rotation = null)
     {
@@ -43,6 +59,14 @@ namespace FronkonGames.GameWork.Foundation
         Point(points[i], size, color, rotation);
     }
 
+    /// <summary>
+    /// Draw a solid line.
+    /// </summary>
+    /// <remarks>Only available in the Editor</remarks>
+    /// <param name="a">Start</param>
+    /// <param name="b">End</param>
+    /// <param name="color">Color</param>
+    /// <param name="rotation">Rotation</param>
     [Conditional("UNITY_EDITOR")]
     private static void Line(Vector3 a, Vector3 b, Color? color = null, Quaternion? rotation = null) =>
       DrawHandle(new LineHandle
@@ -53,6 +77,13 @@ namespace FronkonGames.GameWork.Foundation
         solid = true
       });
 
+    /// <summary>
+    /// Draw an array of solid lines.
+    /// </summary>
+    /// <remarks>Only available in the Editor</remarks>
+    /// <param name="lines">Lines array</param>
+    /// <param name="color">Color</param>
+    /// <param name="rotation">Rotation</param>
     [Conditional("UNITY_EDITOR")]
     private static void Lines(Vector3[] lines, Color? color = null, Quaternion? rotation = null)
     {
@@ -60,6 +91,14 @@ namespace FronkonGames.GameWork.Foundation
         Line(lines[i], lines[i + 1], color, rotation);
     }
 
+    /// <summary>
+    /// Draw a dashed line.
+    /// </summary>
+    /// <remarks>Only available in the Editor</remarks>
+    /// <param name="a">Start</param>
+    /// <param name="b">End</param>
+    /// <param name="color">Color</param>
+    /// <param name="rotation">Rotation</param>
     [Conditional("UNITY_EDITOR")]
     public static void DottedLine(Vector3 a, Vector3 b, Color? color = null, Quaternion? rotation = null) =>
       DrawHandle(new LineHandle
@@ -70,6 +109,13 @@ namespace FronkonGames.GameWork.Foundation
         solid = false
       });
 
+    /// <summary>
+    /// Draw an array of dashed lines.
+    /// </summary>
+    /// <remarks>Only available in the Editor</remarks>
+    /// <param name="lines">Lines array</param>
+    /// <param name="color">Color</param>
+    /// <param name="rotation">Rotation</param>
     [Conditional("UNITY_EDITOR")]
     public static void DottedLines(Vector3[] lines, Color? color = null, Quaternion? rotation = null)
     {
@@ -77,10 +123,19 @@ namespace FronkonGames.GameWork.Foundation
         DottedLine(lines[i], lines[i + 1], color, rotation);
     }
 
+    /// <summary>
+    /// Draw a line using an arrow.
+    /// </summary>
+    /// <remarks>Only available in the Editor</remarks>
+    /// <param name="position">Position</param>
+    /// <param name="direction">Direction</param>
+    /// <param name="length">Line length</param>
+    /// <param name="size">Arrow tip size</param>
+    /// <param name="width">Arrow width</param>
+    /// <param name="color">Color</param>
     [Conditional("UNITY_EDITOR")]
-    public static void Arrow(Vector3 position, Quaternion rotation, float length = 1.0f, float size = ArrowTipSize, float width = ArrowWidth, Color? color = null)
+    public static void Arrow(Vector3 position, Vector3 direction, float length = 1.0f, float size = ArrowTipSize, float width = ArrowWidth, Color? color = null)
     {
-      Vector3 direction = rotation * Vector3.forward;
       float sideLen = length - length * size;
       Vector3 widthOffset = Vector3.Cross(direction, Vector3.up) * width;
       Vector3 tip = position + direction * length;
@@ -97,14 +152,50 @@ namespace FronkonGames.GameWork.Foundation
       Line(upCornerInLeft, position, color ?? ArrowColor);
     }
 
+    /// <summary>
+    /// Draw a line using an arrow.
+    /// </summary>
+    /// <remarks>Only available in the Editor</remarks>
+    /// <param name="position">Position</param>
+    /// <param name="rotation">Rotation</param>
+    /// <param name="length">Line length</param>
+    /// <param name="size">Arrow tip size</param>
+    /// <param name="width">Arrow width</param>
+    /// <param name="color">Color</param>
+    [Conditional("UNITY_EDITOR")]
+    public static void Arrow(Vector3 position, Quaternion rotation, float length = 1.0f, float size = ArrowTipSize, float width = ArrowWidth, Color? color = null)
+      => Arrow(position, rotation * Vector3.forward, length, size, width, color);
+
+    /// <summary>
+    /// Draw a line using an arrow.
+    /// </summary>
+    /// <remarks>Only available in the Editor</remarks>
+    /// <param name="position"></param>
+    /// <param name="rotation"></param>
+    /// <param name="color"></param>
     [Conditional("UNITY_EDITOR")]
     public static void Ray(Vector3 position, Quaternion rotation, Color? color = null) =>
       Line(position, (rotation * Vector3.forward) * RayLength, color ?? RayColor);
 
+    /// <summary>
+    /// Draw a ray. 
+    /// </summary>
+    /// <remarks>Only available in the Editor</remarks>
+    /// <param name="position">Position</param>
+    /// <param name="direction">Direction</param>
+    /// <param name="color">Color</param>
     [Conditional("UNITY_EDITOR")]
     public static void Ray(Vector3 position, Vector3 direction, Color? color = null) =>
       Line(position, direction * RayLength, color ?? RayColor);
     
+    /// <summary>
+    /// Draw a wire circle. 
+    /// </summary>
+    /// <remarks>Only available in the Editor</remarks>
+    /// <param name="center">Center</param>
+    /// <param name="radius">Radius</param>
+    /// <param name="color">Color</param>
+    /// <param name="rotation">Rotation</param>
     [Conditional("UNITY_EDITOR")]
     public static void Circle(Vector3 center, float radius, Color? color = null, Quaternion? rotation = null) =>
       DrawHandle(new CircleHandle
@@ -115,6 +206,14 @@ namespace FronkonGames.GameWork.Foundation
         color = color ?? CircleColor
       });
 
+    /// <summary>
+    /// Draw a wire circle.
+    /// </summary>
+    /// <remarks>Only available in the Editor</remarks>
+    /// <param name="center">Center</param>
+    /// <param name="radius">Radius</param>
+    /// <param name="color">Color</param>
+    /// <param name="normal">Normal</param>
     [Conditional("UNITY_EDITOR")]
     public static void Circle(Vector3 center, float radius, Color? color = null, Vector3? normal = null) =>
       DrawHandle(new CircleHandle
@@ -124,7 +223,15 @@ namespace FronkonGames.GameWork.Foundation
         radius = radius,
         color = color ?? CircleColor
       });
-    
+
+    /// <summary>
+    /// Draw a solid circle.
+    /// </summary>
+    /// <remarks>Only available in the Editor</remarks>
+    /// <param name="center">Center</param>
+    /// <param name="radius">Radius</param>
+    /// <param name="color">Color</param>
+    /// <param name="rotation">Rotation</param>
     [Conditional("UNITY_EDITOR")]
     public static void SolidCircle(Vector3 center, float radius, Color? color = null, Quaternion? rotation = null) =>
       DrawHandle(new CircleHandle
@@ -136,6 +243,33 @@ namespace FronkonGames.GameWork.Foundation
         solid = true
       });
 
+    /// <summary>
+    /// Draw a solid circle.
+    /// </summary>
+    /// <remarks>Only available in the Editor</remarks>
+    /// <param name="center">Center</param>
+    /// <param name="radius">Radius</param>
+    /// <param name="color">Color</param>
+    /// <param name="normal">Normal</param>
+    [Conditional("UNITY_EDITOR")]
+    public static void SolidCircle(Vector3 center, float radius, Color? color = null, Vector3? normal = null) =>
+      DrawHandle(new CircleHandle
+      {
+        center = center,
+        normal = normal ?? Vector3.up,
+        radius = radius,
+        color = color ?? CircleColor,
+        solid = true
+      });
+
+    /// <summary>
+    /// Draw a wire sphere formed by three circles.
+    /// </summary>
+    /// <remarks>Only available in the Editor</remarks>
+    /// <param name="center">Center</param>
+    /// <param name="radius">Radius</param>
+    /// <param name="color">Color</param>
+    /// <param name="rotation">Rotation</param>
     [Conditional("UNITY_EDITOR")]
     public static void Sphere(Vector3 center, float radius, Color? color = null, Quaternion? rotation = null)
     {
@@ -144,6 +278,14 @@ namespace FronkonGames.GameWork.Foundation
       Circle(center, radius, color ?? AxisZ, (rotation ?? Quaternion.identity) * Quaternion.Euler(0.0f, 90.0f, 90.0f));
     }
 
+    /// <summary>
+    /// Draw a solid sphere.
+    /// </summary>
+    /// <remarks>Only available in the Editor</remarks>
+    /// <param name="center">Center</param>
+    /// <param name="radius">Radius</param>
+    /// <param name="color">Color</param>
+    /// <param name="rotation">Rotation</param>
     [Conditional("UNITY_EDITOR")]
     public static void SolidSphere(Vector3 center, float radius, Color? color = null, Quaternion? rotation = null) =>
       DrawHandle(new SphereHandle
@@ -154,6 +296,15 @@ namespace FronkonGames.GameWork.Foundation
         rotation = rotation ?? Quaternion.identity
       });
 
+    /// <summary>
+    /// Draw an wire arc centered on the forward vector.
+    /// </summary>
+    /// <remarks>Only available in the Editor</remarks>
+    /// <param name="center">Center</param>
+    /// <param name="rotation">Rotation</param>
+    /// <param name="radius">Radius</param>
+    /// <param name="angle">Angle</param>
+    /// <param name="color">Color</param>
     [Conditional("UNITY_EDITOR")]
     public static void Arc(Vector3 center, Quaternion rotation, float radius, float angle, Color? color = null) =>
       DrawHandle(new ArcHandle
@@ -166,6 +317,15 @@ namespace FronkonGames.GameWork.Foundation
         color = color ?? ArcColor
       });
 
+    /// <summary>
+    /// Draw an solid arc centered on the forward vector.
+    /// </summary>
+    /// <remarks>Only available in the Editor</remarks>
+    /// <param name="center">Center</param>
+    /// <param name="rotation">Rotation</param>
+    /// <param name="radius">Radius</param>
+    /// <param name="angle">Angle</param>
+    /// <param name="color">Color</param>
     [Conditional("UNITY_EDITOR")]
     public static void SolidArc(Vector3 center, Quaternion rotation, float radius, float angle, Color? color = null) =>
       DrawHandle(new ArcHandle
@@ -179,6 +339,13 @@ namespace FronkonGames.GameWork.Foundation
         solid = true
       });
 
+    /// <summary>
+    /// Draw a wire cube.
+    /// </summary>
+    /// <remarks>Only available in the Editor</remarks>
+    /// <param name="center">Center</param>
+    /// <param name="size">Size</param>
+    /// <param name="color">Color</param>
     [Conditional("UNITY_EDITOR")]
     public static void Cube(Vector3 center, Vector3 size, Color? color = null) =>
       DrawHandle(new CubeHandle
@@ -188,10 +355,25 @@ namespace FronkonGames.GameWork.Foundation
         color = color ?? CubeColor
       });
 
+    /// <summary>
+    /// Draw a wire cube.
+    /// </summary>
+    /// <remarks>Only available in the Editor</remarks>
+    /// <param name="center">Center</param>
+    /// <param name="size">Size</param>
+    /// <param name="color">Color</param>
     [Conditional("UNITY_EDITOR")]
     public static void Cube(Vector3 center, float size, Color? color = null) =>
       Cube(center, Vector3.one * size, color ?? CubeColor);
 
+    /// <summary>
+    /// Draw a wire diamond.
+    /// </summary>
+    /// <remarks>Only available in the Editor</remarks>
+    /// <param name="center">Center</param>
+    /// <param name="size">Size</param>
+    /// <param name="color">Color</param>
+    /// <param name="rotation">Rotation</param>
     [Conditional("UNITY_EDITOR")]
     public static void Diamond(Vector3 center, float size = DiamondSize, Color? color = null, Quaternion? rotation = null)
     {
@@ -219,6 +401,14 @@ namespace FronkonGames.GameWork.Foundation
       }, color ?? DiamondColor, rotation);
     }
 
+    /// <summary>
+    /// Draw a wire cone.
+    /// </summary>
+    /// <remarks>Only available in the Editor</remarks>
+    /// <param name="position">Position</param>
+    /// <param name="rotation">Rotation</param>
+    /// <param name="angle">Angle</param>
+    /// <param name="color">Color</param>
     [Conditional("UNITY_EDITOR")]
     public static void Cone(Vector3 position, Quaternion rotation, float angle, Color? color = null)
     {
@@ -247,37 +437,56 @@ namespace FronkonGames.GameWork.Foundation
       Circle(position + forward, (forward - (slerpedVector.normalized * dist)).magnitude, color ?? ConeColor, rotation);
       Circle(position + (forward * 0.5f), ((forward * 0.5f) - (slerpedVector.normalized * (dist * 0.5f))).magnitude, color ?? ConeColor, rotation);      
     }
-    
+
+    /// <summary>
+    /// Draw bounds.
+    /// </summary>
+    /// <remarks>Only available in the Editor</remarks>
+    /// <param name="b">Bounds</param>
+    /// <param name="color">Color</param>
     [Conditional("UNITY_EDITOR")]
-    public static void Bounds(Bounds b, Color? color)
+    public static void Bounds(Bounds b, Color? color = null)
     {
       Vector3 lbf = new Vector3(b.min.x, b.min.y, b.max.z);
       Vector3 ltb = new Vector3(b.min.x, b.max.y, b.min.z);
       Vector3 rbb = new Vector3(b.max.x, b.min.y, b.min.z);
-      Line(b.min, lbf, color);
-      Line(b.min, ltb, color);
-      Line(b.min, rbb, color);
+      Line(b.min, lbf, color ?? BoundsColor);
+      Line(b.min, ltb, color ?? BoundsColor);
+      Line(b.min, rbb, color ?? BoundsColor);
       
       Vector3 rtb = new Vector3(b.max.x, b.max.y, b.min.z);
       Vector3 rbf = new Vector3(b.max.x, b.min.y, b.max.z);
       Vector3 ltf = new Vector3(b.min.x, b.max.y, b.max.z);
-      Line(b.max, rtb, color);
-      Line(b.max, rbf, color);
-      Line(b.max, ltf, color);
+      Line(b.max, rtb, color ?? BoundsColor);
+      Line(b.max, rbf, color ?? BoundsColor);
+      Line(b.max, ltf, color ?? BoundsColor);
 
-      Line(rbb, rbf, color);
-      Line(rbb, rtb, color);
+      Line(rbb, rbf, color ?? BoundsColor);
+      Line(rbb, rtb, color ?? BoundsColor);
 
-      Line(lbf, rbf, color);
-      Line(lbf, ltf, color);
+      Line(lbf, rbf, color ?? BoundsColor);
+      Line(lbf, ltf, color ?? BoundsColor);
 
-      Line(ltb, rtb, color);
-      Line(ltb, ltf, color);
+      Line(ltb, rtb, color ?? BoundsColor);
+      Line(ltb, ltf, color ?? BoundsColor);
     }
-    
+
+    /// <summary>
+    /// Draw bounds.
+    /// </summary>
+    /// <remarks>Only available in the Editor</remarks>
+    /// <param name="b"></param>
+    /// <param name="color"></param>
     [Conditional("UNITY_EDITOR")]
     public static void Bounds(BoundsInt b, Color color) => Bounds(new Bounds(b.center, b.size), color);
 
+    /// <summary>
+    /// Draw text.
+    /// </summary>
+    /// <remarks>Only available in the Editor</remarks>
+    /// <param name="position">Position</param>
+    /// <param name="text">Text</param>
+    /// <param name="color">Color</param>
     [Conditional("UNITY_EDITOR")]
     public static void Text(Vector3 position, string text, Color? color = null) =>
       DrawHandle(new TextHandle
@@ -286,83 +495,5 @@ namespace FronkonGames.GameWork.Foundation
         text = text,
         color = color ?? TextColor
       });
-/*
-    [Conditional("UNITY_EDITOR")]
-    public static void SphereCast(Ray ray, float radius, float distance, Color colorStart, Color colorEnd, int iterationCount = 10)
-      => SphereCast(ray.origin, radius, ray.direction, distance, colorStart, colorEnd, iterationCount);
-
-    [Conditional("UNITY_EDITOR")]
-    public static void SphereCast(Vector3 origin, float radius, Vector3 direction, float distance, Color colorStart, Color colorEnd, int iterationCount = 10)
-    {
-      direction.EnsureNormalized();
-      Vector3 crossA = GetAxisAlignedPerpendicular(direction);
-      Vector3 crossB = Vector3.Cross(crossA, direction);
-      Color color = colorStart;
-      DrawCircleFast(origin, crossA, crossB, radius, DrawLine);
-      DrawCircleFast(origin, crossB, crossA, radius, DrawLine);
-
-      Vector3 scaledDirection = direction * distance;
-      iterationCount += 2; // Caps
-      for (int i = 0; i < iterationCount; ++i)
-      {
-        float t = i / ((float)iterationCount - 1);
-        color = Color.Lerp(colorStart, colorEnd, t);
-        DrawCircleFast(origin + scaledDirection * t, direction, crossA, radius, DrawLine);
-      }
-
-      Vector3 end = origin + scaledDirection;
-      color = colorEnd;
-      DrawCircleFast(end, crossA, crossB, radius, DrawLine);
-      DrawCircleFast(end, crossB, crossA, radius, DrawLine);
-
-      void DrawLine(Vector3 a, Vector3 b, float f) => lineDelegate(a, b, color);
-    }
-
-    [Conditional("UNITY_EDITOR")]
-    public static void SphereCastHits(RaycastHit[] hits, Ray ray, float radius, Color color, int maxCount = -1)
-      => SphereCastHits(hits, ray.origin, radius, ray.direction, color, maxCount);
-
-    [Conditional("UNITY_EDITOR")]
-    public static void SphereCastHits(RaycastHit[] hits, Vector3 origin, float radius, Vector3 direction, Color color, int maxCount = -1)
-    {
-      if (maxCount < 0)
-        maxCount = hits.Length;
-
-      if (maxCount == 0)
-        return;
-
-      direction.EnsureNormalized();
-
-      Vector3 zero = Vector3.zero;
-      for (int i = 0; i < maxCount; ++i)
-      {
-        RaycastHit hit = hits[i];
-
-        if (hit.point == zero)
-        {
-          hit.point = origin;
-          Vector3 crossA = GetAxisAlignedPerpendicular(direction);
-          Vector3 crossB = Vector3.Cross(crossA, direction);
-          DrawCircleFast(origin, crossA, crossB, radius, DrawLineSolid);
-          DrawCircleFast(origin, crossB, crossA, radius, DrawLineSolid);
-          DrawCircleFast(origin, direction, crossA, radius, DrawLineSolid);
-
-          void DrawLineSolid(Vector3 a, Vector3 b, float f) => lineDelegate(a, b, color);
-          continue;
-        }
-
-        Vector3 localDirection = GetAxisAlignedAlternateWhereRequired(hit.normal, direction);
-        Vector3 cross = Vector3.Cross(localDirection, hit.normal);
-
-        Vector3 point = hit.point + hit.normal * radius;
-        DrawCircleFast(point, cross, hit.normal, radius, DrawLine);
-        Vector3 secondCross = Vector3.Cross(cross, hit.normal);
-        DrawCircleFast(point, secondCross, hit.normal, radius, DrawLine);
-      }
-
-      void DrawLine(Vector3 a, Vector3 b, float f) =>
-        lineDelegate(a, b, new Color(color.r, color.g, color.b, Mathf.Pow(1.0f - Mathf.Abs(f - 0.5f) * 2.0f, 2.0f) * color.a));
-    }
-*/
   }
 }

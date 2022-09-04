@@ -56,7 +56,7 @@ namespace FronkonGames.GameWork.Foundation
 
       UnityEditor.SceneView.duringSceneGui += (_) =>
       {
-        using (UnityEditor.Handles.DrawingScope scope = new UnityEditor.Handles.DrawingScope())
+        using (new UnityEditor.Handles.DrawingScope())
         {
           for (int i = 0; i < handles.Count; ++i)
             handles[i].Draw();
