@@ -82,7 +82,7 @@ namespace FronkonGames.GameWork.Foundation
     /// <returns>Value or 0.0f</returns>
     public static float ToFloat(this string self)
     {
-      float.TryParse(self, out float result);
+      float.TryParse(self, NumberStyles.Float, CultureInfo.InvariantCulture, out float result);
 
       return result;
     }
@@ -98,8 +98,8 @@ namespace FronkonGames.GameWork.Foundation
       string[] args = self.Replace("f", string.Empty).Split(',');
       if (args.Length == 2)
       {
-        result.x = args[0].ToFloat();
-        result.y = args[1].ToFloat();
+        float.TryParse(args[0], NumberStyles.Float, CultureInfo.InvariantCulture, out result.x);
+        float.TryParse(args[1], NumberStyles.Float, CultureInfo.InvariantCulture, out result.y);
       }
 
       return result;
@@ -116,9 +116,9 @@ namespace FronkonGames.GameWork.Foundation
       string[] args = self.Replace("f", string.Empty).Split(',');
       if (args.Length == 3)
       {
-        result.x = args[0].ToFloat();
-        result.y = args[1].ToFloat();
-        result.z = args[2].ToFloat();
+        float.TryParse(args[0], NumberStyles.Float, CultureInfo.InvariantCulture, out result.x);
+        float.TryParse(args[1], NumberStyles.Float, CultureInfo.InvariantCulture, out result.y);
+        float.TryParse(args[2], NumberStyles.Float, CultureInfo.InvariantCulture, out result.z);
       }
 
       return result;
@@ -135,12 +135,12 @@ namespace FronkonGames.GameWork.Foundation
       self = self.Replace("#", "");  // #FFFFFF?
       
       byte a = 255;
-      byte r = byte.Parse(self.Substring(0, 2), NumberStyles.HexNumber);
-      byte g = byte.Parse(self.Substring(2, 2), NumberStyles.HexNumber);
-      byte b = byte.Parse(self.Substring(4, 2), NumberStyles.HexNumber);
+      byte r = byte.Parse(self.Substring(0, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture);
+      byte g = byte.Parse(self.Substring(2, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture);
+      byte b = byte.Parse(self.Substring(4, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture);
       
       if (self.Length == 8)
-        a = byte.Parse(self.Substring(6, 2), NumberStyles.HexNumber);
+        a = byte.Parse(self.Substring(6, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture);
 
       return new Color32(r, g, b, a);
     }

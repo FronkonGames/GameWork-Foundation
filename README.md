@@ -243,7 +243,7 @@ Take a look at the [Check class folder](https://github.com/FronkonGames/GameWork
 
 Visualize in the Editor Scene window the useful information of your game, in a simple way and without affecting the final performance of the game.
 
-<p align="center"><img src="Media/DebugDraw.png"/></p>
+<p align="center"><img src="Media/debug.draw.png"/></p>
 
 ```c#
 // Displays an array of points.
@@ -260,6 +260,17 @@ int hits = Physics.RaycastNonAlloc(playerRay, playerHits, 100.0f);
 if (hits > 0)
   playerHits.Draw(playerRay);
 ```
+
+### Development Console
+
+A developer console for executing commands.
+
+<p align="center"><img src="Media/development.console.gif"/></p>
+
+Simply add a GameObject with the [DevelopmentConsole](https://github.com/FronkonGames/GameWork-Foundation/tree/main/Runtime/Development/Console/DevelopmentConsole.cs) component and assign the commands you want to use to it.
+
+Commands are ScriptableObjects that you can create from [DevelopmentCommand](https://github.com/FronkonGames/GameWork-Foundation/tree/main/Runtime/Development/Console/DevelopmentCommand.cs).
+See the commands included in [this folder](https://github.com/FronkonGames/GameWork-Foundation/tree/main/Runtime/Development/Console/Commands/).
 
 ### Profiling
 
