@@ -71,6 +71,7 @@ The functionality is divided into folders, this is its structure:
 |   |\_Attributes.................. Attributes for fields and class properties.
 |   |\_Development................. Developer utilities.
 |   |   |\_Check................... Assert extension.
+|   |   |\_Console................. Development console.
 |   |   |\_Draw.................... Utilities for drawing gameplay information.
 |   |    \_Profiling............... To find bottlenecks.
 |   |\_Extensions.................. Utility extensions.
@@ -271,6 +272,29 @@ Simply add a GameObject with the [DevelopmentConsole](https://github.com/Fronkon
 
 Commands are ScriptableObjects that you can create from [DevelopmentCommand](https://github.com/FronkonGames/GameWork-Foundation/tree/main/Runtime/Development/Console/DevelopmentCommand.cs).
 See the commands included in [this folder](https://github.com/FronkonGames/GameWork-Foundation/tree/main/Runtime/Development/Console/Commands/).
+
+```c#
+/// <summary>
+/// Quit application.
+/// </summary>
+[CreateAssetMenu(fileName = "Quit", menuName = "Game:Work/Development/Command/Quit")]
+public class QuitCommand : DevelopmentCommand
+{
+    public QuitCommand()
+    {
+      Id = "quit";
+      Usage = "quit";
+      Description = "Quit application.";
+    }
+
+    public override bool Execute(string[] args)
+    {
+        Application.Quit();
+    
+        return true;
+    }
+}
+```
 
 ### Profiling
 
