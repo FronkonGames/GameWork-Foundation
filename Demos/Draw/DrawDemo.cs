@@ -37,7 +37,6 @@ public sealed class DrawDemo : MonoBehaviour
 
   private const int MaxHits = 10;
   private Ray playerRay;
-  private RaycastHit[] playerHits;
 
   private void OnEnable()
   {
@@ -89,7 +88,7 @@ public sealed class DrawDemo : MonoBehaviour
     playerRay.origin = player.transform.position + new Vector3(0.0f, 0.5f, 0.0f);
     playerRay.direction = player.transform.forward;
 
-    playerHits = new RaycastHit[MaxHits];
+    RaycastHit[] playerHits = new RaycastHit[MaxHits];
     int hits = Physics.RaycastNonAlloc(playerRay, playerHits, 100.0f);
     if (hits > 0)
       playerRay.Draw(playerHits);

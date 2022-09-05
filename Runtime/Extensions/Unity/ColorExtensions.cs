@@ -23,13 +23,37 @@ namespace FronkonGames.GameWork.Foundation
   /// </summary>
   public static class ColorExtensions
   {
-    public static Color SetR(this Color self, float r) => new Color(r, self.g, self.b, self.a);
+    /// <summary>
+    /// Color with the R component changed.
+    /// </summary>
+    /// <param name="self">Color</param>
+    /// <param name="r">component</param>
+    /// <returns>Color</returns>
+    public static Color SetR(this Color self, float r) => new(r, self.g, self.b, self.a);
 
-    public static Color SetG(this Color self, float g) => new Color(self.r, g, self.b, self.a);
+    /// <summary>
+    /// Color with the G component changed.
+    /// </summary>
+    /// <param name="self">Color</param>
+    /// <param name="r">component</param>
+    /// <returns>Color</returns>
+    public static Color SetG(this Color self, float g) => new(self.r, g, self.b, self.a);
 
-    public static Color SetB(this Color self, float b) => new Color(self.r, self.g, b, self.a);
+    /// <summary>
+    /// Color with the B component changed.
+    /// </summary>
+    /// <param name="self">Color</param>
+    /// <param name="r">component</param>
+    /// <returns>Color</returns>
+    public static Color SetB(this Color self, float b) => new(self.r, self.g, b, self.a);
 
-    public static Color SetA(this Color self, float a) => new Color(self.r, self.g, self.b, a);
+    /// <summary>
+    /// Color with the A component changed.
+    /// </summary>
+    /// <param name="self">Color</param>
+    /// <param name="r">component</param>
+    /// <returns>Color</returns>
+    public static Color SetA(this Color self, float a) => new(self.r, self.g, self.b, a);
 
     /// <summary>
     /// From hex string.
@@ -107,14 +131,14 @@ namespace FronkonGames.GameWork.Foundation
     /// </summary>
     /// <param name="self">Value</param>
     /// <returns>New opaque color.</returns>
-    public static Color Opaque(this Color self) => new Color(self.r, self.g, self.b);
+    public static Color Opaque(this Color self) => new(self.r, self.g, self.b);
 
     /// <summary>
     /// Inverted color.
     /// </summary>
     /// <param name="self">Value</param>
     /// <returns>New inverted color.</returns>
-    public static Color Invert(this Color self) => new Color(1.0f - self.r, 1.0f - self.g, 1.0f - self.b, self.a);
+    public static Color Invert(this Color self) => new(1.0f - self.r, 1.0f - self.g, 1.0f - self.b, self.a);
 
     /// <summary>
     /// Same color, different alpha.
@@ -122,7 +146,7 @@ namespace FronkonGames.GameWork.Foundation
     /// <param name="self">Value</param>
     /// <param name="alpha">Alpha</param>
     /// <returns>New color.</returns>
-    public static Color WithAlpha(this Color self, float alpha) => new Color(self.r, self.g, self.b, alpha);
+    public static Color WithAlpha(this Color self, float alpha) => new(self.r, self.g, self.b, alpha);
 
     /// <summary>
     /// Random color.

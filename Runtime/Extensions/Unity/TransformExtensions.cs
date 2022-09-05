@@ -67,7 +67,7 @@ namespace FronkonGames.GameWork.Foundation
     public static void DestroyChildren(this Transform self)
     {
       while (self.childCount > 0)
-        UnityEngine.Object.Destroy(self.GetChild(0));
+        Object.Destroy(self.GetChild(0));
     }
 
     /// <summary>
@@ -77,7 +77,7 @@ namespace FronkonGames.GameWork.Foundation
     public static void DestroyChildrenImmediate(this Transform self)
     {
       while (self.childCount > 0)
-        UnityEngine.Object.DestroyImmediate(self.GetChild(0));
+        Object.DestroyImmediate(self.GetChild(0));
     }
 
     /// <summary>
@@ -99,7 +99,7 @@ namespace FronkonGames.GameWork.Foundation
     /// <returns>List with children.</returns>
     public static List<Transform> GetChildren(this Transform self)
     {
-      List<Transform> children = new List<Transform>();
+      List<Transform> children = new();
 
       for (var i = 0; i < self.childCount; ++i)
         children.Add(self.GetChild(i));

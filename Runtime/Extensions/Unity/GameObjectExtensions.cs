@@ -25,11 +25,10 @@ namespace FronkonGames.GameWork.Foundation
   public static class GameObjectExtension
   {
     /// <summary>
-    /// 
+    /// Returns a component of a GameObject. If it does not exist, it adds it.
     /// </summary>
-    /// <param name="self"></param>
-    /// <typeparam name="T"></typeparam>
-    /// <returns></returns>
+    /// <param name="self">Component</param>
+    /// <returns>Component</returns>
     static public T GetOrAddComponent<T>(this Component self) where T : Component
     {
       T result = self.GetComponent<T>();
@@ -40,19 +39,17 @@ namespace FronkonGames.GameWork.Foundation
     }
 
     /// <summary>
-    /// 
+    /// Returns a component of a GameObject. If it does not exist, it adds it.
     /// </summary>
-    /// <param name="self"></param>
-    /// <typeparam name="T"></typeparam>
-    /// <returns></returns>
+    /// <param name="self">GameObject</param>
+    /// <returns>Component</returns>
     static public T GetOrAddComponent<T>(this GameObject self) where T : Component => GetOrAddComponent<T>(self.transform);
 
     /// <summary>
-    /// 
+    /// Returns a component of the parent of a GameObject, ignoring itself.
     /// </summary>
-    /// <param name="self"></param>
-    /// <typeparam name="T"></typeparam>
-    /// <returns></returns>
+    /// <param name="self">GameObject</param>
+    /// <returns>Component</returns>
     public static T GetComponentInParentIgnoreSelf<T>(this GameObject self) => self.transform.parent.GetComponentInParent<T>();
 
     /// <summary>
@@ -90,11 +87,11 @@ namespace FronkonGames.GameWork.Foundation
     }
 
     /// <summary>
-    /// 
+    /// Changes all the materials of a GameObject.
     /// </summary>
-    /// <param name="go"></param>
-    /// <param name="newMat"></param>
-    public static void ChangeMaterial(this GameObject go, Material newMat)
+    /// <param name="go">GameObject</param>
+    /// <param name="newMaterial">Material</param>
+    public static void ChangeMaterial(this GameObject go, Material newMaterial)
     {
       Renderer[] children = go.GetComponentsInChildren<Renderer>(true);
       for (int i = 0; i < children.Length; ++i)
@@ -103,54 +100,66 @@ namespace FronkonGames.GameWork.Foundation
 
         Material[] mats = new Material[rend.materials.Length];
         for (int j = 0; j < rend.materials.Length; j++)
-          mats[j] = newMat;
+          mats[j] = newMaterial;
 
         rend.materials = mats;
       }
     }
 
     /// <summary>
-    /// 
+    /// Destroy all children.
     /// </summary>
-    /// <param name="self"></param>
-    public static void DestroyAllChildrens(this Transform self)
+    /// <param name="self">Transform</param>
+    public static void DestroyAllChildren(this Transform self)
     {
       for (var i = self.childCount - 1; i > -1; i--)
         SafeDestroy(self.GetChild(i).gameObject);
     }
 
     /// <summary>
-    /// 
+    /// Destroy Object.
     /// </summary>
-    /// <param name="obj"></param>
-    /// <typeparam name="T"></typeparam>
-    public static void SafeDestroy<T>(T obj) where T : UnityEngine.Object
+    /// <param name="self">Object</param>
+    public static void SafeDestroy<T>(this T self) where T : Object
     {
 #if UNITY_EDITOR
       if (Application.isEditor == true)
-        UnityEngine.Object.DestroyImmediate(obj);
+        Object.DestroyImmediate(self);
       else
 #endif
-      UnityEngine.Object.Destroy(obj);
+      Object.Destroy(self);
     }
 
     /// <summary>
-    /// 
+    /// Destroy GameObject.
     /// </summary>
-    /// <param name="component"></param>
-    /// <typeparam name="T"></typeparam>
-    public static void SafeDestroyComponent<T>(T component) where T : Component
+    /// <param name="self">Object</param>
+    public static void SafeDestroy(this GameObject self)
     {
-      if (component != null)
-        SafeDestroy(component.gameObject);
+#if UNITY_EDITOR
+      if (Application.isEditor == true)
+        Object.DestroyImmediate(self);
+      else
+#endif
+        Object.Destroy(self);
+    }
+    
+    /// <summary>
+    /// Destroy component.
+    /// </summary>
+    /// <param name="self">Component</param>
+    public static void SafeDestroyComponent<T>(this T self) where T : Component
+    {
+      if (self != null)
+        SafeDestroy(self.gameObject);
     }
 
     /// <summary>
-    /// .
+    /// Returns the first child GameObject with a name, or null.
     /// </summary>
-    /// <param name="name"></param>
-    /// <returns></returns>
-    public static GameObject FindAllByName(string name)
+    /// <param name="name">Name</param>
+    /// <returns>GameObject or null</returns>
+    public static GameObject FindChildrenByName(string name)
     {
       GameObject[] allObjects = Resources.FindObjectsOfTypeAll<GameObject>();
       for (int i = 0; i < allObjects.Length; ++i)

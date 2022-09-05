@@ -24,19 +24,19 @@ namespace FronkonGames.GameWork.Foundation
   public static class LayerMaskExtensions
   {
     /// <summary>
-    /// 
+    /// GameObject in the layer?
     /// </summary>
-    /// <param name="self"></param>
-    /// <param name="other"></param>
-    /// <returns></returns>
+    /// <param name="self">LayerMask</param>
+    /// <param name="other">GameObject</param>
+    /// <returns>True/false</returns>
     public static bool CheckLayermask(this LayerMask self, GameObject other) => CheckLayermask(self, other.layer);
 
     /// <summary>
-    /// 
+    /// In the layer?
     /// </summary>
-    /// <param name="self"></param>
-    /// <param name="layer"></param>
-    /// <returns></returns>
+    /// <param name="self">LayerMask</param>
+    /// <param name="layer">Value</param>
+    /// <returns>True/false</returns>
     public static bool CheckLayermask(this LayerMask self, int layer) => ((1 << layer) & self) != 0;
   }
 }

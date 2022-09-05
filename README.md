@@ -242,7 +242,7 @@ Take a look at the [Check class folder](https://github.com/FronkonGames/GameWork
 
 ### Draw
 
-Visualize in the Editor Scene window the useful information of your game, in a simple way and without affecting the final performance of the game.
+Visualize in the Editor Scene window useful information of your game, in a simple way and without affecting the final performance of the game.
 
 <p align="center"><img src="Media/debug.draw.png"/></p>
 

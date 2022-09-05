@@ -23,8 +23,8 @@ namespace FronkonGames.GameWork.Foundation
   /// </summary>
   public class CommandInvoker
   {
-    private readonly Stack<ICommand> undo = new Stack<ICommand>();
-    private readonly Stack<ICommand> redo = new Stack<ICommand>();
+    private readonly Stack<ICommand> undo = new();
+    private readonly Stack<ICommand> redo = new();
 
     /// <summary>
     /// Execute a command and add it to the undo redo stack if success.

@@ -19,7 +19,7 @@ using UnityEngine;
 namespace FronkonGames.GameWork.Foundation
 {
   /// <summary>
-  /// Close console.
+  /// GameObject commands.
   /// </summary>
   [CreateAssetMenu(fileName = "GameObject", menuName = "Game:Work/Development/Command/GameObject")]
   public class GameObjectCommand : DevelopmentCommand
@@ -54,7 +54,7 @@ namespace FronkonGames.GameWork.Foundation
 #if UNITY_EDITOR
                 DestroyImmediate(gameObject, true);
 #else
-                Destroy(gameObjectsToDestroy[i]);
+                Destroy(gameObject);
 #endif
               return true;
 
@@ -86,6 +86,10 @@ namespace FronkonGames.GameWork.Foundation
 
                 return true;
               }
+              break;
+            
+            default:
+              Log.Warning($"'{command}' unrecognized.");
               break;
           }
         }

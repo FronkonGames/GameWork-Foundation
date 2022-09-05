@@ -23,7 +23,7 @@ namespace FronkonGames.GameWork.Foundation
   /// </summary>
   public abstract class Publisher
   {
-    private readonly List<IObserver> observers = new List<IObserver>();
+    private readonly List<IObserver> observers = new();
 
     public void Notify()
     {
@@ -45,7 +45,7 @@ namespace FronkonGames.GameWork.Foundation
   /// </summary>
   public abstract class Publisher<T>
   {
-    private readonly List<IObserver<T>> observers = new List<IObserver<T>>();
+    private readonly List<IObserver<T>> observers = new();
 
     public void Notify(T value)
     {
@@ -67,7 +67,7 @@ namespace FronkonGames.GameWork.Foundation
   /// </summary>
   public abstract class Publisher<T0, T1>
   {
-    private readonly List<IObserver<T0, T1>> observers = new List<IObserver<T0, T1>>();
+    private readonly List<IObserver<T0, T1>> observers = new();
 
     public void Notify(T0 value0, T1 value1)
     {
@@ -89,7 +89,7 @@ namespace FronkonGames.GameWork.Foundation
   /// </summary>
   public abstract class Publisher<T0, T1, T2>
   {
-    private readonly List<IObserver<T0, T1, T2>> observers = new List<IObserver<T0, T1, T2>>();
+    private readonly List<IObserver<T0, T1, T2>> observers = new();
 
     public void Notify(T0 value0, T1 value1, T2 value2)
     {

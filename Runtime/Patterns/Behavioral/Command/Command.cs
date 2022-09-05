@@ -123,13 +123,13 @@ namespace FronkonGames.GameWork.Foundation
     }
 
     /// <summary>
-    /// Execute the comnand.
+    /// Execute the command.
     /// </summary>
     /// <returns>True if the execution was successful.</returns>
     public bool OnExecute() => Receiver.DoAction(Value0, Value1);
 
     /// <summary>
-    /// Undoe the changes of OnExecute.
+    /// Undo the changes of OnExecute.
     /// </summary>
     public void OnUndo() => Receiver.UndoAction();
   }
@@ -181,13 +181,13 @@ namespace FronkonGames.GameWork.Foundation
     }
 
     /// <summary>
-    /// Execute the comnand.
+    /// Execute the command.
     /// </summary>
     /// <returns>True if the execution was successful.</returns>
     public bool OnExecute() => Receiver.DoAction(Value0, Value1, Value2);
 
     /// <summary>
-    /// Undoe the changes of OnExecute.
+    /// Undo the changes of OnExecute.
     /// </summary>
     public void OnUndo() => Receiver.UndoAction();
   }

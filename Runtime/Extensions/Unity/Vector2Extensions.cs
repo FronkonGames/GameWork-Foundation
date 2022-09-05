@@ -28,14 +28,14 @@ namespace FronkonGames.GameWork.Foundation
     /// </summary>
     /// <param name="self">Value.</param>
     /// <returns>A new vector of the absolute value.</returns>
-    public static Vector2 Abs(this Vector2 self) => new Vector2(Mathf.Abs(self.x), Mathf.Abs(self.y));
+    public static Vector2 Abs(this Vector2 self) => new(Mathf.Abs(self.x), Mathf.Abs(self.y));
 
     /// <summary>
     /// Rounds the vector up to the nearest whole number.
     /// </summary>
     /// <param name="value">The vector to Value.</param>
     /// <returns>A new rounded vector.</returns>
-    public static Vector2 Ceil(this Vector2 value) => new Vector2(Mathf.Ceil(value.x), Mathf.Ceil(value.y));
+    public static Vector2 Ceil(this Vector2 value) => new(Mathf.Ceil(value.x), Mathf.Ceil(value.y));
 
     /// <summary>
     /// Clamps the vector to the range [min..max].
@@ -44,21 +44,21 @@ namespace FronkonGames.GameWork.Foundation
     /// <param name="min">The minimum value.</param>
     /// <param name="max">The maximum value.</param>
     /// <returns>A new clamped vector.</returns>
-    public static Vector2 Clamp(this Vector2 self, Vector2 min, Vector2 max) => new Vector2(Mathf.Clamp(self.x, min.x, max.x), Mathf.Clamp(self.y, min.y, max.y));
+    public static Vector2 Clamp(this Vector2 self, Vector2 min, Vector2 max) => new(Mathf.Clamp(self.x, min.x, max.x), Mathf.Clamp(self.y, min.y, max.y));
 
     /// <summary>
     /// Clamps the vector to the range [0..1].
     /// </summary>
     /// <param name="self">Value.</param>
     /// <returns>A new clamped vector.</returns>
-    public static Vector2 Clamp01(this Vector2 self) => new Vector2(Mathf.Clamp01(self.x), Mathf.Clamp01(self.y));
+    public static Vector2 Clamp01(this Vector2 self) => new(Mathf.Clamp01(self.x), Mathf.Clamp01(self.y));
 
     /// <summary>
     /// Rounds the vector down to the nearest whole number.
     /// </summary>
     /// <param name="self">Value.</param>
     /// <returns>A new rounded vector.</returns>
-    public static Vector2 Floor(this Vector2 self) => new Vector2(Mathf.Floor(self.x), Mathf.Floor(self.y));
+    public static Vector2 Floor(this Vector2 self) => new(Mathf.Floor(self.x), Mathf.Floor(self.y));
 
     /// <summary>
     /// Checks for equality with another vector given a margin of error specified by an epsilon.
@@ -73,6 +73,6 @@ namespace FronkonGames.GameWork.Foundation
     /// </summary>
     /// <param name="self">Value.</param>
     /// <returns>A new rounded vector.</returns>
-    public static Vector2 Rounded(this Vector2 self) => new Vector2(Mathf.Round(self.x), Mathf.Round(self.y));
+    public static Vector2 Rounded(this Vector2 self) => new(Mathf.Round(self.x), Mathf.Round(self.y));
   }
 }

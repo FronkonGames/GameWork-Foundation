@@ -22,7 +22,7 @@ namespace FronkonGames.GameWork.Foundation
   /// <summary>
   /// Development Console.
   /// </summary>
-  public class DevelopmentConsole : MonoBehaviour
+  public class DevelopmentConsole : BaseMonoBehaviour
   {
     /// <summary>
     /// Show console.
@@ -142,7 +142,7 @@ namespace FronkonGames.GameWork.Foundation
         history.Add(input);
         historyPointer = 0;
 
-        string[] parts = input.Trim().ToLower().Split(' ');
+        string[] parts = input.Trim().ToLowerInvariant().Split(' ');
         if (parts.Length > 0)
         {
           string id = parts[0];

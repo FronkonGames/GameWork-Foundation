@@ -34,6 +34,4 @@ namespace FronkonGames.GameWork.Foundation
 
     public FolderAttribute(bool relativeToProject = true) => this.relativeToProject = relativeToProject;
   }
-  
-  public class OpenLocalFolderAttribute : PropertyAttribute { }
 }

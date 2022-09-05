@@ -108,7 +108,7 @@ namespace FronkonGames.GameWork.Foundation
 
       T max = self[0];
       int total = self.Count;
-      for (int i = 1; i < self.Count; ++i)
+      for (int i = 1; i < total; ++i)
       {
         T element = self[i];
         if (element.CompareTo(max) > 0)
@@ -131,7 +131,7 @@ namespace FronkonGames.GameWork.Foundation
 
       T min = self[0];
       int total = self.Count;
-      for (int i = 1; i < self.Count; ++i)
+      for (int i = 1; i < total; ++i)
       {
         T element = self[i];
         if (element.CompareTo(min) < 0)

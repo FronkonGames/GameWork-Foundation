@@ -14,6 +14,7 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+using System;
 using UnityEngine;
 
 namespace FronkonGames.GameWork.Foundation
@@ -23,58 +24,76 @@ namespace FronkonGames.GameWork.Foundation
   /// </summary>
   public abstract class BaseMonoBehaviour : MonoBehaviour
   {
-    /// <summary>Transform cached.</summary>
+    /// <summary>
+    /// Transform cached.
+    /// </summary>
     public new Transform transform      => cachedTransform ?? (cachedTransform = base.transform);
 
-    /// <summary>Animation cached.</summary>
-    public new Animation animation      => chachedAnimation ?? (chachedAnimation = this.GetComponent<Animation>());
+    /// <summary>
+    /// Animation cached.
+    /// </summary>
+    public new Animation animation      => cachedAnimation ?? (cachedAnimation = this.GetComponent<Animation>());
 
-    /// <summary>AudioSource cached.</summary>
+    /// <summary>
+    /// AudioSource cached.
+    /// </summary>
     public new AudioSource audio        => cachedAudio ?? (cachedAudio = this.GetComponent<AudioSource>());
 
-    /// <summary>Collider cached.</summary>
+    /// <summary>
+    /// Collider cached.
+    /// </summary>
     public new Collider collider        => cachedCollider ?? (cachedCollider = this.GetComponent<Collider>());
 
-    /// <summary>RigidBody cached.</summary>
+    /// <summary>
+    /// RigidBody cached.
+    /// </summary>
     public new Rigidbody rigidbody      => cachedRigidbody ?? (cachedRigidbody = this.GetComponent<Rigidbody>());
 
-    /// <summary>Animator cached.</summary>
+    /// <summary>
+    /// Animator cached.
+    /// </summary>
     public Animator animator            => cachedAnimator ?? (cachedAnimator = this.GetComponent<Animator>());
 
-    /// <summary>Collider2D cached.</summary>
+    /// <summary>
+    /// Collider2D cached.
+    /// </summary>
     public new Collider2D collider2D    => cachedCollider2D ?? (cachedCollider2D = this.GetComponent<Collider2D>());
 
-    /// <summary>Rigidbody2D cached.</summary>
+    /// <summary>
+    /// Rigidbody2D cached.
+    /// </summary>
     public new Rigidbody2D rigidbody2D  => cachedRigidbody2D ?? (cachedRigidbody2D = this.GetComponent<Rigidbody2D>());
 
-    /// <summary>RectTransform cached.</summary>
+    /// <summary>
+    /// RectTransform cached
+    /// .</summary>
     public RectTransform rectTransform  => cachedRectTransform ?? (cachedRectTransform = this.GetComponent<RectTransform>());
 
-    [HideInInspector, System.NonSerialized]
+    [NonSerialized]
     private Transform cachedTransform;
 
-    [HideInInspector, System.NonSerialized]
-    private Animation chachedAnimation;
+    [NonSerialized]
+    private Animation cachedAnimation;
 
-    [HideInInspector, System.NonSerialized]
+    [NonSerialized]
     private AudioSource cachedAudio;
 
-    [HideInInspector, System.NonSerialized]
+    [NonSerialized]
     private Animator cachedAnimator;
 
-    [HideInInspector, System.NonSerialized]
+    [NonSerialized]
     private Collider cachedCollider;
 
-    [HideInInspector, System.NonSerialized]
+    [NonSerialized]
     private Rigidbody cachedRigidbody;
 
-    [HideInInspector, System.NonSerialized]
+    [NonSerialized]
     private Collider2D cachedCollider2D;
 
-    [HideInInspector, System.NonSerialized]
+    [NonSerialized]
     private Rigidbody2D cachedRigidbody2D;
 
-    [HideInInspector, System.NonSerialized]
+    [NonSerialized]
     private RectTransform cachedRectTransform;
 
     /// <summary>
@@ -83,7 +102,7 @@ namespace FronkonGames.GameWork.Foundation
     public void ClearCachedComponents()
     {
       cachedTransform = null;
-      chachedAnimation = null;
+      cachedAnimation = null;
       cachedAudio = null;
       cachedAnimator = null;
       cachedCollider = null;

@@ -15,6 +15,7 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 using System.Collections.Generic;
+using FronkonGames.GameWork.Foundation;
 using UnityEngine;
 
 namespace FronkonGames.GameWork.Core
@@ -22,7 +23,7 @@ namespace FronkonGames.GameWork.Core
   /// <summary>
   /// Calculate FPS.
   /// </summary>
-  public sealed class CalculateFPS : MonoBehaviour
+  public sealed class CalculateFPS : BaseMonoBehaviour
   {
     /// <summary>
     /// Last FPS.

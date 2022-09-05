@@ -14,8 +14,6 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-using System;
-
 namespace FronkonGames.GameWork.Foundation
 {
   /// <summary>
@@ -24,11 +22,11 @@ namespace FronkonGames.GameWork.Foundation
   public static class Profiling
   {
     /// <summary>
-    /// 
+    /// It measures the elapsed time.
     /// </summary>
-    /// <param name="title"></param>
-    /// <returns></returns>
-    static public TimeBlock Time(string title) =>
+    /// <param name="title">Label</param>
+    /// <returns>TimeBlock</returns>
+    public static TimeBlock Time(string title) =>
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
       new TimeBlock(title);
 #else
@@ -36,11 +34,11 @@ namespace FronkonGames.GameWork.Foundation
 #endif
 
     /// <summary>
-    /// 
+    /// It measures the memory consumed.
     /// </summary>
-    /// <param name="title"></param>
-    /// <returns></returns>
-    static public MemoryBlock Memory(string title) =>
+    /// <param name="title">Label</param>
+    /// <returns>MemoryBlock</returns>
+    public static MemoryBlock Memory(string title) =>
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
       new MemoryBlock(title);
 #else

@@ -27,7 +27,7 @@ namespace FronkonGames.GameWork.Foundation
     /// <summary>Instance.</summary>
     public static T Instance => instance.Value;
 
-    private static readonly Lazy<T> instance = new Lazy<T>(() => new T());
+    private static readonly Lazy<T> instance = new(() => new T());
 
     private Singleton() { }
   }

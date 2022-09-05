@@ -153,6 +153,8 @@ namespace FronkonGames.GameWork.Foundation
           GUI.Label(screenPos, guiContent, TextStyle);
           UnityEditor.Handles.EndGUI();
         }
+#else
+        throw new NotSupportedException();
 #endif
       }
     }    

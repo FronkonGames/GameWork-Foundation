@@ -23,13 +23,13 @@ namespace FronkonGames.GameWork.Foundation
   public interface ICommand
   {
     /// <summary>
-    /// Execute the comnand.
+    /// Execute the command.
     /// </summary>
     /// <returns>True if the execution was successful.</returns>
     bool OnExecute();
 
     /// <summary>
-    /// Undoe the changes of OnExecute.
+    /// Undo the changes of OnExecute.
     /// </summary>
     void OnUndo();
   }
