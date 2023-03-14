@@ -19,9 +19,7 @@ using UnityEditor;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary>
-  /// .
-  /// </summary>
+  /// <summary> Label drawer. </summary>
   [CustomPropertyDrawer(typeof(LabelAttribute), true)]
   public sealed class LabelPropertyDrawer : PropertyDrawer
   {

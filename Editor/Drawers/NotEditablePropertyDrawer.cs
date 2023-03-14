@@ -20,9 +20,7 @@ using FronkonGames.GameWork.Foundation;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary>
-  /// .
-  /// </summary>
+  /// <summary> Not Editable drawer. </summary>
   [CustomPropertyDrawer(typeof(NotEditableAttribute), true)]
   public sealed class NotEditablePropertyDrawer : PropertyDrawer
   {

@@ -19,9 +19,7 @@ using UnityEngine;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary>
-  /// Generic lazy MonoBehaviour singleton thread-safe.
-  /// </summary>
+  /// <summary> Generic lazy MonoBehaviour singleton thread-safe. </summary>
   /// <typeparam name="T">Singleton type</typeparam>
   public abstract class MonoBehaviourSingleton<T> : BaseMonoBehaviour where T : BaseMonoBehaviour
   {

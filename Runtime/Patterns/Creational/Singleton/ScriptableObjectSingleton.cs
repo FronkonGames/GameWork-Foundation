@@ -19,9 +19,7 @@ using UnityEngine;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary>
-  /// Generic lazy ScriptableObject singleton thread-safe.
-  /// </summary>
+  /// <summary> Generic lazy ScriptableObject singleton thread-safe. </summary>
   /// <remarks>
   /// The scriptable object must be placed in the Resources folder, and must have the same name as its type.
   /// </remarks>

@@ -19,9 +19,7 @@ using UnityEditor;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary>
-  /// .
-  /// </summary>
+  /// <summary> Indent drawer. </summary>
   [CustomPropertyDrawer(typeof(IndentAttribute), true)]
   public sealed class IndentPropertyDrawer : PropertyDrawer
   {

@@ -21,9 +21,7 @@ using FronkonGames.GameWork.Foundation;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary>
-  /// .
-  /// </summary>
+  /// <summary> Folder button drawer. </summary>
   [CustomPropertyDrawer(typeof(FolderAttribute), true)]
   public sealed class FolderPropertyDrawer : PropertyDrawer
   {

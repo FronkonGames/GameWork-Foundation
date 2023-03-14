@@ -18,9 +18,7 @@ using UnityEngine;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary>
-  /// Quit application.
-  /// </summary>
+  /// <summary> Quit application. </summary>
   [CreateAssetMenu(fileName = "Quit", menuName = "Game:Work/Development/Command/Quit")]
   public class QuitCommand : DevelopmentCommand
   {
@@ -31,6 +29,7 @@ namespace FronkonGames.GameWork.Foundation
       Description = "Quit application.";
     }
 
+    /// <inheritdoc/>
     public override bool Execute(string[] args)
     {
 #if UNITY_EDITOR

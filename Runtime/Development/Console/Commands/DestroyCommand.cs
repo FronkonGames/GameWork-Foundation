@@ -19,9 +19,7 @@ using UnityEngine;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary>
-  /// Destroy objects.
-  /// </summary>
+  /// <summary> Destroy objects. </summary>
   [CreateAssetMenu(fileName = "Destroy", menuName = "Game:Work/Development/Command/Destroy")]
   public class DestroyCommand : DevelopmentCommand
   {
@@ -32,6 +30,7 @@ namespace FronkonGames.GameWork.Foundation
       Description = "Destroy GameObject.";
     }
 
+    /// <inheritdoc/>
     public override bool Execute(string[] args)
     {
       if (args.Length == 1)

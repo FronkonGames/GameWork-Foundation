@@ -18,9 +18,7 @@ using UnityEngine;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary>
-  /// Create primitives.
-  /// </summary>
+  /// <summary> Create primitives. </summary>
   [CreateAssetMenu(fileName = "Primitive", menuName = "Game:Work/Development/Command/Primitive")]
   public class PrimitiveCommand : DevelopmentCommand
   {
@@ -31,6 +29,7 @@ namespace FronkonGames.GameWork.Foundation
       Description = "Create primitive objects.";
     }
 
+    /// <inheritdoc/>
     public override bool Execute(string[] args)
     {
       GameObject gameObject = null;

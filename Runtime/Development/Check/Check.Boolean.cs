@@ -19,14 +19,10 @@ using System.Runtime.CompilerServices;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary>
-  /// Checks values and throws an exception if the condition is not met.
-  /// </summary>
+  /// <summary> Checks values and throws an exception if the condition is not met. </summary>
   public static partial class Check
   {
-    /// <summary>
-    /// Check that the value is true. Throws an exception if it fails.
-    /// </summary>
+    /// <summary> Check that the value is true. Throws an exception if it fails. </summary>
     /// <param name="value">Value</param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
     [DebuggerStepThrough, Conditional("UNITY_ASSERTIONS")]
@@ -35,9 +31,7 @@ namespace FronkonGames.GameWork.Foundation
                                         [CallerLineNumber]int line = 0) =>
       Assert(value == true, $"{System.IO.Path.GetFileName(sourceFile)}:{line.ToString()} {member} '{nameof(value)}' must be true.");
 
-    /// <summary>
-    /// Check that the value is false. Throws an exception if it fails.
-    /// </summary>
+    /// <summary> Check that the value is false. Throws an exception if it fails. </summary>
     /// <param name="value">Value</param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
     [DebuggerStepThrough, Conditional("UNITY_ASSERTIONS")]

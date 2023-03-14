@@ -18,9 +18,7 @@ using System;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary>
-  /// Generic lazy singleton thread-safe.
-  /// </summary>
+  /// <summary> Generic lazy singleton thread-safe. </summary>
   /// <typeparam name="T">Singleton type</typeparam>
   public abstract class Singleton<T> where T : class, new()
   {

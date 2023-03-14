@@ -20,20 +20,14 @@ using UnityEngine;
 
 namespace FronkonGames.GameWork.Core
 {
-  /// <summary>
-  /// Calculate FPS.
-  /// </summary>
+  /// <summary> Calculate FPS. </summary>
   public sealed class CalculateFPS : BaseMonoBehaviour
   {
-    /// <summary>
-    /// Last FPS.
-    /// </summary>
+    /// <summary> Last FPS. </summary>
     /// <value>FPS.</value>
     public float CurrentFPS { get; private set; }
 
-    /// <summary>
-    /// Average FPS.
-    /// </summary>
+    /// <summary> Average FPS. </summary>
     /// <value>FPS.</value>
     public float AverageFPS { get; private set; }
 
@@ -46,9 +40,7 @@ namespace FronkonGames.GameWork.Core
     private readonly Queue<float> history = new Queue<float>(HistoryFrames);
     private IEnumerator<float> historyEnumerator;
 
-    /// <summary>
-    /// Reset the counters.
-    /// </summary>
+    /// <summary> Reset the counters. </summary>
     public void Reset()
     {
       CurrentFPS = 0.0f;

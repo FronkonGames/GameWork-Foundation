@@ -22,14 +22,10 @@ using System.Runtime.CompilerServices;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary>
-  /// Checks values and throws an exception if the condition is not met.
-  /// </summary>
+  /// <summary> Checks values and throws an exception if the condition is not met. </summary>
   public static partial class Check
   {
-    /// <summary>
-    /// Check if the value is null.
-    /// </summary>
+    /// <summary> Check if the value is null. </summary>
     /// <param name="value">Value</param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
     [DebuggerStepThrough, Conditional("UNITY_ASSERTIONS")]
@@ -38,9 +34,7 @@ namespace FronkonGames.GameWork.Foundation
                                             [CallerLineNumber]int line = 0) =>
       Assert(value == null, $"{Path.GetFileName(sourceFile)}:{line.ToString()} {member} '{nameof(value)}' must be null.");
 
-    /// <summary>
-    /// Check that the value is not null.
-    /// </summary>
+    /// <summary> Check that the value is not null. </summary>
     /// <param name="value">Value</param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
     [DebuggerStepThrough, Conditional("UNITY_ASSERTIONS")]
@@ -49,9 +43,7 @@ namespace FronkonGames.GameWork.Foundation
                                                [CallerLineNumber]int line = 0) =>
       Assert(value != null, $"{Path.GetFileName(sourceFile)}:{line.ToString()} {member} '{nameof(value)}' must not be null.");
 
-    /// <summary>
-    /// Check that the collection is not null or empty.
-    /// </summary>
+    /// <summary> Check that the collection is not null or empty. </summary>
     /// <param name="collection">ICollection</param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
     [DebuggerStepThrough, Conditional("UNITY_ASSERTIONS")]
@@ -60,9 +52,7 @@ namespace FronkonGames.GameWork.Foundation
                                                                       [CallerLineNumber]int line = 0) =>
       Assert(collection != null && collection.Count > 0, $"{Path.GetFileName(sourceFile)}:{line.ToString()} {member} '{nameof(collection)}' cant be null or empty.");
 
-    /// <summary>
-    /// The object is of type Type.
-    /// </summary>
+    /// <summary> The object is of type Type. </summary>
     /// <param name="value">Value</param>
     /// <param name="type">Type</param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>

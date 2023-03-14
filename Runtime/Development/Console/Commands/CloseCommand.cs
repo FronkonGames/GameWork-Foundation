@@ -18,9 +18,7 @@ using UnityEngine;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary>
-  /// Close console.
-  /// </summary>
+  /// <summary> Close console. </summary>
   [CreateAssetMenu(fileName = "Close", menuName = "Game:Work/Development/Command/Close")]
   public class CloseCommand : DevelopmentCommand
   {
@@ -44,6 +42,7 @@ namespace FronkonGames.GameWork.Foundation
 
     private DevelopmentConsole console;
 
+    /// <inheritdoc/>
     public override bool Execute(string[] args)
     {
       if (Console != null)

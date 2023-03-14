@@ -22,14 +22,10 @@ using UnityEngine;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary>
-  /// Checks values and throws an exception if the condition is not met.
-  /// </summary>
+  /// <summary> Checks values and throws an exception if the condition is not met. </summary>
   public static partial class Check
   {
-    /// <summary>
-    /// The values must be equal.
-    /// </summary>
+    /// <summary> The values must be equal. </summary>
     /// <param name="a">First value</param>
     /// <param name="b">Second value</param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
@@ -39,9 +35,7 @@ namespace FronkonGames.GameWork.Foundation
                                           [CallerLineNumber]int line = 0) where T : struct, IComparable<T> =>
       Assert(a.Equals(b), $"{Path.GetFileName(sourceFile)}:{line.ToString()} {member}() '{nameof(a)}' must be equal to '{nameof(b)}'.");
 
-    /// <summary>
-    /// The values must be equal.
-    /// </summary>
+    /// <summary> The values must be equal. </summary>
     /// <param name="a">First value</param>
     /// <param name="b">Second value</param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
@@ -51,9 +45,7 @@ namespace FronkonGames.GameWork.Foundation
                                                    [CallerLineNumber]int line = 0) =>
       Assert(a.Equals(b), $"{Path.GetFileName(sourceFile)}:{line.ToString()} {member}() '{nameof(a)}' must be equal to '{nameof(b)}'.");
 
-    /// <summary>
-    /// The values must be equal.
-    /// </summary>
+    /// <summary> The values must be equal. </summary>
     /// <param name="a">Value</param>
     /// <param name="magnitude">Magnitude</param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
@@ -63,9 +55,7 @@ namespace FronkonGames.GameWork.Foundation
                                                          [CallerLineNumber]int line = 0) =>
       Assert(a.magnitude.NearlyEquals(magnitude), $"{Path.GetFileName(sourceFile)}:{line.ToString()} {member}() '{nameof(a)}' must be equal to '{nameof(magnitude)}'.");
 
-    /// <summary>
-    /// The values must be equal.
-    /// </summary>
+    /// <summary> The values must be equal. </summary>
     /// <param name="a">First value</param>
     /// <param name="b">Second value</param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
@@ -75,9 +65,7 @@ namespace FronkonGames.GameWork.Foundation
                                                    [CallerLineNumber]int line = 0) =>
       Assert(a.Equals(b), $"{Path.GetFileName(sourceFile)}:{line.ToString()} {member}() '{nameof(a)}' must be equal to '{nameof(b)}'.");
 
-    /// <summary>
-    /// The values must be equal.
-    /// </summary>
+    /// <summary> The values must be equal. </summary>
     /// <param name="a">Value</param>
     /// <param name="magnitude">Magnitude</param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
@@ -87,9 +75,7 @@ namespace FronkonGames.GameWork.Foundation
                                                          [CallerLineNumber]int line = 0) =>
       Assert(a.magnitude.NearlyEquals(magnitude), $"{Path.GetFileName(sourceFile)}:{line.ToString()} {member}() '{nameof(a)}' must be equal to '{nameof(magnitude)}'.");
 
-    /// <summary>
-    /// The values must be equal.
-    /// </summary>
+    /// <summary> The values must be equal. </summary>
     /// <param name="a">First value</param>
     /// <param name="b">Second value</param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
@@ -99,9 +85,7 @@ namespace FronkonGames.GameWork.Foundation
                                                    [CallerLineNumber]int line = 0) =>
       Assert(a.Equals(b), $"{Path.GetFileName(sourceFile)}:{line.ToString()} {member}() '{nameof(a)}' must be equal to '{nameof(b)}'.");
 
-    /// <summary>
-    /// The values must be equal.
-    /// </summary>
+    /// <summary> The values must be equal. </summary>
     /// <param name="a">Value</param>
     /// <param name="magnitude">Magnitude</param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
@@ -111,9 +95,7 @@ namespace FronkonGames.GameWork.Foundation
                                                          [CallerLineNumber]int line = 0) =>
       Assert(a.magnitude.NearlyEquals(magnitude), $"{Path.GetFileName(sourceFile)}:{line.ToString()} {member}() '{nameof(a)}' must be equal to '{nameof(magnitude)}'.");
 
-    /// <summary>
-    /// The values must be equal.
-    /// </summary>
+    /// <summary> The values must be equal. </summary>
     /// <param name="a">First value</param>
     /// <param name="b">Second value</param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
@@ -123,9 +105,7 @@ namespace FronkonGames.GameWork.Foundation
                                                          [CallerLineNumber]int line = 0) =>
       Assert(a.Equals(b), $"{Path.GetFileName(sourceFile)}:{line.ToString()} {member}() '{nameof(a)}' must be equal to '{nameof(b)}'.");
 
-    /// <summary>
-    /// Values should not be equal.
-    /// </summary>
+    /// <summary> Values should not be equal. </summary>
     /// <param name="a">First value</param>
     /// <param name="b">Second value</param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
@@ -135,9 +115,7 @@ namespace FronkonGames.GameWork.Foundation
                                              [CallerLineNumber]int line = 0) =>
       Assert(a.Equals(b) == false, $"{Path.GetFileName(sourceFile)}:{line.ToString()} {member}() '{nameof(a)}' must be equal to '{nameof(b)}'.");
 
-    /// <summary>
-    /// Values should not be equal.
-    /// </summary>
+    /// <summary> Values should not be equal. </summary>
     /// <param name="a">First value</param>
     /// <param name="b">Second value</param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
@@ -147,9 +125,7 @@ namespace FronkonGames.GameWork.Foundation
                                                       [CallerLineNumber]int line = 0) =>
       Assert(a.Equals(b) == false, $"{Path.GetFileName(sourceFile)}:{line.ToString()} {member}() '{nameof(a)}' must be equal to '{nameof(b)}'.");
 
-    /// <summary>
-    /// Values should not be equal.
-    /// </summary>
+    /// <summary> Values should not be equal. </summary>
     /// <param name="a">Value</param>
     /// <param name="magnitude">Magnitude</param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
@@ -159,9 +135,7 @@ namespace FronkonGames.GameWork.Foundation
                                                             [CallerLineNumber]int line = 0) =>
       Assert(a.magnitude.NearlyEquals(magnitude) == false, $"{Path.GetFileName(sourceFile)}:{line.ToString()} {member}() '{nameof(a)}' must be equal to '{nameof(magnitude)}'.");
 
-    /// <summary>
-    /// Values should not be equal.
-    /// </summary>
+    /// <summary> Values should not be equal. </summary>
     /// <param name="a">First value</param>
     /// <param name="b">Second value</param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
@@ -171,9 +145,7 @@ namespace FronkonGames.GameWork.Foundation
                                                       [CallerLineNumber]int line = 0) =>
       Assert(a.Equals(b) == false, $"{Path.GetFileName(sourceFile)}:{line.ToString()} {member}() '{nameof(a)}' must be equal to '{nameof(b)}'.");
 
-    /// <summary>
-    /// Values should not be equal.
-    /// </summary>
+    /// <summary> Values should not be equal. </summary>
     /// <param name="a">Value</param>
     /// <param name="magnitude">Magnitude</param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
@@ -183,9 +155,7 @@ namespace FronkonGames.GameWork.Foundation
                                                             [CallerLineNumber]int line = 0) =>
       Assert(a.magnitude.NearlyEquals(magnitude) == false, $"{Path.GetFileName(sourceFile)}:{line.ToString()} {member}() '{nameof(a)}' must be equal to '{nameof(magnitude)}'.");
 
-    /// <summary>
-    /// Values should not be equal.
-    /// </summary>
+    /// <summary> Values should not be equal. </summary>
     /// <param name="a">First value</param>
     /// <param name="b">Second value</param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
@@ -195,9 +165,7 @@ namespace FronkonGames.GameWork.Foundation
                                                       [CallerLineNumber]int line = 0) =>
       Assert(a.Equals(b) == false, $"{Path.GetFileName(sourceFile)}:{line.ToString()} {member}() '{nameof(a)}' must be equal to '{nameof(b)}'.");
 
-    /// <summary>
-    /// Values should not be equal.
-    /// </summary>
+    /// <summary> Values should not be equal. </summary>
     /// <param name="a">Value</param>
     /// <param name="magnitude">Magnitude</param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
@@ -207,9 +175,7 @@ namespace FronkonGames.GameWork.Foundation
                                                             [CallerLineNumber]int line = 0) =>
       Assert(a.magnitude.NearlyEquals(magnitude) == false, $"{Path.GetFileName(sourceFile)}:{line.ToString()} {member}() '{nameof(a)}' must be equal to '{nameof(magnitude)}'.");
 
-    /// <summary>
-    /// Values should not be equal.
-    /// </summary>
+    /// <summary> Values should not be equal. </summary>
     /// <param name="a">First value</param>
     /// <param name="b">Second value</param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
@@ -219,9 +185,7 @@ namespace FronkonGames.GameWork.Foundation
                                                             [CallerLineNumber]int line = 0) =>
       Assert(a.Equals(b) == false, $"{Path.GetFileName(sourceFile)}:{line.ToString()} {member}() '{nameof(a)}' must be equal to '{nameof(b)}'.");
 
-    /// <summary>
-    /// The first value must be less than the second.
-    /// </summary>
+    /// <summary> The first value must be less than the second. </summary>
     /// <param name="a">First value</param>
     /// <param name="b">Second value</param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
@@ -231,9 +195,7 @@ namespace FronkonGames.GameWork.Foundation
                                          [CallerLineNumber]int line = 0) where T : struct, IComparable<T> =>
       Assert(a.CompareTo(b) < 0, $"{Path.GetFileName(sourceFile)}:{line.ToString()} {member}() '{nameof(a)}' must be less than '{nameof(b)}'.");
 
-    /// <summary>
-    /// The first value must be less than the second.
-    /// </summary>
+    /// <summary> The first value must be less than the second. </summary>
     /// <param name="a">First value</param>
     /// <param name="b">Second value</param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
@@ -243,9 +205,7 @@ namespace FronkonGames.GameWork.Foundation
                                                   [CallerLineNumber]int line = 0) =>
       Assert(a.magnitude < b.magnitude, $"{Path.GetFileName(sourceFile)}:{line.ToString()} {member}() '{nameof(a)}' must be less than '{nameof(b)}'.");
 
-    /// <summary>
-    /// The first value must be less than the second.
-    /// </summary>
+    /// <summary> The first value must be less than the second. </summary>
     /// <param name="a">Value</param>
     /// <param name="magnitude">Magnitude</param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
@@ -255,9 +215,7 @@ namespace FronkonGames.GameWork.Foundation
                                                         [CallerLineNumber]int line = 0) =>
       Assert(a.magnitude < magnitude, $"{Path.GetFileName(sourceFile)}:{line.ToString()} {member}() '{nameof(a)}' must be less than '{nameof(magnitude)}'.");
 
-    /// <summary>
-    /// The first value must be less than the second.
-    /// </summary>
+    /// <summary> The first value must be less than the second. </summary>
     /// <param name="a">First value</param>
     /// <param name="b">Second value</param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
@@ -267,9 +225,7 @@ namespace FronkonGames.GameWork.Foundation
                                                   [CallerLineNumber]int line = 0) =>
       Assert(a.magnitude < b.magnitude, $"{Path.GetFileName(sourceFile)}:{line.ToString()} {member}() '{nameof(a)}' must be less than '{nameof(b)}'.");
 
-    /// <summary>
-    /// The first value must be less than the second.
-    /// </summary>
+    /// <summary> The first value must be less than the second. </summary>
     /// <param name="a">Value</param>
     /// <param name="magnitude">Magnitude</param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
@@ -279,9 +235,7 @@ namespace FronkonGames.GameWork.Foundation
                                                         [CallerLineNumber]int line = 0) =>
       Assert(a.magnitude < magnitude, $"{System.IO.Path.GetFileName(sourceFile)}:{line.ToString()} {member}() '{nameof(a)}' must be less than '{nameof(magnitude)}'.");
 
-    /// <summary>
-    /// The first value must be less than the second.
-    /// </summary>
+    /// <summary> The first value must be less than the second. </summary>
     /// <param name="a">First value</param>
     /// <param name="b">Second value</param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
@@ -291,9 +245,7 @@ namespace FronkonGames.GameWork.Foundation
                                                   [CallerLineNumber]int line = 0) =>
       Assert(a.magnitude < b.magnitude, $"{Path.GetFileName(sourceFile)}:{line.ToString()} {member}() '{nameof(a)}' must be less than '{nameof(b)}'.");
 
-    /// <summary>
-    /// The first value must be less than the second.
-    /// </summary>
+    /// <summary> The first value must be less than the second. </summary>
     /// <param name="a">Value</param>
     /// <param name="magnitude">Magnitude</param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
@@ -303,9 +255,7 @@ namespace FronkonGames.GameWork.Foundation
                                                         [CallerLineNumber]int line = 0) =>
       Assert(a.magnitude < magnitude, $"{Path.GetFileName(sourceFile)}:{line.ToString()} {member}() '{nameof(a)}' must be less than '{nameof(magnitude)}'.");
 
-    /// <summary>
-    /// The first value must be less than or equal to the second.
-    /// </summary>
+    /// <summary> The first value must be less than or equal to the second. </summary>
     /// <param name="a">First value</param>
     /// <param name="b">Second value</param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
@@ -315,9 +265,7 @@ namespace FronkonGames.GameWork.Foundation
                                                 [CallerLineNumber]int line = 0) where T : struct, IComparable<T> =>
       Assert(a.CompareTo(b) <= 0, $"{System.IO.Path.GetFileName(sourceFile)}:{line.ToString()} {member}() '{nameof(a)}' must be less or equal to '{nameof(b)}'.");
 
-    /// <summary>
-    /// The first value must be less than or equal to the second.
-    /// </summary>
+    /// <summary> The first value must be less than or equal to the second. </summary>
     /// <param name="a">First value</param>
     /// <param name="b">Second value</param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
@@ -327,9 +275,7 @@ namespace FronkonGames.GameWork.Foundation
                                                          [CallerLineNumber]int line = 0) =>
       Assert(a.magnitude <= b.magnitude, $"{Path.GetFileName(sourceFile)}:{line.ToString()} {member}() '{nameof(a)}' must be less or equal to '{nameof(b)}'.");
 
-    /// <summary>
-    /// The first value must be less than or equal to the second.
-    /// </summary>
+    /// <summary> The first value must be less than or equal to the second. </summary>
     /// <param name="a">Value</param>
     /// <param name="magnitude">Magnitude</param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
@@ -339,9 +285,7 @@ namespace FronkonGames.GameWork.Foundation
                                                                [CallerLineNumber]int line = 0) =>
       Assert(a.magnitude <= magnitude, $"{Path.GetFileName(sourceFile)}:{line.ToString()} {member}() '{nameof(a)}' must be less or equal to '{nameof(magnitude)}'.");
 
-    /// <summary>
-    /// The first value must be less than or equal to the second.
-    /// </summary>
+    /// <summary> The first value must be less than or equal to the second. </summary>
     /// <param name="a">First value</param>
     /// <param name="b">Second value</param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
@@ -351,9 +295,7 @@ namespace FronkonGames.GameWork.Foundation
                                                          [CallerLineNumber]int line = 0) =>
       Assert(a.magnitude <= b.magnitude, $"{Path.GetFileName(sourceFile)}:{line.ToString()} {member}() '{nameof(a)}' must be less or equal to '{nameof(b)}'.");
 
-    /// <summary>
-    /// The first value must be less than or equal to the second.
-    /// </summary>
+    /// <summary> The first value must be less than or equal to the second. </summary>
     /// <param name="a">Value</param>
     /// <param name="magnitude">Magnitude</param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
@@ -363,9 +305,7 @@ namespace FronkonGames.GameWork.Foundation
                                                                [CallerLineNumber]int line = 0) =>
       Assert(a.magnitude <= magnitude, $"{Path.GetFileName(sourceFile)}:{line.ToString()} {member}() '{nameof(a)}' must be less or equal to '{nameof(magnitude)}'.");
 
-    /// <summary>
-    /// The first value must be less than or equal to the second.
-    /// </summary>
+    /// <summary> The first value must be less than or equal to the second. </summary>
     /// <param name="a">First value</param>
     /// <param name="b">Second value</param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
@@ -375,9 +315,7 @@ namespace FronkonGames.GameWork.Foundation
                                                          [CallerLineNumber]int line = 0) =>
       Assert(a.magnitude <= b.magnitude, $"{Path.GetFileName(sourceFile)}:{line.ToString()} {member}() '{nameof(a)}' must be less or equal to '{nameof(b)}'.");
 
-    /// <summary>
-    /// The first value must be less than or equal to the second.
-    /// </summary>
+    /// <summary> The first value must be less than or equal to the second. </summary>
     /// <param name="a">Value</param>
     /// <param name="magnitude">Magnitude</param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
@@ -387,9 +325,7 @@ namespace FronkonGames.GameWork.Foundation
                                                                [CallerLineNumber]int line = 0) =>
       Assert(a.magnitude <= magnitude, $"{Path.GetFileName(sourceFile)}:{line.ToString()} {member}() '{nameof(a)}' must be less or equal to '{nameof(magnitude)}'.");
 
-    /// <summary>
-    /// The first value must be greater than the second.
-    /// </summary>
+    /// <summary> The first value must be greater than the second. </summary>
     /// <param name="a">First value</param>
     /// <param name="b">Second value</param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
@@ -399,9 +335,7 @@ namespace FronkonGames.GameWork.Foundation
                                             [CallerLineNumber]int line = 0) where T : struct, IComparable<T> =>
       Assert(b.CompareTo(a) < 0, $"{Path.GetFileName(sourceFile)}:{line.ToString()} {member}() '{nameof(a)}' must be greater than '{nameof(b)}'.");
 
-    /// <summary>
-    /// The first value must be greater than the second.
-    /// </summary>
+    /// <summary> The first value must be greater than the second. </summary>
     /// <param name="a">First value</param>
     /// <param name="b">Second value</param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
@@ -411,9 +345,7 @@ namespace FronkonGames.GameWork.Foundation
                                                      [CallerLineNumber]int line = 0) =>
       Assert(a.magnitude > b.magnitude, $"{Path.GetFileName(sourceFile)}:{line.ToString()} {member}() '{nameof(a)}' must be greater than '{nameof(b)}'.");
 
-    /// <summary>
-    /// The first value must be greater than the second.
-    /// </summary>
+    /// <summary> The first value must be greater than the second. </summary>
     /// <param name="a">Value</param>
     /// <param name="magnitude">Magnitude</param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
@@ -423,9 +355,7 @@ namespace FronkonGames.GameWork.Foundation
                                                            [CallerLineNumber]int line = 0) =>
       Assert(a.magnitude > magnitude, $"{Path.GetFileName(sourceFile)}:{line.ToString()} {member}() '{nameof(a)}' must be greater than '{nameof(magnitude)}'.");
 
-    /// <summary>
-    /// The first value must be greater than the second.
-    /// </summary>
+    /// <summary> The first value must be greater than the second. </summary>
     /// <param name="a">First value</param>
     /// <param name="b">Second value</param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
@@ -435,9 +365,7 @@ namespace FronkonGames.GameWork.Foundation
                                                      [CallerLineNumber]int line = 0) =>
       Assert(a.magnitude > b.magnitude, $"{Path.GetFileName(sourceFile)}:{line.ToString()} {member}() '{nameof(a)}' must be greater than '{nameof(b)}'.");
 
-    /// <summary>
-    /// The first value must be greater than the second.
-    /// </summary>
+    /// <summary> The first value must be greater than the second. </summary>
     /// <param name="a">Value</param>
     /// <param name="magnitude">Magnitude</param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
@@ -447,9 +375,7 @@ namespace FronkonGames.GameWork.Foundation
                                                            [CallerLineNumber]int line = 0) =>
       Assert(a.magnitude > magnitude, $"{Path.GetFileName(sourceFile)}:{line.ToString()} {member}() '{nameof(a)}' must be greater than '{nameof(magnitude)}'.");
 
-    /// <summary>
-    /// The first value must be greater than the second.
-    /// </summary>
+    /// <summary> The first value must be greater than the second. </summary>
     /// <param name="a">First value</param>
     /// <param name="b">Second value</param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
@@ -459,9 +385,7 @@ namespace FronkonGames.GameWork.Foundation
                                                      [CallerLineNumber]int line = 0) =>
       Assert(a.magnitude > b.magnitude, $"{Path.GetFileName(sourceFile)}:{line.ToString()} {member}() '{nameof(a)}' must be greater than '{nameof(b)}'.");
 
-    /// <summary>
-    /// The first value must be greater than the second.
-    /// </summary>
+    /// <summary> The first value must be greater than the second. </summary>
     /// <param name="a">Value</param>
     /// <param name="magnitude">Magnitude</param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
@@ -471,9 +395,7 @@ namespace FronkonGames.GameWork.Foundation
                                                            [CallerLineNumber]int line = 0) =>
       Assert(a.magnitude > magnitude, $"{Path.GetFileName(sourceFile)}:{line.ToString()} {member}() '{nameof(a)}' must be greater than '{nameof(magnitude)}'.");
 
-    /// <summary>
-    /// The first value must be greater than or equal to the second.
-    /// </summary>
+    /// <summary> The first value must be greater than or equal to the second. </summary>
     /// <param name="a">First value</param>
     /// <param name="b">Second value</param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
@@ -483,9 +405,7 @@ namespace FronkonGames.GameWork.Foundation
                                                    [CallerLineNumber]int line = 0) where T : struct, IComparable<T> =>
       Assert(b.CompareTo(a) <= 0, $"{Path.GetFileName(sourceFile)}:{line.ToString()} {member}() '{nameof(a)}' must be greater or equal to '{nameof(b)}'.");
 
-    /// <summary>
-    /// The first value must be greater than or equal to the second.
-    /// </summary>
+    /// <summary> The first value must be greater than or equal to the second. </summary>
     /// <param name="a">First value</param>
     /// <param name="b">Second value</param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
@@ -495,9 +415,7 @@ namespace FronkonGames.GameWork.Foundation
                                                             [CallerLineNumber]int line = 0) =>
       Assert(a.magnitude >= b.magnitude, $"{Path.GetFileName(sourceFile)}:{line.ToString()} {member}() '{nameof(a)}' must be greater or equal to '{nameof(b)}'.");
 
-    /// <summary>
-    /// The first value must be greater than or equal to the second.
-    /// </summary>
+    /// <summary> The first value must be greater than or equal to the second. </summary>
     /// <param name="a">Value</param>
     /// <param name="magnitude">Magnitude</param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
@@ -507,9 +425,7 @@ namespace FronkonGames.GameWork.Foundation
                                                                   [CallerLineNumber]int line = 0) =>
       Assert(a.magnitude >= magnitude, $"{Path.GetFileName(sourceFile)}:{line.ToString()} {member}() '{nameof(a)}' must be greater or equal to '{nameof(magnitude)}'.");
 
-    /// <summary>
-    /// The first value must be greater than or equal to the second.
-    /// </summary>
+    /// <summary> The first value must be greater than or equal to the second. </summary>
     /// <param name="a">First value</param>
     /// <param name="b">Second value</param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
@@ -519,9 +435,7 @@ namespace FronkonGames.GameWork.Foundation
                                                             [CallerLineNumber]int line = 0) =>
       Assert(a.magnitude >= b.magnitude, $"{Path.GetFileName(sourceFile)}:{line.ToString()} {member}() '{nameof(a)}' must be greater or equal to '{nameof(b)}'.");
 
-    /// <summary>
-    /// The first value must be greater than or equal to the second.
-    /// </summary>
+    /// <summary> The first value must be greater than or equal to the second. </summary>
     /// <param name="a">Value</param>
     /// <param name="magnitude">Magnitude</param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
@@ -531,9 +445,7 @@ namespace FronkonGames.GameWork.Foundation
                                                                   [CallerLineNumber]int line = 0) =>
       Assert(a.magnitude >= magnitude, $"{Path.GetFileName(sourceFile)}:{line.ToString()} {member}() '{nameof(a)}' must be greater or equal to '{nameof(magnitude)}'.");
 
-    /// <summary>
-    /// The first value must be greater than or equal to the second.
-    /// </summary>
+    /// <summary> The first value must be greater than or equal to the second. </summary>
     /// <param name="a">First value</param>
     /// <param name="b">Second value</param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
@@ -543,9 +455,7 @@ namespace FronkonGames.GameWork.Foundation
                                                             [CallerLineNumber]int line = 0) =>
       Assert(a.magnitude >= b.magnitude, $"{Path.GetFileName(sourceFile)}:{line.ToString()} {member}() '{nameof(a)}' must be greater or equal to '{nameof(b)}'.");
 
-    /// <summary>
-    /// The first value must be greater than or equal to the second.
-    /// </summary>
+    /// <summary> The first value must be greater than or equal to the second. </summary>
     /// <param name="a">Value</param>
     /// <param name="magnitude">Magnitude</param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
@@ -555,9 +465,7 @@ namespace FronkonGames.GameWork.Foundation
                                                                   [CallerLineNumber]int line = 0) =>
       Assert(a.magnitude >= magnitude, $"{Path.GetFileName(sourceFile)}:{line.ToString()} {member}() '{nameof(a)}' must be greater or equal to '{nameof(magnitude)}'.");
 
-    /// <summary>
-    /// The value must be less than zero.
-    /// </summary>
+    /// <summary> The value must be less than zero. </summary>
     /// <param name="value">Value</param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
     [DebuggerStepThrough, Conditional("UNITY_ASSERTIONS")]
@@ -566,9 +474,7 @@ namespace FronkonGames.GameWork.Foundation
                                             [CallerLineNumber]int line = 0) where T : struct, IComparable<T> =>
       Assert(value.CompareTo(default) < 0, $"{Path.GetFileName(sourceFile)}:{line.ToString()} {member}() '{nameof(value)}' must be negative.");
 
-    /// <summary>
-    /// The value must be greater than or equal to zero.
-    /// </summary>
+    /// <summary> The value must be greater than or equal to zero. </summary>
     /// <param name="value">Value</param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
     [DebuggerStepThrough, Conditional("UNITY_ASSERTIONS")]
@@ -577,9 +483,7 @@ namespace FronkonGames.GameWork.Foundation
                                                [CallerLineNumber]int line = 0) where T : struct, IComparable<T> =>
       Assert(value.CompareTo(default) >= 0, $"{Path.GetFileName(sourceFile)}:{line.ToString()} {member}() '{nameof(value)}' must not be negative.");
 
-    /// <summary>
-    /// The value must be within a range (including limits).
-    /// </summary>
+    /// <summary> The value must be within a range (including limits). </summary>
     /// <param name="value">Value</param>
     /// <param name="min">Lower limit</param>
     /// <param name="max">Upper limit</param>
@@ -590,9 +494,7 @@ namespace FronkonGames.GameWork.Foundation
                                                           [CallerLineNumber]int line = 0) where T : struct, IComparable<T> =>
       Assert(value.CompareTo(min) >= 0 && value.CompareTo(max) <= 0, $"{Path.GetFileName(sourceFile)}:{line.ToString()} {member}() '{nameof(value)}' must be within '{nameof(min)}' and '{nameof(max)}'.");
     
-    /// <summary>
-    /// The value must be within a range (limits not included).
-    /// </summary>
+    /// <summary> The value must be within a range (limits not included). </summary>
     /// <param name="value">Value</param>
     /// <param name="min">Lower limit</param>
     /// <param name="max">Upper limit</param>

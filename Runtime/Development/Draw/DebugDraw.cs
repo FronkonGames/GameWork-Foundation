@@ -20,15 +20,11 @@ using Debug = UnityEngine.Debug;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary>
-  /// Drawing of objects for development.
-  /// </summary>
+  /// <summary> Drawing of objects for development. </summary>
   /// <remarks>Only available in the Editor</remarks>
   public static partial class DebugDraw
   {
-    /// <summary>
-    /// Draw a point with a three-axis cross.
-    /// </summary>
+    /// <summary> Draw a point with a three-axis cross. </summary>
     /// <remarks>Only available in the Editor</remarks>
     /// <param name="position">Position</param>
     /// <param name="size">Cross size</param>
@@ -44,9 +40,7 @@ namespace FronkonGames.GameWork.Foundation
       Line(position + Vector3.forward * halfSize, position - Vector3.forward * halfSize, color ?? AxisZ, rotation);
     }
 
-    /// <summary>
-    /// Draw an array of points using three-axis crosshairs.
-    /// </summary>
+    /// <summary> Draw an array of points using three-axis crosshairs. </summary>
     /// <remarks>Only available in the Editor</remarks>
     /// <param name="points">Point array</param>
     /// <param name="size">Cross size</param>
@@ -59,9 +53,7 @@ namespace FronkonGames.GameWork.Foundation
         Point(points[i], size, color, rotation);
     }
 
-    /// <summary>
-    /// Draw a solid line.
-    /// </summary>
+    /// <summary> Draw a solid line. </summary>
     /// <remarks>Only available in the Editor</remarks>
     /// <param name="a">Start</param>
     /// <param name="b">End</param>
@@ -77,9 +69,7 @@ namespace FronkonGames.GameWork.Foundation
         solid = true
       });
 
-    /// <summary>
-    /// Draw an array of solid lines.
-    /// </summary>
+    /// <summary> Draw an array of solid lines. </summary>
     /// <remarks>Only available in the Editor</remarks>
     /// <param name="lines">Lines array</param>
     /// <param name="color">Color</param>
@@ -109,9 +99,7 @@ namespace FronkonGames.GameWork.Foundation
         solid = false
       });
 
-    /// <summary>
-    /// Draw an array of dashed lines.
-    /// </summary>
+    /// <summary> Draw an array of dashed lines. </summary>
     /// <remarks>Only available in the Editor</remarks>
     /// <param name="lines">Lines array</param>
     /// <param name="color">Color</param>
@@ -123,9 +111,7 @@ namespace FronkonGames.GameWork.Foundation
         DottedLine(lines[i], lines[i + 1], color, rotation);
     }
 
-    /// <summary>
-    /// Draw a line using an arrow.
-    /// </summary>
+    /// <summary> Draw a line using an arrow. </summary>
     /// <remarks>Only available in the Editor</remarks>
     /// <param name="position">Position</param>
     /// <param name="direction">Direction</param>
@@ -152,9 +138,7 @@ namespace FronkonGames.GameWork.Foundation
       Line(upCornerInLeft, position, color ?? ArrowColor);
     }
 
-    /// <summary>
-    /// Draw a line using an arrow.
-    /// </summary>
+    /// <summary> Draw a line using an arrow. </summary>
     /// <remarks>Only available in the Editor</remarks>
     /// <param name="position">Position</param>
     /// <param name="rotation">Rotation</param>
@@ -166,9 +150,7 @@ namespace FronkonGames.GameWork.Foundation
     public static void Arrow(Vector3 position, Quaternion rotation, float length = 1.0f, float size = ArrowTipSize, float width = ArrowWidth, Color? color = null)
       => Arrow(position, rotation * Vector3.forward, length, size, width, color);
 
-    /// <summary>
-    /// Draw a line using an arrow.
-    /// </summary>
+    /// <summary> Draw a line using an arrow. </summary>
     /// <remarks>Only available in the Editor</remarks>
     /// <param name="position"></param>
     /// <param name="rotation"></param>
@@ -177,8 +159,7 @@ namespace FronkonGames.GameWork.Foundation
     public static void Ray(Vector3 position, Quaternion rotation, Color? color = null) =>
       Line(position, (rotation * Vector3.forward) * RayLength, color ?? RayColor);
 
-    /// <summary>
-    /// Draw a ray. 
+    /// <summary> Draw a ray.
     /// </summary>
     /// <remarks>Only available in the Editor</remarks>
     /// <param name="position">Position</param>
@@ -188,9 +169,7 @@ namespace FronkonGames.GameWork.Foundation
     public static void Ray(Vector3 position, Vector3 direction, Color? color = null) =>
       Line(position, direction * RayLength, color ?? RayColor);
     
-    /// <summary>
-    /// Draw a wire circle. 
-    /// </summary>
+    /// <summary> Draw a wire circle. </summary>
     /// <remarks>Only available in the Editor</remarks>
     /// <param name="center">Center</param>
     /// <param name="radius">Radius</param>
@@ -206,9 +185,7 @@ namespace FronkonGames.GameWork.Foundation
         color = color ?? CircleColor
       });
 
-    /// <summary>
-    /// Draw a wire circle.
-    /// </summary>
+    /// <summary> Draw a wire circle. </summary>
     /// <remarks>Only available in the Editor</remarks>
     /// <param name="center">Center</param>
     /// <param name="radius">Radius</param>
@@ -224,9 +201,7 @@ namespace FronkonGames.GameWork.Foundation
         color = color ?? CircleColor
       });
 
-    /// <summary>
-    /// Draw a solid circle.
-    /// </summary>
+    /// <summary> Draw a solid circle. </summary>
     /// <remarks>Only available in the Editor</remarks>
     /// <param name="center">Center</param>
     /// <param name="radius">Radius</param>
@@ -243,9 +218,7 @@ namespace FronkonGames.GameWork.Foundation
         solid = true
       });
 
-    /// <summary>
-    /// Draw a solid circle.
-    /// </summary>
+    /// <summary> Draw a solid circle. </summary>
     /// <remarks>Only available in the Editor</remarks>
     /// <param name="center">Center</param>
     /// <param name="radius">Radius</param>
@@ -262,9 +235,7 @@ namespace FronkonGames.GameWork.Foundation
         solid = true
       });
 
-    /// <summary>
-    /// Draw a wire sphere formed by three circles.
-    /// </summary>
+    /// <summary> Draw a wire sphere formed by three circles. </summary>
     /// <remarks>Only available in the Editor</remarks>
     /// <param name="center">Center</param>
     /// <param name="radius">Radius</param>
@@ -278,9 +249,7 @@ namespace FronkonGames.GameWork.Foundation
       Circle(center, radius, color ?? AxisZ, (rotation ?? Quaternion.identity) * Quaternion.Euler(0.0f, 90.0f, 90.0f));
     }
 
-    /// <summary>
-    /// Draw a solid sphere.
-    /// </summary>
+    /// <summary> Draw a solid sphere. </summary>
     /// <remarks>Only available in the Editor</remarks>
     /// <param name="center">Center</param>
     /// <param name="radius">Radius</param>
@@ -296,9 +265,7 @@ namespace FronkonGames.GameWork.Foundation
         rotation = rotation ?? Quaternion.identity
       });
 
-    /// <summary>
-    /// Draw an wire arc centered on the forward vector.
-    /// </summary>
+    /// <summary> Draw an wire arc centered on the forward vector. </summary>
     /// <remarks>Only available in the Editor</remarks>
     /// <param name="center">Center</param>
     /// <param name="rotation">Rotation</param>
@@ -317,9 +284,7 @@ namespace FronkonGames.GameWork.Foundation
         color = color ?? ArcColor
       });
 
-    /// <summary>
-    /// Draw an solid arc centered on the forward vector.
-    /// </summary>
+    /// <summary> Draw an solid arc centered on the forward vector. </summary>
     /// <remarks>Only available in the Editor</remarks>
     /// <param name="center">Center</param>
     /// <param name="rotation">Rotation</param>
@@ -339,9 +304,7 @@ namespace FronkonGames.GameWork.Foundation
         solid = true
       });
 
-    /// <summary>
-    /// Draw a wire cube.
-    /// </summary>
+    /// <summary> Draw a wire cube. </summary>
     /// <remarks>Only available in the Editor</remarks>
     /// <param name="center">Center</param>
     /// <param name="size">Size</param>
@@ -355,9 +318,7 @@ namespace FronkonGames.GameWork.Foundation
         color = color ?? CubeColor
       });
 
-    /// <summary>
-    /// Draw a wire cube.
-    /// </summary>
+    /// <summary> Draw a wire cube. </summary>
     /// <remarks>Only available in the Editor</remarks>
     /// <param name="center">Center</param>
     /// <param name="size">Size</param>
@@ -366,9 +327,7 @@ namespace FronkonGames.GameWork.Foundation
     public static void Cube(Vector3 center, float size, Color? color = null) =>
       Cube(center, Vector3.one * size, color ?? CubeColor);
 
-    /// <summary>
-    /// Draw a wire diamond.
-    /// </summary>
+    /// <summary> Draw a wire diamond. </summary>
     /// <remarks>Only available in the Editor</remarks>
     /// <param name="center">Center</param>
     /// <param name="size">Size</param>
@@ -401,9 +360,7 @@ namespace FronkonGames.GameWork.Foundation
       }, color ?? DiamondColor, rotation);
     }
 
-    /// <summary>
-    /// Draw a wire cone.
-    /// </summary>
+    /// <summary> Draw a wire cone. </summary>
     /// <remarks>Only available in the Editor</remarks>
     /// <param name="position">Position</param>
     /// <param name="rotation">Rotation</param>
@@ -438,9 +395,7 @@ namespace FronkonGames.GameWork.Foundation
       Circle(position + (forward * 0.5f), ((forward * 0.5f) - (slerpedVector.normalized * (dist * 0.5f))).magnitude, color ?? ConeColor, rotation);      
     }
 
-    /// <summary>
-    /// Draw bounds.
-    /// </summary>
+    /// <summary> Draw bounds. </summary>
     /// <remarks>Only available in the Editor</remarks>
     /// <param name="b">Bounds</param>
     /// <param name="color">Color</param>
@@ -471,18 +426,14 @@ namespace FronkonGames.GameWork.Foundation
       Line(ltb, ltf, color ?? BoundsColor);
     }
 
-    /// <summary>
-    /// Draw bounds.
-    /// </summary>
+    /// <summary> Draw bounds. </summary>
     /// <remarks>Only available in the Editor</remarks>
     /// <param name="b"></param>
     /// <param name="color"></param>
     [Conditional("UNITY_EDITOR")]
     public static void Bounds(BoundsInt b, Color color) => Bounds(new Bounds(b.center, b.size), color);
 
-    /// <summary>
-    /// Draw text.
-    /// </summary>
+    /// <summary> Draw text. </summary>
     /// <remarks>Only available in the Editor</remarks>
     /// <param name="position">Position</param>
     /// <param name="text">Text</param>

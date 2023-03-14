@@ -20,14 +20,10 @@ using System.Runtime.CompilerServices;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary>
-  /// Checks values and throws an exception if the condition is not met.
-  /// </summary>
+  /// <summary> Checks values and throws an exception if the condition is not met. </summary>
   public static partial class Check
   {
-    /// <summary>
-    /// Check that the string is not null or empty.
-    /// </summary>
+    /// <summary> Check that the string is not null or empty. </summary>
     /// <param name="value">Value</param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
     [DebuggerStepThrough, Conditional("UNITY_ASSERTIONS")]
@@ -36,9 +32,7 @@ namespace FronkonGames.GameWork.Foundation
                                                     [CallerLineNumber]int line = 0) =>
       Assert(string.IsNullOrEmpty(value) == false, $"{Path.GetFileName(sourceFile)}:{line.ToString()} {member} '{nameof(value)}' is null or empty.");
 
-    /// <summary>
-    /// Check that the chain has an exact length.
-    /// </summary>
+    /// <summary> Check that the chain has an exact length. </summary>
     /// <param name="value">Value</param>
     /// <param name="len">Length</param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
@@ -48,9 +42,7 @@ namespace FronkonGames.GameWork.Foundation
                                                      [CallerLineNumber]int line = 0) =>
       Assert(value.Length == len, $"{Path.GetFileName(sourceFile)}:{line.ToString()} {member} Expected string '{nameof(value)}' length must be {len.ToString()}.");
 
-    /// <summary>
-    /// Check that the chain has a maximum length.
-    /// </summary>
+    /// <summary> Check that the chain has a maximum length. </summary>
     /// <param name="value">Value</param>
     /// <param name="max">Max length</param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
@@ -60,9 +52,7 @@ namespace FronkonGames.GameWork.Foundation
                                                         [CallerLineNumber]int line = 0) =>
       Assert(value.Length <= max, $"{Path.GetFileName(sourceFile)}:{line.ToString()} {member} Expected string '{nameof(value)}' max length must be {max.ToString()}.");
 
-    /// <summary>
-    /// Check that the chain has a minimum length.
-    /// </summary>
+    /// <summary> Check that the chain has a minimum length. </summary>
     /// <param name="value">Value</param>
     /// <param name="min">Min length</param>
     /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>

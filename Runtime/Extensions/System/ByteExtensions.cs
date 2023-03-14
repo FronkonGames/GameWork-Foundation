@@ -18,14 +18,10 @@ using System;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary>
-  /// Byte extensions.
-  /// </summary>
+  /// <summary> Byte extensions. </summary>
   public static class ByteExtensions
   {
-    /// <summary>
-    /// Is the bit set?
-    /// </summary>
+    /// <summary> Is the bit set? </summary>
     /// <param name="self">Value</param>
     /// <param name="pos">Bit to check</param>
     /// <returns>True if bit is set</returns>
@@ -36,9 +32,7 @@ namespace FronkonGames.GameWork.Foundation
       return (self & (1 << pos)) != 0;
     }
 
-    /// <summary>
-    /// Sets a bit to 1.
-    /// </summary>
+    /// <summary> Sets a bit to 1. </summary>
     /// <param name="self">Value</param>
     /// <param name="pos">Bit to change</param>
     /// <returns>The new byte.</returns>
@@ -49,9 +43,7 @@ namespace FronkonGames.GameWork.Foundation
       return (byte)(self | (1 << pos));
     }
 
-    /// <summary>
-    /// Sets a bit to 0.
-    /// </summary>
+    /// <summary> Sets a bit to 0. </summary>
     /// <param name="self">Value</param>
     /// <param name="pos">Bit to change</param>
     /// <returns>The new byte.</returns>
@@ -62,9 +54,7 @@ namespace FronkonGames.GameWork.Foundation
       return (byte)(self & ~(1 << pos));
     }
 
-    /// <summary>
-    /// Change one bit.
-    /// </summary>
+    /// <summary> Change one bit. </summary>
     /// <param name="self">Value</param>
     /// <param name="pos">Bit to change</param>
     /// <returns>The new byte.</returns>
@@ -75,9 +65,7 @@ namespace FronkonGames.GameWork.Foundation
       return (byte)(self ^ (1 << pos));
     }
 
-    /// <summary>
-    /// Byte a string.
-    /// </summary>
+    /// <summary> Byte a string. </summary>
     /// <param name="b">Value</param>
     /// <returns>String.</returns>
     public static string ToBinaryString(this byte b) => Convert.ToString(b, 2).PadLeft(8, '0');    

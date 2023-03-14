@@ -20,9 +20,7 @@ using UnityEngine;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary>
-  /// Attribute.
-  /// </summary>
+  /// <summary> Only Editable In Play attribute. </summary>
   [Conditional("UNITY_EDITOR")]
   [AttributeUsage(AttributeTargets.Field | 
                   AttributeTargets.Property |

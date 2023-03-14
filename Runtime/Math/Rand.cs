@@ -20,56 +20,60 @@ using UnityRandom = UnityEngine.Random;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary>
-  /// Random functions.
-  /// </summary>
+  /// <summary> Random functions. </summary>
   public static class Rand
   {
     // Int
 
-    /// <summary></summary>
-    public static int Range(int min, int max) => random.Next(min, max);
+    /// <summary> A random int within [min..max] (range is inclusive). </summary>
+    /// <param name="min">Minimo</param>
+    /// <param name="max">Maximo</param>
+    /// <returns>Number</returns>
+    public static int Range(int min, int max) => UnityRandom.Range(min, max);
     
     // 1D
     
     /// <summary>Random float within [0 .. 1]</summary>
     public static float Value => UnityRandom.value;
     
-    /// <summary></summary>
+    /// <summary> Positive or negative at 50% </summary>
     public static float Sign => Value > 0.5f ? 1.0f : -1.0f;
 
-    /// <summary></summary>
+    /// <summary> One dimension direction at 50% </summary>
     public static float Direction1D => Sign;
     
-    /// <summary></summary>
+    /// <summary> A random float within [min..max] (range is inclusive). </summary>
+    /// <param name="min"></param>
+    /// <param name="max"></param>
+    /// <returns></returns>
     public static float Range(float min, float max) => UnityRandom.Range(min, max);
 
     // 2D
     
-    /// <summary></summary>
+    /// <summary> Random unit Vector2 </summary>
     public static Vector2 OnUnitCircle => MathUtils.AngToDir(Value * MathConstants.Tau);
 
-    /// <summary></summary>
+    /// <summary> Random unit 2D direction </summary>
     public static Vector2 Direction2D => OnUnitCircle;
 
-    /// <summary></summary>
+    /// <summary> A random point inside or on a circle with radius 1 </summary>
     public static Vector2 InUnitCircle => UnityRandom.insideUnitCircle;
 
-    /// <summary></summary>
-    public static Vector2 InUnitSquare => new Vector2(Value, Value);
+    /// <summary> A random point inside or on a square with sides 1 </summary>
+    public static Vector2 InUnitSquare => new(Value, Value);
 
     // 3D
 
-    /// <summary></summary>
+    /// <summary> A random point on the surface of a sphere with radius 1 </summary>
     public static Vector3 OnUnitSphere => UnityRandom.onUnitSphere;
 
-    /// <summary></summary>
+    /// <summary> Random unit 3D direction </summary>
     public static Vector3 Direction3D => OnUnitSphere;
     
-    /// <summary></summary>
+    /// <summary> A random point inside or on a sphere with radius 1 </summary>
     public static Vector3 InUnitSphere => UnityRandom.insideUnitSphere;
 
-    /// <summary></summary>
+    /// <summary> A random point inside or on a cube with sides 1 </summary>
     public static Vector3 InUnitCube => new Vector3(Value, Value, Value);
 
     // 2D orientation

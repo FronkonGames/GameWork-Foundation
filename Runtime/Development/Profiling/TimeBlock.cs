@@ -20,9 +20,7 @@ using System.Diagnostics;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary>
-  /// Time profiling block.
-  /// </summary>
+  /// <summary> Time profiling block. </summary>
   public class TimeBlock : IDisposable
   {
     private readonly string title;

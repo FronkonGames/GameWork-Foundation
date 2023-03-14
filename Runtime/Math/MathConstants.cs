@@ -18,33 +18,31 @@ using UnityEngine;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary>
-  /// Math constants.
-  /// </summary>
+  /// <summary> Math constants. </summary>
   public static class MathConstants
   {
-    /// <summary></summary>
+    /// <summary> The ratio of a circle's circumference to its diameter </summary>
     public static readonly float Pi                 = 3.14159265358979f;
 
-    /// <summary></summary>     
+    /// <summary> Pi / 2 </summary>     
     public static readonly float PiHalf             = Pi * 0.5f;
 
-    /// <summary></summary>     
+    /// <summary> Pi * 2 </summary>     
     public static readonly float Pi2                = Pi * 2.0f;
 
-    /// <summary></summary>     
+    /// <summary> Euler's number </summary>     
     public static readonly float E                  = 2.71828182846f;
 
-    /// <summary></summary>     
+    /// <summary> The ratio between circumference and radius (2 * Pi) </summary>     
     public static readonly float Tau                = 6.28318530717959f;
 
-    /// <summary></summary>     
-    public static readonly float GoldenRation       = 1.61803398875f;
+    /// <summary> The ratio of their sum to the larger of the two quantities </summary>     
+    public static readonly float GoldenRatio        = 1.61803398875f;
     
-    /// <summary></summary>
+    /// <summary> Multiplying to convert from degrees to radians </summary>
     public static readonly float Deg2Rad            = Tau / 360.0f;
 
-    /// <summary></summary>
+    /// <summary> Multiplying to convert from radians to degrees </summary>
     public static readonly float Rad2Deg  = 360.0f / Tau;
 
     /// <summary>1.0 / 3.0</summary>
@@ -59,31 +57,31 @@ namespace FronkonGames.GameWork.Foundation
     /// <summary>Using float.epsilon can cause precision problems in Unity.</summary>
     public const float Epsilon                      = 1.4E-32f;
 
-    /// <summary></summary>
+    /// <summary> Positive infinity </summary>
     public static readonly float Infinity           = Mathf.Infinity;
     
-    /// <summary></summary>
+    /// <summary> Negative infinity </summary>
     public static readonly float NegativeInfinity   = Mathf.NegativeInfinity;
 
-    /// <summary></summary>
-    public static readonly Vector2 NaNVector2      = new Vector2(float.NaN, float.NaN);
+    /// <summary> Invalid Vector2 </summary>
+    public static readonly Vector2 NaNVector2      = new(float.NaN, float.NaN);
     
-    /// <summary></summary>
-    public static readonly Vector2 InfinityVector2 = new Vector2(Infinity, Infinity);
+    /// <summary> Vector2 infinity </summary>
+    public static readonly Vector2 InfinityVector2 = new(Infinity, Infinity);
     
-    /// <summary></summary>
-    public static readonly Vector3 NaNVector3      = new Vector3(float.NaN, float.NaN, float.NaN);
+    /// <summary> Invalid Vector3 </summary>
+    public static readonly Vector3 NaNVector3      = new(float.NaN, float.NaN, float.NaN);
     
-    /// <summary></summary>
+    /// <summary> Vector3 infinity </summary>
     public static readonly Vector3 InfinityVector3 = new Vector3(Infinity, Infinity, Infinity);
 
-    /// <summary></summary>
+    /// <summary> Invalid Vector4 </summary>
     public static readonly Vector4 NaNVector4      = new Vector4(float.NaN, float.NaN, float.NaN, float.NaN);
     
-    /// <summary></summary>
+    /// <summary> Vector4 infinity </summary>
     public static readonly Vector3 InfinityVector4 = new Vector4(Infinity, Infinity, Infinity, Infinity);
     
-    /// <summary></summary>
+    /// <summary> Empty ray </summary>
     public static readonly Ray EmptyRay = new Ray();
   }
 }

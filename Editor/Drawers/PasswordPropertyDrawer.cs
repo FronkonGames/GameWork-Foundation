@@ -20,9 +20,7 @@ using UnityEditor;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary>
-  /// .
-  /// </summary>
+  /// <summary> Password drawer. </summary>
   [CustomPropertyDrawer(typeof(PasswordAttribute), true)]
   public sealed class PasswordPropertyDrawer : PropertyDrawer
   {

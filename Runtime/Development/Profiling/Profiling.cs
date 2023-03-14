@@ -16,14 +16,10 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary>
-  /// Profiling.
-  /// </summary>
+  /// <summary> Profiling. </summary>
   public static class Profiling
   {
-    /// <summary>
-    /// It measures the elapsed time.
-    /// </summary>
+    /// <summary> It measures the elapsed time. </summary>
     /// <param name="title">Label</param>
     /// <returns>TimeBlock</returns>
     public static TimeBlock Time(string title) =>
@@ -33,9 +29,7 @@ namespace FronkonGames.GameWork.Foundation
       null;
 #endif
 
-    /// <summary>
-    /// It measures the memory consumed.
-    /// </summary>
+    /// <summary> It measures the memory consumed. </summary>
     /// <param name="title">Label</param>
     /// <returns>MemoryBlock</returns>
     public static MemoryBlock Memory(string title) =>

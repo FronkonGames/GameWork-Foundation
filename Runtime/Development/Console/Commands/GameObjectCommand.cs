@@ -18,9 +18,7 @@ using UnityEngine;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary>
-  /// GameObject commands.
-  /// </summary>
+  /// <summary> GameObject commands. </summary>
   [CreateAssetMenu(fileName = "GameObject", menuName = "Game:Work/Development/Command/GameObject")]
   public class GameObjectCommand : DevelopmentCommand
   {
@@ -31,6 +29,7 @@ namespace FronkonGames.GameWork.Foundation
       Description = "Operations on GameObjects.";
     }
 
+    /// <inheritdoc/>
     public override bool Execute(string[] args)
     {
       if (args.Length > 1)

@@ -20,9 +20,7 @@ using FronkonGames.GameWork.Foundation;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary>
-  /// .
-  /// </summary>
+  /// <summary> 'Hide If' drawer. </summary>
   [CustomPropertyDrawer(typeof(HideIfAttribute), true)]
   public sealed class HideIfPropertyDrawer : PropertyDrawer
   {

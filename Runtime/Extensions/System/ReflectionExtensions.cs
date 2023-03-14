@@ -21,18 +21,13 @@ using UnityEngine;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary>
-  /// Reflection extensions.
-  /// </summary>
+  /// <summary> Reflection extensions. </summary>
   public static class ReflectionExtensions
   {
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="self"></param>
-    /// <param name="attributeName"></param>
-    /// <typeparam name="T"></typeparam>
-    /// <returns></returns>
+    /// <summary> Returns an attribute or null. </summary>
+    /// <param name="self"> The object. </param>
+    /// <param name="attributeName"> Attribute name. </param>
+    /// <returns> Attribute or null. </returns>
     public static T GetAttribute<T>(this object self, string attributeName) where T : Attribute
     {
       T attribute = null;
@@ -58,13 +53,9 @@ namespace FronkonGames.GameWork.Foundation
       return attribute;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="self"></param>
-    /// <param name="attributeName"></param>
-    /// <typeparam name="T"></typeparam>
-    /// <returns></returns>
+    /// <summary> Does it have the attribute? </summary>
+    /// <param name="attributeName"> Attribute name. </param>
+    /// <returns> True or false. </returns>
     public static bool HasAttribute<T>(this object self) where T : Attribute
     {
       FieldInfo[] fields = self.GetType().GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
@@ -78,12 +69,9 @@ namespace FronkonGames.GameWork.Foundation
       return false;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="self"></param>
-    /// <typeparam name="T"></typeparam>
-    /// <returns></returns>
+    /// <summary> Returns all attributes. </summary>
+    /// <param name="self"> The object. </param>
+    /// <returns> Array of attributes. </returns>
     public static T[] GetAttributes<T>(this object self) where T : Attribute
     {
       List<T> attributes = new List<T>();
@@ -99,15 +87,12 @@ namespace FronkonGames.GameWork.Foundation
       return attributes.ToArray();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="self"></param>
-    /// <param name="propertyName"></param>
-    /// <param name="attribute"></param>
-    /// <param name="propertyInfo"></param>
-    /// <typeparam name="T"></typeparam>
-    /// <returns></returns>
+    /// <summary> Returns property or null. </summary>
+    /// <param name="self"> The object. </param>
+    /// <param name="propertyName"> Property name. </param>
+    /// <param name="attribute"> Attribute or null. </param>
+    /// <param name="propertyInfo"> Property info. </param>
+    /// <returns> True or false. </returns>
     public static bool GetProperty<T>(this object self, string propertyName, out T attribute, out PropertyInfo propertyInfo) where T : PropertyAttribute
     {
       attribute = null;

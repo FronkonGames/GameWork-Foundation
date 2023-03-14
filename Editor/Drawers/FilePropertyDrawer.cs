@@ -20,9 +20,7 @@ using FronkonGames.GameWork.Foundation;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary>
-  /// .
-  /// </summary>
+  /// <summary> File button drawer. </summary>
   [CustomPropertyDrawer(typeof(FileAttribute), true)]
   public sealed class FilePropertyDrawer : PropertyDrawer
   {

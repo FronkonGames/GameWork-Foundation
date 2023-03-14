@@ -20,9 +20,7 @@ using UnityEditor;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary>
-  /// .
-  /// </summary>
+  /// <summary> Scene selector drawer. </summary>
   [CustomPropertyDrawer(typeof(SceneAttribute), true)]
   public sealed class ScenePropertyDrawer : PropertyDrawer
   {

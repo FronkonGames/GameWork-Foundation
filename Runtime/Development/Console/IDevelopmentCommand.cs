@@ -17,29 +17,19 @@
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary>
-  /// Console Command interface.
-  /// </summary>
+  /// <summary> Console Command interface. </summary>
   public interface IDevelopmentCommand
   {
-    /// <summary>
-    /// Command Id.
-    /// </summary>
+    /// <summary> Command Id. </summary>
     string Id { get; set; }
 
-    /// <summary>
-    /// Use.
-    /// </summary>
+    /// <summary> Use. </summary>
     string Usage { get; set; }
 
-    /// <summary>
-    /// Description of use.
-    /// </summary>
+    /// <summary> Description of use. </summary>
     string Description { get; set; }
 
-    /// <summary>
-    /// Execute the command.
-    /// </summary>
+    /// <summary> Execute the command. </summary>
     /// <param name="args">Arguments</param>
     /// <returns>Success</returns>
     bool Execute(string[] args);

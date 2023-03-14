@@ -21,15 +21,11 @@ using Vector3 = UnityEngine.Vector3;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary>
-  /// Drawing of objects for development.
-  /// </summary>
+  /// <summary> Drawing of objects for development. </summary>
   /// <remarks>Only available in the Editor</remarks>
   public static partial class DebugDraw
   {
-    /// <summary>
-    /// Draw a point with a three-axis cross.
-    /// </summary>
+    /// <summary> Draw a point with a three-axis cross. </summary>
     /// <remarks>Only available in the Editor</remarks>
     /// <param name="self">Point</param>
     /// <param name="size">Size</param>
@@ -38,9 +34,7 @@ namespace FronkonGames.GameWork.Foundation
     public static void Draw(this Vector3 self, float size = PointSize, Color? color = null)
       => Point(self, size, color);
 
-    /// <summary>
-    /// Draw an array of points using three-axis crosshairs.
-    /// </summary>
+    /// <summary> Draw an array of points using three-axis crosshairs. </summary>
     /// <remarks>Only available in the Editor</remarks>
     /// <param name="self">Points</param>
     /// <param name="size">Size</param>
@@ -49,9 +43,7 @@ namespace FronkonGames.GameWork.Foundation
     public static void Draw(this Vector3[] self, float size = PointSize, Color? color = null)
       => Points(self, size, color);
 
-    /// <summary>
-    ///  Draw an arrow indicating the forward direction.
-    /// </summary>
+    /// <summary>  Draw an arrow indicating the forward direction. </summary>
     /// <remarks>Only available in the Editor</remarks>
     /// <param name="self">Transform</param>
     /// <param name="length">Length</param>
@@ -60,36 +52,28 @@ namespace FronkonGames.GameWork.Foundation
     public static void Draw(this Transform self, float length = 1.0f, Color? color = null)
       => Arrow(self.position, self.rotation, length, ArrowTipSize, ArrowWidth, color);
 
-    /// <summary>
-    /// Draw bounds.
-    /// </summary>
+    /// <summary> Draw bounds. </summary>
     /// <remarks>Only available in the Editor</remarks>
     /// <param name="self">Bounds</param>
     /// <param name="color">Color</param>
     [Conditional("UNITY_EDITOR")]
     public static void Draw(this Bounds self, Color? color = null) => Bounds(self, color);
 
-    /// <summary>
-    /// Draw bounds.
-    /// </summary>
+    /// <summary> Draw bounds. </summary>
     /// <remarks>Only available in the Editor</remarks>
     /// <param name="self">Bounds</param>
     /// <param name="color">Color</param>
     [Conditional("UNITY_EDITOR")]
     public static void Draw(this BoundsInt self, Color? color = null) => Bounds(new Bounds(self.center, self.size), color);
 
-    /// <summary>
-    /// Draw a ray. 
-    /// </summary>
+    /// <summary> Draw a ray. </summary>
     /// <remarks>Only available in the Editor</remarks>
     /// <param name="self">Ray</param>
     /// <param name="color">Color</param>
     [Conditional("UNITY_EDITOR")]
     public static void Draw(this Ray self, Color? color = null) => Ray(self.origin, Quaternion.LookRotation(self.direction), color);
 
-    /// <summary>
-    /// Draw a ray with marks where there are impacts.
-    /// </summary>
+    /// <summary> Draw a ray with marks where there are impacts. </summary>
     /// <remarks>Only available in the Editor</remarks>
     /// <param name="self">Ray</param>
     /// <param name="hits">Ray hits</param>
@@ -114,9 +98,7 @@ namespace FronkonGames.GameWork.Foundation
       }
     }
 
-    /// <summary>
-    /// Draw the name of the GameObject.
-    /// </summary>
+    /// <summary> Draw the name of the GameObject. </summary>
     /// <remarks>Only available in the Editor</remarks>
     /// <param name="self">GameObject</param>
     /// <param name="color">Color</param>

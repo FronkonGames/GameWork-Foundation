@@ -18,24 +18,16 @@ using UnityEngine;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary>
-  /// Console Command.
-  /// </summary>
+  /// <summary> Console Command base. </summary>
   public abstract class DevelopmentCommand : ScriptableObject, IDevelopmentCommand
   {
-    /// <summary>
-    /// Command Id.
-    /// </summary>
+    /// <summary> Command Id. </summary>
     public string Id { get => id; set => id = value; }
 
-    /// <summary>
-    /// Use.
-    /// </summary>
+    /// <summary> Use. </summary>
     public string Usage { get => usage; set => usage = value; }
 
-    /// <summary>
-    /// Description of use.
-    /// </summary>
+    /// <summary> Description of use. </summary>
     public string Description { get => description; set => description = value; }
 
     [SerializeField]
@@ -47,9 +39,7 @@ namespace FronkonGames.GameWork.Foundation
     [SerializeField]
     private string description;
 
-    /// <summary>
-    /// Execute the command.
-    /// </summary>
+    /// <summary> Execute the command. </summary>
     /// <param name="args">Arguments</param>
     /// <returns>Success</returns>
     public abstract bool Execute(string[] args);

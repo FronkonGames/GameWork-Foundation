@@ -18,46 +18,30 @@ using UnityEngine;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary>
-  /// Color extensions.
-  /// </summary>
+  /// <summary> Color extensions. </summary>
   public static class ColorExtensions
   {
-    /// <summary>
-    /// Color with the R component changed.
-    /// </summary>
-    /// <param name="self">Color</param>
+    /// <summary> Color with the R component changed. </summary>
     /// <param name="r">component</param>
     /// <returns>Color</returns>
     public static Color SetR(this Color self, float r) => new(r, self.g, self.b, self.a);
 
-    /// <summary>
-    /// Color with the G component changed.
-    /// </summary>
-    /// <param name="self">Color</param>
+    /// <summary> Color with the G component changed. </summary>
     /// <param name="r">component</param>
     /// <returns>Color</returns>
     public static Color SetG(this Color self, float g) => new(self.r, g, self.b, self.a);
 
-    /// <summary>
-    /// Color with the B component changed.
-    /// </summary>
-    /// <param name="self">Color</param>
+    /// <summary> Color with the B component changed. </summary>
     /// <param name="r">component</param>
     /// <returns>Color</returns>
     public static Color SetB(this Color self, float b) => new(self.r, self.g, b, self.a);
 
-    /// <summary>
-    /// Color with the A component changed.
-    /// </summary>
-    /// <param name="self">Color</param>
+    /// <summary> Color with the A component changed. </summary>
     /// <param name="r">component</param>
     /// <returns>Color</returns>
     public static Color SetA(this Color self, float a) => new(self.r, self.g, self.b, a);
 
-    /// <summary>
-    /// From hex string.
-    /// </summary>
+    /// <summary> From hex string. </summary>
     /// <param name="text">HTML color, ie '#FF00FF'</param>
     /// <returns>String</returns>
     public static Color FromHex(this string text)
@@ -67,10 +51,7 @@ namespace FronkonGames.GameWork.Foundation
       return color;    
     }
     
-    /// <summary>
-    /// To hex string.
-    /// </summary>
-    /// <param name="self">Value</param>
+    /// <summary> To hex string. </summary>
     /// <returns>String</returns>
     public static string ToHex(this Color self)
     {
@@ -79,10 +60,7 @@ namespace FronkonGames.GameWork.Foundation
       return $"{color32.r:X2}{color32.g:X2}{color32.b:X2}";    
     }
 
-    /// <summary>
-    /// Brightness correction.
-    /// </summary>
-    /// <param name="self">Value</param>
+    /// <summary> Brightness correction. </summary>
     /// <param name="correctionFactor">Brightness correction factor [-1 - 1]</param>
     /// <returns>Color with corrected brightness.</returns>
     public static Color ChangeBrightness(this Color self, float correctionFactor)
@@ -108,49 +86,32 @@ namespace FronkonGames.GameWork.Foundation
       return new Color(red / 255, green / 255, blue / 255, self.a);
     }
 
-    /// <summary>
-    /// Is it almost black?
-    /// </summary>
-    /// <param name="self">Value</param>
+    /// <summary> Is it almost black? </summary>
     /// <returns>True if it is almost almost black.</returns>
     public static bool IsApproximatelyBlack(this Color self) => self.r <= MathConstants.Epsilon &&
                                                                 self.g <= MathConstants.Epsilon &&
                                                                 self.b <= MathConstants.Epsilon;
 
-    /// <summary>
-    /// Is it almost white?
-    /// </summary>
-    /// <param name="self">Value</param>
+    /// <summary> Is it almost white? </summary>
     /// <returns>True if it is almost almost white.</returns>
     public static bool IsApproximatelyWhite(this Color self) => self.r >= 1.0f - MathConstants.Epsilon &&
                                                                 self.g >= 1.0f - MathConstants.Epsilon &&
                                                                 self.b >= 1.0f - MathConstants.Epsilon;
 
-    /// <summary>
-    /// Opaque version of the color.
-    /// </summary>
-    /// <param name="self">Value</param>
+    /// <summary> Opaque version of the color. </summary>
     /// <returns>New opaque color.</returns>
     public static Color Opaque(this Color self) => new(self.r, self.g, self.b);
 
-    /// <summary>
-    /// Inverted color.
-    /// </summary>
-    /// <param name="self">Value</param>
+    /// <summary> Inverted color. </summary>
     /// <returns>New inverted color.</returns>
     public static Color Invert(this Color self) => new(1.0f - self.r, 1.0f - self.g, 1.0f - self.b, self.a);
 
-    /// <summary>
-    /// Same color, different alpha.
-    /// </summary>
-    /// <param name="self">Value</param>
+    /// <summary> Same color, different alpha. </summary>
     /// <param name="alpha">Alpha</param>
     /// <returns>New color.</returns>
     public static Color WithAlpha(this Color self, float alpha) => new(self.r, self.g, self.b, alpha);
 
-    /// <summary>
-    /// Random color.
-    /// </summary>
+    /// <summary> Random color. </summary>
     /// <returns>New color.</returns>
     public static Color Random()
     {
@@ -163,10 +124,7 @@ namespace FronkonGames.GameWork.Foundation
       };
     }
 
-    /// <summary>
-    /// Random color.
-    /// </summary>
-    /// <param name="self">Value</param>
+    /// <summary> Random color. </summary>
     /// <returns>New random color.</returns>
     public static Color Random(this Color self)
     {

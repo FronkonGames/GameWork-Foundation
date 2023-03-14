@@ -19,9 +19,7 @@ using UnityEditor;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary>
-  /// .
-  /// </summary>
+  /// <summary> Not Null drawer. </summary>
   [CustomPropertyDrawer(typeof(NotNullAttribute), true)]
   public sealed class NotNullPropertyDrawer : PropertyDrawer
   {

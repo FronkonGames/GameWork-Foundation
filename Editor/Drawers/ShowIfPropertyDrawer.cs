@@ -20,9 +20,7 @@ using FronkonGames.GameWork.Foundation;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary>
-  /// .
-  /// </summary>
+  /// <summary> 'Show If' drawer. </summary>
   [CustomPropertyDrawer(typeof(ShowIfAttribute), true)]
   public sealed class ShowIfPropertyDrawer : PropertyDrawer
   {

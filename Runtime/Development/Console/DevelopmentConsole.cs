@@ -19,15 +19,10 @@ using UnityEngine;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary>
-  /// Development Console.
-  /// </summary>
+  /// <summary> Development Console. </summary>
   public class DevelopmentConsole : BaseMonoBehaviour
   {
-    /// <summary>
-    /// Show console.
-    /// </summary>
-    /// <value>Value</value>
+    /// <summary> Show console. </summary>
     public bool Show
     {
       get => show;

@@ -19,15 +19,11 @@ using System.Diagnostics;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary>
-  /// Check conditions.
-  /// </summary>
+  /// <summary> Check conditions. </summary>
   [DebuggerNonUserCode]
   public static partial class Check
   {
-    /// <summary>
-    /// Check a condition. Throws an exception if it fails.
-    /// </summary>
+    /// <summary> Check a condition. Throws an exception if it fails. </summary>
     /// <param name="condition">Condition</param>
     /// <param name="message">Message</param>
     public static void Assert(bool condition, string message)

@@ -26,6 +26,7 @@ public partial class PatternsTests
 {
   private class TestPublisher : Publisher<int>
   {
+    public void Fire(int i) => Notify(i);
   }
 
   private class TestObserver : IObserver<int>
@@ -35,9 +36,7 @@ public partial class PatternsTests
     public void OnNotify(int value) => Value += value;
   }
 
-  /// <summary>
-  /// Observer test.
-  /// </summary>
+  /// <summary> Observer test. </summary>
   [UnityTest]
   public IEnumerator Observer()
   {
@@ -52,17 +51,16 @@ public partial class PatternsTests
     for (int i = 0; i < 10; ++i)
       Assert.AreEqual(observers[i].Value, 0);
 
-    publisher.Notify(1);
+    publisher.Fire(42);
 
     for (int i = 0; i < 10; ++i)
-      Assert.AreEqual(observers[i].Value, 1);
+      Assert.AreEqual(observers[i].Value, 42);
 
     publisher.RemoveObservers(observers);
 
-    publisher.Notify(1);
-
+    publisher.Fire(0);
     for (int i = 0; i < 10; ++i)
-      Assert.AreEqual(observers[i].Value, 1);
+      Assert.AreEqual(observers[i].Value, 42);
 
     yield return null;
   }

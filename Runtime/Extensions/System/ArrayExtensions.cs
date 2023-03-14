@@ -18,41 +18,27 @@ using System;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary>
-  /// Array extensions.
-  /// </summary>
+  /// <summary> Array extensions. </summary>
   public static class ArrayExtensions
   {
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="self"></param>
-    /// <typeparam name="T"></typeparam>
-    /// <returns></returns>
-    public static T Random<T>(this T[] self) => self[Rand.Range(0, self.Length)];
+    /// <summary> Returns a random element. </summary>
+    /// <param name="self"> The array. </param>
+    /// <returns> Value or default. </returns>
+    public static T Random<T>(this T[] self) => self.Length > 0 ? self[Rand.Range(0, self.Length)] : default;
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="self"></param>
-    /// <typeparam name="T"></typeparam>
+    /// <summary> Clears the array. </summary>
+    /// <param name="self"> The array. </param>
     public static void Clear<T>(this T[] self) => Array.Clear(self, 0, self.Length);
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="self"></param>
-    /// <param name="index"></param>
-    /// <param name="count"></param>
-    /// <typeparam name="T"></typeparam>
+    /// <summary> Clears the array in a range. </summary>
+    /// <param name="self"> The array. </param>
+    /// <param name="index"> Start of the range. </param>
+    /// <param name="count"> Number of elements to be cleaned. </param>
     public static void Clear<T>(this T[] self, int index, int count) => Array.Clear(self, index, count);
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="self"></param>
-    /// <typeparam name="T"></typeparam>
-    /// <returns></returns>
+    /// <summary> Copies one array into another. </summary>
+    /// <param name="self"> The array. </param>
+    /// <returns> Copy of the array. </returns>
     public static T[] Copy<T>(this T[] self)
     {
       T[] result = new T[self.Length];
@@ -61,50 +47,35 @@ namespace FronkonGames.GameWork.Foundation
       return result;
     }
 
-    /// <summary>
-    /// Get a subarray.
-    /// </summary>
-    /// <param name="self"></param>
-    /// <param name="offset"></param>
-    /// <param name="length"></param>
-    /// <typeparam name="T"></typeparam>
-    /// <returns></returns>
+    /// <summary> Get a subarray. </summary>
+    /// <param name="self"> The array. </param>
+    /// <param name="offset"> Offset. </param>
+    /// <param name="length"> Length. </param>
+    /// <returns> Subarray. </returns>
     public static T[] Sub<T>(this T[] self, int offset, int length) => new ArraySegment<T>(self, offset, length).ToArray();
 
-    /// <summary>
-    /// Swaps a pair of elements.
-    /// </summary>
-    /// <param name="self"></param>
-    /// <param name="i"></param>
-    /// <param name="j"></param>
-    /// <typeparam name="T"></typeparam>
+    /// <summary> Swaps a pair of elements. </summary>
+    /// <param name="self"> The array. </param>
+    /// <param name="i"> First element. </param>
+    /// <param name="j"> Second element. </param>
     public static void Swap<T>(this T[] self, int i, int j) => (self[i], self[j]) = (self[j], self[i]);
 
-    /// <summary>
-    /// Reverses an array of items in place.
-    /// </summary>
-    /// <param name="self"></param>
-    /// <typeparam name="T"></typeparam>
+    /// <summary> Reverses an array of items in place. </summary>
+    /// <param name="self"> The array. </param>
     public static void Reverse<T>(this T[] self) => Reverse(self, 0, self.Length);
 
-    /// <summary>
-    /// Reverses the order of the items within the specified range in place.
-    /// </summary>
-    /// <param name="self"></param>
-    /// <param name="from"></param>
-    /// <param name="to"></param>
-    /// <typeparam name="T"></typeparam>
+    /// <summary> Reverses the order of the items within the specified range in place. </summary>
+    /// <param name="self"> The array. </param>
+    /// <param name="from"> From. </param>
+    /// <param name="to"> To. </param>
     public static void Reverse<T>(this T[] self, int from, int to)
     {
       while (--to > from)
         self.Swap(from++, to);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="self"></param>
-    /// <typeparam name="T"></typeparam>
+    /// <summary> Unsorts an array. </summary>
+    /// <param name="self"> The array. </param>
     public static void Shuffle<T>(this T[] self)
     {
       for (int i = self.Length - 1; i > 0; i--)
@@ -114,13 +85,10 @@ namespace FronkonGames.GameWork.Foundation
       }      
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="self"></param>
-    /// <param name="index"></param>
-    /// <param name="count"></param>
-    /// <typeparam name="T"></typeparam>
+    /// <summary> Unsorts an array. </summary>
+    /// <param name="self"> The array. </param>
+    /// <param name="index"> Start element. </param>
+    /// <param name="count"> Number of items. </param>
     public static void Shuffle<T>(this T[] self, int index, int count)
     {
       for (int i = count - 1; i > 0; i--)
@@ -130,11 +98,9 @@ namespace FronkonGames.GameWork.Foundation
       }
     }
 
-    /// <summary>
-    /// Calculates the sum of all elements in the array.
-    /// </summary>
-    /// <param name="self">The array.</param>
-    /// <returns>The sum of all elements in the array.</returns>
+    /// <summary> Calculates the sum of all elements in the array. </summary>
+    /// <param name="self"> The array. </param>
+    /// <returns> The sum of all elements in the array. </returns>
     public static int Sum(this int[] self)
     {
       int sum = 0, total = self.Length;
@@ -145,11 +111,9 @@ namespace FronkonGames.GameWork.Foundation
       return sum;
     }
 
-    /// <summary>
-    /// Calculates the sum of all elements in the array.
-    /// </summary>
-    /// <param name="self">The array.</param>
-    /// <returns>The sum of all elements in the array.</returns>
+    /// <summary> Calculates the sum of all elements in the array. </summary>
+    /// <param name="self"> The array. </param>
+    /// <returns> The sum of all elements in the array. </returns>
     public static float Sum(this float[] self)
     {
       float sum = 0.0f;
@@ -161,11 +125,9 @@ namespace FronkonGames.GameWork.Foundation
       return sum;
     }
 
-    /// <summary>
-    /// Returns the maximum value in the array.
-    /// </summary>
+    /// <summary> Returns the maximum value in the array. </summary>
     /// <typeparam name="T">The type of value to check.</typeparam>
-    /// <param name="self">Value.</param>
+    /// <param name="self"> The array. </param>
     /// <returns>The maximum value in the array.</returns>
     public static T Max<T>(this T[] self) where T : IComparable<T>
     {
@@ -184,11 +146,9 @@ namespace FronkonGames.GameWork.Foundation
       return max;
     }
 
-    /// <summary>
-    /// Returns the minimum value in the array.
-    /// </summary>
+    /// <summary> Returns the minimum value in the array. </summary>
     /// <typeparam name="T">The type of value to check.</typeparam>
-    /// <param name="self">Value.</param>
+    /// <param name="self"> The array. </param>
     /// <returns>The minimum value in the array.</returns>
     public static T Min<T>(this T[] self) where T : IComparable<T>
     {

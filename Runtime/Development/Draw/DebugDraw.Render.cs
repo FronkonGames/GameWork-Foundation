@@ -20,9 +20,7 @@ using UnityEngine;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary>
-  /// Drawing of objects for development.
-  /// </summary>
+  /// <summary> Drawing of objects for development. </summary>
   /// <remarks>Only available in the Editor</remarks>
   [UnityEditor.InitializeOnLoad]
   public static partial class DebugDraw

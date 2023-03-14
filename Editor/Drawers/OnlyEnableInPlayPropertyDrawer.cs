@@ -19,9 +19,7 @@ using UnityEditor;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary>
-  /// .
-  /// </summary>
+  /// <summary> Only Enable In Play mode drawer. </summary>
   [CustomPropertyDrawer(typeof(OnlyEditableInPlayAttribute), true)]
   public sealed class OnlyEnableInPlayPropertyDrawer : PropertyDrawer
   {

@@ -18,14 +18,10 @@ using System;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary>
-  /// IComparable extensions.
-  /// </summary>
+  /// <summary> IComparable extensions. </summary>
   public static class ComparableExtensions
   {
-    /// <summary>
-    /// Checks if the value is between a min and max value.
-    /// </summary>
+    /// <summary> Checks if the value is between a min and max value. </summary>
     /// <typeparam name="T">The type of value to check.</typeparam>
     /// <param name="self">Value.</param>
     /// <param name="min">The minimum value.</param>
@@ -50,9 +46,7 @@ namespace FronkonGames.GameWork.Foundation
       return true;
     }
 
-    /// <summary>
-    /// Checks if the value is in the range (min..max).
-    /// </summary>
+    /// <summary> Checks if the value is in the range (min..max). </summary>
     /// <typeparam name="T">The type of value to check.</typeparam>
     /// <param name="self">Value.</param>
     /// <param name="min">The minimum value.</param>

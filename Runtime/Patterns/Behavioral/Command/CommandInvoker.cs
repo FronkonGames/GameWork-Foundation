@@ -18,17 +18,13 @@ using System.Collections.Generic;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary>
-  /// Asks the command to carry out the request.
-  /// </summary>
+  /// <summary> Asks the command to carry out the request. </summary>
   public class CommandInvoker
   {
     private readonly Stack<ICommand> undo = new();
     private readonly Stack<ICommand> redo = new();
 
-    /// <summary>
-    /// Execute a command and add it to the undo redo stack if success.
-    /// </summary>
+    /// <summary> Execute a command and add it to the undo redo stack if success. </summary>
     /// <param name="command"></param>
     /// <returns>True if the execution was successful.</returns>
     public bool Execute(ICommand command)
@@ -44,9 +40,7 @@ namespace FronkonGames.GameWork.Foundation
       return false;
     }
 
-    /// <summary>
-    /// Reverse the last command executed.
-    /// </summary>
+    /// <summary> Reverse the last command executed. </summary>
     public void Undo()
     {
       if (undo.Count > 0)
@@ -59,9 +53,7 @@ namespace FronkonGames.GameWork.Foundation
         Log.Warning("Undo stack empty.");
     }
 
-    /// <summary>
-    /// Replay the last undone command.
-    /// </summary>
+    /// <summary> Replay the last undone command. </summary>
     public void Redo()
     {
       if (redo.Count > 0)

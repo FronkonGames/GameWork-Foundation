@@ -19,9 +19,7 @@ using UnityEditor;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary>
-  /// .
-  /// </summary>
+  /// <summary> Nice title drawer. </summary>
   [CustomPropertyDrawer(typeof(TitleAttribute), true)]
   public sealed class TitlePropertyDrawer : PropertyDrawer
   {

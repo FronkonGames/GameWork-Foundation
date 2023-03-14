@@ -18,9 +18,7 @@ using UnityEngine;
 using FronkonGames.GameWork.Foundation;
 using Random = UnityEngine.Random;
 
-/// <summary>
-/// Draw test.
-/// </summary>
+/// <summary> Draw test. </summary>
 [ExecuteInEditMode]
 public sealed class DrawDemo : MonoBehaviour
 {

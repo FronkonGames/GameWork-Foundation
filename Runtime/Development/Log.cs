@@ -30,9 +30,7 @@ using Debug = UnityEngine.Debug;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary>
-  /// Log level.
-  /// </summary>
+  /// <summary> Log level. </summary>
   public enum LogLevel : byte
   {
     // Info.
@@ -48,9 +46,7 @@ namespace FronkonGames.GameWork.Foundation
     Off
   }
 
-  /// <summary>
-  /// Text colors.
-  /// </summary>
+  /// <summary> Text colors. </summary>
   public static class LogColors
   {
     public static string Info     => "#1E7CAA";
@@ -58,15 +54,10 @@ namespace FronkonGames.GameWork.Foundation
     public static string Error    => "#FF3278";
   }
 
-  /// <summary>
-  /// Log messages.
-  /// </summary>
+  /// <summary> Log messages. </summary>
   public static class Log
   {
-    /// <summary>
-    /// Log level.
-    /// </summary>
-    /// <returns>Log level.</returns>
+    /// <summary> Log level. </summary>
     public static LogLevel Level { get; set; } = LogLevel.Info;
 
 #if UNITY_EDITOR
@@ -79,9 +70,7 @@ namespace FronkonGames.GameWork.Foundation
     private static void LogError(string message)    => Debug.LogError(message);
 #endif
 
-    /// <summary>
-    /// Information message.
-    /// </summary>
+    /// <summary> Information message. </summary>
     /// <param name="message">Message</param>
     [DebuggerStepThrough]
 #if LOGS_DEVELOPER_BUILD
@@ -96,9 +85,7 @@ namespace FronkonGames.GameWork.Foundation
         LogInfo($"[{Path.GetFileNameWithoutExtension(sourceFile)}:{member}] {message}");
     }
 
-    /// <summary>
-    /// Warning message.
-    /// </summary>
+    /// <summary> Warning message. </summary>
     /// <param name="message">Message</param>
     [DebuggerStepThrough]
 #if LOGS_DEVELOPER_BUILD
@@ -113,9 +100,7 @@ namespace FronkonGames.GameWork.Foundation
         LogWarning($"[{Path.GetFileNameWithoutExtension(sourceFile)}:{member}] {message}");
     }
 
-    /// <summary>
-    /// Error message.
-    /// </summary>
+    /// <summary> Error message. </summary>
     /// <param name="message">Message</param>
     [DebuggerStepThrough]
 #if LOGS_DEVELOPER_BUILD
@@ -130,9 +115,7 @@ namespace FronkonGames.GameWork.Foundation
         LogError($"[{Path.GetFileNameWithoutExtension(sourceFile)}:{member}] {message}");
     }
 
-    /// <summary>
-    /// Error message, exception and stack trace.
-    /// </summary>
+    /// <summary> Error message, exception and stack trace. </summary>
     /// <param name="message">Message</param>
     /// <param name="e">Exception</param>
     [DebuggerStepThrough]

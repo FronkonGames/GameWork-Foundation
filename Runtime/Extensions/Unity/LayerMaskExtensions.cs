@@ -18,23 +18,15 @@ using UnityEngine;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary>
-  /// LayerMask extensions.
-  /// </summary>
+  /// <summary> LayerMask extensions. </summary>
   public static class LayerMaskExtensions
   {
-    /// <summary>
-    /// GameObject in the layer?
-    /// </summary>
-    /// <param name="self">LayerMask</param>
+    /// <summary> GameObject in the layer? </summary>
     /// <param name="other">GameObject</param>
     /// <returns>True/false</returns>
     public static bool CheckLayermask(this LayerMask self, GameObject other) => CheckLayermask(self, other.layer);
 
-    /// <summary>
-    /// In the layer?
-    /// </summary>
-    /// <param name="self">LayerMask</param>
+    /// <summary> In the layer? </summary>
     /// <param name="layer">Value</param>
     /// <returns>True/false</returns>
     public static bool CheckLayermask(this LayerMask self, int layer) => ((1 << layer) & self) != 0;

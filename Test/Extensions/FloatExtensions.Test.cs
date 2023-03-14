@@ -104,6 +104,8 @@ public partial class ExtensionsTests
     Assert.IsFalse(2.0f.IsBetweenExclusive(0.0f, 1.0f));
     Assert.IsFalse((-2.0f).IsBetweenExclusive(0.0f, 1.0f));
 
+    Assert.AreEqual(3.1415f.ToInvariantCulture(), "3.1415");
+    
     yield return null;
   }
 }

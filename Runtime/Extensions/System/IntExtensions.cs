@@ -15,52 +15,41 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 using System;
+using System.Globalization;
 using UnityEngine;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary>
-  /// Int extensions.
-  /// </summary>
+  /// <summary> Int extensions. </summary>
   public static class IntExtensions
   {
     private static readonly string[] SizeSuffixes = { @"bytes", @"KB", @"MB", @"GB", @"TB", @"PB", @"EB", @"ZB", @"YB" };
 
     private const long ByteConversion = 1000;
 
-    /// <summary>
-    /// Value sign.
-    /// </summary>
+    /// <summary> Value sign. </summary>
     /// <param name="self">Value</param>
     /// <returns>1 if greater than or equal to 0, -1 if less than 0.</returns>
     public static int Sign(this int self) => self >= 0 ? 1 : -1;
 
-    /// <summary>
-    /// Returns the maximum value.
-    /// </summary>
+    /// <summary> Returns the maximum value. </summary>
     /// <param name="a">Value</param>
     /// <param name="b">Value</param>
     /// <returns>Int</returns>
     public static int Max(this int a, int b) => a < b ? b : a;
 
-    /// <summary>
-    /// Returns the minimum value.
-    /// </summary>
+    /// <summary> Returns the minimum value. </summary>
     /// <param name="a">Value</param>
     /// <param name="b">Value</param>
     /// <returns>Int</returns>
     public static int Min(this int a, int b) => a < b ? a : b;
     
-    /// <summary>
-    /// Returns the absolute value.
-    /// </summary>
+    /// <summary> Returns the absolute value. </summary>
     /// <param name="self">Value</param>
     /// <returns>Int</returns>
     public static int Abs(this int self) => Math.Abs(self);
 
-    /// <summary>
-    /// Constrain the value to a range.
-    /// </summary>
+    /// <summary> Constrain the value to a range. </summary>
     /// <param name="self">Value</param>
     /// <param name="min">Lower range</param>
     /// <param name="max">Upper range</param>
@@ -73,9 +62,7 @@ namespace FronkonGames.GameWork.Foundation
       return self > max ? max : self;
     }
 
-    /// <summary>
-    /// Pow.
-    /// </summary>
+    /// <summary> Pow. </summary>
     /// <param name="self">Value</param>
     /// <param name="exp">Exponent</param>
     /// <returns>Int</returns>
@@ -89,23 +76,17 @@ namespace FronkonGames.GameWork.Foundation
       return result;
     }
 
-    /// <summary>
-    /// Value is even.
-    /// </summary>
+    /// <summary> Value is even. </summary>
     /// <param name="self">Value</param>
     /// <returns>True/false</returns>
     public static bool IsEven(this int self) => self % 2 == 0;
 
-    /// <summary>
-    /// Value is odd.
-    /// </summary>
+    /// <summary> Value is odd. </summary>
     /// <param name="self">Value</param>
     /// <returns>True/false</returns>
     public static bool IsOdd(this int self) => self % 2 != 0;
 
-    /// <summary>
-    /// Next power of two.
-    /// </summary>
+    /// <summary> Next power of two. </summary>
     /// <param name="self">Value</param>
     /// <returns>Int</returns>
     public static int NextPowerOfTwo(this int self)
@@ -122,16 +103,12 @@ namespace FronkonGames.GameWork.Foundation
       return self;
     }
 
-    /// <summary>
-    /// Calculate the mask of a layer.
-    /// </summary>
+    /// <summary> Calculate the mask of a layer. </summary>
     /// <param name="self">Value</param>
     /// <returns>Int</returns>
     public static int GetMask(this int self) => 1 << self;
 
-    /// <summary>
-    /// Calculates the mask of a set of layers.
-    /// </summary>
+    /// <summary>Calculates the mask of a set of layers. </summary>
     /// <param name="self">Value</param>
     /// <returns>Int</returns>
     public static int GetMask(this int[] self)
@@ -143,17 +120,13 @@ namespace FronkonGames.GameWork.Foundation
       return layerMask;
     }
 
-    /// <summary>
-    /// Layer included?
-    /// </summary>
+    /// <summary> Layer included? </summary>
     /// <param name="self">Value</param>
     /// <param name="layermask">Layer mask</param>
     /// <returns>Layer included</returns>
     public static bool IsInLayerMask(this int self, LayerMask layermask) => layermask == (layermask | (1 << self));
 
-    /// <summary>
-    /// Layer incluida?
-    /// </summary>
+    /// <summary> Layer included? </summary>
     /// <param name="self">Value</param>
     /// <param name="layerName">Layer name</param>
     /// <returns>Layer included</returns>
@@ -164,9 +137,7 @@ namespace FronkonGames.GameWork.Foundation
       return layermask == (layermask | (1 << self));
     }
 
-    /// <summary>
-    /// Bytes to a text string.
-    /// </summary>
+    /// <summary> Bytes to a text string. </summary>
     /// <param name="self">Value</param>
     /// <returns>String</returns>
     public static string BytesToHumanReadable(this int self)
@@ -178,21 +149,17 @@ namespace FronkonGames.GameWork.Foundation
         return "0 bytes";
 
       int mag = (int)Math.Log(self, ByteConversion);
-      double adjustedSize = (self / Math.Pow(1024, mag));
+      float adjustedSize = self / Mathf.Pow(1024, mag);
 
-      return $"{adjustedSize:n2} {SizeSuffixes[mag]}";
+      return $"{adjustedSize.ToInvariantCulture()} {SizeSuffixes[mag]}";
     }
 
-    /// <summary>
-    /// Seconds to a text string.
-    /// </summary>
+    /// <summary> Seconds to a text string. </summary>
     /// <param name="self">Value</param>
     /// <returns>String</returns>
     public static string SecondsToHumanReadable(this int self) => $"{self / 3600:00}:{(self / 60) % 60:00}:{self % 60:00}";
 
-    /// <summary>
-    /// Returns the number of digits in the number.
-    /// </summary>
+    /// <summary> Returns the number of digits in the number. </summary>
     /// <param name="self">Value.</param>
     /// <returns>The number of digits in the number.</returns>
     public static int NumDigits(this int self) => Mathf.FloorToInt(Mathf.Log10((float)self.Abs()) + 1.0f);

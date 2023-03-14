@@ -18,9 +18,7 @@ using UnityEngine;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary>
-  /// Math utilities.
-  /// </summary>
+  /// <summary> Math utilities. </summary>
   public static partial class MathUtils
   {
     /// <summary>

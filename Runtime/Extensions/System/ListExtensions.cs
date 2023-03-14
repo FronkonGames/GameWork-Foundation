@@ -19,54 +19,37 @@ using System.Collections.Generic;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary>
-  /// List extensions.
-  /// </summary>
+  /// <summary> List extensions. </summary>
   public static class ListExtensions
   {
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="self"></param>
-    /// <typeparam name="T"></typeparam>
-    /// <returns></returns>
+    /// <summary> Returns an unordered list. </summary>
+    /// <param name="self"> The list. </param>
+    /// <returns> Unordered list. </returns>
     public static T Random<T>(this IList<T> self) => self[Rand.Range(0, self.Count)];
     
-    /// <summary>
-    /// Swaps a pair of elements.
-    /// </summary>
-    /// <param name="self"></param>
-    /// <param name="i"></param>
-    /// <param name="j"></param>
-    /// <typeparam name="T"></typeparam>
+    /// <summary> Swaps a pair of elements. </summary>
+    /// <param name="self"> The list. </param>
+    /// <param name="i"> First element. </param>
+    /// <param name="j"> Second element. </param>
     public static void Swap<T>(this IList<T> self, int i, int j) => (self[i], self[j]) = (self[j], self[i]);
 
-    /// <summary>
-    /// Eliminate an items range.
-    /// </summary>
-    /// <param name="self"></param>
-    /// <param name="entries"></param>
-    /// <typeparam name="T"></typeparam>
+    /// <summary> Eliminate an items range. </summary>
+    /// <param name="self"> The list. </param>
+    /// <param name="entries">Elements to be removed. </param>
     public static void RemoveRange<T>(this IList<T> self, IEnumerable<T> entries)
     {
       foreach (T item in entries)
         self.Remove(item);
     }
 
-    /// <summary>
-    /// Reverses a list of items in place.
-    /// </summary>
-    /// <param name="self"></param>
-    /// <typeparam name="T"></typeparam>
+    /// <summary> Reverses a list of items in place. </summary>
+    /// <param name="self"> The list. </param>
     public static void Reverse<T>(this IList<T> self) => Reverse(self, 0, self.Count);
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="self"></param>
-    /// <param name="from"></param>
-    /// <param name="to"></param>
-    /// <typeparam name="T"></typeparam>
+    /// <summary> Reverses a list of items. </summary>
+    /// <param name="self"> The list. </param>
+    /// <param name="from"> From. </param>
+    /// <param name="to"> To. </param>
     public static void Reverse<T>(this IList<T> self, int from, int to)
     {
       if (self is T[] array)
@@ -79,11 +62,8 @@ namespace FronkonGames.GameWork.Foundation
         self.Swap(from++, to);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="self"></param>
-    /// <typeparam name="T"></typeparam>
+    /// <summary> It unordered the list. </summary>
+    /// <param name="self"> The list. </param>
     public static void Shuffle<T>(this IList<T> self)
     {
       int n = self.Count - 1;
@@ -95,16 +75,14 @@ namespace FronkonGames.GameWork.Foundation
       }
     }
 
-    /// <summary>
-    /// Returns the maximum value in the list.
-    /// </summary>
+    /// <summary> Returns the maximum value in the list. </summary>
     /// <typeparam name="T">The type of value to check.</typeparam>
     /// <param name="self">The values to check.</param>
     /// <returns>The maximum value in the list.</returns>
     public static T Max<T>(this List<T> self) where T : IComparable<T>
     {
       if (self == null || self.Count == 0)
-        return default(T);
+        return default;
 
       T max = self[0];
       int total = self.Count;
@@ -118,16 +96,14 @@ namespace FronkonGames.GameWork.Foundation
       return max;
     }
 
-    /// <summary>
-    /// Returns the minimum value in the list.
-    /// </summary>
+    /// <summary> Returns the minimum value in the list. </summary>
     /// <typeparam name="T">The type of value to check.</typeparam>
     /// <param name="self">The values to check.</param>
     /// <returns>The minimum value in the list.</returns>
     public static T Min<T>(this List<T> self) where T : IComparable<T>
     {
       if (self == null || self.Count == 0)
-        return default(T);
+        return default;
 
       T min = self[0];
       int total = self.Count;

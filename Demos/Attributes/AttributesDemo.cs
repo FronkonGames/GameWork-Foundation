@@ -17,9 +17,7 @@
 using UnityEngine;
 using FronkonGames.GameWork.Foundation;
 
-/// <summary>
-/// Attributes test.
-/// </summary>
+/// <summary> Attributes test. </summary>
 public sealed class AttributesDemo : MonoBehaviour
 {
   [Title("Text")]

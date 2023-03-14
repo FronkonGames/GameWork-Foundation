@@ -20,9 +20,7 @@ using FronkonGames.GameWork.Foundation;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary>
-  /// .
-  /// </summary>
+  /// <summary> 'Enable If' drawer. </summary>
   [CustomPropertyDrawer(typeof(EnableIfAttribute), true)]
   public sealed class EnableIfPropertyDrawer : PropertyDrawer
   {

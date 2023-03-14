@@ -20,9 +20,7 @@ using UnityEditor;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary>
-  /// .
-  /// </summary>
+  /// <summary> Button drawer. </summary>
   [CustomPropertyDrawer(typeof(ButtonAttribute), true)]
   public sealed class ButtonPropertyDrawer : PropertyDrawer
   {

@@ -14,7 +14,10 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+using System;
 using System.Collections;
+using System.Globalization;
 using NUnit.Framework;
 using UnityEngine.TestTools;
 using UnityEngine;
@@ -83,8 +86,9 @@ public partial class ExtensionsTests
     int maskTest = LayerMask.NameToLayer("Test");
     Assert.IsTrue(maskTest.IsInLayerMask(Physics.AllLayers));
 
-    Assert.AreEqual(1024.BytesToHumanReadable(), "1.00 KB");
-    Assert.AreEqual((1024 * 1024).BytesToHumanReadable(), "1.00 MB");
+    Assert.AreEqual(16.BytesToHumanReadable(), "16 bytes");
+    Assert.AreEqual(1024.BytesToHumanReadable(), "1 KB");
+    Assert.AreEqual((1024 * 1024).BytesToHumanReadable(), "1 MB");
 
     Assert.AreEqual(60.SecondsToHumanReadable(), "00:01:00");
     Assert.AreEqual(3600.SecondsToHumanReadable(), "01:00:00");

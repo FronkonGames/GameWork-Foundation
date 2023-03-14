@@ -18,9 +18,7 @@ using System;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary>
-  /// Memory profiling block.
-  /// </summary>
+  /// <summary> Memory profiling block. </summary>
   public class MemoryBlock : IDisposable
   {
     private readonly string title;
