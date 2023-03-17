@@ -19,31 +19,38 @@ using System.Collections;
 using NUnit.Framework;
 using UnityEngine.TestTools;
 using FronkonGames.GameWork.Foundation;
-using Object = UnityEngine.Object;
+using UnityEngine;
 
-/// <summary>
-/// Patterns tests.
-/// </summary>
+/// <summary> Patterns tests. </summary>
 public partial class PatternsTests
 {
-  private class SingletonTest { };
-
+  [ExecuteInEditMode]
   private class MonoBehaviourSingletonTest : MonoBehaviourSingleton<MonoBehaviourSingletonTest> { };
   
-  /// <summary>
-  /// Singleton test.
-  /// </summary>
+  /// <summary> Singleton test. </summary>
   [UnityTest]
   public IEnumerator Singleton()
   {
-    SingletonTest singleton0 = Singleton<SingletonTest>.Instance;
-    SingletonTest singleton1 = Singleton<SingletonTest>.Instance;
-    Assert.AreEqual(singleton0, singleton1);
+    Assert.IsFalse(MonoBehaviourSingletonTest.IsCreated);
 
-    MonoBehaviourSingletonTest monoSingleton0 = MonoBehaviourSingletonTest.Instance;
-    MonoBehaviourSingletonTest monoSingleton1 = MonoBehaviourSingletonTest.Instance;
-    Assert.AreEqual(monoSingleton0, monoSingleton1);
+    GameObject gameObject = new();
+    MonoBehaviourSingletonTest monoBehaviourSingletonTest = gameObject.AddComponent<MonoBehaviourSingletonTest>();
 
+    Assert.NotNull(MonoBehaviourSingletonTest.Instance);
+    Assert.AreEqual(monoBehaviourSingletonTest.GetInstanceID(), MonoBehaviourSingletonTest.Instance.GetInstanceID());
+    Assert.IsTrue(MonoBehaviourSingletonTest.IsCreated);
+
+    gameObject.SafeDestroy();
+
+    Assert.IsFalse(MonoBehaviourSingletonTest.IsCreated);
+
+    monoBehaviourSingletonTest = MonoBehaviourSingletonTest.Instance;
+
+    Assert.NotNull(monoBehaviourSingletonTest);
+    Assert.IsTrue(MonoBehaviourSingletonTest.IsCreated);
+    Assert.AreEqual(monoBehaviourSingletonTest.GetInstanceID(), MonoBehaviourSingletonTest.Instance.GetInstanceID());
+    
     yield return null;
   }
 }
+

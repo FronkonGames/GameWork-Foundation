@@ -19,13 +19,13 @@ using UnityEngine;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary> Generic lazy non-persistent between scenes MonoBehaviour singleton thread-safe. </summary>
+  /// <summary> Generic lazy persistent between scenes MonoBehaviour singleton thread-safe. </summary>
   /// <remarks>
   /// FindObjectOfType is executed the first time you call Instance, so it is not recommended to do it in Update() or similar.
   /// </remarks>
   /// <typeparam name="T">Singleton type</typeparam>
   [DisallowMultipleComponent]
-  public abstract class MonoBehaviourSingleton<T> : BaseMonoBehaviour where T : BaseMonoBehaviour
+  public abstract class PersistentMonoBehaviourSingleton<T> : BaseMonoBehaviour where T : BaseMonoBehaviour
   {
     /// <summary> Instance. </summary>
     public static T Instance => Lazy.Value;
@@ -45,7 +45,11 @@ namespace FronkonGames.GameWork.Foundation
     {
       T instance = FindObjectOfType<T>(true);
       if (instance == null)
-        instance = new GameObject(typeof(T).Name).AddComponent<T>();
+      {
+        GameObject ownerObject = new GameObject(typeof(T).Name);
+        DontDestroyOnLoad(ownerObject);
+        instance = ownerObject.AddComponent<T>();
+      }
 
       return instance;
     }
