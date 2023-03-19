@@ -124,7 +124,10 @@ namespace FronkonGames.GameWork.Foundation.Editor
         }
 
         if (GUILayout.Button(EditorGUIUtility.IconContent("d_Refresh"), EditorStyles.iconButton) == true)
+        {
           setting.Reset();
+          EditorPrefs.SetString($"{EditorPrefPrefix}.{setting.Key}", setting.Value.ToHex());
+        }
       }
       EditorGUILayout.EndHorizontal();
     }
@@ -149,7 +152,10 @@ namespace FronkonGames.GameWork.Foundation.Editor
         }
 
         if (GUILayout.Button(EditorGUIUtility.IconContent("d_Refresh"), EditorStyles.iconButton) == true)
+        {
           setting.Reset();
+          EditorPrefs.SetInt($"{EditorPrefPrefix}.{setting.Key}", setting.Value);
+        }
       }
       EditorGUILayout.EndHorizontal();
     }
@@ -174,7 +180,10 @@ namespace FronkonGames.GameWork.Foundation.Editor
         }
 
         if (GUILayout.Button(EditorGUIUtility.IconContent("d_Refresh"), EditorStyles.iconButton) == true)
+        {
           setting.Reset();
+          EditorPrefs.SetFloat($"{EditorPrefPrefix}.{setting.Key}", setting.Value);
+        }
       }
       EditorGUILayout.EndHorizontal();
     }
@@ -199,7 +208,10 @@ namespace FronkonGames.GameWork.Foundation.Editor
         }
 
         if (GUILayout.Button(EditorGUIUtility.IconContent("d_Refresh"), EditorStyles.iconButton) == true)
+        {
           setting.Reset();
+          EditorPrefs.SetFloat($"{EditorPrefPrefix}.{setting.Key}", setting.Value);
+        }
       }
       EditorGUILayout.EndHorizontal();
     }

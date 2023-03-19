@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.5 - 2023-03-19
+
+### Fixed
+
+- Reset() button SettingValue does not save the value.
+
 ## 1.0.4 - 2023-03-19
 
 ### Changed
