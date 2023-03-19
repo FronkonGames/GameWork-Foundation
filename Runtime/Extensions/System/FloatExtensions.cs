@@ -14,7 +14,6 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 using System.Globalization;
 using UnityEngine;
 
@@ -66,6 +65,11 @@ namespace FronkonGames.GameWork.Foundation
     /// <summary> Returns the absolute value. </summary>
     /// <returns>Float</returns>
     public static float Abs(this float self) => Mathf.Abs(self);
+
+    /// <summary> Returns the rounded value. </summary>
+    /// <param name="snap"> Rounding distance </param>
+    /// <returns>Float</returns>
+    public static float Snap(this float self, float snap) => snap > 0.0f ? Mathf.Round(self / snap) * snap : self;
     
     /// <summary> Constrain the value to a range. </summary>
     /// <param name="min">Lower range</param>

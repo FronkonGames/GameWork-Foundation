@@ -24,7 +24,9 @@
 using System;
 using System.IO;
 using System.Diagnostics;
-using System.Runtime.CompilerServices;
+using CallerName = System.Runtime.CompilerServices.CallerMemberNameAttribute;
+using CallerPath = System.Runtime.CompilerServices.CallerFilePathAttribute;
+using CallerLine  = System.Runtime.CompilerServices.CallerLineNumberAttribute;
 
 using Debug = UnityEngine.Debug;
 
@@ -46,14 +48,6 @@ namespace FronkonGames.GameWork.Foundation
     Off
   }
 
-  /// <summary> Text colors. </summary>
-  public static class LogColors
-  {
-    public static string Info     => "#1E7CAA";
-    public static string Warning  => "#FF8449";
-    public static string Error    => "#FF3278";
-  }
-
   /// <summary> Log messages. </summary>
   public static class Log
   {
@@ -61,13 +55,13 @@ namespace FronkonGames.GameWork.Foundation
     public static LogLevel Level { get; set; } = LogLevel.Info;
 
 #if UNITY_EDITOR
-    private static void LogInfo(string message)     => Debug.Log($"<color={LogColors.Info}>{message}</color>");
-    private static void LogWarning(string message)  => Debug.LogWarning($"<color={LogColors.Warning}>{message}</color>");
-    private static void LogError(string message)    => Debug.LogError($"<color={LogColors.Error}>{message}</color>");
+    private static void LogInfo(string source, string message)     => Debug.Log($"{source} <color={Settings.LogInfoColor.Value.ToHex()}>{message}</color>");
+    private static void LogWarning(string source, string message)  => Debug.LogWarning($"{source} <color={Settings.LogWarningColor.Value.ToHex()}>{message}</color>");
+    private static void LogError(string source, string message)    => Debug.LogError($"{source} <color={Settings.LogErrorColor.Value.ToHex()}>{message}</color>");
 #else
-    private static void LogInfo(string message)     => Debug.Log(message);
-    private static void LogWarning(string message)  => Debug.LogWarning(message);
-    private static void LogError(string message)    => Debug.LogError(message);
+    private static void LogInfo(string source, string message)     => Debug.Log($"{source} {message}");
+    private static void LogWarning(string source, string message)  => Debug.LogWarning($"{source} {message}");
+    private static void LogError(string source, string message)    => Debug.LogError($"{source} {message}");
 #endif
 
     /// <summary> Information message. </summary>
@@ -79,10 +73,12 @@ namespace FronkonGames.GameWork.Foundation
 #if LOGS_EDITOR
     [Conditional("UNITY_EDITOR")]
 #endif
-    public static void Info(string message, [CallerMemberName]string member = "", [CallerFilePath]string sourceFile = "")
+    public static void Info(string message, [CallerName] string member = "",
+                                            [CallerPath] string sourceFile = "",
+                                            [CallerLine] int line = 0)
     {
       if (Level <= LogLevel.Info)
-        LogInfo($"[{Path.GetFileNameWithoutExtension(sourceFile)}:{member}] {message}");
+        LogInfo($"[{Path.GetFileNameWithoutExtension(sourceFile)}:{line}:{member}]", message);
     }
 
     /// <summary> Warning message. </summary>
@@ -94,10 +90,12 @@ namespace FronkonGames.GameWork.Foundation
 #if LOGS_EDITOR
     [Conditional("UNITY_EDITOR")]
 #endif
-    public static void Warning(string message, [CallerMemberName]string member = "", [CallerFilePath]string sourceFile = "")
+    public static void Warning(string message, [CallerName] string member = "",
+                                               [CallerPath] string sourceFile = "",
+                                               [CallerLine] int line = 0)
     {
       if (Level <= LogLevel.Warning)
-        LogWarning($"[{Path.GetFileNameWithoutExtension(sourceFile)}:{member}] {message}");
+        LogWarning($"[{Path.GetFileNameWithoutExtension(sourceFile)}:{member}:{line}]", message);
     }
 
     /// <summary> Error message. </summary>
@@ -109,10 +107,12 @@ namespace FronkonGames.GameWork.Foundation
 #if LOGS_EDITOR
     [Conditional("UNITY_EDITOR")]
 #endif
-    public static void Error(string message, [CallerMemberName]string member = "", [CallerFilePath]string sourceFile = "")
+    public static void Error(string message, [CallerName] string member = "",
+                                             [CallerPath] string sourceFile = "",
+                                             [CallerLine] int line = 0)
     {
       if (Level <= LogLevel.Error)
-        LogError($"[{Path.GetFileNameWithoutExtension(sourceFile)}:{member}] {message}");
+        LogError($"[{Path.GetFileNameWithoutExtension(sourceFile)}:{member}:{line}]", message);
     }
 
     /// <summary> Error message, exception and stack trace. </summary>
@@ -125,9 +125,11 @@ namespace FronkonGames.GameWork.Foundation
 #if LOGS_EDITOR
     [Conditional("UNITY_EDITOR")]
 #endif
-    public static void Exception(string message, Exception e = null, [CallerMemberName] string member = "", [CallerFilePath] string sourceFile = "")
+    public static void Exception(string message, Exception e = null, [CallerName] string member = "",
+                                                                     [CallerPath] string sourceFile = "",
+                                                                     [CallerLine] int line = 0)
     {
-      LogError($"[{Path.GetFileNameWithoutExtension(sourceFile)}:{member}] {message}");
+      LogError($"[{Path.GetFileNameWithoutExtension(sourceFile)}:{member}:{line}]", message);
 
       if (e == null)
         e = new Exception(message);

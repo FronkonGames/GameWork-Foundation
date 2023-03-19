@@ -15,22 +15,153 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 using System;
+using System.Collections.Generic;
+using UnityEngine.Assertions;
 
 namespace FronkonGames.GameWork.Foundation
 {
   /// <summary> Array extensions. </summary>
   public static class ArrayExtensions
   {
+    /// <summary> Adds an element to the end of the array. </summary>
+    /// <param name="self"> The array. </param>
+    /// <param name="item"> Item. </param>
+    /// <returns> Array with added value. </returns>
+    public static T[] Append<T>(this T[] self, T item)
+    {
+      T[] result = new T[self.Length + 1];
+      result[^1] = item;
+
+      return result;
+    }
+    
+    /// <summary> Adds an array to the end of the array. </summary>
+    /// <param name="self"> The array. </param>
+    /// <param name="item"> Array. </param>
+    /// <returns> Array with added values. </returns>
+    public static T[] Append<T>(this T[] self, T[] items)
+    {
+      Assert.IsNotNull(items);
+
+      T[] result = new T[self.Length + items.Length];
+      self.CopyTo(result, 0);
+      items.CopyTo(result, self.Length);
+
+      return result;
+    }
+    
+    /// <summary> Contains an element? </summary>
+    /// <param name="self"> The array. </param>
+    /// <param name="element"> Item. </param>
+    /// <returns> True if it contains at least one element. </returns>
+    public static bool Contains<T>(this T[] self, T element) where T : IComparable
+    {
+      for (int i = 0, len = self.Length; i < len; ++i)
+      {
+        if (self[i].Equals(element) == true)
+          return true;
+      }
+
+      return false;
+    }
+
+    /// <summary> Position of the first element in the array. </summary>
+    /// <param name="self"> The array. </param>
+    /// <param name="value"> Item. </param>
+    /// <returns> 0-based index of the element or -1. </returns>
+    public static int IndexOf<T>(this T[] self, T value) where T : IComparable
+    {
+      for (int i = 0; i < self.Length; ++i)
+      {
+        if (self[i].Equals(value) == true)
+          return i;
+      }
+
+      return -1;
+    }
+
+    /// <summary> Position of the first element in the array that meets a condition. </summary>
+    /// <param name="self"> The array. </param>
+    /// <param name="condition"> Condition. </param>
+    /// <returns> 0-based index of the element or -1. </returns>
+    public static int IndexOf<T>(this T[] array, Func<T, bool> condition) where T : IComparable
+    {
+      for (int i = 0; i < array.Length; ++i)
+      {
+        if (condition(array[i]) == true)
+          return i;
+      }
+
+      return -1;
+    }
+
+    /// <summary> Removes the first occurrence of an element. </summary>
+    /// <param name="self"> The array. </param>
+    /// <param name="value"> Item. </param>
+    /// <returns> Array without the first element. </returns>
+    public static T[] Remove<T>(this T[] self, T value)
+    {
+      List<T> elems = new List<T>(self);
+      elems.Remove(value);
+
+      return elems.ToArray();      
+    }
+
+    /// <summary> Deletes an element according to its index. </summary>
+    /// <param name="self"> The array. </param>
+    /// <param name="index"> Index. </param>
+    /// <returns> Array without that element. </returns>
+    public static T[] RemoveAt<T>(this T[] self, int index)
+    {
+      T[] result = new T[self.Length - 1];
+
+      if (index == 0 && result.Length > 0)
+        Array.Copy(self, 1, result, 0, self.Length - 1);
+      else if (index == self.Length - 1)
+        Array.Copy(self, result, self.Length - 1);
+      else
+      {
+        Array.Copy(self, 0, result, 0, index);
+        Array.Copy(self, index + 1, result, index, self.Length - index - 1);
+      }
+
+      return result;    
+    }
+
+    /// <summary> Fills an array of one element. </summary>
+    /// <param name="self"> The array. </param>
+    /// <param name="value"> Value. </param>
+    /// <returns> Array filled with that element. </returns>
+    public static T[] Fill<T>(this T[] self, T value)
+    {
+      for (int i = 0; i < self.Length; ++i)
+        self[i] = value;
+
+      return self;
+    }
+
+    /// <summary> Fills an array using a function. </summary>
+    /// <param name="self"> The array. </param>
+    /// <param name="filler"> Filling function. </param>
+    /// <returns> Filled array. </returns>
+    public static T[] Fill<T>(this T[] self, Func<int, T> filler)
+    {
+      for (int i = 0; i < self.Length; ++i)
+        self[i] = filler(i);
+
+      return self;
+    }
+
     /// <summary> Returns a random element. </summary>
     /// <param name="self"> The array. </param>
     /// <returns> Value or default. </returns>
     public static T Random<T>(this T[] self) => self.Length > 0 ? self[Rand.Range(0, self.Length)] : default;
 
-    /// <summary> Clears the array. </summary>
+    /// <summary> Sets array to default. </summary>
     /// <param name="self"> The array. </param>
     public static void Clear<T>(this T[] self) => Array.Clear(self, 0, self.Length);
 
-    /// <summary> Clears the array in a range. </summary>
+    /// <summary> Sets a range of elements in the array to default. </summary>
     /// <param name="self"> The array. </param>
     /// <param name="index"> Start of the range. </param>
     /// <param name="count"> Number of elements to be cleaned. </param>

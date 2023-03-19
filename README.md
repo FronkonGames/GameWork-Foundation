@@ -101,25 +101,81 @@ Check the comments for each file for more information.
 ```c#
 [Title("Attributes Demo")]
 ```
-</th><th><img src="Media/attributes.title.png"/></th></tr>
+</th><th><img src="Media/attributes.title.png"/></th></tr><tr><th align="left">
 
-<tr><th align="left">
+```c#
+[MessageBox("MessageBox test", MessageType.Info)]
+```
+</th><th><img src="Media/attributes.messagebox.png"/></th></tr><tr><th align="left">
+
+```c#
+[Label("Int field"), Field(50)]
+public int intField;
+
+[Label("Int less than 0"), FieldLess(0, -1)]
+public int intLess = -1;
+
+[Label("Int less equal than 0"), FieldLessEqual(0, 0)]
+public int intLessEqual;
+
+[Label("Int greater than 0"), FieldGreat(0, 10)]
+public int intGreater;
+
+[Label("Int greater equal than 10"), FieldGreat(10, 10)]
+public int intGreaterEqual;
+
+[Label("Int"), Slider(0, 10, 10)]
+public int intSlider;
+
+[Label("Int snap 10"), Slider(0, 100, 50, 10)]
+public int intSnap;
+
+[Label("Ints min/max"), MinMaxSlider(0, 100, 0, 100)]
+public int intMin = 0;
+
+[HideInInspector]
+public int intMax = 100;
+
+[Label("Float field"), Field(1.0f)]
+public float floatField;
+
+[Label("Float less than 0"), FieldLess(0.0f, -1.0f)]
+public float floatLess = 1.0f;
+
+[Label("Float less equal than 0"), FieldLessEqual(0.0f, 0.0f)]
+public float floatLessEqual;
+
+[Label("Float greater than 0"), FieldGreat(0.0f, 1.0f)]
+public float floatGreater;
+
+[Label("Float greater equal than 0"), FieldGreatEqual(0.0f, 0.0f)]
+public float floatGreaterEqual;
+
+[Label("Float"), Slider(0.0f, 1.0f, 1.0f)]
+public float floatSlider;
+
+[Label("Float snap 0.5"), Slider(0.0f, 1.0f, 0.5f, 0.1f)]
+public float floatSnap;
+
+[Label("Floats min/max"), MinMaxSlider(0.0f, 1.0f)]
+public float floatMin = 0.0f;
+
+[HideInInspector]
+public float floatMax = 1.0f;
+```
+</th><th><img src="Media/attributes.variables.png"/></th></tr><tr><th align="left">
 
 ```c#
 [Label("Nice name")]
 public string badName;
 ```
-</th><th><img src="Media/attributes.label.png"/></th></tr>
-
-<tr><th align="left">
+</th><th><img src="Media/attributes.label.png"/></th></tr><tr><th align="left">
 
 ```c#
 [Password]
 public string password;
 ```
-</th><th><img src="Media/attributes.password.png"/></th></tr>
-
-<tr><th align="left">
+</th><th><img src="Media/attributes.password.png"/></th></tr><tr><th align="left">
 
 ```c#
 [Indent(0)]
@@ -128,17 +184,13 @@ public string noIndent;
 [Indent(1)]
 public string indented;
 ```
-</th><th><img src="Media/attributes.indent.png"/></th></tr>
-
-<tr><th align="left">
+</th><th><img src="Media/attributes.indent.png"/></th></tr><tr><th align="left">
 
 ```c#
 [NotNull]
 public GameObject cantBeNull;
 ```
-</th><th><img src="Media/attributes.notnull.png"/></th></tr>
-
-<tr><th align="left">
+</th><th><img src="Media/attributes.notnull.png"/></th></tr><tr><th align="left">
 
 ```c#
 [File]
@@ -147,17 +199,13 @@ public string filePath;
 [Folder]
 public string folderPath;
 ```
-</th><th><img src="Media/attributes.file.png"/></th></tr>
-
-<tr><th align="left">
+</th><th><img src="Media/attributes.file.png"/></th></tr><tr><th align="left">
 
 ```c#
 [Scene]
 public int sceneIndex;
 ```
-</th><th><img src="Media/attributes.scene.png"/></th></tr>
-
-<tr><th align="left">
+</th><th><img src="Media/attributes.scene.png"/></th></tr><tr><th align="left">
 
 ```c#
 [NotEditable]
@@ -169,9 +217,7 @@ public string editableInEdit;
 [OnlyEditableInPlay]
 public string editableInPlay;
 ```
-</th><th><img src="Media/attributes.noteditable.png"/></th></tr>
-
-<tr><th align="left">
+</th><th><img src="Media/attributes.noteditable.png"/></th></tr><tr><th align="left">
 
 ```c#
 public bool toggle;
@@ -182,9 +228,7 @@ public string enableIf;
 [DisableIf(nameof(toggle))]
 public string disableIf;
 ```
-</th><th><img src="Media/attributes.enableif.png"/></th></tr>
-
-<tr><th align="left">
+</th><th><img src="Media/attributes.enableif.png"/></th></tr><tr><th align="left">
 
 ```c#
 public bool toggle;
@@ -192,9 +236,7 @@ public bool toggle;
 [ShowIf(nameof(toggle))]
 public string showIf;
 ```
-</th><th><img src="Media/attributes.showif.png"/></th></tr>
-
-<tr><th align="left">
+</th><th><img src="Media/attributes.showif.png"/></th></tr><tr><th align="left">
 
 ```c#
 public bool toggle;
@@ -202,9 +244,7 @@ public bool toggle;
 [HideIf(nameof(toggle))]
 public string hideIf;
 ```
-</th><th><img src="Media/attributes.hideif.png"/></th></tr>
-
-<tr><th align="left">
+</th><th><img src="Media/attributes.hideif.png"/></th></tr><tr><th align="left">
 
 ```c#
 [NotEditable]
@@ -327,6 +367,12 @@ The most used design patterns:
 - Structural: [Decorator](https://github.com/FronkonGames/GameWork-Foundation/tree/main/Runtime/Patterns/Structural/Decorator).
 
 All using generics.
+
+### Centralized settings
+
+Only one place to modify the framework parameters (Edit > Preferences > Game:Work > Foundation).
+
+<p align="center"><img src="Media/settings.png"/></p>
 
 ## License 📜
 

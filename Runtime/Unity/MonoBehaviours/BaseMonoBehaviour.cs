@@ -23,31 +23,31 @@ namespace FronkonGames.GameWork.Foundation
   public abstract class BaseMonoBehaviour : MonoBehaviour
   {
     /// <summary> Transform cached. </summary>
-    public new Transform transform      => cachedTransform ?? (cachedTransform = base.transform);
+    public new Transform transform => cachedTransform ? cachedTransform : cachedTransform = base.transform;
 
     /// <summary> Animation cached. </summary>
-    public new Animation animation      => cachedAnimation ?? (cachedAnimation = this.GetComponent<Animation>());
+    public new Animation animation => cachedAnimation ? cachedAnimation : cachedAnimation = GetComponent<Animation>();
 
     /// <summary> AudioSource cached. </summary>
-    public new AudioSource audio        => cachedAudio ?? (cachedAudio = this.GetComponent<AudioSource>());
+    public new AudioSource audio => cachedAudio ? cachedAudio : cachedAudio = GetComponent<AudioSource>();
 
     /// <summary> Collider cached. </summary>
-    public new Collider collider        => cachedCollider ?? (cachedCollider = this.GetComponent<Collider>());
+    public new Collider collider => cachedCollider ? cachedCollider : cachedCollider = GetComponent<Collider>();
 
     /// <summary> RigidBody cached. </summary>
-    public new Rigidbody rigidbody      => cachedRigidbody ?? (cachedRigidbody = this.GetComponent<Rigidbody>());
+    public new Rigidbody rigidbody => cachedRigidbody ? cachedRigidbody : cachedRigidbody = GetComponent<Rigidbody>();
 
     /// <summary> Animator cached. </summary>
-    public Animator animator            => cachedAnimator ?? (cachedAnimator = this.GetComponent<Animator>());
+    public Animator animator => cachedAnimator ? cachedAnimator : cachedAnimator = GetComponent<Animator>();
 
     /// <summary> Collider2D cached. </summary>
-    public new Collider2D collider2D    => cachedCollider2D ?? (cachedCollider2D = this.GetComponent<Collider2D>());
+    public new Collider2D collider2D => cachedCollider2D ? cachedCollider2D : cachedCollider2D = GetComponent<Collider2D>();
 
     /// <summary> Rigidbody2D cached. </summary>
-    public new Rigidbody2D rigidbody2D  => cachedRigidbody2D ?? (cachedRigidbody2D = this.GetComponent<Rigidbody2D>());
+    public new Rigidbody2D rigidbody2D => cachedRigidbody2D ? cachedRigidbody2D : cachedRigidbody2D = GetComponent<Rigidbody2D>();
 
     /// <summary> RectTransform cached. </summary>
-    public RectTransform rectTransform  => cachedRectTransform ?? (cachedRectTransform = this.GetComponent<RectTransform>());
+    public RectTransform rectTransform => cachedRectTransform ? cachedRectTransform : cachedRectTransform = GetComponent<RectTransform>();
 
     [NonSerialized]
     private Transform cachedTransform;

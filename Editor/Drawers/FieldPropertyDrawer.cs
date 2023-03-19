@@ -19,15 +19,36 @@ using UnityEditor;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary> Label drawer. </summary>
-  [CustomPropertyDrawer(typeof(LabelAttribute), true)]
-  public sealed class LabelPropertyDrawer : PropertyDrawer
+  /// <summary> Int/float drawer. </summary>
+  [CustomPropertyDrawer(typeof(FieldAttribute), true)]
+  public sealed class FieldPropertyDrawer : PropertyDrawer
   {
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
-      LabelAttribute labelAttribute = (LabelAttribute)attribute;
-      
-      EditorGUI.PropertyField(position, property, new GUIContent(labelAttribute.label, labelAttribute.tooltip), true);
+      FieldAttribute fieldAttribute = (FieldAttribute)attribute;
+
+      if (property.propertyType == SerializedPropertyType.Float)
+      {
+        Rect rectSlider = position;
+        rectSlider.xMax -= 18.0f;
+        property.floatValue = EditorGUI.FloatField(rectSlider, label, property.floatValue);
+
+        Rect rectReset = position;
+        rectReset.xMin = rectSlider.xMax + 1.0f;
+        if (GUI.Button(rectReset, EditorGUIUtility.IconContent("d_Refresh"), EditorStyles.iconButton) == true)
+          property.floatValue = fieldAttribute.reset;
+      }
+      else if (property.propertyType == SerializedPropertyType.Integer)
+      {
+        Rect rectSlider = position;
+        rectSlider.xMax -= 18.0f;
+        property.intValue = EditorGUI.IntField(rectSlider, label, property.intValue);
+
+        Rect rectReset = position;
+        rectReset.xMin = rectSlider.xMax + 1.0f;
+        if (GUI.Button(rectReset, EditorGUIUtility.IconContent("d_Refresh"), EditorStyles.iconButton) == true)
+          property.intValue = Mathf.RoundToInt(fieldAttribute.reset);
+      }
     }
   }
 }

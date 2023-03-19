@@ -30,6 +30,12 @@ namespace FronkonGames.GameWork.Foundation
   {
     public readonly string label;
 
-    public LabelAttribute(string label) => this.label = label;
+    public readonly string tooltip;
+
+    public LabelAttribute(string label, string tooltip = "")
+    {
+      this.label = label;
+      this.tooltip = tooltip;
+    }
   }
 }

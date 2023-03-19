@@ -1,4 +1,4 @@
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+﻿////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Copyright (c) Martin Bustos @FronkonGames <fronkongames@gmail.com>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
@@ -15,27 +15,31 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 using System;
+using System.Diagnostics;
+using UnityEngine;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary> Memory profiling block. </summary>
-  public class MemoryBlock : IDisposable
+  /// <summary> Int/Float slider attribute. </summary>
+  [Conditional("UNITY_EDITOR")]
+  [AttributeUsage(AttributeTargets.Field |
+                  AttributeTargets.Property)]
+  public class SliderAttribute : PropertyAttribute
   {
-    private readonly string title;
-    private readonly long bytesStart;
+    public readonly float min;
 
-    public MemoryBlock(string title)
+    public readonly float max;
+
+    public readonly float snap;
+
+    public readonly float reset;
+
+    public SliderAttribute(float min, float max, float reset = 0.0f, float snap = 0.0f)
     {
-      this.title = title ?? "Unknown";
-      bytesStart = GC.GetTotalMemory(false);
-    }
-
-    public void Dispose()
-    {
-      int bytesDiff = (int)(GC.GetTotalMemory(false) - bytesStart);
-
-      // @TODO: Add more memory info.
-      Log.Info($"Task '{title}' consume {bytesDiff.BytesToHumanReadable()}");
+      this.min = Mathf.Min(min, max);
+      this.max = Mathf.Max(min, max);
+      this.reset = Mathf.Clamp(reset, min, max);
+      this.snap = snap;
     }
   }
 }

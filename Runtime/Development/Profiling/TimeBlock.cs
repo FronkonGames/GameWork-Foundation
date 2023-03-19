@@ -49,7 +49,7 @@ namespace FronkonGames.GameWork.Foundation
       double duration = (double)stopwatch.ElapsedTicks / Stopwatch.Frequency * 1000;
 
       if (string.IsNullOrEmpty(title) == false)
-        Log.Info($"[Profiling] Task '{title}' took {duration:0.00}ms ({Time.frameCount - frameStart} frames)");
+        Log.Info($"Task '{title}' took {duration:0.00}ms ({Time.frameCount - frameStart} frames)");
     }
   }
 }

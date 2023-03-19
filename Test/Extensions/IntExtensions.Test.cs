@@ -14,10 +14,7 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-using System;
 using System.Collections;
-using System.Globalization;
 using NUnit.Framework;
 using UnityEngine.TestTools;
 using UnityEngine;
@@ -49,6 +46,10 @@ public partial class ExtensionsTests
     Assert.AreEqual(1.Abs(), 1);
     Assert.AreEqual((-1).Abs(), 1);
 
+    Assert.AreEqual(0.Snap(5), 0);
+    Assert.AreEqual(4.Snap(5), 5);
+    Assert.AreEqual(8.Snap(5), 10);
+    
     Assert.AreEqual(1.Clamp(0, 2), 1);
     Assert.AreEqual((-1).Clamp(0, 2), 0);
     Assert.AreEqual(3.Clamp(0, 2), 2);

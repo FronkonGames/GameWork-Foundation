@@ -152,6 +152,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81f9bc2803ec4514eac5c1d73be91be9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  intField: 10
+  intLess: -1
+  intLessEqual: 0
+  intGreater: 1
+  intGreaterEqual: 10
+  intSlider: 0
+  intSnap: 0
+  intMin: 0
+  intMax: 100
+  floatField: 1
+  floatLess: -1
+  floatLessEqual: -0
+  floatGreater: 1
+  floatGreaterEqual: 0
+  floatSlider: 0
+  floatSnap: 0
+  floatMin: 0
+  floatMax: 1
   badName: 
   password: password
   sceneIndex: 0
@@ -166,6 +184,9 @@ MonoBehaviour:
   showIf: Shows if Toogle is true.
   hideIf: Hide if Toogle is true.
   cantBeNull: {fileID: 0}
+  counter: 0
+  buttonInc: 
+  buttonReset: 
 --- !u!4 &692872481
 Transform:
   m_ObjectHideFlags: 0

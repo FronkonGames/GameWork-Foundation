@@ -1,4 +1,4 @@
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+﻿////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Copyright (c) Martin Bustos @FronkonGames <fronkongames@gmail.com>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
@@ -15,27 +15,25 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 using System;
+using System.Diagnostics;
+using UnityEngine;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary> Memory profiling block. </summary>
-  public class MemoryBlock : IDisposable
+  /// <summary> Int/Float field attribute. </summary>
+  [Conditional("UNITY_EDITOR")]
+  [AttributeUsage(AttributeTargets.Field |
+                  AttributeTargets.Property)]
+  public class FieldLessAttribute : PropertyAttribute
   {
-    private readonly string title;
-    private readonly long bytesStart;
+    public readonly float less;
 
-    public MemoryBlock(string title)
+    public readonly float reset;
+
+    public FieldLessAttribute(float less, float reset = 0.0f)
     {
-      this.title = title ?? "Unknown";
-      bytesStart = GC.GetTotalMemory(false);
-    }
-
-    public void Dispose()
-    {
-      int bytesDiff = (int)(GC.GetTotalMemory(false) - bytesStart);
-
-      // @TODO: Add more memory info.
-      Log.Info($"Task '{title}' consume {bytesDiff.BytesToHumanReadable()}");
+      this.less = less;
+      this.reset = Mathf.Min(reset, less);
     }
   }
 }

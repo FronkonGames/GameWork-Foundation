@@ -1,4 +1,4 @@
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+﻿////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Copyright (c) Martin Bustos @FronkonGames <fronkongames@gmail.com>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
@@ -14,28 +14,38 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-using System;
+using UnityEngine;
+using UnityEditor;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary> Memory profiling block. </summary>
-  public class MemoryBlock : IDisposable
+  /// <summary> Message box drawer. </summary>
+  [CustomPropertyDrawer(typeof(MessageBoxAttribute), true)]
+  public sealed class MessageBoxDecoratorDrawer : DecoratorDrawer
   {
-    private readonly string title;
-    private readonly long bytesStart;
-
-    public MemoryBlock(string title)
+    public override void OnGUI(Rect position)
     {
-      this.title = title ?? "Unknown";
-      bytesStart = GC.GetTotalMemory(false);
+      position.height -= EditorGUIUtility.standardVerticalSpacing;
+
+      MessageBoxAttribute messageBox = (MessageBoxAttribute)attribute;
+      
+      EditorGUI.HelpBox(position, messageBox.label, (MessageType)messageBox.messageType);
     }
 
-    public void Dispose()
+    public override float GetHeight()
     {
-      int bytesDiff = (int)(GC.GetTotalMemory(false) - bytesStart);
+      MessageBoxAttribute messageBox = (MessageBoxAttribute)attribute;
+      string iconName = messageBox.messageType switch
+      {
+        MessageBoxAttribute.MessageType.None =>    string.Empty,
+        MessageBoxAttribute.MessageType.Info =>    "console.infoicon",
+        MessageBoxAttribute.MessageType.Warning => "console.warnicon",
+        MessageBoxAttribute.MessageType.Error =>   "console.erroricon",
+        _ => string.Empty
+      };
 
-      // @TODO: Add more memory info.
-      Log.Info($"Task '{title}' consume {bytesDiff.BytesToHumanReadable()}");
+      return EditorStyles.helpBox.CalcHeight(EditorGUIUtility.TrTextContentWithIcon(messageBox.label, iconName),
+        EditorGUIUtility.currentViewWidth - 37) + EditorGUIUtility.standardVerticalSpacing;
     }
   }
 }

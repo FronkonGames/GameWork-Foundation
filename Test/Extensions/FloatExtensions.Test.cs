@@ -77,6 +77,11 @@ public partial class ExtensionsTests
     Assert.AreEqual(1.0f.Abs(), 1.0f);
     Assert.AreEqual((-1.0f).Abs(), 1.0f);
 
+    Assert.AreEqual(0.5f.Snap(1.0f), 0.0f);
+    Assert.AreEqual(0.6f.Snap(1.0f), 1.0f);
+    Assert.AreEqual(1.1f.Snap(1.0f), 1.0f);
+    Assert.AreEqual(1.9f.Snap(1.0f), 2.0f);
+    
     Assert.AreEqual(1.0f.Clamp(0.0f, 2.0f), 1.0f);
     Assert.AreEqual((-1.0f).Clamp(0.0f, 2.0f), 0.0f);
     Assert.AreEqual(3.0f.Clamp(0.0f, 2.0f), 2.0f);

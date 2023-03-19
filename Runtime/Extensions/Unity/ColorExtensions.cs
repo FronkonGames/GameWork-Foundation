@@ -57,7 +57,7 @@ namespace FronkonGames.GameWork.Foundation
     {
       Color32 color32 = self;
 
-      return $"{color32.r:X2}{color32.g:X2}{color32.b:X2}";    
+      return $"#{color32.r:X2}{color32.g:X2}{color32.b:X2}";    
     }
 
     /// <summary> Brightness correction. </summary>

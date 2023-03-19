@@ -20,14 +20,73 @@ using FronkonGames.GameWork.Foundation;
 /// <summary> Attributes test. </summary>
 public sealed class AttributesDemo : MonoBehaviour
 {
-  [Title("Text")]
+  [MessageBox("This inspector is an example of all the extra Game:Work Foundation attributes", MessageBoxAttribute.MessageType.Info)]
+  [Space]
 
+  [Title("Variables")]
+
+  [Indent, Label("Int field"), Field(50)]
+  public int intField;
+
+  [Indent, Label("Int less than 0"), FieldLess(0, -1)]
+  public int intLess = -1;
+
+  [Indent, Label("Int less equal than 0"), FieldLessEqual(0, 0)]
+  public int intLessEqual;
+  
+  [Indent, Label("Int greater than 0"), FieldGreat(0, 10)]
+  public int intGreater;
+
+  [Indent, Label("Int greater equal than 10"), FieldGreat(10, 10)]
+  public int intGreaterEqual;
+  
+  [Indent, Label("Int"), Slider(0, 10, 10)]
+  public int intSlider;
+
+  [Indent, Label("Int snap 10"), Slider(0, 100, 50, 10)]
+  public int intSnap;
+
+  [Indent, Label("Ints min/max"), MinMaxSlider(0, 100, 0, 100)]
+  public int intMin = 0;
+
+  [HideInInspector]
+  public int intMax = 100;
+  
+  [Indent, Label("Float field"), Field(1.0f)]
+  public float floatField;
+
+  [Indent, Label("Float less than 0"), FieldLess(0.0f, -1.0f)]
+  public float floatLess = 1.0f;
+
+  [Indent, Label("Float less equal than 0"), FieldLessEqual(0.0f, 0.0f)]
+  public float floatLessEqual;
+  
+  [Indent, Label("Float greater than 0"), FieldGreat(0.0f, 1.0f)]
+  public float floatGreater;
+
+  [Indent, Label("Float greater equal than 0"), FieldGreatEqual(0.0f, 0.0f)]
+  public float floatGreaterEqual;
+  
+  [Indent, Label("Float"), Slider(0.0f, 1.0f, 1.0f)]
+  public float floatSlider;
+
+  [Indent, Label("Float snap 0.5"), Slider(0.0f, 1.0f, 0.5f, 0.1f)]
+  public float floatSnap;
+  
+  [Indent, Label("Floats min/max"), MinMaxSlider(0.0f, 1.0f)]
+  public float floatMin = 0.0f;
+
+  [HideInInspector]
+  public float floatMax = 1.0f;
+  
+  [Title("Text")]
+  
   [Indent, Label("Nice name")]
   public string badName;
 
   [Indent, Password]
   public string password;
-
+  
   [Title("Files")]
 
   [Indent, Scene]

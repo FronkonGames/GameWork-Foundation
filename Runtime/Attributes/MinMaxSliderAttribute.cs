@@ -1,4 +1,4 @@
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+﻿////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Copyright (c) Martin Bustos @FronkonGames <fronkongames@gmail.com>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
@@ -15,27 +15,34 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 using System;
+using System.Diagnostics;
+using UnityEngine;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary> Memory profiling block. </summary>
-  public class MemoryBlock : IDisposable
+  /// <summary> Min-max Int/Float slider attribute. </summary>
+  [Conditional("UNITY_EDITOR")]
+  [AttributeUsage(AttributeTargets.Field |
+                  AttributeTargets.Property)]
+  public class MinMaxSliderAttribute : PropertyAttribute
   {
-    private readonly string title;
-    private readonly long bytesStart;
+    public float min;
 
-    public MemoryBlock(string title)
+    public float max;
+
+    public readonly float snap;
+
+    public readonly float resetMin;
+
+    public readonly float resetMax;
+    
+    public MinMaxSliderAttribute(float min, float max, float resetMin = 0.0f, float resetMax = 1.0f, float snap = 0.0f)
     {
-      this.title = title ?? "Unknown";
-      bytesStart = GC.GetTotalMemory(false);
-    }
-
-    public void Dispose()
-    {
-      int bytesDiff = (int)(GC.GetTotalMemory(false) - bytesStart);
-
-      // @TODO: Add more memory info.
-      Log.Info($"Task '{title}' consume {bytesDiff.BytesToHumanReadable()}");
+      this.min = Mathf.Min(min, max);
+      this.max = Mathf.Max(min, max);
+      this.resetMin = Mathf.Max(this.min, resetMin);
+      this.resetMax = Mathf.Min(this.max, resetMax);
+      this.snap = snap;
     }
   }
 }

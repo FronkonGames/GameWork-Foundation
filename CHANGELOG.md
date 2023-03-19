@@ -1,5 +1,26 @@
 # Changelog
 
+## 1.0.3 - 2023-03-19
+
+### Added
+
+- All configuration variables centralized in 'Edit > Preferences > Game:Work > Foundation'.
+- New array extensions: Append, Contains, IndexOf, Remove, RemoveAt and Fill.
+- Snap extension to Int and Float.
+- Line numbers included in console messages.
+- New attributes: Field, FieldGreat, FieldLess, FieldGreatEqual, FieldLessEqual, Slider, MinMaxSlider, MessageBox.
+
+### Changed
+
+- Best way to cache components in BaseMonoBehaviour.
+- Simplified TimeBlock and MemoryBlock messages.
+- Only the log messages are colored, not the file information, line number, etc.
+- Added 'tooltip' field to LabelAttribute.
+
+### Fixed
+
+- Color.ToHex() starts with '#'.
+
 ## 1.0.2 - 2023-03-17
 
 ### Added

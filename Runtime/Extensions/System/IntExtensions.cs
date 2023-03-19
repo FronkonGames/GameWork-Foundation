@@ -49,6 +49,11 @@ namespace FronkonGames.GameWork.Foundation
     /// <returns>Int</returns>
     public static int Abs(this int self) => Math.Abs(self);
 
+    /// <summary> Returns the rounded value. </summary>
+    /// <param name="snap"> Rounding distance </param>
+    /// <returns>Int</returns>
+    public static int Snap(this int self, int snap) => snap > 0 ? Mathf.RoundToInt((float)self / snap) * snap : self;
+    
     /// <summary> Constrain the value to a range. </summary>
     /// <param name="self">Value</param>
     /// <param name="min">Lower range</param>
