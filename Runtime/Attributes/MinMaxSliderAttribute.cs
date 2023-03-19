@@ -26,9 +26,9 @@ namespace FronkonGames.GameWork.Foundation
                   AttributeTargets.Property)]
   public class MinMaxSliderAttribute : PropertyAttribute
   {
-    public float min;
+    public readonly float min;
 
-    public float max;
+    public readonly float max;
 
     public readonly float snap;
 

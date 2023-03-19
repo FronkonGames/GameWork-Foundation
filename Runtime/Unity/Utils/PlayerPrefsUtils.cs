@@ -91,8 +91,7 @@ namespace FronkonGames.GameWork.Foundation
     {
       string value = PlayerPrefs.GetString(ProductKey(key), null);
 
-      DateTime result = DateTime.MinValue;
-      if (string.IsNullOrEmpty(value) == false && DateTime.TryParse(value, CultureInfo.InvariantCulture, DateTimeStyles.None, out result) == true)
+      if (string.IsNullOrEmpty(value) == false && DateTime.TryParse(value, CultureInfo.InvariantCulture, DateTimeStyles.None, out var result) == true)
         return result;
 
       return defaultValue;

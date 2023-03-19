@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.0.4 - 2023-03-19
+
+### Changed
+
+- All the IHandleDraw programs throw exceptions in executable mode (should only be used in the Editor).
+
+### Fixed
+
+- Error in DestroyCommand.Execute() in executable versions.
+- PlayerPrefsUtils.GetDateTime() parameter out implicit.
+
 ## 1.0.3 - 2023-03-19
 
 ### Added

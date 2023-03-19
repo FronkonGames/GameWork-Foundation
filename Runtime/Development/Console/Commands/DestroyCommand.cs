@@ -47,11 +47,6 @@ namespace FronkonGames.GameWork.Foundation
 
         for (int i = gameObjectsToDestroy.Count - 1; i >= 0; i--)
           gameObjectsToDestroy[i].SafeDestroy();
-#if UNITY_EDITOR
-          //DestroyImmediate(gameObjectsToDestroy[i], true);
-#else
-          Destroy(gameObjectsToDestroy[i]);
-#endif
 
         return true;
       }

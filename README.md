@@ -109,55 +109,71 @@ Check the comments for each file for more information.
 </th><th><img src="Media/attributes.messagebox.png"/></th></tr><tr><th align="left">
 
 ```c#
-[Label("Int field"), Field(50)]
+[Label("Int field")]
+[Field(50)]
 public int intField;
 
-[Label("Int less than 0"), FieldLess(0, -1)]
+[Label("Int less than 0")]
+[FieldLess(0, -1)]
 public int intLess = -1;
 
-[Label("Int less equal than 0"), FieldLessEqual(0, 0)]
+[Label("Int less equal than 0")]
+[FieldLessEqual(0, 0)]
 public int intLessEqual;
 
-[Label("Int greater than 0"), FieldGreat(0, 10)]
+[Label("Int greater than 0")]
+[FieldGreat(0, 10)]
 public int intGreater;
 
-[Label("Int greater equal than 10"), FieldGreat(10, 10)]
+[Label("Int greater equal than 10")]
+[FieldGreat(10, 10)]
 public int intGreaterEqual;
 
-[Label("Int"), Slider(0, 10, 10)]
+[Label("Int")]
+[Slider(0, 10, 10)]
 public int intSlider;
 
-[Label("Int snap 10"), Slider(0, 100, 50, 10)]
+[Label("Int snap 10")]
+[Slider(0, 100, 50, 10)]
 public int intSnap;
 
-[Label("Ints min/max"), MinMaxSlider(0, 100, 0, 100)]
+[Label("Ints min/max")]
+[MinMaxSlider(0, 100, 0, 100)]
 public int intMin = 0;
 
 [HideInInspector]
 public int intMax = 100;
 
-[Label("Float field"), Field(1.0f)]
+[Label("Float field")]
+[Field(1.0f)]
 public float floatField;
 
-[Label("Float less than 0"), FieldLess(0.0f, -1.0f)]
+[Label("Float less than 0")]
+[FieldLess(0.0f, -1.0f)]
 public float floatLess = 1.0f;
 
-[Label("Float less equal than 0"), FieldLessEqual(0.0f, 0.0f)]
+[Label("Float less equal than 0")]
+[FieldLessEqual(0.0f, 0.0f)]
 public float floatLessEqual;
 
-[Label("Float greater than 0"), FieldGreat(0.0f, 1.0f)]
+[Label("Float greater than 0")]
+[FieldGreat(0.0f, 1.0f)]
 public float floatGreater;
 
-[Label("Float greater equal than 0"), FieldGreatEqual(0.0f, 0.0f)]
+[Label("Float greater equal than 0")]
+[FieldGreatEqual(0.0f, 0.0f)]
 public float floatGreaterEqual;
 
-[Label("Float"), Slider(0.0f, 1.0f, 1.0f)]
+[Label("Float")]
+[Slider(0.0f, 1.0f, 1.0f)]
 public float floatSlider;
 
-[Label("Float snap 0.5"), Slider(0.0f, 1.0f, 0.5f, 0.1f)]
+[Label("Float snap 0.5")]
+[Slider(0.0f, 1.0f, 0.5f, 0.1f)]
 public float floatSnap;
 
-[Label("Floats min/max"), MinMaxSlider(0.0f, 1.0f)]
+[Label("Floats min/max")]
+[MinMaxSlider(0.0f, 1.0f)]
 public float floatMin = 0.0f;
 
 [HideInInspector]
