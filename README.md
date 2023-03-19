@@ -384,6 +384,10 @@ The most used design patterns:
 
 All using generics.
 
+### Unit tests
+
+<p align="center"><img src="Media/unittests.png"/></p>
+
 ### Centralized settings
 
 Only one place to modify the framework parameters (Edit > Preferences > Game:Work > Foundation).
