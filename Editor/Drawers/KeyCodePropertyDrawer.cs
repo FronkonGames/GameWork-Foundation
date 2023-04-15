@@ -19,47 +19,55 @@ using UnityEditor;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary> Int/float drawer. </summary>
-  [CustomPropertyDrawer(typeof(FieldLessAttribute), true)]
-  public sealed class FieldLessAttributeDrawer : PropertyDrawer
+  /// <summary> KeyCode drawer. </summary>
+  [CustomPropertyDrawer(typeof(KeyCodeAttribute), true)]
+  public sealed class KeyCodePropertyDrawer : PropertyDrawer
   {
+    private bool detectKeyDown;
+
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
-      FieldLessAttribute fieldAttribute = (FieldLessAttribute)attribute;
 
-      if (property.propertyType == SerializedPropertyType.Float)
+      if (property.propertyType == SerializedPropertyType.Enum)
       {
-        Rect rectSlider = position;
-        rectSlider.xMax -= 18.0f;
-        float value = EditorGUI.FloatField(rectSlider, label, property.floatValue);
-        if (value < fieldAttribute.less)
-          property.floatValue = value;
+        if (detectKeyDown == true)
+        {
+          position = EditorGUI.PrefixLabel(position, label);
+          if (GUI.Button(position, "Press any key or this button to cancel"))
+            detectKeyDown = false;
+        }
+        else
+        {
+          Rect basePosition = position;
+          position.width -= 20.0f;
+          property.intValue = (int)(KeyCode)EditorGUI.EnumPopup(position, label, (KeyCode)property.intValue);
+          position.x += position.width;
+          position.width = basePosition.width - position.width;
 
-        Rect rectReset = position;
-        rectReset.xMin = rectSlider.xMax + 1.0f;
-        if (GUI.Button(rectReset, EditorGUIUtility.IconContent("d_Refresh"), EditorStyles.iconButton) == true)
-          property.floatValue = fieldAttribute.reset;
-      }
-      else if (property.propertyType == SerializedPropertyType.Integer)
-      {
-        Rect rectSlider = position;
-        rectSlider.xMax -= 18.0f;
-        int value = EditorGUI.IntField(rectSlider, label, property.intValue);
-        if (value < fieldAttribute.less)
-          property.intValue = value;
-
-        Rect rectReset = position;
-        rectReset.xMin = rectSlider.xMax + 1.0f;
-        if (GUI.Button(rectReset, EditorGUIUtility.IconContent("d_Refresh"), EditorStyles.iconButton) == true)
-          property.intValue = Mathf.RoundToInt(fieldAttribute.reset);
+          if (GUI.Button(position, EditorGUIUtility.IconContent("d_Font Icon"), EditorStyles.iconButton) == true)
+            detectKeyDown = true;
+        }
       }
       else
       {
         Color original = GUI.color;
         GUI.color = Color.red;
-        EditorGUI.LabelField(position, label.text, $"Field '{property.propertyPath}' can only be applied to a float or int fields");
+        EditorGUI.LabelField(position, label.text, $"Field '{property.propertyPath}' can only be applied to a KeyCode fields");
         GUI.color = original;      
       }
+
+      KeyCode key = (KeyCode)property.intValue;
+      if (detectKeyDown == true)
+      {
+        Event e = Event.current;
+        if (e.type != EventType.KeyDown)
+          return;
+
+        key = e.keyCode;
+        detectKeyDown = false;        
+      }
+
+      property.intValue = (int)key;
     }
   }
 }

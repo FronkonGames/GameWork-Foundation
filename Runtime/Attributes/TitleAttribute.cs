@@ -22,10 +22,7 @@ namespace FronkonGames.GameWork.Foundation
 {
   /// <summary> Nice title attribute. </summary>
   [Conditional("UNITY_EDITOR")]
-  [AttributeUsage(AttributeTargets.Field |
-                  AttributeTargets.Property |
-                  AttributeTargets.Class |
-                  AttributeTargets.Struct)]
+  [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
   public class TitleAttribute : PropertyAttribute
   {
     public readonly string label;

@@ -1,5 +1,23 @@
 # Changelog
 
+## 1.0.6 - 2023-04-15
+
+### Added
+
+- KeyCodeAttribute, with keystroke detection.
+- Error message if any attribute is used with another type than expected.
+- New color extensions: SetHue, SetSaturation, SetValue.
+
+### Changed
+
+- Most of the attributes limited to Property and Field.
+- Private AttributesDemo variables.
+
+### Fixed
+
+- Color unit test.
+- Transform.FlipPositive typo.
+
 ## 1.0.5 - 2023-03-19
 
 ### Fixed

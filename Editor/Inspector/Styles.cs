@@ -19,18 +19,14 @@ using UnityEditor;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary>
-  /// .
-  /// </summary>
+  /// <summary> Styles for the Editor. </summary>
   public static class Styles
   {
     public static Color Splitter => EditorGUIUtility.isProSkin == true ? SplitterDark : SplitterLight;
 
     public static Color HeaderBackground => EditorGUIUtility.isProSkin == true ? HeaderBackgroundDark : HeaderBackgroundLight;
 
-    /// <summary>
-    /// .
-    /// </summary>
+    /// <summary> 1x1 white texture. </summary>
     public static Texture2D WhiteTexture
     {
       get
@@ -46,9 +42,7 @@ namespace FronkonGames.GameWork.Foundation
       }
     }
 
-    /// <summary>
-    /// .
-    /// </summary>
+    /// <summary> 1x1 black texture. </summary>
     public static Texture2D BlackTexture
     {
       get
@@ -64,9 +58,7 @@ namespace FronkonGames.GameWork.Foundation
       }
     }
 
-    /// <summary>
-    /// .
-    /// </summary>
+    /// <summary> 1x1 transparent texture. </summary>
     public static Texture2D TransparentTexture
     {
       get
@@ -82,9 +74,7 @@ namespace FronkonGames.GameWork.Foundation
       }
     }
 
-    /// <summary>
-    /// .
-    /// </summary>
+    /// <summary> Pane options texture. </summary>
     public static Texture2D PaneOptionsIcon
     {
       get

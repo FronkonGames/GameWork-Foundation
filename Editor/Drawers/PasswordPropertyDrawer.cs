@@ -43,7 +43,12 @@ namespace FronkonGames.GameWork.Foundation
         GUI.color = color;
       }
       else
-        EditorGUI.PropertyField(position, property, label);
+      {
+        Color original = GUI.color;
+        GUI.color = Color.red;
+        EditorGUI.LabelField(position, label.text, $"Field '{property.propertyPath}' can only be applied to a string fields");
+        GUI.color = original;      
+      }
     }
 
     private bool IsValid(string password) => password.Length >= ((PasswordAttribute)attribute).minLength &&

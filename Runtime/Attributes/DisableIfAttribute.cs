@@ -22,10 +22,7 @@ namespace FronkonGames.GameWork.Foundation
 {
   /// <summary> 'Disable If' attribute. </summary>
   [Conditional("UNITY_EDITOR")]
-  [AttributeUsage(AttributeTargets.Field |
-                  AttributeTargets.Property |
-                  AttributeTargets.Class |
-                  AttributeTargets.Struct)]
+  [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
   public class DisableIfAttribute : PropertyAttribute
   {
     public readonly string conditional;

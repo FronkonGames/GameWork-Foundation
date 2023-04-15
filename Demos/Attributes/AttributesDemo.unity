@@ -170,6 +170,7 @@ MonoBehaviour:
   floatSnap: 0
   floatMin: 0
   floatMax: 1
+  keyCode: 32
   badName: 
   password: password
   sceneIndex: 0

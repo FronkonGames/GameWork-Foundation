@@ -22,10 +22,7 @@ namespace FronkonGames.GameWork.Foundation
 {
   /// <summary> Scene selector attribute. </summary>
   [Conditional("UNITY_EDITOR")]
-  [AttributeUsage(AttributeTargets.Field |
-                  AttributeTargets.Property |
-                  AttributeTargets.Class |
-                  AttributeTargets.Struct)]
+  [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
   public class SceneAttribute : PropertyAttribute
   {
   }

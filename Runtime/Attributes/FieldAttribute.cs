@@ -22,8 +22,7 @@ namespace FronkonGames.GameWork.Foundation
 {
   /// <summary> Int/Float field attribute. </summary>
   [Conditional("UNITY_EDITOR")]
-  [AttributeUsage(AttributeTargets.Field |
-                  AttributeTargets.Property)]
+  [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
   public class FieldAttribute : PropertyAttribute
   {
     public readonly float reset;

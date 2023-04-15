@@ -19,7 +19,7 @@ using UnityEngine;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary> Transform extenions. </summary>
+  /// <summary> Transform extensions. </summary>
   public static class TransformExt
   {
     /// <summary> Full name, separating the parents' names with '/'. </summary>
@@ -130,40 +130,40 @@ namespace FronkonGames.GameWork.Foundation
     /// <param name="self">Transform</param>
     /// <param name="y">Y axis</param>
     /// <param name="local">Use localPosition instead position</param>
-    public static void TranslateX(this Transform self, float x, bool local = false) => self.TranslateXYZ(x, 0, 0, local);
+    public static void TranslateX(this Transform self, float x, bool local = false) => self.TranslateXYZ(x, 0.0f, 0.0f, local);
 
     /// <summary> Translates this transform along the Y axis. </summary>
     /// <param name="self">Transform</param>
     /// <param name="y">Y axis</param>
     /// <param name="local">Use localPosition instead position</param>
-    public static void TranslateY(this Transform self, float y, bool local = false) => self.TranslateXYZ(0, y, 0, local);
+    public static void TranslateY(this Transform self, float y, bool local = false) => self.TranslateXYZ(0.0f, y, 0.0f, local);
 
     /// <summary> Translates this transform along the Z axis. </summary>
     /// <param name="self">Transform</param>
     /// <param name="z">Z axis</param>
     /// <param name="local">Use localPosition instead position</param>
-    public static void TranslateZ(this Transform self, float z, bool local = false) => self.TranslateXYZ(0, 0, z, local);
+    public static void TranslateZ(this Transform self, float z, bool local = false) => self.TranslateXYZ(0.0f, 0.0f, z, local);
 
     /// <summary> Translates this transform along the X and Y axes. </summary>
     /// <param name="self">Transform</param>
     /// <param name="x">X axis</param>
     /// <param name="y">Y axis</param>
     /// <param name="local">Use localPosition instead position</param>
-    public static void TranslateXY(this Transform self, float x, float y, bool local = false) => self.TranslateXYZ(x, y, 0, local);
+    public static void TranslateXY(this Transform self, float x, float y, bool local = false) => self.TranslateXYZ(x, y, 0.0f, local);
 
     /// <summary> Translates this transform along the X and Z axes. </summary>
     /// <param name="self">Transform</param>
     /// <param name="x">X axis</param>
     /// <param name="z">Z axis</param>
     /// <param name="local">Use localPosition instead position</param>
-    public static void TranslateXZ(this Transform self, float x, float z, bool local = false) => self.TranslateXYZ(x, 0, z, local);
+    public static void TranslateXZ(this Transform self, float x, float z, bool local = false) => self.TranslateXYZ(x, 0.0f, z, local);
 
     /// <summary> Translates this transform along the Y and Z axes. </summary>
     /// <param name="self">Transform</param>
     /// <param name="y">Y axis</param>
     /// <param name="z">Z axis</param>
     /// <param name="local">Use localPosition instead position</param>
-    public static void TranslateYZ(this Transform self, float y, float z, bool local = false) => self.TranslateXYZ(0, y, z, local);
+    public static void TranslateYZ(this Transform self, float y, float z, bool local = false) => self.TranslateXYZ(0.0f, y, z, local);
 
     /// <summary> Translates this transform along the X, Y and Z axis. </summary>
     /// <param name="self">Transform</param>
@@ -286,10 +286,7 @@ namespace FronkonGames.GameWork.Foundation
     /// <param name="self">Transform</param>
     /// <param name="x">X axis</param>
     /// <param name="z">Z axis</param>
-    public static void ScaleByXZ(this Transform self, float x, float z)
-    {
-      self.localScale = new Vector3(self.localScale.x * x, self.localScale.y, self.localScale.z * z);
-    }
+    public static void ScaleByXZ(this Transform self, float x, float z) => self.localScale = new Vector3(self.localScale.x * x, self.localScale.y, self.localScale.z * z);
 
     /// <summary> Scale this transform in the Y and Z directions. </summary>
     /// <param name="self">Transform</param>
@@ -354,9 +351,9 @@ namespace FronkonGames.GameWork.Foundation
 
     /// <summary> Sets all scale values to the absolute values. </summary>
     /// <param name="self">Transform</param>
-    public static void FlipPostive(this Transform self) => self.localScale = new Vector3(Mathf.Abs(self.localScale.x),
-                                                                                         Mathf.Abs(self.localScale.y),
-                                                                                         Mathf.Abs(self.localScale.z));
+    public static void FlipPositive(this Transform self) => self.localScale = new Vector3(Mathf.Abs(self.localScale.x),
+                                                                                          Mathf.Abs(self.localScale.y),
+                                                                                          Mathf.Abs(self.localScale.z));
 
     /// <summary> Resets the local scale of this transform in to 1 1 1. </summary>
     /// <param name="self">Transform</param>
@@ -365,27 +362,27 @@ namespace FronkonGames.GameWork.Foundation
     /// <summary> Rotates the transform around the X axis. </summary>
     /// <param name="self">Transform</param>
     /// <param name="angle">Degrees angle</param>
-    public static void RotateAroundX(this Transform self, float angle) => self.Rotate(new Vector3(angle, 0, 0));
+    public static void RotateAroundX(this Transform self, float angle) => self.Rotate(new Vector3(angle, 0.0f, 0.0f));
 
     /// <summary> Rotates the transform around the Y axis. </summary>
     /// <param name="self">Transform</param>
     /// <param name="angle">Degrees angle</param>
-    public static void RotateAroundY(this Transform self, float angle) => self.Rotate(new Vector3(0, angle, 0));
+    public static void RotateAroundY(this Transform self, float angle) => self.Rotate(new Vector3(0.0f, angle, 0.0f));
 
     /// <summary> Rotates the transform around the Z axis. </summary>
     /// <param name="self">Transform</param>
     /// <param name="angle">Degrees angle</param>
-    public static void RotateAroundZ(this Transform self, float angle) => self.Rotate(new Vector3(0, 0, angle));
+    public static void RotateAroundZ(this Transform self, float angle) => self.Rotate(new Vector3(0.0f, 0.0f, angle));
 
     /// <summary> Sets the X rotation. </summary>
     /// <param name="self">Transform</param>
     /// <param name="angle">Degrees angle</param>
-    public static void SetRotationX(this Transform self, float angle) => self.eulerAngles = new Vector3(angle, 0, 0);
+    public static void SetRotationX(this Transform self, float angle) => self.eulerAngles = new Vector3(angle, 0.0f, 0.0f);
 
     /// <summary> Sets the Y rotation. </summary>
     /// <param name="self">Transform</param>
     /// <param name="angle">Degrees angle</param>
-    public static void SetRotationY(this Transform self, float angle) => self.eulerAngles = new Vector3(0, angle, 0);
+    public static void SetRotationY(this Transform self, float angle) => self.eulerAngles = new Vector3(0.0f, angle, 0.0f);
 
     /// <summary> Adds a modifier to the current y rotation </summary>
     /// <param name="self">Transform</param>
@@ -397,22 +394,22 @@ namespace FronkonGames.GameWork.Foundation
     /// <summary> Sets the Z rotation. </summary>
     /// <param name="self">Transform</param>
     /// <param name="angle">Degrees angle</param>
-    public static void SetRotationZ(this Transform self, float angle) => self.eulerAngles = new Vector3(0, 0, angle);
+    public static void SetRotationZ(this Transform self, float angle) => self.eulerAngles = new Vector3(0.0f, 0.0f, angle);
 
     /// <summary> Sets the local X rotation. </summary>
     /// <param name="self">Transform</param>
     /// <param name="angle">Degrees angle</param>
-    public static void SetLocalRotationX(this Transform self, float angle) => self.localRotation = Quaternion.Euler(new Vector3(angle, 0, 0));
+    public static void SetLocalRotationX(this Transform self, float angle) => self.localRotation = Quaternion.Euler(new Vector3(angle, 0.0f, 0.0f));
 
     /// <summary> Sets the local Y rotation. </summary>
     /// <param name="self">Transform</param>
     /// <param name="angle">Degrees angle</param>
-    public static void SetLocalRotationY(this Transform self, float angle) => self.localRotation = Quaternion.Euler(new Vector3(0, angle, 0));
+    public static void SetLocalRotationY(this Transform self, float angle) => self.localRotation = Quaternion.Euler(new Vector3(0.0f, angle, 0.0f));
 
     /// <summary> Sets the local Z rotation. </summary>
     /// <param name="self">Transform</param>
     /// <param name="angle">Degrees angle</param>
-    public static void SetLocalRotationZ(this Transform self, float angle) => self.localRotation = Quaternion.Euler(new Vector3(0, 0, angle));
+    public static void SetLocalRotationZ(this Transform self, float angle) => self.localRotation = Quaternion.Euler(new Vector3(0.0f, 0.0f, angle));
 
     /// <summary> Resets the rotation to 0, 0, 0. </summary>
     /// <param name="self">Transform</param>

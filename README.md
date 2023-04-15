@@ -263,6 +263,12 @@ public string hideIf;
 </th><th><img src="Media/attributes.hideif.png"/></th></tr><tr><th align="left">
 
 ```c#
+[KeyCode]
+public KeyCode keyCode;
+```
+</th><th><img src="Media/attributes.keycode.gif"/></th></tr><tr><th align="left">
+
+```c#
 [NotEditable]
 public int counter;
 

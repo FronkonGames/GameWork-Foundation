@@ -22,9 +22,6 @@ namespace FronkonGames.GameWork.Foundation
 {
   /// <summary> Only Editable In Editor attribute. </summary>
   [Conditional("UNITY_EDITOR")]
-  [AttributeUsage(AttributeTargets.Field | 
-                  AttributeTargets.Property |
-                  AttributeTargets.Class |
-                  AttributeTargets.Struct)]
+  [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
   public class OnlyEditableInEditorAttribute : PropertyAttribute { }
 }

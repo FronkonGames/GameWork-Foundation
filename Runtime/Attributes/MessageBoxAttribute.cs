@@ -22,10 +22,7 @@ namespace FronkonGames.GameWork.Foundation
 {
   /// <summary> Message box attribute. </summary>
   [Conditional("UNITY_EDITOR")]
-  [AttributeUsage(AttributeTargets.Field |
-                  AttributeTargets.Property |
-                  AttributeTargets.Class |
-                  AttributeTargets.Struct, AllowMultiple = true)]
+  [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property, AllowMultiple = true)]
   public class MessageBoxAttribute : PropertyAttribute
   {
     public enum MessageType

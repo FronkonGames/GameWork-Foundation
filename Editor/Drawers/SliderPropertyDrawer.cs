@@ -53,6 +53,13 @@ namespace FronkonGames.GameWork.Foundation
         if (GUI.Button(rectReset, EditorGUIUtility.IconContent("d_Refresh"), EditorStyles.iconButton) == true)
           property.intValue = Mathf.RoundToInt(sliderAttribute.reset);
       }
+      else
+      {
+        Color original = GUI.color;
+        GUI.color = Color.red;
+        EditorGUI.LabelField(position, label.text, $"Field '{property.propertyPath}' can only be applied to a float or int fields");
+        GUI.color = original;      
+      }
     }
   }
 }

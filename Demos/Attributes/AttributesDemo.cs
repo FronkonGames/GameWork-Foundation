@@ -20,129 +20,136 @@ using FronkonGames.GameWork.Foundation;
 /// <summary> Attributes test. </summary>
 public sealed class AttributesDemo : MonoBehaviour
 {
+#pragma warning disable CS0414 
+  
   [MessageBox("This inspector is an example of all the extra Game:Work Foundation attributes", MessageBoxAttribute.MessageType.Info)]
   [Space]
 
   [Title("Variables")]
 
-  [Indent, Label("Int field"), Field(50)]
-  public int intField;
+  [Indent, Label("Int field"), Field(50), SerializeField]
+  private int intField;
 
-  [Indent, Label("Int less than 0"), FieldLess(0, -1)]
-  public int intLess = -1;
+  [Indent, Label("Int less than 0"), FieldLess(0, -1), SerializeField]
+  private int intLess = -1;
 
-  [Indent, Label("Int less equal than 0"), FieldLessEqual(0, 0)]
-  public int intLessEqual;
+  [Indent, Label("Int less equal than 0"), FieldLessEqual(0, 0), SerializeField]
+  private int intLessEqual;
   
-  [Indent, Label("Int greater than 0"), FieldGreat(0, 10)]
-  public int intGreater;
+  [Indent, Label("Int greater than 0"), FieldGreat(0, 10), SerializeField]
+  private int intGreater;
 
-  [Indent, Label("Int greater equal than 10"), FieldGreat(10, 10)]
-  public int intGreaterEqual;
+  [Indent, Label("Int greater equal than 10"), FieldGreat(10, 10), SerializeField]
+  private int intGreaterEqual;
   
-  [Indent, Label("Int"), Slider(0, 10, 10)]
-  public int intSlider;
+  [Indent, Label("Int"), Slider(0, 10, 10), SerializeField]
+  private int intSlider;
 
-  [Indent, Label("Int snap 10"), Slider(0, 100, 50, 10)]
-  public int intSnap;
+  [Indent, Label("Int snap 10"), Slider(0, 100, 50, 10), SerializeField]
+  private int intSnap;
 
-  [Indent, Label("Ints min/max"), MinMaxSlider(0, 100, 0, 100)]
-  public int intMin = 0;
+  [Indent, Label("Ints min/max"), MinMaxSlider(0, 100, 0, 100), SerializeField]
+  private int intMin = 0;
 
-  [HideInInspector]
-  public int intMax = 100;
+  [HideInInspector, SerializeField]
+  private int intMax = 100;
   
-  [Indent, Label("Float field"), Field(1.0f)]
-  public float floatField;
+  [Indent, Label("Float field"), Field(1.0f), SerializeField]
+  private float floatField;
 
-  [Indent, Label("Float less than 0"), FieldLess(0.0f, -1.0f)]
-  public float floatLess = 1.0f;
+  [Indent, Label("Float less than 0"), FieldLess(0.0f, -1.0f), SerializeField]
+  private float floatLess = 1.0f;
 
-  [Indent, Label("Float less equal than 0"), FieldLessEqual(0.0f, 0.0f)]
-  public float floatLessEqual;
+  [Indent, Label("Float less equal than 0"), FieldLessEqual(0.0f, 0.0f), SerializeField]
+  private float floatLessEqual;
+
+  [Indent, Label("Float greater than 0"), FieldGreat(0.0f, 1.0f), SerializeField]
+  private float floatGreater;
+
+  [Indent, Label("Float greater equal than 0"), FieldGreatEqual(0.0f, 0.0f), SerializeField]
+  private float floatGreaterEqual;
+
+  [Indent, Label("Float"), Slider(0.0f, 1.0f, 1.0f), SerializeField]
+  private float floatSlider;
+
+  [Indent, Label("Float snap 0.5"), Slider(0.0f, 1.0f, 0.5f, 0.1f), SerializeField]
+  private float floatSnap;
   
-  [Indent, Label("Float greater than 0"), FieldGreat(0.0f, 1.0f)]
-  public float floatGreater;
+  [Indent, Label("Floats min/max"), MinMaxSlider(0.0f, 1.0f), SerializeField]
+  private float floatMin = 0.0f;
 
-  [Indent, Label("Float greater equal than 0"), FieldGreatEqual(0.0f, 0.0f)]
-  public float floatGreaterEqual;
+  [HideInInspector, SerializeField]
+  private float floatMax = 1.0f;
   
-  [Indent, Label("Float"), Slider(0.0f, 1.0f, 1.0f)]
-  public float floatSlider;
-
-  [Indent, Label("Float snap 0.5"), Slider(0.0f, 1.0f, 0.5f, 0.1f)]
-  public float floatSnap;
-  
-  [Indent, Label("Floats min/max"), MinMaxSlider(0.0f, 1.0f)]
-  public float floatMin = 0.0f;
-
-  [HideInInspector]
-  public float floatMax = 1.0f;
+  [Indent, KeyCode, SerializeField]
+  private KeyCode keyCode = KeyCode.Space;
   
   [Title("Text")]
   
-  [Indent, Label("Nice name")]
-  public string badName;
+  [Indent, Label("Nice name"), SerializeField]
+  private string badName;
 
-  [Indent, Password]
-  public string password;
+  [Indent, Password, SerializeField]
+  private string password;
   
   [Title("Files")]
 
-  [Indent, Scene]
-  public int sceneIndex;
+  [Indent, Scene, SerializeField]
+  private int sceneIndex;
 
-  [Indent, File]
-  public string filePath;
+  [Indent, File, SerializeField]
+  private string filePath;
 
-  [Indent, Folder]
-  public string folderPath;
+  [Indent, Folder, SerializeField]
+  private string folderPath;
   
   [Title("Editable")]
   
-  [Indent, NotEditable]
-  public string notEditable;
+  [Indent, NotEditable, SerializeField]
+  private string notEditable;
   
-  [Indent, OnlyEditableInEditor]
-  public string editableInEdit;
+  [Indent, OnlyEditableInEditor, SerializeField]
+  private string editableInEdit;
   
-  [Indent, OnlyEditableInPlay]
-  public string editableInPlay;
+  [Indent, OnlyEditableInPlay, SerializeField]
+  private string editableInPlay;
 
-  [Title("Toogle")]
+  [Title("Toggle")]
 
-  [Indent]
-  public bool toggle;
+  [Indent, SerializeField]
+  private bool toggle;
 
-  [Indent, EnableIf(nameof(toggle))]
-  public string enableIf;
+  [Indent, EnableIf(nameof(toggle)), SerializeField]
+  private string enableIf;
 
-  [Indent, DisableIf(nameof(toggle))]
-  public string disableIf;
+  [Indent, DisableIf(nameof(toggle)), SerializeField]
+  private string disableIf;
 
-  [Indent, ShowIf(nameof(toggle))]
-  public string showIf;
+  [Indent, ShowIf(nameof(toggle)), SerializeField]
+  private string showIf;
 
-  [Indent, HideIf(nameof(toggle))]
-  public string hideIf;
+  [Indent, HideIf(nameof(toggle)), SerializeField]
+  private string hideIf;
 
   [Title("Check")]
   
-  [Indent, NotNull]
-  public GameObject cantBeNull;
+  [Indent, NotNull, SerializeField]
+  private GameObject cantBeNull;
   
   [Title("Misc")]
   
-  [Indent, NotEditable]
-  public int counter;
+  [Indent, NotEditable, SerializeField]
+  private int counter;
   
-  [Button(nameof(Increase))]
-  public string buttonInc;
+  [Button(nameof(Increase)), SerializeField]
+  private string buttonInc;
 
-  [Button(nameof(Reset))]
-  public string buttonReset;
+  [Button(nameof(Reset)), SerializeField]
+  private string buttonReset;
 
-  public void Increase() => counter++;
+  private void Increase() => counter++;
   
-  public void Reset() => counter = 0;
+  private void Reset() => counter = 0;
+  
+#pragma warning restore CS0414  
 }

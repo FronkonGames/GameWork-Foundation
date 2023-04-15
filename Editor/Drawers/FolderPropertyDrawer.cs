@@ -53,7 +53,12 @@ namespace FronkonGames.GameWork.Foundation
         EditorGUI.EndProperty();
       }
       else
-        EditorGUI.PropertyField(position, property, label);
+      {
+        Color original = GUI.color;
+        GUI.color = Color.red;
+        EditorGUI.LabelField(position, label.text, $"Field '{property.propertyPath}' can only be applied to a string fields");
+        GUI.color = original;      
+      }
     }
     
     private static void SetFolderPath(SerializedProperty property, FolderAttribute folderAttribute)

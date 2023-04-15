@@ -19,18 +19,14 @@ using NUnit.Framework;
 using UnityEngine.TestTools;
 using FronkonGames.GameWork.Foundation;
 
-/// <summary>
-/// Extensions test.
-/// </summary>
+/// <summary> Extensions test. </summary>
 public partial class ExtensionsTests
 {
-  /// <summary>
-  /// Color extensions test.
-  /// </summary>
+  /// <summary> Color extensions test. </summary>
   [UnityTest]
   public IEnumerator Color()
   {
-    Assert.AreEqual(UnityEngine.Color.magenta.ToHex(), "FF00FF");
+    Assert.AreEqual("#FF00FF", UnityEngine.Color.magenta.ToHex());
 
     Assert.IsTrue(UnityEngine.Color.black.IsApproximatelyBlack());
     Assert.IsFalse(UnityEngine.Color.white.IsApproximatelyBlack());
@@ -40,8 +36,19 @@ public partial class ExtensionsTests
     Assert.IsTrue(UnityEngine.Color.white.IsApproximatelyWhite());
     Assert.IsTrue((UnityEngine.Color.white * (1.0f - MathConstants.Epsilon)).IsApproximatelyWhite());
 
-    Assert.AreEqual(UnityEngine.Color.white.Invert(), UnityEngine.Color.black);
+    Assert.AreEqual(UnityEngine.Color.black, UnityEngine.Color.white.Invert());
 
+    Assert.AreEqual(new UnityEngine.Color(0.0f, 1.0f, 1.0f, 1.0f), UnityEngine.Color.white.SetR(0.0f));
+    Assert.AreEqual(new UnityEngine.Color(1.0f, 0.0f, 1.0f, 1.0f), UnityEngine.Color.white.SetG(0.0f));
+    Assert.AreEqual(new UnityEngine.Color(1.0f, 1.0f, 0.0f, 1.0f), UnityEngine.Color.white.SetB(0.0f));
+    Assert.AreEqual(new UnityEngine.Color(1.0f, 1.0f, 1.0f, 0.0f), UnityEngine.Color.white.SetA(0.0f));
+
+    Assert.AreEqual(UnityEngine.Color.red, UnityEngine.Color.red.SetHue(0.0f));
+    Assert.AreEqual(UnityEngine.Color.red, UnityEngine.Color.red.SetHue(1.0f));
+    Assert.AreEqual(UnityEngine.Color.white, UnityEngine.Color.white.SetSaturation(0.0f));
+    Assert.AreEqual(UnityEngine.Color.red, UnityEngine.Color.red.SetSaturation(1.0f));
+    Assert.AreEqual(UnityEngine.Color.white, UnityEngine.Color.red.SetSaturation(0.0f));
+    
     yield return null;
   }
 }

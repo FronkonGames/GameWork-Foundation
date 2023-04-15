@@ -20,13 +20,10 @@ using UnityEngine;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary> File button attribute. </summary>
+  /// <summary> KeyCode attribute with key press detection. </summary>
   [Conditional("UNITY_EDITOR")]
   [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
-  public class FileAttribute : PropertyAttribute
+  public class KeyCodeAttribute : PropertyAttribute
   {
-    public readonly bool relativeToProject;
-
-    public FileAttribute(bool relativeToProject = true) => this.relativeToProject = relativeToProject;
   }
 }

@@ -41,6 +41,39 @@ namespace FronkonGames.GameWork.Foundation
     /// <returns>Color</returns>
     public static Color SetA(this Color self, float a) => new(self.r, self.g, self.b, a);
 
+    /// <summary> Color with the hue component displaced. </summary>
+    /// <param name="hue">Hue</param>
+    /// <param name="hdr">HDR color?</param>
+    /// <returns>Color</returns>
+    public static Color SetHue(this Color self, float hue, bool hdr = false)
+    {
+      Color.RGBToHSV(self, out _, out var saturation, out var value);
+
+      return Color.HSVToRGB(hue, saturation, value, hdr);      
+    }
+
+    /// <summary> Color with the saturation changed. </summary>
+    /// <param name="saturation">Saturation</param>
+    /// <param name="hdr">HDR color?</param>
+    /// <returns>Color</returns>
+    public static Color SetSaturation(this Color self, float saturation, bool hdr = false)
+    {
+      Color.RGBToHSV(self, out var hue, out _, out var value);
+
+      return Color.HSVToRGB(hue, saturation, value, hdr);
+    }
+    
+    /// <summary> Color with the value (HSV space) changed. </summary>
+    /// <param name="value">Value</param>
+    /// <param name="hdr">HDR color?</param>
+    /// <returns>Color</returns>
+    public static Color SetValue(this Color self, float value, bool hdr = false)
+    {
+      Color.RGBToHSV(self, out var hue, out var saturation, out _);
+
+      return Color.HSVToRGB(hue, saturation, value, hdr);
+    }
+
     /// <summary> From hex string. </summary>
     /// <param name="text">HTML color, ie '#FF00FF'</param>
     /// <returns>String</returns>

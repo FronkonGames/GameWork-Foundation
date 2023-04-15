@@ -32,14 +32,18 @@ namespace FronkonGames.GameWork.Foundation
 
       if (minProperty.propertyType != maxProperty.propertyType)
       {
-        Log.Warning($"The types don't match in field '{property.propertyPath}'");
-        EditorGUI.PropertyField(position, property, label);
+        Color original = GUI.color;
+        GUI.color = Color.red;
+        EditorGUI.LabelField(position, label.text, $"The types don't match in field '{property.propertyPath}'");
+        GUI.color = original;      
       }
       else if (minProperty.propertyType != SerializedPropertyType.Float &&
                minProperty.propertyType != SerializedPropertyType.Integer)
       {
-        Log.Warning($"Field '{property.propertyPath}' can only be applied to a float or int fields");
-        EditorGUI.PropertyField(position, property, label);
+        Color original = GUI.color;
+        GUI.color = Color.red;
+        EditorGUI.LabelField(position, label.text, $"Field '{property.propertyPath}' can only be applied to a float or int fields");
+        GUI.color = original;      
       }
       else
       {
