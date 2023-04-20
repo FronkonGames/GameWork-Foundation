@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.7 - 2023-04-20
+
+### Added
+
+- Strategy pattern.
+- Visitor pattern.
+
 ## 1.0.6 - 2023-04-15
 
 ### Added
