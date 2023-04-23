@@ -40,12 +40,12 @@ namespace FronkonGames.GameWork.Foundation
       {
 #if UNITY_EDITOR
         UnityEditor.Handles.color = color;
-        UnityEditor.Handles.color = UnityEditor.Handles.color.SetA(Settings.DebugDrawTransparency.Value);
+        UnityEditor.Handles.color = UnityEditor.Handles.color.SetA(Settings.Draw.Transparency);
 
         if (solid == true)
-          UnityEditor.Handles.DrawLine(a, b, Settings.DebugDrawLineThickness.Value);
+          UnityEditor.Handles.DrawLine(a, b, Settings.Draw.LineThickness);
         else
-          UnityEditor.Handles.DrawDottedLine(a, b, Settings.DebugDrawLineGapSize.Value);
+          UnityEditor.Handles.DrawDottedLine(a, b, Settings.Draw.LineGapSize);
 #else
         throw new NotSupportedException("Only available in Editor version.");
 #endif
@@ -64,7 +64,7 @@ namespace FronkonGames.GameWork.Foundation
       {
 #if UNITY_EDITOR
         UnityEditor.Handles.color = color;
-        UnityEditor.Handles.color = UnityEditor.Handles.color.SetA(Settings.DebugDrawTransparency.Value);
+        UnityEditor.Handles.color = UnityEditor.Handles.color.SetA(Settings.Draw.Transparency);
 
         if (solid == true)
           UnityEditor.Handles.DrawSolidDisc(center, normal, radius);
@@ -90,7 +90,7 @@ namespace FronkonGames.GameWork.Foundation
       {
 #if UNITY_EDITOR
         UnityEditor.Handles.color = color;
-        UnityEditor.Handles.color = UnityEditor.Handles.color.SetA(Settings.DebugDrawTransparency.Value);
+        UnityEditor.Handles.color = UnityEditor.Handles.color.SetA(Settings.Draw.Transparency);
         
         if (solid == true)
           UnityEditor.Handles.DrawSolidArc(center, normal, from, angle, radius);
@@ -113,7 +113,7 @@ namespace FronkonGames.GameWork.Foundation
       {
 #if UNITY_EDITOR
         UnityEditor.Handles.color = color;
-        UnityEditor.Handles.color = UnityEditor.Handles.color.SetA(Settings.DebugDrawTransparency.Value);
+        UnityEditor.Handles.color = UnityEditor.Handles.color.SetA(Settings.Draw.Transparency);
         UnityEditor.Handles.SphereHandleCap(0, center, rotation, radius, EventType.Repaint);
 #else
         throw new NotSupportedException("Only available in Editor version.");
@@ -131,7 +131,7 @@ namespace FronkonGames.GameWork.Foundation
       {
 #if UNITY_EDITOR
         UnityEditor.Handles.color = color;
-        UnityEditor.Handles.color = UnityEditor.Handles.color.SetA(Settings.DebugDrawTransparency.Value);
+        UnityEditor.Handles.color = UnityEditor.Handles.color.SetA(Settings.Draw.Transparency);
         UnityEditor.Handles.DrawWireCube(center, size);
 #else
         throw new NotSupportedException("Only available in Editor version.");
@@ -153,7 +153,7 @@ namespace FronkonGames.GameWork.Foundation
           if (guiContent == null)
             guiContent = new GUIContent();
 
-          guiContent.text = $"<color=#{color.ToHex()}{(byte)(Settings.DebugDrawTransparency.Value * 255.0):X}>{text}</color>";
+          guiContent.text = $"<color=#{color.ToHex()}{(byte)(Settings.Draw.Transparency * 255.0):X}>{text}</color>";
 
           Vector2 size = TextStyle.CalcSize(guiContent) * 0.5f;
           UnityEditor.Handles.BeginGUI();

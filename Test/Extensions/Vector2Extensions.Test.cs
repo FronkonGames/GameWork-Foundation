@@ -28,7 +28,7 @@ public partial class ExtensionsTests
   /// Vector2 extensions test.
   /// </summary>
   [UnityTest]
-  public IEnumerator Vector2Float()
+  public IEnumerator Vector2()
   {
     // @TODO.
 

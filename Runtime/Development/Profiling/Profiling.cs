@@ -14,12 +14,52 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+using System;
+using Unity.Profiling;
+using UnityEngine.Profiling;
+
 namespace FronkonGames.GameWork.Foundation
 {
   /// <summary> Profiling. </summary>
   public static class Profiling
   {
+    /// <summary> Gets the allocated managed memory for live objects and non-collected objects. </summary>
+    /// <remarks>It needs the Profiler to be enabled.</remarks>
+    public static long MonoUsed => Profiler.supported == true ? Profiler.GetMonoUsedSizeLong() : 0L;
+
+    /// <summary> Returns the size in bytes of the reserved space for managed-memory. </summary>
+    public static long MonoHeap => Profiler.supported == true ? Profiler.GetMonoHeapSizeLong() : GC.GetTotalMemory(false);
+
+    /// <summary>
+    /// The total memory allocated by the internal allocators in Unity. Unity reserves large pools of memory from
+    /// the system; this includes double the required memory for textures because Unity keeps a copy of each texture
+    /// on both the CPU and GPU. This function returns the amount of used memory in those pools.
+    /// </summary>
+    /// <remarks>It needs the Profiler to be enabled.</remarks>
+    public static long Allocated => Profiler.supported == true ? Profiler.GetTotalAllocatedMemoryLong() : 0L;
+
+    /// <summary> The total memory Unity has reserved. </summary>
+    /// <remarks>It needs the Profiler to be enabled.</remarks>
+    public static long Reserved => Profiler.supported == true ? Profiler.GetTotalReservedMemoryLong() : 0L;
+
+    /// <summary> Returns the size of the temp allocator. </summary>
+    /// <remarks>It needs the Profiler to be enabled.</remarks>
+    public static long Stack => Profiler.supported == true ? Profiler.GetTempAllocatorSize() : 0L;
+    
+    /// <summary> Used and available memory. </summary>
+    /// <remarks>It needs the Profiler to be enabled.</remarks>
+    public static string MonoMemory => $"{((int)MonoUsed).BytesToHumanReadable()}/{((int)MonoHeap).BytesToHumanReadable()}";
+
+    /// <summary> Total used and available memory. </summary>
+    /// <remarks>It needs the Profiler to be enabled.</remarks>
+    public static string TotalMemory => $"{((int)Allocated).BytesToHumanReadable()}/{((int)Reserved).BytesToHumanReadable()}";
+
+    /// <summary> Returns the size of the temp allocator. </summary>
+    /// <remarks>It needs the Profiler to be enabled.</remarks>
+    public static string StackMemory => ((int)Stack).BytesToHumanReadable();
+    
     /// <summary> It measures the elapsed time. </summary>
+    /// <remarks>Only available in the Editor or Development Builds.</remarks>
     /// <param name="title">Label</param>
     /// <returns>TimeBlock</returns>
     public static TimeBlock Time(string title) =>
@@ -30,11 +70,33 @@ namespace FronkonGames.GameWork.Foundation
 #endif
 
     /// <summary> It measures the memory consumed. </summary>
+    /// <remarks>Only available in the Editor or Development Builds.</remarks>
     /// <param name="title">Label</param>
     /// <returns>MemoryBlock</returns>
     public static MemoryBlock Memory(string title) =>
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
       new MemoryBlock(title);
+#else
+      null;
+#endif
+
+    /// <summary> Profiling CPU block of code with a custom label. </summary>
+    /// <remarks>Only available in the Editor or Development Builds.</remarks>
+    /// <param name="title">Label</param>
+    public static void Sample(string title) =>
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+      new SampleBlock(title);
+#else
+      null;
+#endif
+
+    /// <summary> Profiling marker block of code. </summary>
+    /// <remarks>Only available in the Editor or Development Builds.</remarks>
+    /// <param name="category">Profiler category</param>
+    /// <param name="title">Label</param>
+    public static void Marker(ProfilerCategory category, string title) =>
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+      new MarkerBlock(category, title);
 #else
       null;
 #endif

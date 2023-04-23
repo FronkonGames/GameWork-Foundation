@@ -34,10 +34,7 @@ namespace FronkonGames.GameWork.Core
     private int frames;
     private float deltaTime;
 
-    private const int UpdatePerSecond = 2;
-    private const int HistoryFrames = 100;
-
-    private readonly Queue<float> history = new Queue<float>(HistoryFrames);
+    private readonly Queue<float> history = new(Settings.FPS.HistoryFrames);
     private IEnumerator<float> historyEnumerator;
 
     /// <summary> Reset the counters. </summary>
@@ -62,7 +59,7 @@ namespace FronkonGames.GameWork.Core
       ++frames;
       deltaTime += Time.unscaledDeltaTime;
       
-      float lapse = 1.0f / UpdatePerSecond;
+      float lapse = 1.0f / Settings.FPS.UpdatePerSecond;
       if (deltaTime > lapse)
       {
         CurrentFPS = frames / deltaTime;
@@ -70,7 +67,7 @@ namespace FronkonGames.GameWork.Core
         deltaTime -= lapse;
 
         int count = history.Count;
-        if (count >= HistoryFrames)
+        if (count >= Settings.FPS.HistoryFrames)
           history.Dequeue();
 
         history.Enqueue(CurrentFPS);

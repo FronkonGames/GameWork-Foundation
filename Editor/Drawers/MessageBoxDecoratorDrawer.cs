@@ -38,9 +38,9 @@ namespace FronkonGames.GameWork.Foundation
       string iconName = messageBox.messageType switch
       {
         MessageBoxAttribute.MessageType.None =>    string.Empty,
-        MessageBoxAttribute.MessageType.Info =>    "console.infoicon",
-        MessageBoxAttribute.MessageType.Warning => "console.warnicon",
-        MessageBoxAttribute.MessageType.Error =>   "console.erroricon",
+        MessageBoxAttribute.MessageType.Info =>    Settings.Editor.MessageBoxInfoIcon,
+        MessageBoxAttribute.MessageType.Warning => Settings.Editor.MessageBoxWarningIcon,
+        MessageBoxAttribute.MessageType.Error =>   Settings.Editor.MessageBoxErrorIcon,
         _ => string.Empty
       };
 

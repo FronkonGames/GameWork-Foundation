@@ -82,5 +82,10 @@ namespace FronkonGames.GameWork.Foundation
     /// <param name="self">Value.</param>
     /// <returns>A new rounded vector.</returns>
     public static Vector3 Rounded(this Vector3 self) => new(Mathf.Round(self.x), Mathf.Round(self.y), Mathf.Round(self.z));
+    
+    /// <summary> Vector3 to string. </summary>
+    /// <param name="self">Value</param>
+    /// <returns>string</returns>
+    public static string ToString(this Vector3 self) => $"{self.x},{self.y},{self.z}";
   }
 }

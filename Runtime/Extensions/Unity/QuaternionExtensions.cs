@@ -1,4 +1,4 @@
-﻿////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Copyright (c) Martin Bustos @FronkonGames <fronkongames@gmail.com>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
@@ -15,24 +15,27 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 using UnityEngine;
-using UnityEditor;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary> Not Editable drawer. </summary>
-  [CustomPropertyDrawer(typeof(NotEditableAttribute), true)]
-  public sealed class NotEditablePropertyDrawer : PropertyDrawer
+  /// <summary> Quaternion extensions. </summary>
+  public static class QuaternionExtensions
   {
-    public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
-    {
-      bool previous = GUI.enabled;
-      GUI.enabled = false;
+    /// <summary> Quaternion magnitude. </summary>
+    /// <param name="self">Value</param>
+    /// <returns>Magnitude</returns>
+    public static float Magnitude(this Quaternion self) => Mathf.Sqrt(self.x * self.x + self.y * self.y + self.z * self.z + self.w * self.w);
 
-      label = EditorGUI.BeginProperty(position, label, property);
-      EditorGUI.PropertyField(position, property, label, true);
-      EditorGUI.EndProperty();
+    /// <summary> Checks for equality with another quaternion given a margin of error specified by an epsilon. </summary>
+    /// <param name="a">The left-hand side of the equality check.</param>
+    /// <param name="b">The right-hand side of the equality check.</param>
+    /// <returns>True if the values are equal.</returns>
+    public static bool NearlyEquals(this Quaternion a, Quaternion b, float epsilon = MathConstants.Epsilon) =>
+      1.0f - Mathf.Abs(Quaternion.Dot(a, b)) < epsilon;
 
-      GUI.enabled = previous;
-    }
+    /// <summary> Quaternion to string. </summary>
+    /// <param name="self">Value</param>
+    /// <returns>string</returns>
+    public static string ToString(this Quaternion self) => $"{self.x},{self.y},{self.z},{self.w}";
   }
 }

@@ -1,4 +1,4 @@
-﻿////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Copyright (c) Martin Bustos @FronkonGames <fronkongames@gmail.com>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
@@ -14,25 +14,16 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-using UnityEngine;
-using UnityEditor;
+using System;
+using UnityEngine.Profiling;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary> Not Editable drawer. </summary>
-  [CustomPropertyDrawer(typeof(NotEditableAttribute), true)]
-  public sealed class NotEditablePropertyDrawer : PropertyDrawer
+  /// <summary> Profiler sample block. </summary>
+  public class SampleBlock : IDisposable
   {
-    public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
-    {
-      bool previous = GUI.enabled;
-      GUI.enabled = false;
+    public SampleBlock(string title) => Profiler.BeginSample(title);
 
-      label = EditorGUI.BeginProperty(position, label, property);
-      EditorGUI.PropertyField(position, property, label, true);
-      EditorGUI.EndProperty();
-
-      GUI.enabled = previous;
-    }
+    public void Dispose() => Profiler.EndSample();
   }
 }

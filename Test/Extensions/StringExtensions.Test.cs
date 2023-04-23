@@ -49,10 +49,10 @@ public partial class ExtensionsTests
 
     Assert.AreEqual("Camel case string".ToCamelCase(), "CamelCaseString");
     Assert.AreEqual("CamelCaseString".FromCamelCase(), "Camel case string");
-    Assert.AreEqual("0,0".ToVector2(), Vector2.zero);
-    Assert.AreEqual("1.0f,1.0".ToVector2(), Vector2.one);
-    Assert.AreEqual("0,0,0".ToVector3(), Vector3.zero);
-    Assert.AreEqual("1.0f,1.0,1".ToVector3(), Vector3.one);
+    Assert.AreEqual("0,0".ToVector2(), UnityEngine.Vector2.zero);
+    Assert.AreEqual("1.0f,1.0".ToVector2(), UnityEngine.Vector2.one);
+    Assert.AreEqual("0,0,0".ToVector3(), UnityEngine.Vector3.zero);
+    Assert.AreEqual("1.0f,1.0,1".ToVector3(), UnityEngine.Vector3.one);
     Assert.AreEqual("All your base are belong to us".ToBase64(), "QWxsIHlvdXIgYmFzZSBhcmUgYmVsb25nIHRvIHVz");
     Assert.AreEqual("QWxsIHlvdXIgYmFzZSBhcmUgYmVsb25nIHRvIHVz".FromBase64(), "All your base are belong to us");
     Assert.AreEqual("hello World!".Capitalized(), "Hello World!");
@@ -94,6 +94,8 @@ public partial class ExtensionsTests
 
     string decrypted = encrypted.Decrypt(password);
     Assert.AreEqual(decrypted, secret);
+    
+    Assert.AreEqual(secret, secret.Xor(password).Xor(password));
 
     Assert.AreEqual("Hello word!".Similarity("Hello word!"), 0);
     Assert.AreNotEqual("Hello word!".Similarity("Hell to word!"), 0);

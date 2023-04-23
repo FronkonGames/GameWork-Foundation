@@ -33,11 +33,11 @@ namespace FronkonGames.GameWork.Foundation
     [Conditional("UNITY_EDITOR")]
     public static void Point(Vector3 position, float? size = null, Color? color = null, Quaternion? rotation = null)
     {
-      float halfSize = (size ?? Settings.DebugDrawPointSize.Value) * 0.5f;
+      float halfSize = (size ?? Settings.Draw.PointSize) * 0.5f;
 
-      Line(position + Vector3.right * halfSize, position - Vector3.right * halfSize, color ?? Settings.DebugDrawAxisXColor.Value, rotation);
-      Line(position + Vector3.up * halfSize, position - Vector3.up * halfSize, color ?? Settings.DebugDrawAxisYColor.Value, rotation);
-      Line(position + Vector3.forward * halfSize, position - Vector3.forward * halfSize, color ?? Settings.DebugDrawAxisZColor.Value, rotation);
+      Line(position + Vector3.right * halfSize, position - Vector3.right * halfSize, color ?? Settings.Draw.AxisXColor, rotation);
+      Line(position + Vector3.up * halfSize, position - Vector3.up * halfSize, color ?? Settings.Draw.AxisYColor, rotation);
+      Line(position + Vector3.forward * halfSize, position - Vector3.forward * halfSize, color ?? Settings.Draw.AxisZColor, rotation);
     }
 
     /// <summary> Draw an array of points using three-axis crosshairs. </summary>
@@ -65,7 +65,7 @@ namespace FronkonGames.GameWork.Foundation
       {
         a = rotation == null ? a : (Quaternion)rotation * a,
         b = rotation == null ? b : (Quaternion)rotation * b,
-        color = color ?? Settings.DebugDrawLineColor.Value,
+        color = color ?? Settings.Draw.LineColor,
         solid = true
       });
 
@@ -95,7 +95,7 @@ namespace FronkonGames.GameWork.Foundation
       {
         a = rotation == null ? a : (Quaternion)rotation * a,
         b = rotation == null ? b : (Quaternion)rotation * b,
-        color = color ?? Settings.DebugDrawLineColor.Value,
+        color = color ?? Settings.Draw.LineColor,
         solid = false
       });
 
@@ -122,20 +122,20 @@ namespace FronkonGames.GameWork.Foundation
     [Conditional("UNITY_EDITOR")]
     public static void Arrow(Vector3 position, Vector3 direction, float length = 1.0f, float? size = null, float? width = null, Color? color = null)
     {
-      float sideLen = length - length * (size ?? Settings.DebugDrawArrowTipSize.Value);
-      Vector3 widthOffset = Vector3.Cross(direction, Vector3.up) * (width ?? Settings.DebugDrawArrowWidth.Value);
+      float sideLen = length - length * (size ?? Settings.Draw.ArrowTipSize);
+      Vector3 widthOffset = Vector3.Cross(direction, Vector3.up) * (width ?? Settings.Draw.ArrowWidth);
       Vector3 tip = position + direction * length;
       Vector3 upCornerInRight = position - widthOffset * 0.3f + direction * sideLen;
       Vector3 upCornerInLeft = position + widthOffset * 0.3f + direction * sideLen;
       Vector3 upCornerOutRight = position - widthOffset * 0.5f + direction * sideLen;
       Vector3 upCornerOutLeft = position + widthOffset * 0.5f + direction * sideLen;
 
-      Line(position, upCornerInRight, color ?? Settings.DebugDrawArrowColor.Value);
-      Line(upCornerInRight, upCornerOutRight, color ?? Settings.DebugDrawArrowColor.Value);
-      Line(upCornerOutRight, tip, color ?? Settings.DebugDrawArrowColor.Value);
-      Line(tip, upCornerOutLeft, color ?? Settings.DebugDrawArrowColor.Value);
-      Line(upCornerOutLeft, upCornerInLeft, color ?? Settings.DebugDrawArrowColor.Value);
-      Line(upCornerInLeft, position, color ?? Settings.DebugDrawArrowColor.Value);
+      Line(position, upCornerInRight, color ?? Settings.Draw.ArrowColor);
+      Line(upCornerInRight, upCornerOutRight, color ?? Settings.Draw.ArrowColor);
+      Line(upCornerOutRight, tip, color ?? Settings.Draw.ArrowColor);
+      Line(tip, upCornerOutLeft, color ?? Settings.Draw.ArrowColor);
+      Line(upCornerOutLeft, upCornerInLeft, color ?? Settings.Draw.ArrowColor);
+      Line(upCornerInLeft, position, color ?? Settings.Draw.ArrowColor);
     }
 
     /// <summary> Draw a line using an arrow. </summary>
@@ -157,7 +157,7 @@ namespace FronkonGames.GameWork.Foundation
     /// <param name="color"></param>
     [Conditional("UNITY_EDITOR")]
     public static void Ray(Vector3 position, Quaternion rotation, Color? color = null) =>
-      Line(position, (rotation * Vector3.forward) * Settings.DebugDrawRayLength.Value, color ?? Settings.DebugDrawRayColor.Value);
+      Line(position, (rotation * Vector3.forward) * Settings.Draw.RayLength, color ?? Settings.Draw.RayColor);
 
     /// <summary> Draw a ray.
     /// </summary>
@@ -167,7 +167,7 @@ namespace FronkonGames.GameWork.Foundation
     /// <param name="color">Color</param>
     [Conditional("UNITY_EDITOR")]
     public static void Ray(Vector3 position, Vector3 direction, Color? color = null) =>
-      Line(position, direction * Settings.DebugDrawRayLength.Value, color ?? Settings.DebugDrawRayColor.Value);
+      Line(position, direction * Settings.Draw.RayLength, color ?? Settings.Draw.RayColor);
     
     /// <summary> Draw a wire circle. </summary>
     /// <remarks>Only available in the Editor</remarks>
@@ -182,7 +182,7 @@ namespace FronkonGames.GameWork.Foundation
         center = center,
         normal = rotation == null ? Vector3.up : (Quaternion)rotation * Vector3.forward,
         radius = radius,
-        color = color ?? Settings.DebugDrawCircleColor.Value
+        color = color ?? Settings.Draw.CircleColor
       });
 
     /// <summary> Draw a wire circle. </summary>
@@ -198,7 +198,7 @@ namespace FronkonGames.GameWork.Foundation
         center = center,
         normal = normal ?? Vector3.up,
         radius = radius,
-        color = color ?? Settings.DebugDrawCircleColor.Value
+        color = color ?? Settings.Draw.CircleColor
       });
 
     /// <summary> Draw a solid circle. </summary>
@@ -214,7 +214,7 @@ namespace FronkonGames.GameWork.Foundation
         center = center,
         normal = rotation == null ? Vector3.up : (Quaternion)rotation * Vector3.forward,
         radius = radius,
-        color = color ?? Settings.DebugDrawCircleColor.Value,
+        color = color ?? Settings.Draw.CircleColor,
         solid = true
       });
 
@@ -231,7 +231,7 @@ namespace FronkonGames.GameWork.Foundation
         center = center,
         normal = normal ?? Vector3.up,
         radius = radius,
-        color = color ?? Settings.DebugDrawCircleColor.Value,
+        color = color ?? Settings.Draw.CircleColor,
         solid = true
       });
 
@@ -244,9 +244,9 @@ namespace FronkonGames.GameWork.Foundation
     [Conditional("UNITY_EDITOR")]
     public static void Sphere(Vector3 center, float radius, Color? color = null, Quaternion? rotation = null)
     {
-      Circle(center, radius, color ?? Settings.DebugDrawAxisYColor.Value, rotation);
-      Circle(center, radius, color ?? Settings.DebugDrawAxisXColor.Value, (rotation ?? Quaternion.identity) * Quaternion.Euler(0.0f, 0.0f, 90.0f));
-      Circle(center, radius, color ?? Settings.DebugDrawAxisZColor.Value, (rotation ?? Quaternion.identity) * Quaternion.Euler(0.0f, 90.0f, 90.0f));
+      Circle(center, radius, color ?? Settings.Draw.AxisYColor, rotation);
+      Circle(center, radius, color ?? Settings.Draw.AxisXColor, (rotation ?? Quaternion.identity) * Quaternion.Euler(0.0f, 0.0f, 90.0f));
+      Circle(center, radius, color ?? Settings.Draw.AxisZColor, (rotation ?? Quaternion.identity) * Quaternion.Euler(0.0f, 90.0f, 90.0f));
     }
 
     /// <summary> Draw a solid sphere. </summary>
@@ -261,7 +261,7 @@ namespace FronkonGames.GameWork.Foundation
       {
         center = center,
         radius = radius,
-        color = color ?? Settings.DebugDrawCircleColor.Value,
+        color = color ?? Settings.Draw.CircleColor,
         rotation = rotation ?? Quaternion.identity
       });
 
@@ -281,7 +281,7 @@ namespace FronkonGames.GameWork.Foundation
         from = (rotation * Quaternion.Euler(-angle * 0.5f, 0.0f, 0.0f)) * Vector3.forward,
         angle = angle,
         radius = radius,
-        color = color ?? Settings.DebugDrawArcColor.Value
+        color = color ?? Settings.Draw.ArcColor
       });
 
     /// <summary> Draw an solid arc centered on the forward vector. </summary>
@@ -300,7 +300,7 @@ namespace FronkonGames.GameWork.Foundation
         from = (rotation * Quaternion.Euler(0.0f, -angle * 0.5f, 0.0f)) * Vector3.forward,
         angle = angle,
         radius = radius,
-        color = color ?? Settings.DebugDrawArcColor.Value,
+        color = color ?? Settings.Draw.ArcColor,
         solid = true
       });
 
@@ -315,7 +315,7 @@ namespace FronkonGames.GameWork.Foundation
       {
         center = center,
         size = size,
-        color = color ?? Settings.DebugDrawCubeColor.Value
+        color = color ?? Settings.Draw.CubeColor
       });
 
     /// <summary> Draw a wire cube. </summary>
@@ -325,7 +325,7 @@ namespace FronkonGames.GameWork.Foundation
     /// <param name="color">Color</param>
     [Conditional("UNITY_EDITOR")]
     public static void Cube(Vector3 center, float size, Color? color = null) =>
-      Cube(center, Vector3.one * size, color ?? Settings.DebugDrawCubeColor.Value);
+      Cube(center, Vector3.one * size, color ?? Settings.Draw.CubeColor);
 
     /// <summary> Draw a wire diamond. </summary>
     /// <remarks>Only available in the Editor</remarks>
@@ -336,7 +336,7 @@ namespace FronkonGames.GameWork.Foundation
     [Conditional("UNITY_EDITOR")]
     public static void Diamond(Vector3 center, float? size = null, Color? color = null, Quaternion? rotation = null)
     {
-      float diamondSize = size ?? Settings.DebugDrawDiamondSize.Value;
+      float diamondSize = size ?? Settings.Draw.DiamondSize;
       Vector3 u = center + Vector3.up * diamondSize;
       Vector3 d = center + Vector3.down * diamondSize;
       Vector3 r = center + Vector3.right * diamondSize;
@@ -350,7 +350,7 @@ namespace FronkonGames.GameWork.Foundation
         u, f, l,
         u, l, b,
         u, b, r
-      }, color ?? Settings.DebugDrawDiamondColor.Value, rotation);
+      }, color ?? Settings.Draw.DiamondColor, rotation);
 
       Lines(new[]
       {
@@ -358,7 +358,7 @@ namespace FronkonGames.GameWork.Foundation
         d, r, b,
         d, b, l,
         d, l, f
-      }, color ?? Settings.DebugDrawDiamondColor.Value, rotation);
+      }, color ?? Settings.Draw.DiamondColor, rotation);
     }
 
     /// <summary> Draw a wire cone. </summary>
@@ -387,7 +387,7 @@ namespace FronkonGames.GameWork.Foundation
 
       farPlane.Raycast(distRay, out dist);
 
-      Color coneColor = color ?? Settings.DebugDrawConeColor.Value;
+      Color coneColor = color ?? Settings.Draw.ConeColor;
       Debug.DrawRay(position, slerpedVector.normalized * dist, coneColor);
       Debug.DrawRay(position, Vector3.Slerp(forward, -up, angle / 90.0f).normalized * dist, coneColor);
       Debug.DrawRay(position, Vector3.Slerp(forward, right, angle / 90.0f).normalized * dist, coneColor);
@@ -404,7 +404,7 @@ namespace FronkonGames.GameWork.Foundation
     [Conditional("UNITY_EDITOR")]
     public static void Bounds(Bounds b, Color? color = null)
     {
-      Color boundsColor = color ?? Settings.DebugDrawBoundsColor.Value;
+      Color boundsColor = color ?? Settings.Draw.BoundsColor;
       
       Vector3 lbf = new Vector3(b.min.x, b.min.y, b.max.z);
       Vector3 ltb = new Vector3(b.min.x, b.max.y, b.min.z);
@@ -448,7 +448,7 @@ namespace FronkonGames.GameWork.Foundation
       {
         position = position,
         text = text,
-        color = color ?? Settings.DebugDrawTextColor.Value
+        color = color ?? Settings.Draw.TextColor
       });
   }
 }

@@ -17,7 +17,6 @@
 using System;
 using UnityEngine;
 using UnityEditor;
-using FronkonGames.GameWork.Foundation;
 
 namespace FronkonGames.GameWork.Foundation
 {
@@ -26,8 +25,6 @@ namespace FronkonGames.GameWork.Foundation
   public sealed class FolderPropertyDrawer : PropertyDrawer
   {
     private readonly Texture2D folderButtonTexture;
-    private const float buttonWidth = 20.0f;
-    private const float padding = 4.0f;
 
     public FolderPropertyDrawer()
     {
@@ -39,13 +36,13 @@ namespace FronkonGames.GameWork.Foundation
       FolderAttribute folderAttribute = (FolderAttribute)attribute;
       if (property.propertyType == SerializedPropertyType.String)
       {
-        position.width -= buttonWidth + padding;
+        position.width -= Settings.Editor.FileButtonWidth + Settings.Editor.FileButtonPadding;
         
         label = EditorGUI.BeginProperty(position, label, property);
         EditorGUI.PropertyField(position, property, label, true);
        
-        position.x += position.width + padding;
-        position.width = buttonWidth;
+        position.x += position.width + Settings.Editor.FileButtonPadding;
+        position.width = Settings.Editor.FileButtonWidth;
 
         if (GUI.Button(position, folderButtonTexture, GUIStyle.none) == true)
           SetFolderPath(property, folderAttribute);
@@ -55,7 +52,7 @@ namespace FronkonGames.GameWork.Foundation
       else
       {
         Color original = GUI.color;
-        GUI.color = Color.red;
+        GUI.color = Settings.Editor.ErrorColor;
         EditorGUI.LabelField(position, label.text, $"Field '{property.propertyPath}' can only be applied to a string fields");
         GUI.color = original;      
       }

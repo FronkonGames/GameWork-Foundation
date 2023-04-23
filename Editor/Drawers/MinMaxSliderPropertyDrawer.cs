@@ -33,7 +33,7 @@ namespace FronkonGames.GameWork.Foundation
       if (minProperty.propertyType != maxProperty.propertyType)
       {
         Color original = GUI.color;
-        GUI.color = Color.red;
+        GUI.color = Settings.Editor.ErrorColor;
         EditorGUI.LabelField(position, label.text, $"The types don't match in field '{property.propertyPath}'");
         GUI.color = original;      
       }
@@ -41,7 +41,7 @@ namespace FronkonGames.GameWork.Foundation
                minProperty.propertyType != SerializedPropertyType.Integer)
       {
         Color original = GUI.color;
-        GUI.color = Color.red;
+        GUI.color = Settings.Editor.ErrorColor;
         EditorGUI.LabelField(position, label.text, $"Field '{property.propertyPath}' can only be applied to a float or int fields");
         GUI.color = original;      
       }
@@ -75,7 +75,7 @@ namespace FronkonGames.GameWork.Foundation
           minProperty.floatValue = Mathf.Clamp(min, sliderAttribute.min, max);
           maxProperty.floatValue = Mathf.Clamp(max, min, sliderAttribute.max);
 
-          if (GUI.Button(resetRect, EditorGUIUtility.IconContent("d_Refresh"), EditorStyles.iconButton) == true)
+          if (GUI.Button(resetRect, Styles.RefreshIcon, EditorStyles.iconButton) == true)
           {
             minProperty.floatValue = sliderAttribute.resetMin;
             maxProperty.floatValue = sliderAttribute.resetMax;
@@ -94,7 +94,7 @@ namespace FronkonGames.GameWork.Foundation
           minProperty.intValue = Mathf.Clamp(min, Mathf.RoundToInt(sliderAttribute.min), max);
           maxProperty.intValue = Mathf.Clamp(max, min, Mathf.RoundToInt(sliderAttribute.max));
 
-          if (GUI.Button(resetRect, EditorGUIUtility.IconContent("d_Refresh"), EditorStyles.iconButton) == true)
+          if (GUI.Button(resetRect, Styles.RefreshIcon, EditorStyles.iconButton) == true)
           {
             minProperty.intValue = Mathf.RoundToInt(sliderAttribute.resetMin);
             maxProperty.intValue = Mathf.RoundToInt(sliderAttribute.resetMax);

@@ -1,5 +1,25 @@
 # Changelog
 
+## 1.0.8 - 2023-04-23
+
+### Added
+
+- Profiler memory stamps, sample and marker.
+- PlayerPrefsUtils color.
+- Quaternion extensions.
+- string.ToVector4, string.ToQuaternion.
+
+### Changed
+
+- Settings refactor.
+- MemoryBlock use Profiler.GetMonoHeapSize().
+- string.ToColor parse comma separated color channels.
+
+### Fixed
+
+- Log.Info and Check message format.
+- Small fixes.
+
 ## 1.0.7 - 2023-04-20
 
 ### Added

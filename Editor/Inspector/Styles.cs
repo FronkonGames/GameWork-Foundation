@@ -22,6 +22,8 @@ namespace FronkonGames.GameWork.Foundation
   /// <summary> Styles for the Editor. </summary>
   public static class Styles
   {
+    public static readonly GUIContent RefreshIcon = EditorGUIUtility.IconContent(Settings.Editor.RefreshIcon);
+
     public static Color Splitter => EditorGUIUtility.isProSkin == true ? SplitterDark : SplitterLight;
 
     public static Color HeaderBackground => EditorGUIUtility.isProSkin == true ? HeaderBackgroundDark : HeaderBackgroundLight;

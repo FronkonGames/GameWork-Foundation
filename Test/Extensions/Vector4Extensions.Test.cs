@@ -1,4 +1,4 @@
-﻿////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Copyright (c) Martin Bustos @FronkonGames <fronkongames@gmail.com>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
@@ -14,25 +14,24 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-using UnityEngine;
-using UnityEditor;
+using System.Collections;
+using NUnit.Framework;
+using UnityEngine.TestTools;
+using FronkonGames.GameWork.Foundation;
 
-namespace FronkonGames.GameWork.Foundation
+/// <summary>
+/// Extensions test.
+/// </summary>
+public partial class ExtensionsTests
 {
-  /// <summary> Not Editable drawer. </summary>
-  [CustomPropertyDrawer(typeof(NotEditableAttribute), true)]
-  public sealed class NotEditablePropertyDrawer : PropertyDrawer
+  /// <summary>
+  /// Vector4 extensions test.
+  /// </summary>
+  [UnityTest]
+  public IEnumerator Vector4()
   {
-    public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
-    {
-      bool previous = GUI.enabled;
-      GUI.enabled = false;
-
-      label = EditorGUI.BeginProperty(position, label, property);
-      EditorGUI.PropertyField(position, property, label, true);
-      EditorGUI.EndProperty();
-
-      GUI.enabled = previous;
-    }
+    // @TODO.
+    
+    yield return null;
   }
 }

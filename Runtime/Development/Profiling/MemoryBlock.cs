@@ -23,18 +23,17 @@ namespace FronkonGames.GameWork.Foundation
   {
     private readonly string title;
     private readonly long bytesStart;
-
+    
     public MemoryBlock(string title)
     {
       this.title = title ?? "Unknown";
-      bytesStart = GC.GetTotalMemory(false);
+      bytesStart = Profiling.MonoHeap;
     }
 
     public void Dispose()
     {
-      int bytesDiff = (int)(GC.GetTotalMemory(false) - bytesStart);
-
-      // @TODO: Add more memory info.
+      int bytesDiff = (int)(Profiling.MonoHeap - bytesStart);
+      
       Log.Info($"Task '{title}' consume {bytesDiff.BytesToHumanReadable()}");
     }
   }

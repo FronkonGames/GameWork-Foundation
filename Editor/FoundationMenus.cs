@@ -17,7 +17,7 @@
 using UnityEngine;
 using UnityEditor;
 
-namespace FronkonGames.GameWork.Foundation.Editor
+namespace FronkonGames.GameWork.Foundation
 {
   /// <summary> Foundation menus. </summary>
   public static class FoundationMenus

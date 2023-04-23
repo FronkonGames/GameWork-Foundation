@@ -384,7 +384,7 @@ Output the message: "**Task 'Some hungry code' consume 4.00 kb**".
 
 The most used design patterns:
 
-- Behavioral: [Command](https://github.com/FronkonGames/GameWork-Foundation/tree/main/Runtime/Patterns/Behavioral/Command), [Observer](https://github.com/FronkonGames/GameWork-Foundation/tree/main/Runtime/Patterns/Behavioral/Observer).
+- Behavioral: [Command](https://github.com/FronkonGames/GameWork-Foundation/tree/main/Runtime/Patterns/Behavioral/Command), [Observer](https://github.com/FronkonGames/GameWork-Foundation/tree/main/Runtime/Patterns/Behavioral/Observer), [Strategy](https://github.com/FronkonGames/GameWork-Foundation/tree/main/Runtime/Patterns/Behavioral/Strategy), [Visitor](https://github.com/FronkonGames/GameWork-Foundation/tree/main/Runtime/Patterns/Behavioral/Visitor).
 - Creational: [Singleton](https://github.com/FronkonGames/GameWork-Foundation/tree/main/Runtime/Patterns/Creational/Singleton).
 - Structural: [Decorator](https://github.com/FronkonGames/GameWork-Foundation/tree/main/Runtime/Patterns/Structural/Decorator).
 
@@ -393,12 +393,6 @@ All using generics.
 ### Unit tests
 
 <p align="center"><img src="Media/unittests.png"/></p>
-
-### Centralized settings
-
-Only one place to modify the framework parameters (Edit > Preferences > Game:Work > Foundation).
-
-<p align="center"><img src="Media/settings.png"/></p>
 
 ## License 📜
 

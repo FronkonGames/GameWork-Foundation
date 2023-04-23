@@ -27,6 +27,7 @@ using System.Diagnostics;
 using CallerName = System.Runtime.CompilerServices.CallerMemberNameAttribute;
 using CallerPath = System.Runtime.CompilerServices.CallerFilePathAttribute;
 using CallerLine  = System.Runtime.CompilerServices.CallerLineNumberAttribute;
+using UnityEngine;
 
 using Debug = UnityEngine.Debug;
 
@@ -52,12 +53,12 @@ namespace FronkonGames.GameWork.Foundation
   public static class Log
   {
     /// <summary> Log level. </summary>
-    public static LogLevel Level { get; set; } = LogLevel.Info;
+    public static LogLevel Level { get; set; } = Settings.Log.DefaultLevel;
 
 #if UNITY_EDITOR
-    private static void LogInfo(string source, string message)     => Debug.Log($"{source} <color={Settings.LogInfoColor.Value.ToHex()}>{message}</color>");
-    private static void LogWarning(string source, string message)  => Debug.LogWarning($"{source} <color={Settings.LogWarningColor.Value.ToHex()}>{message}</color>");
-    private static void LogError(string source, string message)    => Debug.LogError($"{source} <color={Settings.LogErrorColor.Value.ToHex()}>{message}</color>");
+    private static void LogInfo(string source, string message)     => Debug.Log($"{source} <color={Settings.Log.InfoColor.ToHex()}>{message}</color>");
+    private static void LogWarning(string source, string message)  => Debug.LogWarning($"{source} <color={(Settings.Log.WarningColor).ToHex()}>{message}</color>");
+    private static void LogError(string source, string message)    => Debug.LogError($"{source} <color={(Settings.Log.ErrorColor).ToHex()}>{message}</color>");
 #else
     private static void LogInfo(string source, string message)     => Debug.Log($"{source} {message}");
     private static void LogWarning(string source, string message)  => Debug.LogWarning($"{source} {message}");
@@ -78,7 +79,7 @@ namespace FronkonGames.GameWork.Foundation
                                             [CallerLine] int line = 0)
     {
       if (Level <= LogLevel.Info)
-        LogInfo($"[{Path.GetFileNameWithoutExtension(sourceFile)}:{line}:{member}]", message);
+        LogInfo($"[{Path.GetFileNameWithoutExtension(sourceFile)}:{member}:{line}]", message);
     }
 
     /// <summary> Warning message. </summary>
@@ -135,7 +136,9 @@ namespace FronkonGames.GameWork.Foundation
         e = new Exception(message);
 
       Debug.LogException(e);
-      Debug.LogError(e.StackTrace);
+
+      if (Settings.Log.ShowStackTrace == true)
+        Debug.LogError(e.StackTrace);
     }
   }
 }

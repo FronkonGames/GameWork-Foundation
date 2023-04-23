@@ -23,32 +23,27 @@ namespace FronkonGames.GameWork.Foundation
   [CustomPropertyDrawer(typeof(TitleAttribute), true)]
   public sealed class TitlePropertyDrawer : PropertyDrawer
   {
-    private const int SpaceBeforeTitle = 8;
-    private const int SpaceBeforeLine = 2;
-    private const int LineHeight = 2;
-    private const int SpaceBeforeContent = 3;
-
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
       TitleAttribute titleAttribute = (TitleAttribute)attribute;
 
       Rect rectTitle = new(position)
       {
-        y = position.y + SpaceBeforeTitle,
+        y = position.y + Settings.Editor.TitleSpaceBeforeTitle,
         height = EditorGUIUtility.singleLineHeight
       };
       GUI.Label(rectTitle, titleAttribute.label, EditorStyles.boldLabel);
 
       Rect rectLine = new(position)
       {
-        y = rectTitle.yMax + SpaceBeforeLine,
-        height = LineHeight
+        y = rectTitle.yMax + Settings.Editor.TitleSpaceBeforeLine,
+        height = Settings.Editor.TitleLineHeight
       };
       EditorGUI.DrawRect(rectLine, Color.gray);
 
       Rect rectContent = new(position)
       {
-        yMin = rectLine.yMax + SpaceBeforeContent
+        yMin = rectLine.yMax + Settings.Editor.TitleSpaceBeforeContent
       };
       label = EditorGUI.BeginProperty(rectContent, label, property);
       EditorGUI.PropertyField(rectContent, property, label, true);
@@ -57,10 +52,10 @@ namespace FronkonGames.GameWork.Foundation
 
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label) =>
       EditorGUI.GetPropertyHeight(property, label) +
-      SpaceBeforeTitle +
+      Settings.Editor.TitleSpaceBeforeTitle +
       EditorGUIUtility.singleLineHeight +
-      SpaceBeforeLine +
-      LineHeight +
-      SpaceBeforeContent;
+      Settings.Editor.TitleSpaceBeforeLine +
+      Settings.Editor.TitleLineHeight +
+      Settings.Editor.TitleSpaceBeforeContent;
   }
 }

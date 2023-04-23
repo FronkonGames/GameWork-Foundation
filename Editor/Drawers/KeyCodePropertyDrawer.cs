@@ -51,7 +51,7 @@ namespace FronkonGames.GameWork.Foundation
       else
       {
         Color original = GUI.color;
-        GUI.color = Color.red;
+        GUI.color = Settings.Editor.ErrorColor;
         EditorGUI.LabelField(position, label.text, $"Field '{property.propertyPath}' can only be applied to a KeyCode fields");
         GUI.color = original;      
       }

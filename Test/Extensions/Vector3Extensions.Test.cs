@@ -28,7 +28,7 @@ public partial class ExtensionsTests
   /// Vector3 extensions test.
   /// </summary>
   [UnityTest]
-  public IEnumerator Vector3Float()
+  public IEnumerator Vector3()
   {
     // @TODO.
     

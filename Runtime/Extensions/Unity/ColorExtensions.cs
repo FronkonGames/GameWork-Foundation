@@ -14,6 +14,8 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+using UnityEditor;
 using UnityEngine;
 
 namespace FronkonGames.GameWork.Foundation
@@ -93,6 +95,11 @@ namespace FronkonGames.GameWork.Foundation
       return $"#{color32.r:X2}{color32.g:X2}{color32.b:X2}";    
     }
 
+    /// <summary> Color to string. </summary>
+    /// <param name="self">Value</param>
+    /// <returns></returns>
+    public static string ToString(this Color self) => $"{self.r},{self.g},{self.b},{self.a}";
+    
     /// <summary> Brightness correction. </summary>
     /// <param name="correctionFactor">Brightness correction factor [-1 - 1]</param>
     /// <returns>Color with corrected brightness.</returns>

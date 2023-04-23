@@ -31,7 +31,7 @@ namespace FronkonGames.GameWork.Foundation
     public static void Interface(Type value, [CallerMemberName]string member = "",
                                              [CallerFilePath]string sourceFile = "",
                                              [CallerLineNumber]int line = 0) =>
-      Assert(value.IsInterface == true, $"{Path.GetFileName(sourceFile)}:{line.ToString()} {member} '{nameof(value)}' must be an interface.");
+      Assert(value.IsInterface == true, $"{Path.GetFileName(sourceFile)}:{member}:{line.ToString()} '{nameof(value)}' must be an interface.");
 
     /// <summary> Type is not a interface. </summary>
     /// <param name="value">Value</param>
@@ -40,6 +40,6 @@ namespace FronkonGames.GameWork.Foundation
     public static void NotInterface(Type value, [CallerMemberName]string member = "",
                                                 [CallerFilePath]string sourceFile = "",
                                                 [CallerLineNumber]int line = 0) =>
-      Assert(value.IsInterface == false, $"{Path.GetFileName(sourceFile)}:{line.ToString()} {member} '{nameof(value)}' must be an interface.");
+      Assert(value.IsInterface == false, $"{Path.GetFileName(sourceFile)}:{member}:{line.ToString()} '{nameof(value)}' must be an interface.");
   }
 }

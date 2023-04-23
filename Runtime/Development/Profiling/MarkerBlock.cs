@@ -1,4 +1,4 @@
-﻿////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Copyright (c) Martin Bustos @FronkonGames <fronkongames@gmail.com>
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
@@ -14,25 +14,22 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-using UnityEngine;
-using UnityEditor;
+using System;
+using Unity.Profiling;
+using UnityEngine.Profiling;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary> Not Editable drawer. </summary>
-  [CustomPropertyDrawer(typeof(NotEditableAttribute), true)]
-  public sealed class NotEditablePropertyDrawer : PropertyDrawer
+  /// <summary> Profiler marker block. </summary>
+  public class MarkerBlock : IDisposable
   {
-    public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+    private ProfilerMarker marker;
+
+    public MarkerBlock(ProfilerCategory category, string title)
     {
-      bool previous = GUI.enabled;
-      GUI.enabled = false;
-
-      label = EditorGUI.BeginProperty(position, label, property);
-      EditorGUI.PropertyField(position, property, label, true);
-      EditorGUI.EndProperty();
-
-      GUI.enabled = previous;
+      marker = new ProfilerMarker(category, title); 
     }
+
+    public void Dispose() => marker.End();
   }
 }

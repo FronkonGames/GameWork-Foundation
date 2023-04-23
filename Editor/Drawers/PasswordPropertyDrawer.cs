@@ -14,7 +14,6 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-using System.IO;
 using UnityEngine;
 using UnityEditor;
 
@@ -36,7 +35,7 @@ namespace FronkonGames.GameWork.Foundation
 
         Color color = GUI.color;
 
-        GUI.color = IsValid(password) ? Color.white : Color.red;
+        GUI.color = IsValid(password) ? Color.white : Settings.Editor.ErrorColor;
 
         property.stringValue = EditorGUI.PasswordField(position, label, password);
 
@@ -45,7 +44,7 @@ namespace FronkonGames.GameWork.Foundation
       else
       {
         Color original = GUI.color;
-        GUI.color = Color.red;
+        GUI.color = Settings.Editor.ErrorColor;
         EditorGUI.LabelField(position, label.text, $"Field '{property.propertyPath}' can only be applied to a string fields");
         GUI.color = original;      
       }

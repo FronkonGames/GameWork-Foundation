@@ -35,7 +35,7 @@ namespace FronkonGames.GameWork.Foundation
 
         Rect rectReset = position;
         rectReset.xMin = rectSlider.xMax + 1.0f;
-        if (GUI.Button(rectReset, EditorGUIUtility.IconContent("d_Refresh"), EditorStyles.iconButton) == true)
+        if (GUI.Button(rectReset, Styles.RefreshIcon, EditorStyles.iconButton) == true)
           property.floatValue = fieldAttribute.reset;
       }
       else if (property.propertyType == SerializedPropertyType.Integer)
@@ -46,13 +46,13 @@ namespace FronkonGames.GameWork.Foundation
 
         Rect rectReset = position;
         rectReset.xMin = rectSlider.xMax + 1.0f;
-        if (GUI.Button(rectReset, EditorGUIUtility.IconContent("d_Refresh"), EditorStyles.iconButton) == true)
+        if (GUI.Button(rectReset, Styles.RefreshIcon, EditorStyles.iconButton) == true)
           property.intValue = Mathf.RoundToInt(fieldAttribute.reset);
       }
       else
       {
         Color original = GUI.color;
-        GUI.color = Color.red;
+        GUI.color = Settings.Editor.ErrorColor;
         EditorGUI.LabelField(position, label.text, $"Field '{property.propertyPath}' can only be applied to a float or int fields");
         GUI.color = original;      
       }

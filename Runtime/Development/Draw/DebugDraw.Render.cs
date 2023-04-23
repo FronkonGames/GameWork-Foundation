@@ -35,7 +35,7 @@ namespace FronkonGames.GameWork.Foundation
           textStyle = new(UnityEditor.EditorStyles.whiteMiniLabel)
           {
             richText = true,
-            fontSize = Settings.DebugDrawTextSize.Value,
+            fontSize = Settings.Draw.TextSize,
             alignment = TextAnchor.MiddleCenter
           };
 
@@ -50,7 +50,7 @@ namespace FronkonGames.GameWork.Foundation
     
     static DebugDraw()
     {
-      handles = new(Settings.DebugDrawCapacity.Value);
+      handles = new(Settings.Draw.Capacity);
 
       UnityEditor.SceneView.duringSceneGui += (_) =>
       {

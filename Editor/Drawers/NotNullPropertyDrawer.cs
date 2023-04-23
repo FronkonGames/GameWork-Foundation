@@ -28,7 +28,7 @@ namespace FronkonGames.GameWork.Foundation
       Color original = GUI.color;
 
       if (ReferenceEquals(property.objectReferenceValue, null) == true)
-        GUI.color = Color.red;
+        GUI.color = Settings.Editor.ErrorColor;
 
       label = EditorGUI.BeginProperty(position, label, property);
       EditorGUI.PropertyField(position, property, label, true);

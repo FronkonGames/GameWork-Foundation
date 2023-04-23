@@ -48,7 +48,7 @@ namespace FronkonGames.GameWork.Foundation
     /// <param name="color">Color</param>
     [Conditional("UNITY_EDITOR")]
     public static void Draw(this Transform self, float length = 1.0f, Color? color = null)
-      => Arrow(self.position, self.rotation, length, Settings.DebugDrawArrowTipSize.Value, Settings.DebugDrawArrowWidth.Value, color);
+      => Arrow(self.position, self.rotation, length, Settings.Draw.ArrowTipSize, Settings.Draw.ArrowWidth, color);
 
     /// <summary> Draw bounds. </summary>
     /// <remarks>Only available in the Editor</remarks>
@@ -89,9 +89,9 @@ namespace FronkonGames.GameWork.Foundation
 
         for (int i = 0; i < maxHits; ++i)
         {
-          Circle(hits[i].point, Settings.DebugDrawHitRadius.Value * 0.5f, color ?? Settings.DebugDrawHitColor.Value, hits[i].normal);
-          Circle(hits[i].point, Settings.DebugDrawHitRadius.Value, color ?? Settings.DebugDrawHitColor.Value, hits[i].normal);
-          Line(hits[i].point, hits[i].point + (hits[i].normal * Settings.DebugDrawHitLength.Value), color ?? Settings.DebugDrawHitColor.Value);
+          Circle(hits[i].point, Settings.Draw.HitRadius * 0.5f, color ?? Settings.Draw.HitColor, hits[i].normal);
+          Circle(hits[i].point, Settings.Draw.HitRadius, color ?? Settings.Draw.HitColor, hits[i].normal);
+          Line(hits[i].point, hits[i].point + (hits[i].normal * Settings.Draw.HitLength), color ?? Settings.Draw.HitColor);
         }
       }
     }

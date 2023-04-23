@@ -21,6 +21,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Globalization;
+using System.Linq;
 using UnityEngine;
 
 namespace FronkonGames.GameWork.Foundation
@@ -106,22 +107,76 @@ namespace FronkonGames.GameWork.Foundation
       return result;
     }
 
-    /// <summary> Converts hex string color (0xFF00FF, #FF00FF, ...) to color. </summary>
+    /// <summary> Try to converts to Vector4. </summary>
+    /// <returns>Vector4</returns>
+    public static Vector4 ToVector4(this string self)
+    {
+      Vector4 result = Vector4.zero;
+      string[] args = self.Replace("f", string.Empty).Split(',');
+      if (args.Length == 4)
+      {
+        float.TryParse(args[0], NumberStyles.Float, CultureInfo.InvariantCulture, out result.x);
+        float.TryParse(args[1], NumberStyles.Float, CultureInfo.InvariantCulture, out result.y);
+        float.TryParse(args[2], NumberStyles.Float, CultureInfo.InvariantCulture, out result.z);
+        float.TryParse(args[3], NumberStyles.Float, CultureInfo.InvariantCulture, out result.w);
+      }
+
+      return result;
+    }
+
+    /// <summary> Try to converts to Quaternion. </summary>
+    /// <returns>Quaternion</returns>
+    public static Quaternion ToQuaternion(this string self)
+    {
+      Quaternion result = Quaternion.identity;
+      string[] args = self.Replace("f", string.Empty).Split(',');
+      if (args.Length == 4)
+      {
+        float.TryParse(args[0], NumberStyles.Float, CultureInfo.InvariantCulture, out result.x);
+        float.TryParse(args[1], NumberStyles.Float, CultureInfo.InvariantCulture, out result.y);
+        float.TryParse(args[2], NumberStyles.Float, CultureInfo.InvariantCulture, out result.z);
+        float.TryParse(args[3], NumberStyles.Float, CultureInfo.InvariantCulture, out result.w);
+      }
+
+      return result;
+    }
+    
+    /// <summary> Converts hex string color (0xFF00FF, #FF00FF, commas) to color. </summary>
     /// <returns>Color</returns>
     public static Color ToColor(this string self)
     {
-      self = self.Replace("0x", ""); // 0xFFFFFF?
-      self = self.Replace("#", "");  // #FFFFFF?
-      
-      byte a = 255;
-      byte r = byte.Parse(self.Substring(0, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture);
-      byte g = byte.Parse(self.Substring(2, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture);
-      byte b = byte.Parse(self.Substring(4, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture);
-      
-      if (self.Length == 8)
-        a = byte.Parse(self.Substring(6, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture);
+      Color color = new Color();
 
-      return new Color32(r, g, b, a);
+      if (self.Contains("0x") == true || self.Contains("#") == true)
+      {
+        self = self.Replace("0x", string.Empty); // 0xFFFFFF?
+        self = self.Replace("#", string.Empty);  // #FFFFFF?
+      
+        byte a = 255;
+        byte r = byte.Parse(self.Substring(0, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture);
+        byte g = byte.Parse(self.Substring(2, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture);
+        byte b = byte.Parse(self.Substring(4, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture);
+      
+        if (self.Length == 8)
+          a = byte.Parse(self.Substring(6, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture);
+
+        color = new Color32(r, g, b, a);
+      }
+      else if (self.Contains(",") == true)
+      {
+        string[] channels = self.Substring(1, self.Length - 2).Split(',');
+        if (channels.Length >= 3)
+        {
+          color.r = float.Parse(channels[0]);
+          color.g = float.Parse(channels[1]);
+          color.b = float.Parse(channels[2]);
+          
+          if (channels.Length == 4)
+            color.a = float.Parse(channels[3]);
+        }
+      }
+
+      return color;
     }
 
     /// <summary> To hash algorithm called MD5. </summary>
@@ -167,6 +222,19 @@ namespace FronkonGames.GameWork.Foundation
       byte[] valueBytes = Convert.FromBase64String(self);
 
       return Encoding.UTF8.GetString(valueBytes);
+    }
+
+    /// <summary> </summary>
+    /// <param name="self"></param>
+    /// <param name="key"></param>
+    /// <returns></returns>
+    public static string Xor(this string self, string key)
+    {
+      StringBuilder builder = new StringBuilder();
+      for (int i = 0; i < self.Length; ++i)
+        builder.Append((char)(self[i] ^ key[i % key.Length]));
+
+      return builder.ToString();
     }
     
     /// <summary> "CamelCaseString" => "Camel case string" </summary>
