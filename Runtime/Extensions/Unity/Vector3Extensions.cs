@@ -14,8 +14,6 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-using System.Runtime.CompilerServices;
 using UnityEngine;
 
 namespace FronkonGames.GameWork.Foundation
@@ -82,7 +80,7 @@ namespace FronkonGames.GameWork.Foundation
     /// <param name="self">Value.</param>
     /// <returns>A new rounded vector.</returns>
     public static Vector3 Rounded(this Vector3 self) => new(Mathf.Round(self.x), Mathf.Round(self.y), Mathf.Round(self.z));
-    
+
     /// <summary> Vector3 to string. </summary>
     /// <param name="self">Value</param>
     /// <returns>string</returns>

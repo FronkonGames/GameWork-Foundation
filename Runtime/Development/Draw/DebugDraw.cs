@@ -77,7 +77,7 @@ namespace FronkonGames.GameWork.Foundation
     [Conditional("UNITY_EDITOR")]
     private static void Lines(Vector3[] lines, Color? color = null, Quaternion? rotation = null)
     {
-      for (int i = 0; i < lines.Length - 1; i += 1)
+      for (int i = 0; i < lines.Length - 1; ++i)
         Line(lines[i], lines[i + 1], color, rotation);
     }
 
@@ -107,7 +107,7 @@ namespace FronkonGames.GameWork.Foundation
     [Conditional("UNITY_EDITOR")]
     public static void DottedLines(Vector3[] lines, Color? color = null, Quaternion? rotation = null)
     {
-      for (int i = 0; i < lines.Length - 1; i += 1)
+      for (int i = 0; i < lines.Length - 1; ++i)
         DottedLine(lines[i], lines[i + 1], color, rotation);
     }
 
@@ -168,7 +168,7 @@ namespace FronkonGames.GameWork.Foundation
     [Conditional("UNITY_EDITOR")]
     public static void Ray(Vector3 position, Vector3 direction, Color? color = null) =>
       Line(position, direction * Settings.Draw.RayLength, color ?? Settings.Draw.RayColor);
-    
+
     /// <summary> Draw a wire circle. </summary>
     /// <remarks>Only available in the Editor</remarks>
     /// <param name="center">Center</param>
@@ -343,7 +343,7 @@ namespace FronkonGames.GameWork.Foundation
       Vector3 l = center + Vector3.left * diamondSize;
       Vector3 f = center + Vector3.forward * diamondSize;
       Vector3 b = center + Vector3.back * diamondSize;
-      
+
       Lines(new[]
       {
         u, r, f,
@@ -381,11 +381,10 @@ namespace FronkonGames.GameWork.Foundation
 
       Vector3 slerpedVector = Vector3.Slerp(forward, up, angle / 90.0f);
 
-      float dist;
       var farPlane = new Plane(-direction, position + forward);
       var distRay = new Ray(position, slerpedVector);
 
-      farPlane.Raycast(distRay, out dist);
+      farPlane.Raycast(distRay, out float dist);
 
       Color coneColor = color ?? Settings.Draw.ConeColor;
       Debug.DrawRay(position, slerpedVector.normalized * dist, coneColor);
@@ -405,17 +404,17 @@ namespace FronkonGames.GameWork.Foundation
     public static void Bounds(Bounds b, Color? color = null)
     {
       Color boundsColor = color ?? Settings.Draw.BoundsColor;
-      
-      Vector3 lbf = new Vector3(b.min.x, b.min.y, b.max.z);
-      Vector3 ltb = new Vector3(b.min.x, b.max.y, b.min.z);
-      Vector3 rbb = new Vector3(b.max.x, b.min.y, b.min.z);
+
+      Vector3 lbf = new(b.min.x, b.min.y, b.max.z);
+      Vector3 ltb = new(b.min.x, b.max.y, b.min.z);
+      Vector3 rbb = new(b.max.x, b.min.y, b.min.z);
       Line(b.min, lbf, boundsColor);
       Line(b.min, ltb, boundsColor);
       Line(b.min, rbb, boundsColor);
       
-      Vector3 rtb = new Vector3(b.max.x, b.max.y, b.min.z);
-      Vector3 rbf = new Vector3(b.max.x, b.min.y, b.max.z);
-      Vector3 ltf = new Vector3(b.min.x, b.max.y, b.max.z);
+      Vector3 rtb = new(b.max.x, b.max.y, b.min.z);
+      Vector3 rbf = new(b.max.x, b.min.y, b.max.z);
+      Vector3 ltf = new(b.min.x, b.max.y, b.max.z);
       Line(b.max, rtb, boundsColor);
       Line(b.max, rbf, boundsColor);
       Line(b.max, ltf, boundsColor);

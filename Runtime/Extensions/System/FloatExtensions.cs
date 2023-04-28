@@ -25,23 +25,23 @@ namespace FronkonGames.GameWork.Foundation
     /// <summary> Value sign. </summary>
     /// <returns>1.0 if greater than or equal to 0, -1.0 if less than 0.</returns>
     public static float Sign(this float self) => self >= 0.0f ? 1.0f : -1.0f;
-    
+
     /// <summary> The smallest integer greater to or equal to value. </summary>
     /// <returns>Float</returns>
     public static float Ceil(this float self) => Mathf.Ceil(self);
-    
+
     /// <summary> Value rounded to the nearest integer. </summary>
     /// <returns>Float</returns>
     public static float Round(this float self) => Mathf.Round(self);
-    
+
     /// <summary> Largest integer smaller than or equal to value. </summary>
     /// <returns>Int</returns>
     public static int ToIntFloor(this float self) => (int)Mathf.Floor(self);
-    
+
     /// <summary> Smallest integer greater to or equal to value. </summary>
     /// <returns>Int</returns>
     public static int ToIntCeil(this float value) => Mathf.CeilToInt(value);
-    
+
     /// <summary> Rounded to the nearest integer. </summary>
     /// <returns>Float</returns>
     public static int ToIntRound(this float self) => Mathf.RoundToInt(self);
@@ -61,7 +61,7 @@ namespace FronkonGames.GameWork.Foundation
     /// <param name="b">Value</param>
     /// <returns>Float</returns>
     public static float Min(this float a, float b) => Mathf.Min(a, b);
-    
+
     /// <summary> Returns the absolute value. </summary>
     /// <returns>Float</returns>
     public static float Abs(this float self) => Mathf.Abs(self);
@@ -70,7 +70,7 @@ namespace FronkonGames.GameWork.Foundation
     /// <param name="snap"> Rounding distance </param>
     /// <returns>Float</returns>
     public static float Snap(this float self, float snap) => snap > 0.0f ? Mathf.Round(self / snap) * snap : self;
-    
+
     /// <summary> Constrain the value to a range. </summary>
     /// <param name="min">Lower range</param>
     /// <param name="max">Upper range</param>

@@ -57,8 +57,8 @@ namespace FronkonGames.GameWork.Foundation
 
 #if UNITY_EDITOR
     private static void LogInfo(string source, string message)     => Debug.Log($"{source} <color={Settings.Log.InfoColor.ToHex()}>{message}</color>");
-    private static void LogWarning(string source, string message)  => Debug.LogWarning($"{source} <color={(Settings.Log.WarningColor).ToHex()}>{message}</color>");
-    private static void LogError(string source, string message)    => Debug.LogError($"{source} <color={(Settings.Log.ErrorColor).ToHex()}>{message}</color>");
+    private static void LogWarning(string source, string message)  => Debug.LogWarning($"{source} <color={Settings.Log.WarningColor.ToHex()}>{message}</color>");
+    private static void LogError(string source, string message)    => Debug.LogError($"{source} <color={Settings.Log.ErrorColor.ToHex()}>{message}</color>");
 #else
     private static void LogInfo(string source, string message)     => Debug.Log($"{source} {message}");
     private static void LogWarning(string source, string message)  => Debug.LogWarning($"{source} {message}");
@@ -140,5 +140,47 @@ namespace FronkonGames.GameWork.Foundation
       if (Settings.Log.ShowStackTrace == true)
         Debug.LogError(e.StackTrace);
     }
+
+    /// <summary> ArgumentOutOfRange exception and stack trace. </summary>
+    /// <param name="message">Message</param>
+    [DebuggerStepThrough]
+#if LOGS_DEVELOPER_BUILD
+    [Conditional("DEVELOPMENT_BUILD")]
+#endif
+#if LOGS_EDITOR
+    [Conditional("UNITY_EDITOR")]
+#endif
+    public static void ExceptionArgumentOutOfRange(string message, [CallerName] string member = "",
+                                                                   [CallerPath] string sourceFile = "",
+                                                                   [CallerLine] int line = 0) =>
+        Exception(message, new ArgumentOutOfRangeException(), member, sourceFile, line);
+
+    /// <summary> IndexOutOfRange exception and stack trace. </summary>
+    /// <param name="message">Message</param>
+    [DebuggerStepThrough]
+#if LOGS_DEVELOPER_BUILD
+    [Conditional("DEVELOPMENT_BUILD")]
+#endif
+#if LOGS_EDITOR
+    [Conditional("UNITY_EDITOR")]
+#endif
+    public static void ExceptionIndexOutOfRange(string message, [CallerName] string member = "",
+                                                                [CallerPath] string sourceFile = "",
+                                                                [CallerLine] int line = 0) =>
+        Exception(message, new IndexOutOfRangeException(), member, sourceFile, line);
+
+    /// <summary> ArgumentNull exception and stack trace. </summary>
+    /// <param name="message">Message</param>
+    [DebuggerStepThrough]
+#if LOGS_DEVELOPER_BUILD
+    [Conditional("DEVELOPMENT_BUILD")]
+#endif
+#if LOGS_EDITOR
+    [Conditional("UNITY_EDITOR")]
+#endif
+    public static void ExceptionArgumentNull(string message, [CallerName] string member = "",
+                                                             [CallerPath] string sourceFile = "",
+                                                             [CallerLine] int line = 0) =>
+        Exception(message, new ArgumentNullException(), member, sourceFile, line);
   }
 }

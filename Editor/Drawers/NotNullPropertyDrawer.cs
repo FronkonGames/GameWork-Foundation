@@ -27,14 +27,14 @@ namespace FronkonGames.GameWork.Foundation
     {
       Color original = GUI.color;
 
-      if (ReferenceEquals(property.objectReferenceValue, null) == true)
+      if (property.objectReferenceValue is null == true)
         GUI.color = Settings.Editor.ErrorColor;
 
       label = EditorGUI.BeginProperty(position, label, property);
       EditorGUI.PropertyField(position, property, label, true);
       EditorGUI.EndProperty();
 
-      GUI.color = original;      
+      GUI.color = original;
     }
   }
 }

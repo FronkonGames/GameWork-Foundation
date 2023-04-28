@@ -82,7 +82,7 @@ namespace FronkonGames.GameWork.Foundation
     /// <param name="key">Key name</param>
     /// <param name="value">Value</param>
     public static void SetString(string key, string value) => PlayerPrefs.SetString(Prefix(key), value);
-    
+
     /// <summary> Returns the value of a PlayerPrefs variable or its default value. </summary>
     /// <param name="key">Key name</param>
     /// <param name="defaultValue"> Value if the variable is not found. </param>

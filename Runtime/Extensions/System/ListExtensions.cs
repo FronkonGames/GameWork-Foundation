@@ -26,7 +26,7 @@ namespace FronkonGames.GameWork.Foundation
     /// <param name="self"> The list. </param>
     /// <returns> Unordered list. </returns>
     public static T Random<T>(this IList<T> self) => self[Rand.Range(0, self.Count)];
-    
+
     /// <summary> Swaps a pair of elements. </summary>
     /// <param name="self"> The list. </param>
     /// <param name="i"> First element. </param>

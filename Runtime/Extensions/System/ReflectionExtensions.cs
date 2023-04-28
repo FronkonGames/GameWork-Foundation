@@ -34,7 +34,7 @@ namespace FronkonGames.GameWork.Foundation
 
       const BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
 
-      List<FieldInfo> fieldInfos = new List<FieldInfo>();
+      List<FieldInfo> fieldInfos = new();
       Type type = self.GetType();
 
       do
@@ -48,7 +48,7 @@ namespace FronkonGames.GameWork.Foundation
       }
 
       if (attribute == null)
-        Log.Warning($"Attribute '{attributeName}' not found.");
+        Log.Warning($"Attribute '{attributeName}' not found");
 
       return attribute;
     }
@@ -74,7 +74,7 @@ namespace FronkonGames.GameWork.Foundation
     /// <returns> Array of attributes. </returns>
     public static T[] GetAttributes<T>(this object self) where T : Attribute
     {
-      List<T> attributes = new List<T>();
+      List<T> attributes = new();
 
       FieldInfo[] fields = self.GetType().GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
       for (int i = 0; i < fields.Length; ++i)
@@ -113,6 +113,6 @@ namespace FronkonGames.GameWork.Foundation
       }
 
       return attribute != null && propertyInfo != null;
-    }    
+    }
   }
 }

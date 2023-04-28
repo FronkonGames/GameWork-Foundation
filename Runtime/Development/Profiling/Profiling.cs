@@ -45,7 +45,7 @@ namespace FronkonGames.GameWork.Foundation
     /// <summary> Returns the size of the temp allocator. </summary>
     /// <remarks>It needs the Profiler to be enabled.</remarks>
     public static long Stack => Profiler.supported == true ? Profiler.GetTempAllocatorSize() : 0L;
-    
+
     /// <summary> Used and available memory. </summary>
     /// <remarks>It needs the Profiler to be enabled.</remarks>
     public static string MonoMemory => $"{((int)MonoUsed).BytesToHumanReadable()}/{((int)MonoHeap).BytesToHumanReadable()}";
@@ -57,14 +57,14 @@ namespace FronkonGames.GameWork.Foundation
     /// <summary> Returns the size of the temp allocator. </summary>
     /// <remarks>It needs the Profiler to be enabled.</remarks>
     public static string StackMemory => ((int)Stack).BytesToHumanReadable();
-    
+
     /// <summary> It measures the elapsed time. </summary>
     /// <remarks>Only available in the Editor or Development Builds.</remarks>
     /// <param name="title">Label</param>
     /// <returns>TimeBlock</returns>
     public static TimeBlock Time(string title) =>
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
-      new TimeBlock(title);
+      new(title);
 #else
       null;
 #endif
@@ -75,7 +75,7 @@ namespace FronkonGames.GameWork.Foundation
     /// <returns>MemoryBlock</returns>
     public static MemoryBlock Memory(string title) =>
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
-      new MemoryBlock(title);
+      new(title);
 #else
       null;
 #endif
@@ -83,9 +83,10 @@ namespace FronkonGames.GameWork.Foundation
     /// <summary> Profiling CPU block of code with a custom label. </summary>
     /// <remarks>Only available in the Editor or Development Builds.</remarks>
     /// <param name="title">Label</param>
-    public static void Sample(string title) =>
+    /// <returns>SampleBlock</returns>
+    public static SampleBlock Sample(string title) =>
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
-      new SampleBlock(title);
+      new(title);
 #else
       null;
 #endif
@@ -94,9 +95,10 @@ namespace FronkonGames.GameWork.Foundation
     /// <remarks>Only available in the Editor or Development Builds.</remarks>
     /// <param name="category">Profiler category</param>
     /// <param name="title">Label</param>
-    public static void Marker(ProfilerCategory category, string title) =>
+    /// <returns>MarkerBlock</returns>
+    public static MarkerBlock Marker(ProfilerCategory category, string title) =>
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
-      new MarkerBlock(category, title);
+      new(category, title);
 #else
       null;
 #endif

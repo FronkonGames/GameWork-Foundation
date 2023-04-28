@@ -38,7 +38,7 @@ namespace FronkonGames.GameWork.Foundation
     /// <summary> Remove observers. </summary>
     /// <param name="observer">Observers</param>
     public void RemoveObservers(IEnumerable<IObserver> observers) => this.observers.RemoveRange(observers);
-    
+
     /// <summary> Notifies all its observers. </summary>
     protected void Notify()
     {

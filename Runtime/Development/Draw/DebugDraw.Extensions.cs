@@ -29,8 +29,7 @@ namespace FronkonGames.GameWork.Foundation
     /// <param name="size">Size</param>
     /// <param name="color">Color</param>
     [Conditional("UNITY_EDITOR")]
-    public static void Draw(this Vector3 self, float? size = null, Color? color = null)
-      => Point(self, size, color);
+    public static void Draw(this Vector3 self, float? size = null, Color? color = null) => Point(self, size, color);
 
     /// <summary> Draw an array of points using three-axis crosshairs. </summary>
     /// <remarks>Only available in the Editor</remarks>
@@ -38,8 +37,7 @@ namespace FronkonGames.GameWork.Foundation
     /// <param name="size">Size</param>
     /// <param name="color">Color</param>
     [Conditional("UNITY_EDITOR")]
-    public static void Draw(this Vector3[] self, float? size, Color? color = null)
-      => Points(self, size, color);
+    public static void Draw(this Vector3[] self, float? size, Color? color = null) => Points(self, size, color);
 
     /// <summary>  Draw an arrow indicating the forward direction. </summary>
     /// <remarks>Only available in the Editor</remarks>

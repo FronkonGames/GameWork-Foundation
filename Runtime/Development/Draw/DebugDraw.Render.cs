@@ -47,7 +47,7 @@ namespace FronkonGames.GameWork.Foundation
     private static GUIContent guiContent;
 
     private static int lastFrame;
-    
+
     static DebugDraw()
     {
       handles = new(Settings.Draw.Capacity);

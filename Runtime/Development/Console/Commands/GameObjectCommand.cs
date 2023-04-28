@@ -86,7 +86,7 @@ namespace FronkonGames.GameWork.Foundation
                 return true;
               }
               break;
-            
+
             default:
               Log.Warning($"'{command}' unrecognized.");
               break;

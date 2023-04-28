@@ -28,7 +28,7 @@ namespace FronkonGames.GameWork.Foundation
       position.height -= EditorGUIUtility.standardVerticalSpacing;
 
       MessageBoxAttribute messageBox = (MessageBoxAttribute)attribute;
-      
+
       EditorGUI.HelpBox(position, messageBox.label, (MessageType)messageBox.messageType);
     }
 

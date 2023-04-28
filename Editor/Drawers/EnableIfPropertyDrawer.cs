@@ -43,12 +43,12 @@ namespace FronkonGames.GameWork.Foundation
       string propertyPath = property.propertyPath;
       string conditionPath = propertyPath.Replace(property.name, enableIf.conditional);
       SerializedProperty sourcePropertyValue = property.serializedObject.FindProperty(conditionPath);
- 
+
       if (sourcePropertyValue != null)
         enabled = sourcePropertyValue.boolValue;
       else
         Log.Warning($"Condition '{enableIf.conditional}' not found.");
- 
+
       return enabled;
     }
   }

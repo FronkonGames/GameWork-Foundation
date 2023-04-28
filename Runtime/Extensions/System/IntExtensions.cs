@@ -43,7 +43,7 @@ namespace FronkonGames.GameWork.Foundation
     /// <param name="b">Value</param>
     /// <returns>Int</returns>
     public static int Min(this int a, int b) => a < b ? a : b;
-    
+
     /// <summary> Returns the absolute value. </summary>
     /// <param name="self">Value</param>
     /// <returns>Int</returns>
@@ -53,7 +53,7 @@ namespace FronkonGames.GameWork.Foundation
     /// <param name="snap"> Rounding distance </param>
     /// <returns>Int</returns>
     public static int Snap(this int self, int snap) => snap > 0 ? Mathf.RoundToInt((float)self / snap) * snap : self;
-    
+
     /// <summary> Constrain the value to a range. </summary>
     /// <param name="self">Value</param>
     /// <param name="min">Lower range</param>

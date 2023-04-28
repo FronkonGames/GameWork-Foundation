@@ -35,7 +35,7 @@ namespace FronkonGames.GameWork.Foundation
       stopwatch = Stopwatch.StartNew();
       frameStart = Time.frameCount;
     }
-    
+
     public TimeBlock(string title)
     {
       this.title = title ?? "Unknown";

@@ -40,7 +40,7 @@ namespace FronkonGames.GameWork.Foundation
     public MessageBoxAttribute(string label)
     {
       this.label = label;
-      this.messageType = MessageType.None;
+      messageType = MessageType.None;
     }
 
     public MessageBoxAttribute(string label, MessageType messageType)

@@ -14,8 +14,6 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-using UnityEditor;
 using UnityEngine;
 
 namespace FronkonGames.GameWork.Foundation
@@ -51,7 +49,7 @@ namespace FronkonGames.GameWork.Foundation
     {
       Color.RGBToHSV(self, out _, out var saturation, out var value);
 
-      return Color.HSVToRGB(hue, saturation, value, hdr);      
+      return Color.HSVToRGB(hue, saturation, value, hdr);
     }
 
     /// <summary> Color with the saturation changed. </summary>
@@ -64,7 +62,7 @@ namespace FronkonGames.GameWork.Foundation
 
       return Color.HSVToRGB(hue, saturation, value, hdr);
     }
-    
+
     /// <summary> Color with the value (HSV space) changed. </summary>
     /// <param name="value">Value</param>
     /// <param name="hdr">HDR color?</param>
@@ -83,23 +81,23 @@ namespace FronkonGames.GameWork.Foundation
     {
       ColorUtility.TryParseHtmlString(text, out Color color);
 
-      return color;    
+      return color;
     }
-    
+
     /// <summary> To hex string. </summary>
     /// <returns>String</returns>
     public static string ToHex(this Color self)
     {
       Color32 color32 = self;
 
-      return $"#{color32.r:X2}{color32.g:X2}{color32.b:X2}";    
+      return $"#{color32.r:X2}{color32.g:X2}{color32.b:X2}";
     }
 
     /// <summary> Color to string. </summary>
     /// <param name="self">Value</param>
     /// <returns></returns>
     public static string ToString(this Color self) => $"{self.r},{self.g},{self.b},{self.a}";
-    
+
     /// <summary> Brightness correction. </summary>
     /// <param name="correctionFactor">Brightness correction factor [-1 - 1]</param>
     /// <returns>Color with corrected brightness.</returns>
@@ -127,13 +125,13 @@ namespace FronkonGames.GameWork.Foundation
     }
 
     /// <summary> Is it almost black? </summary>
-    /// <returns>True if it is almost almost black.</returns>
+    /// <returns>True if it is almost black.</returns>
     public static bool IsApproximatelyBlack(this Color self) => self.r <= MathConstants.Epsilon &&
                                                                 self.g <= MathConstants.Epsilon &&
                                                                 self.b <= MathConstants.Epsilon;
 
     /// <summary> Is it almost white? </summary>
-    /// <returns>True if it is almost almost white.</returns>
+    /// <returns>True if it is almost white.</returns>
     public static bool IsApproximatelyWhite(this Color self) => self.r >= 1.0f - MathConstants.Epsilon &&
                                                                 self.g >= 1.0f - MathConstants.Epsilon &&
                                                                 self.b >= 1.0f - MathConstants.Epsilon;

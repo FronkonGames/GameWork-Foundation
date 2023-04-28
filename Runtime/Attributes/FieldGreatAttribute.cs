@@ -26,7 +26,7 @@ namespace FronkonGames.GameWork.Foundation
   public class FieldGreatAttribute : PropertyAttribute
   {
     public readonly float great;
-    
+
     public readonly float reset;
 
     public FieldGreatAttribute(float great, float reset = 0.0f)

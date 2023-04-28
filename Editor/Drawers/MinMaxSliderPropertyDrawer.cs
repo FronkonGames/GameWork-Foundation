@@ -26,7 +26,7 @@ namespace FronkonGames.GameWork.Foundation
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
       MinMaxSliderAttribute sliderAttribute = (MinMaxSliderAttribute)attribute;
-      
+
       SerializedProperty minProperty = property;
       SerializedProperty maxProperty = property.GetEndProperty(true);
 
@@ -35,7 +35,7 @@ namespace FronkonGames.GameWork.Foundation
         Color original = GUI.color;
         GUI.color = Settings.Editor.ErrorColor;
         EditorGUI.LabelField(position, label.text, $"The types don't match in field '{property.propertyPath}'");
-        GUI.color = original;      
+        GUI.color = original;
       }
       else if (minProperty.propertyType != SerializedPropertyType.Float &&
                minProperty.propertyType != SerializedPropertyType.Integer)
@@ -43,7 +43,7 @@ namespace FronkonGames.GameWork.Foundation
         Color original = GUI.color;
         GUI.color = Settings.Editor.ErrorColor;
         EditorGUI.LabelField(position, label.text, $"Field '{property.propertyPath}' can only be applied to a float or int fields");
-        GUI.color = original;      
+        GUI.color = original;
       }
       else
       {
@@ -68,10 +68,10 @@ namespace FronkonGames.GameWork.Foundation
           float max = EditorGUI.FloatField(maxRect, maxProperty.floatValue);
 
           EditorGUI.MinMaxSlider(sliderRect, ref min, ref max, sliderAttribute.min, sliderAttribute.max);
-          
+
           min = min.Snap(sliderAttribute.snap);
           max = max.Snap(sliderAttribute.snap);
-          
+
           minProperty.floatValue = Mathf.Clamp(min, sliderAttribute.min, max);
           maxProperty.floatValue = Mathf.Clamp(max, min, sliderAttribute.max);
 
@@ -87,10 +87,10 @@ namespace FronkonGames.GameWork.Foundation
           float maximum = EditorGUI.IntField(maxRect, maxProperty.intValue);
 
           EditorGUI.MinMaxSlider(sliderRect, ref minimum, ref maximum, sliderAttribute.min, sliderAttribute.max);
-          
+
           int min = Mathf.RoundToInt(minimum.Snap(sliderAttribute.snap));
           int max = Mathf.RoundToInt(maximum.Snap(sliderAttribute.snap));
-          
+
           minProperty.intValue = Mathf.Clamp(min, Mathf.RoundToInt(sliderAttribute.min), max);
           maxProperty.intValue = Mathf.Clamp(max, min, Mathf.RoundToInt(sliderAttribute.max));
 

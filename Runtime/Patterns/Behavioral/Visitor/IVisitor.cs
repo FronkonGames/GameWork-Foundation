@@ -26,6 +26,6 @@ namespace FronkonGames.GameWork.Foundation
   public interface IVisitor<in T> where T : IVisitable
   {
     /// <summary> Visit to a visitor. </summary>
-    void Visit(T hero);
+    void Visit(T visit);
   }
 }

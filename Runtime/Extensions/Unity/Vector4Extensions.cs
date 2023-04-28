@@ -73,7 +73,7 @@ namespace FronkonGames.GameWork.Foundation
                                                             Mathf.Round(self.y),
                                                             Mathf.Round(self.z),
                                                             Mathf.Round(self.w));
-    
+
     /// <summary> Vector4 to string. </summary>
     /// <param name="self">Value</param>
     /// <returns>string</returns>

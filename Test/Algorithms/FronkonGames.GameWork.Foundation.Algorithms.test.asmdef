@@ -1,0 +1,10 @@
+{
+  "name": "FronkonGames.GameWork.Foundation.Algorithms.test",
+  "references": [
+    "FronkonGames.GameWork.Foundation"
+  ],
+  "optionalUnityReferences": [ "TestAssemblies" ],
+  "includePlatforms": [ "Editor" ],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false
+}

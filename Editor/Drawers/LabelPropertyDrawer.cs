@@ -26,7 +26,7 @@ namespace FronkonGames.GameWork.Foundation
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
       LabelAttribute labelAttribute = (LabelAttribute)attribute;
-      
+
       EditorGUI.PropertyField(position, property, new GUIContent(labelAttribute.label, labelAttribute.tooltip), true);
     }
   }

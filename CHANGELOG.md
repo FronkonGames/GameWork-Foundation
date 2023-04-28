@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.0.9 - 2023-04-28
+
+### Added
+
+- Structures: Arraylist.
+- IEnumable extensions.
+- New Exceptions log.
+
+### Fixed
+
+- Small fixes.
+
 ## 1.0.8 - 2023-04-23
 
 ### Added

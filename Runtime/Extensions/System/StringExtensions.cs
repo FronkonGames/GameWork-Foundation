@@ -21,7 +21,6 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Globalization;
-using System.Linq;
 using UnityEngine;
 
 namespace FronkonGames.GameWork.Foundation
@@ -140,23 +139,23 @@ namespace FronkonGames.GameWork.Foundation
 
       return result;
     }
-    
+
     /// <summary> Converts hex string color (0xFF00FF, #FF00FF, commas) to color. </summary>
     /// <returns>Color</returns>
     public static Color ToColor(this string self)
     {
-      Color color = new Color();
+      Color color = new();
 
       if (self.Contains("0x") == true || self.Contains("#") == true)
       {
         self = self.Replace("0x", string.Empty); // 0xFFFFFF?
         self = self.Replace("#", string.Empty);  // #FFFFFF?
-      
+
         byte a = 255;
         byte r = byte.Parse(self.Substring(0, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture);
         byte g = byte.Parse(self.Substring(2, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture);
         byte b = byte.Parse(self.Substring(4, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture);
-      
+
         if (self.Length == 8)
           a = byte.Parse(self.Substring(6, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture);
 
@@ -170,7 +169,7 @@ namespace FronkonGames.GameWork.Foundation
           color.r = float.Parse(channels[0]);
           color.g = float.Parse(channels[1]);
           color.b = float.Parse(channels[2]);
-          
+
           if (channels.Length == 4)
             color.a = float.Parse(channels[3]);
         }
@@ -187,7 +186,7 @@ namespace FronkonGames.GameWork.Foundation
 
       byte[] data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(self));
 
-      StringBuilder builder = new StringBuilder();
+      StringBuilder builder = new();
 
       for (int i = 0; i < data.Length; ++i)
         builder.Append(data[i].ToString("x2"));
@@ -224,19 +223,19 @@ namespace FronkonGames.GameWork.Foundation
       return Encoding.UTF8.GetString(valueBytes);
     }
 
-    /// <summary> </summary>
-    /// <param name="self"></param>
-    /// <param name="key"></param>
-    /// <returns></returns>
+    /// <summary> Xor encryption. </summary>
+    /// <param name="self">String</param>
+    /// <param name="key">Key</param>
+    /// <returns>De/Encrypted string</returns>
     public static string Xor(this string self, string key)
     {
-      StringBuilder builder = new StringBuilder();
+      StringBuilder builder = new();
       for (int i = 0; i < self.Length; ++i)
         builder.Append((char)(self[i] ^ key[i % key.Length]));
 
       return builder.ToString();
     }
-    
+
     /// <summary> "CamelCaseString" => "Camel case string" </summary>
     /// <returns>Value</returns>
     public static string FromCamelCase(this string self)
@@ -259,7 +258,7 @@ namespace FronkonGames.GameWork.Foundation
     /// <returns>Value</returns>
     public static string ReplaceChars(this string self, string originalChars, string newChars)
     {
-      StringBuilder builder = new StringBuilder();
+      StringBuilder builder = new();
 
       for (int i = 0; i < self.Length; ++i)
       {
@@ -281,7 +280,7 @@ namespace FronkonGames.GameWork.Foundation
     /// only Latin letters and numbers and of a certain length.
     /// </summary>
     /// <returns>True/false</returns>
-    public static bool IsValidLatinUsername(this string self, int min = 6, int max = 12) => Regex.IsMatch(self, $"{UserNamePattern}{{{min.ToString()},{max.ToString()}}}");
+    public static bool IsValidLatinUsername(this string self, int min = 6, int max = 12) => Regex.IsMatch(self, $"{UserNamePattern}{{{min},{max}}}");
 
     /// <summary> Is a valid email. </summary>
     /// <returns>True/false</returns>
@@ -316,7 +315,7 @@ namespace FronkonGames.GameWork.Foundation
       string capitalized = string.Empty;
 
       if (string.IsNullOrEmpty(self) == false)
-        capitalized = self.Length == 1 ? char.ToUpper(self[0]).ToString() : $"{char.ToUpper(self[0]).ToString()}{self[1..]}";
+        capitalized = self.Length == 1 ? char.ToUpper(self[0]).ToString() : $"{char.ToUpper(self[0])}{self[1..]}";
 
       return capitalized;
     }
@@ -325,7 +324,7 @@ namespace FronkonGames.GameWork.Foundation
     /// <returns>Reversed text</returns>
     public static string Reverse(this string self)
     {
-      StringBuilder builder = new StringBuilder();
+      StringBuilder builder = new();
 
       for (int i = self.Length; i-- > 0;)
         builder.Append(self[i]);
@@ -351,9 +350,9 @@ namespace FronkonGames.GameWork.Foundation
     {
       string compressed;
       byte[] bytes = Encoding.UTF8.GetBytes(self);
-      using (MemoryStream memoryStream = new MemoryStream())
+      using (MemoryStream memoryStream = new())
       {
-        using (GZipStream gZipStream = new GZipStream(memoryStream, CompressionMode.Compress, true))
+        using (GZipStream gZipStream = new(memoryStream, CompressionMode.Compress, true))
         {
           gZipStream.Write(bytes, 0, bytes.Length);
         }
@@ -375,13 +374,13 @@ namespace FronkonGames.GameWork.Foundation
     {
       string decompressed;
       byte[] numArray = Convert.FromBase64String(self);
-      using (MemoryStream memoryStream = new MemoryStream())
+      using (MemoryStream memoryStream = new())
       {
         int num = BitConverter.ToInt32(numArray, 0);
         memoryStream.Write(numArray, 4, numArray.Length - 4);
         byte[] numArray1 = new byte[num];
         memoryStream.Position = (long)0;
-        using (GZipStream gZipStream = new GZipStream(memoryStream, CompressionMode.Decompress))
+        using (GZipStream gZipStream = new(memoryStream, CompressionMode.Decompress))
         {
           gZipStream.Read(numArray1, 0, numArray1.Length);
         }
@@ -398,12 +397,12 @@ namespace FronkonGames.GameWork.Foundation
     public static string Encrypt(this string self, string passphrase)
     {
       byte[] Results;
-      UTF8Encoding UTF8 = new UTF8Encoding();
+      UTF8Encoding UTF8 = new();
 
-      MD5CryptoServiceProvider HashProvider = new MD5CryptoServiceProvider();
+      MD5CryptoServiceProvider HashProvider = new();
       byte[] tdesKey = HashProvider.ComputeHash(UTF8.GetBytes(passphrase));
 
-      TripleDESCryptoServiceProvider tdesAlgorithm = new TripleDESCryptoServiceProvider
+      TripleDESCryptoServiceProvider tdesAlgorithm = new()
       {
         Key = tdesKey,
         Mode = CipherMode.ECB,
@@ -437,12 +436,12 @@ namespace FronkonGames.GameWork.Foundation
     public static string Decrypt(this string self, string passphrase)
     {
       byte[] Results;
-      UTF8Encoding UTF8 = new UTF8Encoding();
+      UTF8Encoding UTF8 = new();
 
-      MD5CryptoServiceProvider HashProvider = new MD5CryptoServiceProvider();
+      MD5CryptoServiceProvider HashProvider = new();
       byte[] tdesKey = HashProvider.ComputeHash(UTF8.GetBytes(passphrase));
 
-      TripleDESCryptoServiceProvider tdesAlgorithm = new TripleDESCryptoServiceProvider
+      TripleDESCryptoServiceProvider tdesAlgorithm = new()
       {
         Key = tdesKey,
         Mode = CipherMode.ECB,
@@ -493,7 +492,7 @@ namespace FronkonGames.GameWork.Foundation
 
       return d[n, m];
     }
-    
+
     /// <summary> Rect containing the string. </summary>
     /// <param name="font">Font used</param>
     /// <param name="size">Font size</param>
@@ -529,6 +528,6 @@ namespace FronkonGames.GameWork.Foundation
       height += lineHeight;
 
       return new Rect(0, 0, width, height);
-    }    
+    }
   }
 }

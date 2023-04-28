@@ -75,7 +75,7 @@ namespace FronkonGames.GameWork.Foundation
 #endif
       }
     }
-    
+
     private struct ArcHandle : IHandleDraw
     {
       public Vector3 center;
@@ -91,7 +91,7 @@ namespace FronkonGames.GameWork.Foundation
 #if UNITY_EDITOR
         UnityEditor.Handles.color = color;
         UnityEditor.Handles.color = UnityEditor.Handles.color.SetA(Settings.Draw.Transparency);
-        
+
         if (solid == true)
           UnityEditor.Handles.DrawSolidArc(center, normal, from, angle, radius);
         else
@@ -120,7 +120,7 @@ namespace FronkonGames.GameWork.Foundation
 #endif
       }
     }
-    
+
     private struct CubeHandle : IHandleDraw
     {
       public Vector3 center;
@@ -138,7 +138,7 @@ namespace FronkonGames.GameWork.Foundation
 #endif
       }
     }
-    
+
     private struct TextHandle : IHandleDraw
     {
       public Vector3 position;
@@ -167,6 +167,6 @@ namespace FronkonGames.GameWork.Foundation
         throw new NotSupportedException("Only available in Editor version.");
 #endif
       }
-    }    
+    }
   }
 }

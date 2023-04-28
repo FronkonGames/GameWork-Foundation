@@ -33,7 +33,7 @@ namespace FronkonGames.GameWork.Foundation
         EditorGUI.EndProperty();
       }
     }
-    
+
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
     {
       HideIfAttribute hideIf = (HideIfAttribute)attribute;
@@ -48,12 +48,12 @@ namespace FronkonGames.GameWork.Foundation
       string propertyPath = property.propertyPath;
       string conditionPath = propertyPath.Replace(property.name, hideIf.conditional);
       SerializedProperty sourcePropertyValue = property.serializedObject.FindProperty(conditionPath);
- 
+
       if (sourcePropertyValue != null)
         enabled = sourcePropertyValue.boolValue;
       else
-        Log.Warning($"Condition '{hideIf.conditional}' not found.");
- 
+        Log.Warning($"Condition '{hideIf.conditional}' not found");
+
       return enabled;
     }
   }

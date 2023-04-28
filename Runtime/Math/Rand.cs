@@ -14,7 +14,6 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-using System;
 using UnityEngine;
 using UnityRandom = UnityEngine.Random;
 
@@ -30,18 +29,18 @@ namespace FronkonGames.GameWork.Foundation
     /// <param name="max">Maximo</param>
     /// <returns>Number</returns>
     public static int Range(int min, int max) => UnityRandom.Range(min, max);
-    
+
     // 1D
-    
+
     /// <summary>Random float within [0 .. 1]</summary>
     public static float Value => UnityRandom.value;
-    
+
     /// <summary> Positive or negative at 50% </summary>
     public static float Sign => Value > 0.5f ? 1.0f : -1.0f;
 
     /// <summary> One dimension direction at 50% </summary>
     public static float Direction1D => Sign;
-    
+
     /// <summary> A random float within [min..max] (range is inclusive). </summary>
     /// <param name="min"></param>
     /// <param name="max"></param>
@@ -49,7 +48,7 @@ namespace FronkonGames.GameWork.Foundation
     public static float Range(float min, float max) => UnityRandom.Range(min, max);
 
     // 2D
-    
+
     /// <summary> Random unit Vector2 </summary>
     public static Vector2 OnUnitCircle => MathUtils.AngToDir(Value * MathConstants.Tau);
 
@@ -69,15 +68,15 @@ namespace FronkonGames.GameWork.Foundation
 
     /// <summary> Random unit 3D direction </summary>
     public static Vector3 Direction3D => OnUnitSphere;
-    
+
     /// <summary> A random point inside or on a sphere with radius 1 </summary>
     public static Vector3 InUnitSphere => UnityRandom.insideUnitSphere;
 
     /// <summary> A random point inside or on a cube with sides 1 </summary>
-    public static Vector3 InUnitCube => new Vector3(Value, Value, Value);
+    public static Vector3 InUnitCube => new(Value, Value, Value);
 
     // 2D orientation
-    
+
     /// <summary>Returns a random angle in radians from 0 to TAU</summary>
     public static float Angle => Value * MathConstants.Tau;
 
@@ -85,7 +84,5 @@ namespace FronkonGames.GameWork.Foundation
 
     /// <summary>Returns a random uniformly distributed rotation</summary>
     public static Quaternion Rotation => UnityRandom.rotationUniform;
-
-    private static readonly System.Random random = new System.Random(Guid.NewGuid().GetHashCode());
   }
 }

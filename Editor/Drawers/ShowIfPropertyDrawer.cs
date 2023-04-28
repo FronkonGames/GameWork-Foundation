@@ -33,7 +33,7 @@ namespace FronkonGames.GameWork.Foundation
         EditorGUI.EndProperty();
       }
     }
-    
+
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
     {
       ShowIfAttribute showIf = (ShowIfAttribute)attribute;
@@ -48,12 +48,12 @@ namespace FronkonGames.GameWork.Foundation
       string propertyPath = property.propertyPath;
       string conditionPath = propertyPath.Replace(property.name, showIf.conditional);
       SerializedProperty sourcePropertyValue = property.serializedObject.FindProperty(conditionPath);
- 
+
       if (sourcePropertyValue != null)
         enabled = sourcePropertyValue.boolValue;
       else
-        Log.Warning($"Condition '{showIf.conditional}' not found.");
- 
+        Log.Warning($"Condition '{showIf.conditional}' not found");
+
       return enabled;
     }
   }

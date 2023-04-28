@@ -31,7 +31,7 @@ namespace FronkonGames.GameWork.Foundation
     public static T Instance => Lazy.Value;
 
     /// <summary> Instance created? </summary>
-    public static bool IsCreated => lazy != null && lazy.IsValueCreated;
+    public static bool IsCreated => lazy?.IsValueCreated == true;
 
     private static Lazy<T> Lazy
     {
@@ -41,16 +41,9 @@ namespace FronkonGames.GameWork.Foundation
 
     private static Lazy<T> lazy;
 
-    private static T LazyCreate()
-    {
-      T instance = FindObjectOfType<T>(true);
-      if (instance == null)
-        instance = new GameObject(typeof(T).Name).AddComponent<T>();
+    private static T LazyCreate() => FindObjectOfType<T>(true) ?? new GameObject(typeof(T).Name).AddComponent<T>();
 
-      return instance;
-    }
-
-    /// <remarks> Don't forget to call 'base.OnDestroy()' in the overloaded method. </remarks>>
+    /// <remarks> Don't forget to call 'base.OnDestroy()' in the overloaded method. </remarks>
     protected virtual void OnDestroy() => Lazy = null;
   }
 }

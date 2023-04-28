@@ -34,10 +34,10 @@ namespace FronkonGames.GameWork.Foundation
 
       return result;
     }
-    
+
     /// <summary> Adds an array to the end of the array. </summary>
     /// <param name="self"> The array. </param>
-    /// <param name="item"> Array. </param>
+    /// <param name="items"> Array. </param>
     /// <returns> Array with added values. </returns>
     public static T[] Append<T>(this T[] self, T[] items)
     {
@@ -49,7 +49,7 @@ namespace FronkonGames.GameWork.Foundation
 
       return result;
     }
-    
+
     /// <summary> Contains an element? </summary>
     /// <param name="self"> The array. </param>
     /// <param name="element"> Item. </param>
@@ -101,10 +101,10 @@ namespace FronkonGames.GameWork.Foundation
     /// <returns> Array without the first element. </returns>
     public static T[] Remove<T>(this T[] self, T value)
     {
-      List<T> elems = new List<T>(self);
+      List<T> elems = new(self);
       elems.Remove(value);
 
-      return elems.ToArray();      
+      return elems.ToArray();
     }
 
     /// <summary> Deletes an element according to its index. </summary>
@@ -213,7 +213,7 @@ namespace FronkonGames.GameWork.Foundation
       {
         int j = Rand.Range(0, i);
         self.Swap(i, j);
-      }      
+      }
     }
 
     /// <summary> Unsorts an array. </summary>
@@ -263,7 +263,7 @@ namespace FronkonGames.GameWork.Foundation
     public static T Max<T>(this T[] self) where T : IComparable<T>
     {
       if (self == null || self.Length == 0)
-        return default(T);
+        return default;
 
       T max = self[0];
       int total = self.Length;
@@ -284,7 +284,7 @@ namespace FronkonGames.GameWork.Foundation
     public static T Min<T>(this T[] self) where T : IComparable<T>
     {
       if (self == null || self.Length == 0)
-        return default(T);
+        return default;
 
       T min = self[0];
       int total = self.Length;

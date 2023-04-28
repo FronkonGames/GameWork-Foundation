@@ -34,7 +34,7 @@ namespace FronkonGames.GameWork.Foundation
 
     /// <summary> Find a child by name, recursively. </summary>
     /// <param name="name">Name</param>
-    /// <returns>Child or null.</returns>    
+    /// <returns>Child or null.</returns>
     public static Transform FindChildRecursive(this Transform self, string name)
     {
       Transform result = self.Find(name);
@@ -173,7 +173,7 @@ namespace FronkonGames.GameWork.Foundation
     /// <param name="local">Use localPosition instead position</param>
     public static void TranslateXYZ(this Transform self, float x, float y, float z, bool local = false)
     {
-      Vector3 offset = new Vector3(x, y, z);
+      Vector3 offset = new(x, y, z);
 
       if (local == true)
         self.localPosition += offset;
@@ -418,7 +418,7 @@ namespace FronkonGames.GameWork.Foundation
     /// <summary> Resets the local rotation to 0, 0, 0. </summary>
     /// <param name="self">Transform</param>
     public static void ResetLocalRotation(this Transform self) => self.localRotation = Quaternion.identity;
-    
+
     /// <summary> Reset the transforms position, rotation and scale. </summary>
     /// <param name="self">Transform</param>
     public static void ResetWorld(this Transform self)
@@ -458,6 +458,6 @@ namespace FronkonGames.GameWork.Foundation
         children[i] = self.GetChild(i);
 
       return children;
-    }    
+    }
   }
 }

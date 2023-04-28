@@ -50,7 +50,7 @@ public sealed class DrawDemo : MonoBehaviour
   private void Update()
   {
     DebugDraw.DottedLine(player.transform.position, new Vector3(0.0f, 0.5f, 0.0f));
-    
+
     DebugDraw.Point(new Vector3(0.0f, 0.5f, 0.0f), 0.4f, Color.white);
     DebugDraw.Point(new Vector3(0.5f, 0.5f, 0.0f));
     DebugDraw.Point(new Vector3(0.0f, 0.5f, 0.5f));
@@ -64,13 +64,13 @@ public sealed class DrawDemo : MonoBehaviour
     DebugDraw.SolidCircle(new Vector3(0.0f, 0.5f, 0.0f), 0.2f, null, player.transform.rotation);
     DebugDraw.Circle(new Vector3(0.0f, 0.5f, 0.0f), 0.21f, null, player.transform.rotation);
     DebugDraw.Cone(new Vector3(0.0f, 1.0f, 0.0f), Quaternion.Euler(-90.0f, 0.0f, 0.0f), arcAngle / 10.0f);
-    
+
     points.Draw(0.1f, Color.cyan);
 
     player.DrawName();
     player.transform.Draw(3.0f);
     player.GetComponent<Renderer>().bounds.Draw();
-    
+
     for (int i = 0; i < enemies.Length; ++i)
     {
       enemies[i].DrawName();

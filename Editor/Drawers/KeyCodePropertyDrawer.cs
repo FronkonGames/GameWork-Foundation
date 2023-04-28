@@ -27,7 +27,6 @@ namespace FronkonGames.GameWork.Foundation
 
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
-
       if (property.propertyType == SerializedPropertyType.Enum)
       {
         if (detectKeyDown == true)
@@ -53,7 +52,7 @@ namespace FronkonGames.GameWork.Foundation
         Color original = GUI.color;
         GUI.color = Settings.Editor.ErrorColor;
         EditorGUI.LabelField(position, label.text, $"Field '{property.propertyPath}' can only be applied to a KeyCode fields");
-        GUI.color = original;      
+        GUI.color = original;
       }
 
       KeyCode key = (KeyCode)property.intValue;
@@ -64,7 +63,7 @@ namespace FronkonGames.GameWork.Foundation
           return;
 
         key = e.keyCode;
-        detectKeyDown = false;        
+        detectKeyDown = false;
       }
 
       property.intValue = (int)key;

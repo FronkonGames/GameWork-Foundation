@@ -31,7 +31,7 @@ namespace FronkonGames.GameWork.Foundation
     public static T Instance => Lazy.Value;
 
     /// <summary> Instance created? </summary>
-    public static bool IsCreated => lazy != null && lazy.IsValueCreated;
+    public static bool IsCreated => lazy?.IsValueCreated == true;
 
     private static Lazy<T> Lazy
     {
@@ -46,7 +46,7 @@ namespace FronkonGames.GameWork.Foundation
       T instance = FindObjectOfType<T>(true);
       if (instance == null)
       {
-        GameObject ownerObject = new GameObject(typeof(T).Name);
+        GameObject ownerObject = new(typeof(T).Name);
         DontDestroyOnLoad(ownerObject);
         instance = ownerObject.AddComponent<T>();
       }

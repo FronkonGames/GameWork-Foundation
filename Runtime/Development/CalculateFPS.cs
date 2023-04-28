@@ -58,7 +58,7 @@ namespace FronkonGames.GameWork.Core
     {
       ++frames;
       deltaTime += Time.unscaledDeltaTime;
-      
+
       float lapse = 1.0f / Settings.FPS.UpdatePerSecond;
       if (deltaTime > lapse)
       {

@@ -29,7 +29,7 @@ namespace FronkonGames.GameWork.Foundation
     public static void True(bool value, [CallerMemberName]string member = "",
                                         [CallerFilePath]string sourceFile = "",
                                         [CallerLineNumber]int line = 0) =>
-      Assert(value == true, $"{System.IO.Path.GetFileName(sourceFile)}:{member}:{line.ToString()} '{nameof(value)}' must be true.");
+      Assert(value == true, $"{System.IO.Path.GetFileName(sourceFile)}:{member}:{line} '{nameof(value)}' must be true.");
 
     /// <summary> Check that the value is false. Throws an exception if it fails. </summary>
     /// <param name="value">Value</param>
@@ -38,6 +38,6 @@ namespace FronkonGames.GameWork.Foundation
     public static void False(bool value, [CallerMemberName]string member = "",
                                          [CallerFilePath]string sourceFile = "",
                                          [CallerLineNumber]int line = 0) =>
-      Assert(value == false, $"{System.IO.Path.GetFileName(sourceFile)}:{member}:{line.ToString()} '{nameof(value)}' must be false.");
+      Assert(value == false, $"{System.IO.Path.GetFileName(sourceFile)}:{member}:{line} '{nameof(value)}' must be false.");
   }
 }

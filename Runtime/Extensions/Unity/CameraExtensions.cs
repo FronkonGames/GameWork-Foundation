@@ -69,6 +69,6 @@ namespace FronkonGames.GameWork.Foundation
           self.aspect * self.orthographicSize * 2.0f,
           self.orthographicSize * 2.0f
         ));
-    }    
+    }
   }
 }

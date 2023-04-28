@@ -23,7 +23,7 @@ namespace FronkonGames.GameWork.Foundation
   }
 
   /// <summary> Visitable interface. </summary>
-  public interface IVisitable<in T> where T : IVisitor 
+  public interface IVisitable<in T> where T : IVisitor
   {
     /// <summary> Accept a visitor's visit. </summary>
     void Accept(T visitor);

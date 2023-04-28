@@ -36,10 +36,10 @@ namespace FronkonGames.GameWork.Foundation
 
       if (minCompare < 0 || maxCompare > 0)
         return false;
-      
+
       if (includeMin == false && minCompare == 0)
         return false;
-      
+
       if (includeMax == false && maxCompare == 0)
         return false;
 

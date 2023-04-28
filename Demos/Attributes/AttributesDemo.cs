@@ -21,7 +21,7 @@ using FronkonGames.GameWork.Foundation;
 public sealed class AttributesDemo : MonoBehaviour
 {
 #pragma warning disable CS0414 
-  
+
   [MessageBox("This inspector is an example of all the extra Game:Work Foundation attributes", MessageBoxAttribute.MessageType.Info)]
   [Space]
 
@@ -74,24 +74,24 @@ public sealed class AttributesDemo : MonoBehaviour
 
   [Indent, Label("Float snap 0.5"), Slider(0.0f, 1.0f, 0.5f, 0.1f), SerializeField]
   private float floatSnap;
-  
+
   [Indent, Label("Floats min/max"), MinMaxSlider(0.0f, 1.0f), SerializeField]
   private float floatMin = 0.0f;
 
   [HideInInspector, SerializeField]
   private float floatMax = 1.0f;
-  
+
   [Indent, KeyCode, SerializeField]
   private KeyCode keyCode = KeyCode.Space;
-  
+
   [Title("Text")]
-  
+
   [Indent, Label("Nice name"), SerializeField]
   private string badName;
 
   [Indent, Password, SerializeField]
   private string password;
-  
+
   [Title("Files")]
 
   [Indent, Scene, SerializeField]
@@ -102,15 +102,15 @@ public sealed class AttributesDemo : MonoBehaviour
 
   [Indent, Folder, SerializeField]
   private string folderPath;
-  
+
   [Title("Editable")]
-  
+
   [Indent, NotEditable, SerializeField]
   private string notEditable;
-  
+
   [Indent, OnlyEditableInEditor, SerializeField]
   private string editableInEdit;
-  
+
   [Indent, OnlyEditableInPlay, SerializeField]
   private string editableInPlay;
 
@@ -132,15 +132,15 @@ public sealed class AttributesDemo : MonoBehaviour
   private string hideIf;
 
   [Title("Check")]
-  
+
   [Indent, NotNull, SerializeField]
   private GameObject cantBeNull;
-  
+
   [Title("Misc")]
-  
+
   [Indent, NotEditable, SerializeField]
   private int counter;
-  
+
   [Button(nameof(Increase)), SerializeField]
   private string buttonInc;
 
@@ -148,8 +148,8 @@ public sealed class AttributesDemo : MonoBehaviour
   private string buttonReset;
 
   private void Increase() => counter++;
-  
+
   private void Reset() => counter = 0;
-  
+
 #pragma warning restore CS0414  
 }

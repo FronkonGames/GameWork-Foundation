@@ -33,11 +33,11 @@ namespace FronkonGames.GameWork.Foundation
     private static readonly Lazy<T> lazy = new(() =>
     {
       string name = typeof(T).Name;
-      
+
       T instance = Resources.Load<T>(name);
       if (instance == null)
-        Log.Exception($"No instance of '{name}' found in the Resources folder. Create one inside the Resources folder, and name the file '{name}'.");
-      
+        Log.Exception($"No instance of '{name}' found in the Resources folder. Create one inside the Resources folder, and name the file '{name}'");
+
       return instance;
     });
   }

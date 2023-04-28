@@ -36,16 +36,16 @@ namespace FronkonGames.GameWork.Foundation
       if (property.propertyType == SerializedPropertyType.String)
       {
         position.width -= Settings.Editor.FileButtonWidth + Settings.Editor.FileButtonPadding;
-        
+
         label = EditorGUI.BeginProperty(position, label, property);
         EditorGUI.PropertyField(position, property, label, true);
-       
+
         position.x += position.width + Settings.Editor.FileButtonPadding;
         position.width = Settings.Editor.FileButtonWidth;
 
         if (GUI.Button(position, folderButtonTexture, GUIStyle.none) == true)
           SetFilePath(property, fileAttribute);
-        
+
         EditorGUI.EndProperty();
       }
       else
@@ -53,7 +53,7 @@ namespace FronkonGames.GameWork.Foundation
         Color original = GUI.color;
         GUI.color = Settings.Editor.ErrorColor;
         EditorGUI.LabelField(position, label.text, $"Field '{property.propertyPath}' can only be applied to a string fields");
-        GUI.color = original;      
+        GUI.color = original;
       }
     }
 
@@ -61,13 +61,13 @@ namespace FronkonGames.GameWork.Foundation
     {
       string path = property.stringValue;
       path = EditorUtility.OpenFilePanel("Select file", fileAttribute.relativeToProject == true ? path.ToAbsolutePath() : path, string.Empty);
-      
+
       if (string.IsNullOrEmpty(path) == false)
         path = fileAttribute.relativeToProject == true ? path.ToRelativePath() : path;
 
       property.stringValue = path;
       property.serializedObject.ApplyModifiedProperties();
-      GUIUtility.ExitGUI();      
+      GUIUtility.ExitGUI();
     }
 
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label) =>

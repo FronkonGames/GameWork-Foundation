@@ -26,11 +26,11 @@ namespace FronkonGames.GameWork.Foundation
   {
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
-      ButtonAttribute button = (ButtonAttribute)attribute; 
-      
+      ButtonAttribute button = (ButtonAttribute)attribute;
+
       Object target = property.serializedObject.targetObject;
       MethodInfo method = target.GetType().GetMethod(button.methodName, BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
-      
+
       if (method == null)
         GUI.Label(position, $"Method '{button.methodName}' could not be found.");
       else if (method.GetParameters().Length > 0)

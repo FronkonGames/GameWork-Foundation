@@ -36,7 +36,7 @@ namespace FronkonGames.GameWork.Foundation
 
         return true;
       }
-      
+
       return false;
     }
 
@@ -50,7 +50,7 @@ namespace FronkonGames.GameWork.Foundation
         redo.Push(executed);
       }
       else
-        Log.Warning("Undo stack empty.");
+        Log.Warning("Undo stack empty");
     }
 
     /// <summary> Replay the last undone command. </summary>

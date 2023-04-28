@@ -27,7 +27,7 @@ namespace FronkonGames.GameWork.Foundation
     {
       IndentAttribute indentAttribute = (IndentAttribute)attribute;
       EditorGUI.indentLevel += indentAttribute.level;
-      
+
       label = EditorGUI.BeginProperty(position, label, property);
       EditorGUI.PropertyField(position, property, label, true);
       EditorGUI.EndProperty();

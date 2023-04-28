@@ -61,19 +61,19 @@ namespace FronkonGames.GameWork.Foundation
         Show = true;
       }
     }
-    
+
     public void OnGUI()
     {
       if (Show == true)
       {
         ProcessInput();
-        
+
         ConsoleGUI();
       }
     }
 
     private bool AcceptNewInput() => Time.time - lastInputTime > 0.1f;
-    
+
     private void ConsoleGUI()
     {
       GUILayout.BeginArea(new Rect(5, 5, Screen.width - 10, 28), GUI.skin.box);
@@ -89,13 +89,13 @@ namespace FronkonGames.GameWork.Foundation
         GUILayout.EndHorizontal();
       }
       GUILayout.EndArea();
-      
+
       if (needFocus == true)
       {
         GUI.FocusControl(TextInputName);
 
         needFocus = false;
-      }      
+      }
     }
 
     private void ProcessInput()
@@ -133,7 +133,7 @@ namespace FronkonGames.GameWork.Foundation
       if (string.IsNullOrEmpty(input) == false)
       {
         input = input.Trim();
-        
+
         history.Add(input);
         historyPointer = 0;
 
@@ -148,14 +148,14 @@ namespace FronkonGames.GameWork.Foundation
             if (id.Equals(commands[i].Id) == true)
               command = commands[i];
           }
-          
+
           if (command != null)
           {
             if (command.Execute(parts.Sub(1, parts.Length - 1)) == false)
-              Log.Warning($"Error executing command '{id}'.");
+              Log.Warning($"Error executing command '{id}'");
           }
           else
-            Log.Warning($"Invalid command '{id}'.");
+            Log.Warning($"Invalid command '{id}'");
         }
 
         input = string.Empty;

@@ -25,7 +25,7 @@ namespace FronkonGames.GameWork.Foundation
   {
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
-      GUI.enabled = !EditorApplication.isPlayingOrWillChangePlaymode; 
+      GUI.enabled = !EditorApplication.isPlayingOrWillChangePlaymode;
 
       label = EditorGUI.BeginProperty(position, label, property);
       EditorGUI.PropertyField(position, property, label, true);

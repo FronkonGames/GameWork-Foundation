@@ -21,96 +21,70 @@ namespace FronkonGames.GameWork.Foundation
   /// <summary> Math utilities. </summary>
   public static partial class MathUtils
   {
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="angRad"></param>
-    /// <returns></returns>
-    public static float Sin(float angRad) => Mathf.Sin(angRad);
+    /// <summary> Sine of angle. </summary>
+    /// <param name="rad">Angle in radians. </param>
+    /// <returns>Value</returns>
+    public static float Sin(float rad) => Mathf.Sin(rad);
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="angRad"></param>
-    /// <returns></returns>
-    public static float Cos(float angRad) => Mathf.Cos(angRad);
+    /// <summary> Cosine of angle. </summary>
+    /// <param name="rad">Angle in radians. </param>
+    /// <returns>Value</returns>
+    public static float Cos(float rad) => Mathf.Cos(rad);
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="angRad"></param>
-    /// <returns></returns>
-    public static float Tan(float angRad) => Mathf.Tan(angRad);
+    /// <summary> Tangent of angle. </summary>
+    /// <param name="rad">Angle in radians. </param>
+    /// <returns>Value</returns>
+    public static float Tan(float rad) => Mathf.Tan(rad);
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="value"></param>
-    /// <returns></returns>
-    public static float Asin(float value) => Mathf.Asin(value);
+    /// <summary> Arc-sine of angle. </summary>
+    /// <param name="rad">Angle in radians. </param>
+    /// <returns>Value</returns>
+    public static float Asin(float rad) => Mathf.Asin(rad);
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="value"></param>
-    /// <returns></returns>
-    public static float Acos(float value) => Mathf.Acos(value);
+    /// <summary> Arc-cosine of angle. </summary>
+    /// <param name="rad">Angle in radians. </param>
+    /// <returns>Value</returns>
+    public static float Acos(float rad) => Mathf.Acos(rad);
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="value"></param>
-    /// <returns></returns>
-    public static float Atan(float value) => Mathf.Atan(value);
+    /// <summary> Arc-tangent of angle. </summary>
+    /// <param name="rad">Angle in radians. </param>
+    /// <returns>Value</returns>
+    public static float Atan(float rad) => Mathf.Atan(rad);
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="y"></param>
-    /// <param name="x"></param>
-    /// <returns></returns>
+    /// <summary> Angle in radians whose Tan is y/x </summary>
+    /// <param name="y">Value</param>
+    /// <param name="x">Value</param>
+    /// <returns>Value</returns>
     public static float Atan2(float y, float x) => Mathf.Atan2(y, x);
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="x"></param>
-    /// <returns></returns>
+    /// <summary> Cosecant of angle. </summary>
+    /// <param name="x">Value</param>
+    /// <returns>Value</returns>
     public static float Csc(float x) => 1.0f / Mathf.Sin(x);
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="x"></param>
-    /// <returns></returns>
+    /// <summary> Secant of angle. </summary>
+    /// <param name="x">Value</param>
+    /// <returns>Value</returns>
     public static float Sec(float x) => 1.0f / Mathf.Cos(x);
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="x"></param>
-    /// <returns></returns>
+    /// <summary> Cotangent of angle. </summary>
+    /// <param name="x">Value</param>
+    /// <returns>Value</returns>
     public static float Cot(float x) => 1.0f / Mathf.Tan(x);
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="x"></param>
-    /// <returns></returns>
+    /// <summary> Versine of angle. </summary>
+    /// <param name="x">Value</param>
+    /// <returns>Value</returns>
     public static float Ver(float x) => 1.0f - Mathf.Cos(x);
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="x"></param>
-    /// <returns></returns>
+    /// <summary> Coversine of angle. </summary>
+    /// <param name="x">Value</param>
+    /// <returns>Value</returns>
     public static float Cvs(float x) => 1.0f - Mathf.Sin(x);
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="x"></param>
-    /// <returns></returns>
+    /// <summary> Chord of angle. </summary>
+    /// <param name="x">Value</param>
+    /// <returns>Value</returns>
     public static float Crd(float x) => 2.0f * Mathf.Sin(x * 0.5f);
   }
 }

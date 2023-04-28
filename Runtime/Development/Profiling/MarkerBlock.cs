@@ -27,7 +27,7 @@ namespace FronkonGames.GameWork.Foundation
 
     public MarkerBlock(ProfilerCategory category, string title)
     {
-      marker = new ProfilerMarker(category, title); 
+      marker = new ProfilerMarker(category, title);
     }
 
     public void Dispose() => marker.End();

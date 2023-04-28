@@ -25,8 +25,8 @@ namespace FronkonGames.GameWork.Foundation
   {
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
-      SliderAttribute sliderAttribute = (SliderAttribute)attribute; 
-      
+      SliderAttribute sliderAttribute = (SliderAttribute)attribute;
+
       if (property.propertyType == SerializedPropertyType.Float)
       {
         Rect rectSlider = position;
@@ -58,7 +58,7 @@ namespace FronkonGames.GameWork.Foundation
         Color original = GUI.color;
         GUI.color = Settings.Editor.ErrorColor;
         EditorGUI.LabelField(position, label.text, $"Field '{property.propertyPath}' can only be applied to a float or int fields");
-        GUI.color = original;      
+        GUI.color = original;
       }
     }
   }

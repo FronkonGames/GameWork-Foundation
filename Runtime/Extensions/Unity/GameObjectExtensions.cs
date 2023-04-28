@@ -24,14 +24,7 @@ namespace FronkonGames.GameWork.Foundation
   {
     /// <summary> Returns a component of a GameObject. If it does not exist, it adds it. </summary>
     /// <returns>Component</returns>
-    static public T GetOrAddComponent<T>(this Component self) where T : Component
-    {
-      T result = self.GetComponent<T>();
-      if (result == null)
-        result = self.gameObject.AddComponent<T>();
-
-      return result;
-    }
+    static public T GetOrAddComponent<T>(this Component self) where T : Component => self.GetComponent<T>() ?? self.gameObject.AddComponent<T>();
 
     /// <summary> Returns a component of a GameObject. If it does not exist, it adds it. </summary>
     /// <returns>Component</returns>
@@ -46,11 +39,12 @@ namespace FronkonGames.GameWork.Foundation
     public static List<GameObject> GetAllChildren(this GameObject self)
     {
       Transform[] childTransforms = self.GetComponentsInChildren<Transform>();
-      List<GameObject> allChildren = new List<GameObject>(childTransforms.Length);
+      List<GameObject> allChildren = new(childTransforms.Length);
 
       foreach (Transform child in childTransforms)
       {
-        if (child.gameObject != self) allChildren.Add(child.gameObject);
+        if (child.gameObject != self)
+          allChildren.Add(child.gameObject);
       }
 
       return allChildren;
@@ -61,7 +55,7 @@ namespace FronkonGames.GameWork.Foundation
     public static List<GameObject> GetAllChildrenAndSelf(this GameObject self)
     {
       Transform[] childTransforms = self.GetComponentsInChildren<Transform>();
-      List<GameObject> allChildren = new List<GameObject>(childTransforms.Length);
+      List<GameObject> allChildren = new(childTransforms.Length);
 
       for (int transformIndex = 0; transformIndex < childTransforms.Length; ++transformIndex)
         allChildren.Add(childTransforms[transformIndex].gameObject);
@@ -115,7 +109,7 @@ namespace FronkonGames.GameWork.Foundation
 #endif
         Object.Destroy(self);
     }
-    
+
     /// <summary> Destroy component. </summary>
     public static void SafeDestroyComponent<T>(this T self) where T : Component
     {
@@ -136,6 +130,6 @@ namespace FronkonGames.GameWork.Foundation
       }
 
       return null;
-    }    
+    }
   }
 }

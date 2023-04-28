@@ -32,7 +32,7 @@ namespace FronkonGames.GameWork.Foundation
     public static void IsNull(object value, [CallerMemberName]string member = "",
                                             [CallerFilePath]string sourceFile = "",
                                             [CallerLineNumber]int line = 0) =>
-      Assert(value == null, $"{Path.GetFileName(sourceFile)}:{member}:{line.ToString()} '{nameof(value)}' must be null.");
+      Assert(value == null, $"{Path.GetFileName(sourceFile)}:{member}:{line} '{nameof(value)}' must be null.");
 
     /// <summary> Check that the value is not null. </summary>
     /// <param name="value">Value</param>
@@ -41,7 +41,7 @@ namespace FronkonGames.GameWork.Foundation
     public static void IsNotNull(object value, [CallerMemberName]string member = "",
                                                [CallerFilePath]string sourceFile = "",
                                                [CallerLineNumber]int line = 0) =>
-      Assert(value != null, $"{Path.GetFileName(sourceFile)}:{member}:{line.ToString()} '{nameof(value)}' must not be null.");
+      Assert(value != null, $"{Path.GetFileName(sourceFile)}:{member}:{line} '{nameof(value)}' must not be null.");
 
     /// <summary> Check that the collection is not null or empty. </summary>
     /// <param name="collection">ICollection</param>
@@ -50,7 +50,7 @@ namespace FronkonGames.GameWork.Foundation
     public static void IsNotNullOrEmpty<T>(ICollection<T> collection, [CallerMemberName]string member = "",
                                                                       [CallerFilePath]string sourceFile = "",
                                                                       [CallerLineNumber]int line = 0) =>
-      Assert(collection != null && collection.Count > 0, $"{Path.GetFileName(sourceFile)}:{member}:{line.ToString()} '{nameof(collection)}' cant be null or empty.");
+      Assert(collection != null && collection.Count > 0, $"{Path.GetFileName(sourceFile)}:{member}:{line} '{nameof(collection)}' cant be null or empty.");
 
     /// <summary> The object is of type Type. </summary>
     /// <param name="value">Value</param>
@@ -60,6 +60,6 @@ namespace FronkonGames.GameWork.Foundation
     public static void OfType(object value, Type type, [CallerMemberName]string member = "",
                                                        [CallerFilePath]string sourceFile = "",
                                                        [CallerLineNumber]int line = 0) =>
-      Assert(type != null && value != null && type.IsInstanceOfType(value) == true, $"{Path.GetFileName(sourceFile)}:{member}:{line.ToString()} '{nameof(value)}' must be of type '{type?.Name}'.");
+      Assert(type != null && value != null && type.IsInstanceOfType(value) == true, $"{Path.GetFileName(sourceFile)}:{member}:{line} '{nameof(value)}' must be of type '{type?.Name}'.");
   }
 }

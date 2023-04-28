@@ -23,7 +23,7 @@ namespace FronkonGames.GameWork.Foundation
   {
     private readonly string title;
     private readonly long bytesStart;
-    
+
     public MemoryBlock(string title)
     {
       this.title = title ?? "Unknown";
@@ -33,7 +33,7 @@ namespace FronkonGames.GameWork.Foundation
     public void Dispose()
     {
       int bytesDiff = (int)(Profiling.MonoHeap - bytesStart);
-      
+
       Log.Info($"Task '{title}' consume {bytesDiff.BytesToHumanReadable()}");
     }
   }

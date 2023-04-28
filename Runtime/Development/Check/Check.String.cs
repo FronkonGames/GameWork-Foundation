@@ -30,7 +30,7 @@ namespace FronkonGames.GameWork.Foundation
     public static void IsNotNullOrEmpty(string value, [CallerMemberName]string member = "",
                                                     [CallerFilePath]string sourceFile = "",
                                                     [CallerLineNumber]int line = 0) =>
-      Assert(string.IsNullOrEmpty(value) == false, $"{Path.GetFileName(sourceFile)}:{member}:{line.ToString()} '{nameof(value)}' is null or empty.");
+      Assert(string.IsNullOrEmpty(value) == false, $"{Path.GetFileName(sourceFile)}:{member}:{line} '{nameof(value)}' is null or empty.");
 
     /// <summary> Check that the chain has an exact length. </summary>
     /// <param name="value">Value</param>
@@ -40,7 +40,7 @@ namespace FronkonGames.GameWork.Foundation
     public static void Length(string value, int len, [CallerMemberName]string member = "",
                                                      [CallerFilePath]string sourceFile = "",
                                                      [CallerLineNumber]int line = 0) =>
-      Assert(value.Length == len, $"{Path.GetFileName(sourceFile)}:{member}:{line.ToString()} Expected string '{nameof(value)}' length must be {len.ToString()}.");
+      Assert(value.Length == len, $"{Path.GetFileName(sourceFile)}:{member}:{line} Expected string '{nameof(value)}' length must be {len}.");
 
     /// <summary> Check that the chain has a maximum length. </summary>
     /// <param name="value">Value</param>
@@ -50,7 +50,7 @@ namespace FronkonGames.GameWork.Foundation
     public static void MaxLength(string value, int max, [CallerMemberName]string member = "",
                                                         [CallerFilePath]string sourceFile = "",
                                                         [CallerLineNumber]int line = 0) =>
-      Assert(value.Length <= max, $"{Path.GetFileName(sourceFile)}:{member}:{line.ToString()} Expected string '{nameof(value)}' max length must be {max.ToString()}.");
+      Assert(value.Length <= max, $"{Path.GetFileName(sourceFile)}:{member}:{line} Expected string '{nameof(value)}' max length must be {max}.");
 
     /// <summary> Check that the chain has a minimum length. </summary>
     /// <param name="value">Value</param>
@@ -60,6 +60,6 @@ namespace FronkonGames.GameWork.Foundation
     public static void MinLength(string value, int min, [CallerMemberName]string member = "",
                                                         [CallerFilePath]string sourceFile = "",
                                                         [CallerLineNumber]int line = 0) =>
-      Assert(value.Length >= min, $"{Path.GetFileName(sourceFile)}:{member}:{line.ToString()} Expected string '{nameof(value)}' min length must be {min.ToString()}.");
+      Assert(value.Length >= min, $"{Path.GetFileName(sourceFile)}:{member}:{line} Expected string '{nameof(value)}' min length must be {min}.");
   }
 }

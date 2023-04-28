@@ -26,7 +26,7 @@ namespace FronkonGames.GameWork.Foundation
     {
       public static LogLevel DefaultLevel = LogLevel.Info;
       public static bool ShowStackTrace = true;
-      
+
       public static Color InfoColor = new(0.12f, 0.49f, 0.67f);
       public static Color WarningColor = new(1.0f, 0.52f, 0.29f);
       public static Color ErrorColor = new(1.0f, 0.2f, 0.47f);
@@ -49,7 +49,7 @@ namespace FronkonGames.GameWork.Foundation
       public static Color AxisYColor = Color.green;
       public static Color AxisZColor = Color.blue;
       public static Color LineColor = new(0.941f, 0.796f, 0.788f);
-    
+
       public static float LineGapSize = 4.0f;
       public static float LineThickness = 0.0f;
       public static Color ArrowColor = new(0.043f, 0.561f, 0.988f);

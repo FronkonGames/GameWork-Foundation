@@ -26,15 +26,15 @@ namespace FronkonGames.GameWork.Foundation
   public class ButtonAttribute : PropertyAttribute
   {
     public readonly string label;
-    
+
     public readonly string methodName;
 
-    public ButtonAttribute(string methodName) => label = this.methodName = methodName; 
+    public ButtonAttribute(string methodName) => label = this.methodName = methodName;
 
     public ButtonAttribute(string label, string methodName)
     {
       this.label = label;
-      this.methodName = methodName; 
+      this.methodName = methodName;
     }
   }
 }

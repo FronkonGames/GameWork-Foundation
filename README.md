@@ -68,6 +68,8 @@ The functionality is divided into folders, this is its structure:
 ```
 |
 |\_Runtime......................... Utilities for the game.
+|   |\_Algorithms.................. Algorithms.
+|   |    \_Structures.............. Data structures.
 |   |\_Attributes.................. Attributes for fields and class properties.
 |   |\_Development................. Developer utilities.
 |   |   |\_Check................... Assert extension.
