@@ -20,7 +20,7 @@ A set of code useful for developing Unity based games. It is independent of any 
 
 These are the foundations on which [Game:Work Core](https://github.com/FronkonGames/GameWork-Core) is built.
 
-## Features 🎇
+## 🎇 Features
 
 - Architecture agnostic, use it in any code.
 - Many [attributes](https://github.com/FronkonGames/GameWork-Foundation/tree/main/Runtime/Attributes) to make your classes more usable in the editor (without having to write a custom Editor).
@@ -29,12 +29,12 @@ These are the foundations on which [Game:Work Core](https://github.com/FronkonGa
 - The most used [design patterns](https://github.com/FronkonGames/GameWork-Foundation/tree/main/Runtime/Patterns), in generic versions so that they are easy to adapt to your needs.
 - Commented code with test units.
 
-## Requisites 🔧
+## 🔧 Requisites
 
 - Unity 2021.3 or higher.
 - Test Framework 1.1.31 or higher.
 
-## Installation ⚙️
+## ⚙️ Installation
 
 ### Editing your 'manifest.json'
 
@@ -61,7 +61,7 @@ Just clone the repository into your Assets folder:
 git clone https://github.com/FronkonGames/GameWork-Foundation.git 
 ```
 
-## Use 🚀
+## 🚀 Use
 
 The functionality is divided into folders, this is its structure:
 
@@ -382,6 +382,12 @@ using (Profiling.Memory("Some hungry code"))
 
 Output the message: "**Task 'Some hungry code' consume 4.00 kb**". 
 
+### Algorithms
+
+Algorithms and data structures.
+
+- Structures: ArrayList.
+
 ### Patterns
 
 The most used design patterns:
@@ -396,7 +402,7 @@ All using generics.
 
 <p align="center"><img src="Media/unittests.png"/></p>
 
-## License 📜
+## 📜 License
 
 Code released under [MIT License](https://github.com/FronkonGames/GameWork-Foundation/blob/main/LICENSE.md).
 
