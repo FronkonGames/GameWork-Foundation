@@ -7,6 +7,7 @@
 - Structures: Arraylist.
 - IEnumable extensions.
 - New Exceptions log.
+- Git tags.
 
 ### Fixed
 
