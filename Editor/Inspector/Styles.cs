@@ -33,7 +33,7 @@ namespace FronkonGames.GameWork.Foundation
     {
       get
       {
-        if (whiteTexture == null)
+        if (whiteTexture is null)
         {
           whiteTexture = new Texture2D(1, 1, TextureFormat.ARGB32, false) { name = "White Texture" };
           whiteTexture.SetPixel(0, 0, Color.white);
@@ -49,7 +49,7 @@ namespace FronkonGames.GameWork.Foundation
     {
       get
       {
-        if (blackTexture == null)
+        if (blackTexture is null)
         {
           blackTexture = new Texture2D(1, 1, TextureFormat.ARGB32, false) { name = "Black Texture" };
           blackTexture.SetPixel(0, 0, Color.black);
@@ -65,7 +65,7 @@ namespace FronkonGames.GameWork.Foundation
     {
       get
       {
-        if (transparentTexture == null)
+        if (transparentTexture is null)
         {
           transparentTexture = new Texture2D(1, 1, TextureFormat.ARGB32, false) { name = "Transparent Texture" };
           transparentTexture.SetPixel(0, 0, Color.clear);
@@ -81,7 +81,7 @@ namespace FronkonGames.GameWork.Foundation
     {
       get
       {
-        if (paneOptionsIcon == null)
+        if (paneOptionsIcon is null)
           paneOptionsIcon = (Texture2D)EditorGUIUtility.Load(EditorGUIUtility.isProSkin == true
             ? "Builtin Skins/DarkSkin/Images/pane options.png"
             : "Builtin Skins/LightSkin/Images/pane options.png");
@@ -91,6 +91,8 @@ namespace FronkonGames.GameWork.Foundation
     }
 
     public static readonly GUIStyle SmallTickBox;
+    public static readonly GUIStyle Header;
+    public static readonly GUIStyle HeaderCheckbox;
     public static readonly GUIStyle MiniLabelButton;
     public static readonly GUIStyle MiniLabel;
 
@@ -132,6 +134,15 @@ namespace FronkonGames.GameWork.Foundation
       }
 
       SmallTickBox = new GUIStyle("ShurikenToggle");
+      Header = new GUIStyle("ShurikenModuleTitle")
+      {
+        font = new GUIStyle("Label").font,
+        fontSize = 14,
+        border = new RectOffset(15, 7, 4, 4),
+        fixedHeight = 22,
+        contentOffset = new Vector2(20.0f, -2.0f)
+      };
+      HeaderCheckbox = new GUIStyle("ShurikenCheckMark");
 
       MiniLabelButton = new GUIStyle(EditorStyles.miniLabel)
       {

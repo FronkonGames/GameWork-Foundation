@@ -17,6 +17,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Linq;
 using UnityEngine;
 
 namespace FronkonGames.GameWork.Foundation
@@ -26,66 +27,20 @@ namespace FronkonGames.GameWork.Foundation
   {
     /// <summary> Returns an attribute or null. </summary>
     /// <param name="self"> The object. </param>
-    /// <param name="attributeName"> Attribute name. </param>
     /// <returns> Attribute or null. </returns>
-    public static T GetAttribute<T>(this object self, string attributeName) where T : Attribute
+    public static T GetAttribute<T>(this FieldInfo self, bool inherit = true) where T : Attribute
     {
-      T attribute = null;
+      object[] objects = self.GetCustomAttributes(typeof(T), inherit);
 
-      const BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
+      if (objects.Length == 0)
+        Log.Warning($"Attribute '{typeof(T).Name}' not found");
 
-      List<FieldInfo> fieldInfos = new();
-      Type type = self.GetType();
-
-      do
-        fieldInfos.AddRange(type.GetFields(bindingFlags));
-      while ((type = type.BaseType) != null && type != typeof(MonoBehaviour));
-
-      for (int i = 0; i < fieldInfos.Count && attribute == null; ++i)
-      {
-        if (fieldInfos[i].Name.Equals(attributeName) == true)
-          attribute = Attribute.GetCustomAttribute(fieldInfos[i], typeof(T)) as T;
-      }
-
-      if (attribute == null)
-        Log.Warning($"Attribute '{attributeName}' not found");
-
-      return attribute;
+      return objects.Length > 0 ? objects[0] as T: null;
     }
 
     /// <summary> Does it have the attribute? </summary>
-    /// <param name="attributeName"> Attribute name. </param>
     /// <returns> True or false. </returns>
-    public static bool HasAttribute<T>(this object self) where T : Attribute
-    {
-      FieldInfo[] fields = self.GetType().GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
-      for (int i = 0; i < fields.Length; ++i)
-      {
-        FieldInfo field = fields[i];
-        if (field.GetCustomAttributes(typeof(T), true).Length > 0)
-          return true;
-      }
-
-      return false;
-    }
-
-    /// <summary> Returns all attributes. </summary>
-    /// <param name="self"> The object. </param>
-    /// <returns> Array of attributes. </returns>
-    public static T[] GetAttributes<T>(this object self) where T : Attribute
-    {
-      List<T> attributes = new();
-
-      FieldInfo[] fields = self.GetType().GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
-      for (int i = 0; i < fields.Length; ++i)
-      {
-        object[] objs = fields[i].GetCustomAttributes(typeof(T), true);
-        for (int j = 0; j < objs.Length; ++j)
-          attributes.Add(objs[j] as T);
-      }
-
-      return attributes.ToArray();
-    }
+    public static bool HasAttribute<T>(this FieldInfo self, bool inherit = true) where T : Attribute => self.GetCustomAttributes(typeof(T), inherit).Length > 0;
 
     /// <summary> Returns property or null. </summary>
     /// <param name="self"> The object. </param>
@@ -101,7 +56,7 @@ namespace FronkonGames.GameWork.Foundation
       PropertyInfo[] properties = self.GetType().GetProperties();
       for (int i = 0; i < properties.Length && attribute == null; ++i)
       {
-        if (properties[i].Name.Equals(propertyName) == true)
+        if (properties[i].Name == propertyName)
         {
           object[] attributes = properties[i].GetCustomAttributes(true);
           for (int j = 0; j < attributes.Length; ++j)
@@ -114,5 +69,17 @@ namespace FronkonGames.GameWork.Foundation
 
       return attribute != null && propertyInfo != null;
     }
+
+    /// <summary> Returns private property by name or null. </summary>
+    /// <param name="self"> The object. </param>
+    /// <param name="propertyName"> Property name. </param>
+    /// <returns> Property or null. </returns>
+    public static PropertyInfo GetProperty(this object self, string propertyName) => self.GetType().GetProperty(propertyName, BindingFlags.NonPublic | BindingFlags.Instance);
+
+    /// <summary> Returns private field by name or null. </summary>
+    /// <param name="self"> The object. </param>
+    /// <param name="fieldName"> Field name. </param>
+    /// <returns> Field or null. </returns>
+    public static FieldInfo GetField(this object self, string fieldName) => self.GetType().GetField(fieldName, BindingFlags.NonPublic | BindingFlags.Instance);
   }
 }

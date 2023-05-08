@@ -14,70 +14,40 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#if UNITY_EDITOR
+using UnityEditor;
 using System.Collections.Generic;
-using UnityEngine;
+using System.Reflection;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary> Drawing of objects for development. </summary>
-  /// <remarks>Only available in the Editor</remarks>
-  [UnityEditor.InitializeOnLoad]
-  public static partial class DebugDraw
+  /// <summary> Custom inspector. </summary>
+  public abstract partial class Inspector : Editor
   {
-    private static readonly List<IHandleDraw> handles;
+    private string productID;
+    private readonly Dictionary<string, bool> foldoutDisplay = new();
 
-    private static GUIStyle TextStyle
+    private readonly PropertyInfo[] properties;
+
+    /// <summary> Custom inspector. </summary>
+    protected abstract void InspectorGUI();
+
+    public override void OnInspectorGUI()
     {
-      get
-      {
-        return textStyle ??= new(UnityEditor.EditorStyles.whiteMiniLabel)
-        {
-          richText = true,
-          fontSize = Settings.Draw.TextSize,
-          alignment = TextAnchor.MiddleCenter
-        };
-      }
+      ResetGUI();
+
+      serializedObject.Update();
+
+      InspectorGUI();
+
+      serializedObject.ApplyModifiedProperties();
+
+      if (Changed == true)
+        DirtyGUI();
     }
 
-    private static GUIStyle textStyle;
-    private static GUIContent guiContent;
-
-    private static int lastFrame;
-
-    static DebugDraw()
+    protected virtual void OnEnable()
     {
-      handles = new(Settings.Draw.Capacity);
-
-      UnityEditor.SceneView.duringSceneGui += (_) =>
-      {
-        using (new UnityEditor.Handles.DrawingScope())
-        {
-          for (int i = 0; i < handles.Count; ++i)
-            handles[i].Draw();
-        }
-
-        CheckFrameChange();
-      };
-    }
-
-    private static void CheckFrameChange()
-    {
-      int currentFrame = Time.frameCount;
-      if (lastFrame != currentFrame)
-      {
-        handles.Clear();
-
-        lastFrame = currentFrame;
-      }
-    }
-
-    private static void DrawHandle(IHandleDraw handle)
-    {
-      CheckFrameChange();
-
-      handles.Add(handle);
+      productID = GetType().ToString().Replace("Editor", string.Empty);
     }
   }
 }
-#endif

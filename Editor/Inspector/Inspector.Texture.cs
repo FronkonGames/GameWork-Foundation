@@ -14,70 +14,43 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#if UNITY_EDITOR
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
+using System.Reflection;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary> Drawing of objects for development. </summary>
-  /// <remarks>Only available in the Editor</remarks>
-  [UnityEditor.InitializeOnLoad]
-  public static partial class DebugDraw
+  /// <summary> Custom inspector. </summary>
+  public abstract partial class Inspector : Editor
   {
-    private static readonly List<IHandleDraw> handles;
-
-    private static GUIStyle TextStyle
+    /// <summary> Texture. </summary>
+    public Texture Texture(GUIContent label, Texture value, bool allowSceneTextures = false, bool multiLine = false)
     {
-      get
+      if (multiLine == true)
+        value = EditorGUILayout.ObjectField(label, value, typeof(Texture), allowSceneTextures) as Texture;
+      else
+        value = EditorGUILayout.ObjectField(label, value, typeof(Texture), allowSceneTextures, GUILayout.Height(EditorGUIUtility.singleLineHeight)) as Texture;
+
+      return value;
+    }
+
+    /// <summary> Texture field. </summary>
+    public Texture Texture(string fieldName, bool allowSceneTextures = false, bool multiLine = false)
+    {
+      Texture value = default;
+      FieldInfo fieldInfo = target.GetField(fieldName);
+      if (fieldInfo != null)
       {
-        return textStyle ??= new(UnityEditor.EditorStyles.whiteMiniLabel)
-        {
-          richText = true,
-          fontSize = Settings.Draw.TextSize,
-          alignment = TextAnchor.MiddleCenter
-        };
+        GUIContent label = GetFieldLabel(fieldName, fieldInfo);
+
+        value = Texture(label, (Texture)fieldInfo.GetValue(target), allowSceneTextures, multiLine);
+
+        fieldInfo.SetValue(target, value);
       }
-    }
+      else
+        Log.Warning($"Field '{fieldName}' not found");
 
-    private static GUIStyle textStyle;
-    private static GUIContent guiContent;
-
-    private static int lastFrame;
-
-    static DebugDraw()
-    {
-      handles = new(Settings.Draw.Capacity);
-
-      UnityEditor.SceneView.duringSceneGui += (_) =>
-      {
-        using (new UnityEditor.Handles.DrawingScope())
-        {
-          for (int i = 0; i < handles.Count; ++i)
-            handles[i].Draw();
-        }
-
-        CheckFrameChange();
-      };
-    }
-
-    private static void CheckFrameChange()
-    {
-      int currentFrame = Time.frameCount;
-      if (lastFrame != currentFrame)
-      {
-        handles.Clear();
-
-        lastFrame = currentFrame;
-      }
-    }
-
-    private static void DrawHandle(IHandleDraw handle)
-    {
-      CheckFrameChange();
-
-      handles.Add(handle);
+      return value;
     }
   }
 }
-#endif

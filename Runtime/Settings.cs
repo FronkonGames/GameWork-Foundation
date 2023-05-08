@@ -78,6 +78,7 @@ namespace FronkonGames.GameWork.Foundation
       public static Color ErrorColor = Color.red;
       public static float FileButtonWidth = 20.0f;
       public static float FileButtonPadding = 4.0f;
+      public static float MinMaxFieldWidth = 30.0f;
       public static string MessageBoxInfoIcon = "console.infoicon";
       public static string MessageBoxWarningIcon = "console.warnicon";
       public static string MessageBoxErrorIcon = "console.erroricon";
@@ -86,6 +87,7 @@ namespace FronkonGames.GameWork.Foundation
       public static int TitleLineHeight = 2;
       public static int TitleSpaceBeforeContent = 3;
       public static string RefreshIcon = "d_Refresh";
+      public const float SpaceSeparation = 5.0f;
     }
 #endif
   }

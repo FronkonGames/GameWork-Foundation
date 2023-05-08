@@ -118,7 +118,7 @@ public partial class AlgorithmsTests
 
     timer = new();
     for (int i = 0; i < ops; ++i)
-      array.InsertAt(Rand.Range(0, 10), Rand.Range(0, array.Count));
+      array.Insert(Rand.Range(0, 10), Rand.Range(0, array.Count));
     float timeRandInsertArray = timer.Duration;
 
     timer = new();

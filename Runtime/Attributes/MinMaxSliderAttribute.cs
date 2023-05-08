@@ -35,7 +35,9 @@ namespace FronkonGames.GameWork.Foundation
 
     public readonly float resetMax;
 
-    public MinMaxSliderAttribute(float min, float max, float resetMin = 0.0f, float resetMax = 1.0f, float snap = 0.0f)
+    public MinMaxSliderAttribute(float min, float max, float snap = 0.0f) : this(min, max, min, max, snap) { }
+
+    public MinMaxSliderAttribute(float min, float max, float resetMin, float resetMax, float snap = 0.0f)
     {
       this.min = Mathf.Min(min, max);
       this.max = Mathf.Max(min, max);

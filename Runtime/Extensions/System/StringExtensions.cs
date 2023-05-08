@@ -214,6 +214,10 @@ namespace FronkonGames.GameWork.Foundation
       return self;
     }
 
+    /// <summary> "CamelCaseString" => "Camel case string" </summary>
+    /// <returns>Value</returns>
+    public static string ToWords(this string self) => Regex.Replace(self, "(\\B[A-Z])", " $1").Capitalized();
+
     /// <summary> Decode to Base64 (RFC 3548, RFC 4648). </summary>
     /// <returns>String</returns>
     public static string FromBase64(this string self)

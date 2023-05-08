@@ -14,70 +14,47 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#if UNITY_EDITOR
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
+using System.Reflection;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary> Drawing of objects for development. </summary>
-  /// <remarks>Only available in the Editor</remarks>
-  [UnityEditor.InitializeOnLoad]
-  public static partial class DebugDraw
+  /// <summary> Custom inspector. </summary>
+  public abstract partial class Inspector : Editor
   {
-    private static readonly List<IHandleDraw> handles;
-
-    private static GUIStyle TextStyle
+    /// <summary> Toggle with reset. </summary>
+    public bool Toggle(GUIContent label, bool value, bool reset = default)
     {
-      get
+      EditorGUILayout.BeginHorizontal();
       {
-        return textStyle ??= new(UnityEditor.EditorStyles.whiteMiniLabel)
-        {
-          richText = true,
-          fontSize = Settings.Draw.TextSize,
-          alignment = TextAnchor.MiddleCenter
-        };
+        value = EditorGUILayout.Toggle(label, value);
+
+        if (ResetButton() == true)
+          value = reset;
       }
+      EditorGUILayout.EndHorizontal();
+
+      return value;
     }
 
-    private static GUIStyle textStyle;
-    private static GUIContent guiContent;
-
-    private static int lastFrame;
-
-    static DebugDraw()
+    /// <summary> Boolean field with reset. </summary>
+    public bool Toggle(string fieldName, bool reset = default)
     {
-      handles = new(Settings.Draw.Capacity);
-
-      UnityEditor.SceneView.duringSceneGui += (_) =>
+      bool value = default;
+      FieldInfo fieldInfo = target.GetField(fieldName);
+      if (fieldInfo != null)
       {
-        using (new UnityEditor.Handles.DrawingScope())
-        {
-          for (int i = 0; i < handles.Count; ++i)
-            handles[i].Draw();
-        }
+        GUIContent label = GetFieldLabel(fieldName, fieldInfo);
 
-        CheckFrameChange();
-      };
-    }
+        value = Toggle(label, (bool)fieldInfo.GetValue(target), reset);
 
-    private static void CheckFrameChange()
-    {
-      int currentFrame = Time.frameCount;
-      if (lastFrame != currentFrame)
-      {
-        handles.Clear();
-
-        lastFrame = currentFrame;
+        fieldInfo.SetValue(target, value);
       }
-    }
+      else
+        Log.Warning($"Field '{fieldName}' not found");
 
-    private static void DrawHandle(IHandleDraw handle)
-    {
-      CheckFrameChange();
-
-      handles.Add(handle);
+      return value;
     }
   }
 }
-#endif

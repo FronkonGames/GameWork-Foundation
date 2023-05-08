@@ -23,7 +23,7 @@ These are the foundations on which [Game:Work Core](https://github.com/FronkonGa
 ## 🎇 Features
 
 - Architecture agnostic, use it in any code.
-- Many [attributes](https://github.com/FronkonGames/GameWork-Foundation/tree/main/Runtime/Attributes) to make your classes more usable in the editor (without having to write a custom Editor).
+- Many [attributes](https://github.com/FronkonGames/GameWork-Foundation/tree/main/Runtime/Attributes) to make your classes more usable in the editor. Custom [Inspector](https://github.com/FronkonGames/GameWork-Foundation/tree/main/Editor/Inspector) to help you create your own inspectors.
 - Multiple utilities to improve your developments: [checkers](https://github.com/FronkonGames/GameWork-Foundation/tree/main/Runtime/Development/Check), [debug draw](https://github.com/FronkonGames/GameWork-Foundation/tree/main/Runtime/Development/Draw), [profiling](https://github.com/FronkonGames/GameWork-Foundation/tree/main/Runtime/Development/Profiling) and a console with custom commands.
 - A lot of .Net and Unity types [extensions](https://github.com/FronkonGames/GameWork-Foundation/tree/main/Runtime/Extensions).
 - The most used [design patterns](https://github.com/FronkonGames/GameWork-Foundation/tree/main/Runtime/Patterns), in generic versions so that they are easy to adapt to your needs.
@@ -60,6 +60,10 @@ Just clone the repository into your Assets folder:
 ```c#
 git clone https://github.com/FronkonGames/GameWork-Foundation.git 
 ```
+
+### Zip
+
+Download the [latest release](https://github.com/FronkonGames/GameWork-Foundation/releases) and unzip it into the Assets directory.
 
 ## 🚀 Use
 
@@ -286,6 +290,12 @@ public void Reset()    => counter = 0;
 </th><th><img src="Media/attributes.button.gif"/></th></tr>
 
 </table>
+
+### Custom Inspector
+
+A simple way to create your own inspectors by quickly accessing all the private fields of your components.
+
+<p align="center"><img src="Media/inspector.png"/></p>
 
 ### Check
 

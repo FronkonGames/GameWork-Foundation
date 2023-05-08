@@ -44,7 +44,7 @@ namespace FronkonGames.GameWork.Foundation
     private static T LazyCreate()
     {
       T instance = FindObjectOfType<T>(true);
-      if (instance == null)
+      if (instance is null)
       {
         GameObject ownerObject = new(typeof(T).Name);
         DontDestroyOnLoad(ownerObject);

@@ -26,7 +26,7 @@ namespace FronkonGames.GameWork.Foundation
     /// <returns>Path</returns>
     public static string GetPath(this Transform self)
     {
-      if (self.parent == null)
+      if (self.parent is null)
         return self.name;
 
       return $"{self.parent.GetPath()}/{self.name}";

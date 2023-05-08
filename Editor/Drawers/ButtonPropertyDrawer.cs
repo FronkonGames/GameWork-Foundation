@@ -31,7 +31,7 @@ namespace FronkonGames.GameWork.Foundation
       Object target = property.serializedObject.targetObject;
       MethodInfo method = target.GetType().GetMethod(button.methodName, BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
 
-      if (method == null)
+      if (method is null)
         GUI.Label(position, $"Method '{button.methodName}' could not be found.");
       else if (method.GetParameters().Length > 0)
         GUI.Label(position, $"Method '{button.methodName}' cannot have parameters.");

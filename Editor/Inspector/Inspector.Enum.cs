@@ -14,70 +14,48 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#if UNITY_EDITOR
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
+using System.Reflection;
+using System;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary> Drawing of objects for development. </summary>
-  /// <remarks>Only available in the Editor</remarks>
-  [UnityEditor.InitializeOnLoad]
-  public static partial class DebugDraw
+  /// <summary> Custom inspector. </summary>
+  public abstract partial class Inspector : Editor
   {
-    private static readonly List<IHandleDraw> handles;
-
-    private static GUIStyle TextStyle
+    /// <summary> Enum popup with reset. </summary>
+    public Enum EnumPopup(GUIContent label, Enum value, Enum reset = default)
     {
-      get
+      EditorGUILayout.BeginHorizontal();
       {
-        return textStyle ??= new(UnityEditor.EditorStyles.whiteMiniLabel)
-        {
-          richText = true,
-          fontSize = Settings.Draw.TextSize,
-          alignment = TextAnchor.MiddleCenter
-        };
+        value = EditorGUILayout.EnumPopup(label, value);
+
+        if (ResetButton() == true)
+          value = reset;
       }
+      EditorGUILayout.EndHorizontal();
+
+      return value;
     }
 
-    private static GUIStyle textStyle;
-    private static GUIContent guiContent;
-
-    private static int lastFrame;
-
-    static DebugDraw()
+    /// <summary> Enum popup field with reset. </summary>
+    public Enum EnumPopup(string fieldName, Enum reset = default)
     {
-      handles = new(Settings.Draw.Capacity);
-
-      UnityEditor.SceneView.duringSceneGui += (_) =>
+      Enum value = default;
+      FieldInfo fieldInfo = target.GetField(fieldName);
+      if (fieldInfo != null)
       {
-        using (new UnityEditor.Handles.DrawingScope())
-        {
-          for (int i = 0; i < handles.Count; ++i)
-            handles[i].Draw();
-        }
+        GUIContent label = GetFieldLabel(fieldName, fieldInfo);
 
-        CheckFrameChange();
-      };
-    }
+        value = EnumPopup(label, (Enum)fieldInfo.GetValue(target), reset);
 
-    private static void CheckFrameChange()
-    {
-      int currentFrame = Time.frameCount;
-      if (lastFrame != currentFrame)
-      {
-        handles.Clear();
-
-        lastFrame = currentFrame;
+        fieldInfo.SetValue(target, value);
       }
-    }
+      else
+        Log.Warning($"Field '{fieldName}' not found");
 
-    private static void DrawHandle(IHandleDraw handle)
-    {
-      CheckFrameChange();
-
-      handles.Add(handle);
+      return value;
     }
   }
 }
-#endif

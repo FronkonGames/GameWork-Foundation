@@ -1,12 +1,26 @@
 # Changelog
 
+## 1.0.10 - 2023-05-08
+
+### Added
+
+- Custom Inspector.
+- GUI.Scope disposable groups.
+- sting.ToWords() extension.
+
+### Fixed
+
+- Small fixes.
+
 ## 1.0.9 - 2023-04-28
 
 ### Added
 
+- Custom Inspector.
 - Structures: Arraylist.
 - IEnumable extensions.
 - New Exceptions log.
+- ReflectionExtensions.GetProperty(), GetField() by name.
 
 ### Fixed
 

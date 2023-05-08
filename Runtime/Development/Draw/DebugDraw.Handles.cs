@@ -150,8 +150,7 @@ namespace FronkonGames.GameWork.Foundation
 #if UNITY_EDITOR
         if (UnityEditor.HandleUtility.WorldToGUIPointWithDepth(position).z >= 0.0)
         {
-          if (guiContent == null)
-            guiContent = new GUIContent();
+          guiContent ??= new GUIContent();
 
           guiContent.text = $"<color=#{color.ToHex()}{(byte)(Settings.Draw.Transparency * 255.0):X}>{text}</color>";
 

@@ -14,70 +14,37 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#if UNITY_EDITOR
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
+using System;
+using System.Reflection;
+using Object = UnityEngine.Object;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary> Drawing of objects for development. </summary>
-  /// <remarks>Only available in the Editor</remarks>
-  [UnityEditor.InitializeOnLoad]
-  public static partial class DebugDraw
+  /// <summary> Custom inspector. </summary>
+  public abstract partial class Inspector : Editor
   {
-    private static readonly List<IHandleDraw> handles;
+    /// <summary> Object. </summary>
+    public Object Object<T>(GUIContent label, Object value, bool allowSceneTextures = false) => EditorGUILayout.ObjectField(label, value, typeof(T), allowSceneTextures) as Object;
 
-    private static GUIStyle TextStyle
+    /// <summary> Object field. </summary>
+    public Object Object<T>(string fieldName, bool allowSceneTextures = false)
     {
-      get
+      Object value = default;
+      FieldInfo fieldInfo = target.GetField(fieldName);
+      if (fieldInfo != null)
       {
-        return textStyle ??= new(UnityEditor.EditorStyles.whiteMiniLabel)
-        {
-          richText = true,
-          fontSize = Settings.Draw.TextSize,
-          alignment = TextAnchor.MiddleCenter
-        };
+        GUIContent label = GetFieldLabel(fieldName, fieldInfo);
+
+        value = Object<T>(label, (Object)fieldInfo.GetValue(target), allowSceneTextures);
+
+        fieldInfo.SetValue(target, value);
       }
-    }
+      else
+        Log.Warning($"Field '{fieldName}' not found");
 
-    private static GUIStyle textStyle;
-    private static GUIContent guiContent;
-
-    private static int lastFrame;
-
-    static DebugDraw()
-    {
-      handles = new(Settings.Draw.Capacity);
-
-      UnityEditor.SceneView.duringSceneGui += (_) =>
-      {
-        using (new UnityEditor.Handles.DrawingScope())
-        {
-          for (int i = 0; i < handles.Count; ++i)
-            handles[i].Draw();
-        }
-
-        CheckFrameChange();
-      };
-    }
-
-    private static void CheckFrameChange()
-    {
-      int currentFrame = Time.frameCount;
-      if (lastFrame != currentFrame)
-      {
-        handles.Clear();
-
-        lastFrame = currentFrame;
-      }
-    }
-
-    private static void DrawHandle(IHandleDraw handle)
-    {
-      CheckFrameChange();
-
-      handles.Add(handle);
+      return value;
     }
   }
 }
-#endif

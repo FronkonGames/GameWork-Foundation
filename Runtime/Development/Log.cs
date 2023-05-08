@@ -132,8 +132,7 @@ namespace FronkonGames.GameWork.Foundation
     {
       LogError($"[{Path.GetFileNameWithoutExtension(sourceFile)}:{member}:{line}]", message);
 
-      if (e == null)
-        e = new Exception(message);
+      e ??= new Exception(message);
 
       Debug.LogException(e);
 

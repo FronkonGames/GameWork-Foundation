@@ -14,70 +14,56 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#if UNITY_EDITOR
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
+using System.Reflection;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary> Drawing of objects for development. </summary>
-  /// <remarks>Only available in the Editor</remarks>
-  [UnityEditor.InitializeOnLoad]
-  public static partial class DebugDraw
+  /// <summary> Custom inspector. </summary>
+  public abstract partial class Inspector : Editor
   {
-    private static readonly List<IHandleDraw> handles;
-
-    private static GUIStyle TextStyle
+    /// <summary> String with reset. </summary>
+    public string String(GUIContent label, string value, string reset)
     {
-      get
+      EditorGUILayout.BeginHorizontal();
       {
-        return textStyle ??= new(UnityEditor.EditorStyles.whiteMiniLabel)
-        {
-          richText = true,
-          fontSize = Settings.Draw.TextSize,
-          alignment = TextAnchor.MiddleCenter
-        };
+        value = EditorGUILayout.TextField(label, value);
+
+        if (ResetButton() == true)
+          value = reset;
       }
+      EditorGUILayout.EndHorizontal();
+
+      return value;
     }
 
-    private static GUIStyle textStyle;
-    private static GUIContent guiContent;
+    /// <summary> String with reset. </summary>
+    public string String(string label, string value, string reset) => String(new GUIContent(label), value, reset);
 
-    private static int lastFrame;
-
-    static DebugDraw()
+    /// <summary> String field with reset. </summary>
+    public string String(string fieldName, string reset = default)
     {
-      handles = new(Settings.Draw.Capacity);
-
-      UnityEditor.SceneView.duringSceneGui += (_) =>
+      string value = default;
+      FieldInfo fieldInfo = target.GetField(fieldName);
+      if (fieldInfo != null)
       {
-        using (new UnityEditor.Handles.DrawingScope())
+        GUIContent label = GetFieldLabel(fieldName, fieldInfo);
+
+        if (fieldInfo.HasAttribute<RangeAttribute>() == true)
         {
-          for (int i = 0; i < handles.Count; ++i)
-            handles[i].Draw();
+          RangeAttribute attribute = fieldInfo.GetAttribute<RangeAttribute>();
+          value = String(label, (string)fieldInfo.GetValue(target), reset);
         }
+        else
+          value = String(label, (string)fieldInfo.GetValue(target), reset);
 
-        CheckFrameChange();
-      };
-    }
-
-    private static void CheckFrameChange()
-    {
-      int currentFrame = Time.frameCount;
-      if (lastFrame != currentFrame)
-      {
-        handles.Clear();
-
-        lastFrame = currentFrame;
+        fieldInfo.SetValue(target, value);
       }
-    }
+      else
+        Log.Warning($"Field '{fieldName}' not found");
 
-    private static void DrawHandle(IHandleDraw handle)
-    {
-      CheckFrameChange();
-
-      handles.Add(handle);
+      return value;
     }
   }
 }
-#endif
