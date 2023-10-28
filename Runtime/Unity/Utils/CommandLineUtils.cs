@@ -50,7 +50,10 @@ namespace FronkonGames.GameWork.Foundation
           return args.ToArray();
         }
       }
-      catch (Exception) { }
+      catch (Exception e)
+      {
+        Log.Error(e.Message);
+      }
 
       return new string[0];
     }

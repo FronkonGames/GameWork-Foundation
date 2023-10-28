@@ -29,7 +29,7 @@ namespace FronkonGames.GameWork.Foundation
     private string nameFilter;
 
     [SerializeField]
-    public float velocityFilter = 0.0f;
+    private float velocityFilter = 0.0f;
 
     [Space, SerializeField]
     private UnityEvent<GameObject, Collision> onCollisionEnter;

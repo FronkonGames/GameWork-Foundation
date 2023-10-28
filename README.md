@@ -23,11 +23,11 @@ These are the foundations on which [Game:Work Core](https://github.com/FronkonGa
 ## 🎇 Features
 
 - Architecture agnostic, use it in any code.
-- Many [attributes](https://github.com/FronkonGames/GameWork-Foundation/tree/main/Runtime/Attributes) to make your classes more usable in the editor. Custom [Inspector](https://github.com/FronkonGames/GameWork-Foundation/tree/main/Editor/Inspector) to help you create your own inspectors.
-- Multiple utilities to improve your developments: [checkers](https://github.com/FronkonGames/GameWork-Foundation/tree/main/Runtime/Development/Check), [debug draw](https://github.com/FronkonGames/GameWork-Foundation/tree/main/Runtime/Development/Draw), [profiling](https://github.com/FronkonGames/GameWork-Foundation/tree/main/Runtime/Development/Profiling) and a console with custom commands.
-- A lot of .Net and Unity types [extensions](https://github.com/FronkonGames/GameWork-Foundation/tree/main/Runtime/Extensions).
-- The most used [design patterns](https://github.com/FronkonGames/GameWork-Foundation/tree/main/Runtime/Patterns), in generic versions so that they are easy to adapt to your needs.
-- Utilities to speed up prototyping time.
+- Many [attributes](./Runtime/Attributes) to make your classes more usable in the editor. Custom [Inspector](./Editor/Inspector) to help you create your own inspectors.
+- Multiple utilities to improve your developments: [checkers](./Runtime/Development/Check), [debug draw](./Runtime/Development/Draw), [profiling](./Runtime/Development/Profiling) and a console with custom commands.
+- A lot of .Net and Unity types [extensions](./Runtime/Extensions).
+- The most used [design patterns](./Runtime/Patterns), in generic versions so that they are easy to adapt to your needs.
+- [Utilities](./Runtime/Unity/Components/) to speed up prototyping time.
 - Commented code with test units.
 
 ## 🔧 Requisites
@@ -313,7 +313,7 @@ public void GetImpact(GameObject gameObject, float damage, Vector3 impact)
 }
 ```
 
-Take a look at the [Check class folder](https://github.com/FronkonGames/GameWork-Foundation/tree/main/Runtime/Development/Check).
+Take a look at the [Check class folder](./Runtime/Development/Check).
 
 ### Draw
 
@@ -359,10 +359,10 @@ A developer console for executing commands.
 
 <p align="center"><img src="Media/development.console.gif"/></p>
 
-Simply add a GameObject with the [DevelopmentConsole](https://github.com/FronkonGames/GameWork-Foundation/tree/main/Runtime/Development/Console/DevelopmentConsole.cs) component and assign the commands you want to use to it.
+Simply add a GameObject with the [DevelopmentConsole](./Runtime/Development/Console/DevelopmentConsole.cs) component and assign the commands you want to use to it.
 
-Commands are ScriptableObjects that you can create from [DevelopmentCommand](https://github.com/FronkonGames/GameWork-Foundation/tree/main/Runtime/Development/Console/DevelopmentCommand.cs).
-See the commands included in [this folder](https://github.com/FronkonGames/GameWork-Foundation/tree/main/Runtime/Development/Console/Commands/).
+Commands are ScriptableObjects that you can create from [DevelopmentCommand](./Runtime/Development/Console/DevelopmentCommand.cs).
+See the commands included in [this folder](./Runtime/Development/Console/Commands/).
 
 ```c#
 /// <summary>
@@ -419,9 +419,9 @@ Algorithms and data structures.
 
 The most used design patterns:
 
-- Behavioral: [Command](https://github.com/FronkonGames/GameWork-Foundation/tree/main/Runtime/Patterns/Behavioral/Command), [Observer](https://github.com/FronkonGames/GameWork-Foundation/tree/main/Runtime/Patterns/Behavioral/Observer), [Strategy](https://github.com/FronkonGames/GameWork-Foundation/tree/main/Runtime/Patterns/Behavioral/Strategy), [Visitor](https://github.com/FronkonGames/GameWork-Foundation/tree/main/Runtime/Patterns/Behavioral/Visitor).
-- Creational: [Singleton](https://github.com/FronkonGames/GameWork-Foundation/tree/main/Runtime/Patterns/Creational/Singleton).
-- Structural: [Decorator](https://github.com/FronkonGames/GameWork-Foundation/tree/main/Runtime/Patterns/Structural/Decorator).
+- Behavioral: [Command](./Runtime/Patterns/Behavioral/Command), [Observer](./Runtime/Patterns/Behavioral/Observer), [Strategy](./Runtime/Patterns/Behavioral/Strategy), [Visitor](./Runtime/Patterns/Behavioral/Visitor).
+- Creational: [Singleton](./Runtime/Patterns/Creational/Singleton).
+- Structural: [Decorator](./Runtime/Patterns/Structural/Decorator).
 
 All using generics.
 

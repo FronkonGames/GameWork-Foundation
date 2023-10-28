@@ -56,7 +56,7 @@ namespace FronkonGames.GameWork.Foundation
   /// <summary> Vertical scope group. </summary>
   public class VerticalGroup : GUI.Scope
   {
-    public Rect Rect;
+    private Rect rect;
 
     private readonly bool disabled;
 
@@ -71,7 +71,7 @@ namespace FronkonGames.GameWork.Foundation
     public VerticalGroup(bool disabled, GUIStyle style, params GUILayoutOption[] options)
     {
       this.disabled = disabled;
-      Rect = EditorGUILayout.BeginVertical(style, options);
+      rect = EditorGUILayout.BeginVertical(style, options);
 
       if (this.disabled == true)
         EditorGUI.BeginDisabledGroup(disabled);

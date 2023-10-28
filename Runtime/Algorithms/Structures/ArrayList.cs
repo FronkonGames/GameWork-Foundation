@@ -127,7 +127,7 @@ namespace FronkonGames.GameWork.Foundation
       if (items is null)
         Log.ExceptionArgumentNull("Null items.");
 #endif
-      int count = items.Count();
+      int count = items != null ? items.Count() : 0;
       if (size + count > MaxArrayCapacity)
         throw new OverflowException();
 
@@ -311,7 +311,7 @@ namespace FronkonGames.GameWork.Foundation
       {
         for (int i = 0; i < size; ++i)
         {
-          if (comparer.Equals(data[i], item))
+          if (comparer != null && comparer.Equals(data[i], item) == true)
             return true;
         }
       }

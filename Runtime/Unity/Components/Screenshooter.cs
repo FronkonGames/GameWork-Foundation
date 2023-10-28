@@ -102,8 +102,9 @@ namespace FronkonGames.GameWork.Foundation
         switch (encoder)
         {
           case Encoders.JPG: encoded = ImageConversion.EncodeNativeArrayToJPG(buffer, flip.graphicsFormat, (uint)flip.width, (uint)flip.height); path += ".jpg"; break;
-          case Encoders.PNG: encoded = ImageConversion.EncodeNativeArrayToPNG(buffer, flip.graphicsFormat, (uint)flip.width, (uint)flip.height); path += ".png"; break;
           case Encoders.TGA: encoded = ImageConversion.EncodeNativeArrayToTGA(buffer, flip.graphicsFormat, (uint)flip.width, (uint)flip.height); path += ".tga"; break;
+          default:
+          case Encoders.PNG: encoded = ImageConversion.EncodeNativeArrayToPNG(buffer, flip.graphicsFormat, (uint)flip.width, (uint)flip.height); path += ".png"; break;
         }
 
         if (Application.isEditor == true)

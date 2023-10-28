@@ -16,14 +16,13 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 using System;
 using Unity.Profiling;
-using UnityEngine.Profiling;
 
 namespace FronkonGames.GameWork.Foundation
 {
   /// <summary> Profiler marker block. </summary>
   public class MarkerBlock : IDisposable
   {
-    private ProfilerMarker marker;
+    private readonly ProfilerMarker marker;
 
     public MarkerBlock(ProfilerCategory category, string title)
     {
