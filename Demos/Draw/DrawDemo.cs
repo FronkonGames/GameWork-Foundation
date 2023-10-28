@@ -61,8 +61,8 @@ public sealed class DrawDemo : MonoBehaviour
     DebugDraw.Diamond(new Vector3(0.0f, 0.5f, 0.0f));
     DebugDraw.Cube(new Vector3(0.0f, 0.5f, 0.0f), 1.0f);
 
-    DebugDraw.SolidCircle(new Vector3(0.0f, 0.5f, 0.0f), 0.2f, null, player.transform.rotation);
-    DebugDraw.Circle(new Vector3(0.0f, 0.5f, 0.0f), 0.21f, null, player.transform.rotation);
+    DebugDraw.SolidCircle(new Vector3(0.0f, 0.5f, 0.0f), 0.2f, Settings.Draw.CircleColor, player.transform.rotation);
+    DebugDraw.Circle(new Vector3(0.0f, 0.5f, 0.0f), 0.21f, Settings.Draw.CircleColor, player.transform.rotation);
     DebugDraw.Cone(new Vector3(0.0f, 1.0f, 0.0f), Quaternion.Euler(-90.0f, 0.0f, 0.0f), arcAngle / 10.0f);
 
     points.Draw(0.1f, Color.cyan);

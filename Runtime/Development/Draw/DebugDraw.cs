@@ -188,13 +188,12 @@ namespace FronkonGames.GameWork.Foundation
     /// <param name="center">Center</param>
     /// <param name="radius">Radius</param>
     /// <param name="color">Color</param>
-    /// <param name="rotation">Rotation</param>
     [Conditional("UNITY_EDITOR")]
-    public static void Circle(Vector3 center, float radius, Color? color = null, Quaternion? rotation = null) =>
+    public static void Circle(Vector3 center, float radius, Color? color = null) =>
       ChangeDrawHandle(new CircleHandle
       {
         center = center,
-        normal = rotation == null ? Vector3.up : (Quaternion)rotation * Vector3.forward,
+        normal = Vector3.up,
         radius = radius,
         color = color ?? Settings.Draw.CircleColor
       });
@@ -204,15 +203,31 @@ namespace FronkonGames.GameWork.Foundation
     /// <param name="center">Center</param>
     /// <param name="radius">Radius</param>
     /// <param name="color">Color</param>
+    /// <param name="rotation">Rotation</param>
+    [Conditional("UNITY_EDITOR")]
+    public static void Circle(Vector3 center, float radius, Color color, Quaternion? rotation = null) =>
+      ChangeDrawHandle(new CircleHandle
+      {
+        center = center,
+        normal = rotation == null ? Vector3.up : (Quaternion)rotation * Vector3.forward,
+        radius = radius,
+        color = color
+      });
+
+    /// <summary> Draw a wire circle. </summary>
+    /// <remarks>Only available in the Editor</remarks>
+    /// <param name="center">Center</param>
+    /// <param name="radius">Radius</param>
+    /// <param name="color">Color</param>
     /// <param name="normal">Normal</param>
     [Conditional("UNITY_EDITOR")]
-    public static void Circle(Vector3 center, float radius, Color? color = null, Vector3? normal = null) =>
+    public static void Circle(Vector3 center, float radius, Color color, Vector3? normal = null) =>
       ChangeDrawHandle(new CircleHandle
       {
         center = center,
         normal = normal ?? Vector3.up,
         radius = radius,
-        color = color ?? Settings.Draw.CircleColor
+        color = color
       });
 
     /// <summary> Draw a solid circle. </summary>

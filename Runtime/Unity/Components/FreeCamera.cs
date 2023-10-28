@@ -63,6 +63,7 @@ namespace FronkonGames.GameWork.Foundation
 
     private void Start()
     {
+      currentSpeed = Vector3.zero;
       currentRotation = transform.rotation.eulerAngles;
       speed = movementSpeed;
     }

@@ -49,14 +49,7 @@ namespace FronkonGames.GameWork.Foundation
       if (fieldInfo != null)
       {
         GUIContent label = GetFieldLabel(fieldName, fieldInfo);
-
-        if (fieldInfo.HasAttribute<RangeAttribute>() == true)
-        {
-          RangeAttribute attribute = fieldInfo.GetAttribute<RangeAttribute>();
-          value = String(label, (string)fieldInfo.GetValue(target), reset);
-        }
-        else
-          value = String(label, (string)fieldInfo.GetValue(target), reset);
+        value = String(label, (string)fieldInfo.GetValue(target), reset);
 
         fieldInfo.SetValue(target, value);
       }

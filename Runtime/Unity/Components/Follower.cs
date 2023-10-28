@@ -107,7 +107,6 @@ namespace FronkonGames.GameWork.Foundation
           switch (movementType)
           {
             case MovementType.Transform:
-            default:
               transform.position = Vector3.MoveTowards(this.transform.position, targetPosition, moveSpeed * Time.deltaTime);
               break;
             case MovementType.MovePosition:
@@ -122,6 +121,7 @@ namespace FronkonGames.GameWork.Foundation
               else
                 transform.position = Vector3.MoveTowards(this.transform.position, targetPosition, moveSpeed * Time.deltaTime);
               break;
+              default: break;
           }
 
           if (lookAtTarget == true)

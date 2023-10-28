@@ -14,7 +14,6 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#define ENABLE_EXCEPTIONS
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -38,10 +37,9 @@ namespace FronkonGames.GameWork.Foundation
     {
       get
       {
-#if ENABLE_EXCEPTIONS
         if (IsEmpty == true)
           Log.ExceptionArgumentOutOfRange("The list is empty.");
-#endif
+
         return data[0];
       }
     }
@@ -51,10 +49,9 @@ namespace FronkonGames.GameWork.Foundation
     {
       get
       {
-#if ENABLE_EXCEPTIONS
         if (IsEmpty == true)
           Log.ExceptionIndexOutOfRange("The list is empty.");
-#endif
+
         return data[Count - 1];
       }
     }
@@ -65,19 +62,16 @@ namespace FronkonGames.GameWork.Foundation
       [MethodImpl(MethodImplOptions.AggressiveInlining)]
       get
       {
-#if ENABLE_EXCEPTIONS
         if (index < 0 || index >= size)
           Log.ExceptionIndexOutOfRange($"Index {index} out of size {size}.");
-#endif
+
         return data[index];
       }
       [MethodImpl(MethodImplOptions.AggressiveInlining)]
       set
       {
-#if ENABLE_EXCEPTIONS
         if (index < 0 || index >= size)
           Log.ExceptionIndexOutOfRange($"Index {index} out of size {size}.");
-#endif
 
         data[index] = value;
       }
@@ -99,10 +93,9 @@ namespace FronkonGames.GameWork.Foundation
     /// <summary> Constructor. </summary>
     public ArrayList(int capacity)
     {
-#if ENABLE_EXCEPTIONS
       if (capacity < 0)
         Log.ExceptionArgumentOutOfRange("Capacity cant be negative.");
-#endif
+
       data = capacity == 0 ? EmptyArray : new T[capacity];
       size = 0;
     }
@@ -123,15 +116,14 @@ namespace FronkonGames.GameWork.Foundation
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void AddRange(IEnumerable<T> items)
     {
-#if ENABLE_EXCEPTIONS
       if (items is null)
         Log.ExceptionArgumentNull("Null items.");
-#endif
+
       int count = items != null ? items.Count() : 0;
       if (size + count > MaxArrayCapacity)
         throw new OverflowException();
 
-      if (count > 0)
+      if (count > 0 && items != null)
       {
         EnsureCapacity(size + count);
 
@@ -146,10 +138,9 @@ namespace FronkonGames.GameWork.Foundation
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void Insert(int index, T item)
     {
-#if ENABLE_EXCEPTIONS
       if (index < 0 || index > size)
         Log.ExceptionIndexOutOfRange($"Index {index} out of range [0, {size - 1}].");
-#endif
+
       if (size == data.Length)
         EnsureCapacity(size + 1);
 
@@ -178,10 +169,9 @@ namespace FronkonGames.GameWork.Foundation
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void RemoveAt(int index)
     {
-#if ENABLE_EXCEPTIONS
       if (index < 0 || index >= size)
         Log.ExceptionIndexOutOfRange($"Index {index} out of range [0, {size - 1}].");
-#endif
+
       size--;
 
       // O(N).
@@ -236,13 +226,12 @@ namespace FronkonGames.GameWork.Foundation
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void Reverse(int start, int count)
     {
-#if ENABLE_EXCEPTIONS
       if (start < 0 || start >= size)
         Log.ExceptionIndexOutOfRange($"Index {start} out of range [0, {size - 1}].");
 
       if (count < 0 || start > (size - count))
         Log.ExceptionIndexOutOfRange($"Index {start} out of range [0, {size - 1}].");
-#endif
+
       // Array.Reverse uses TrySZReverse.
       Array.Reverse(data, start, count);
     }
@@ -252,10 +241,9 @@ namespace FronkonGames.GameWork.Foundation
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void ForEach(Action<T> action)
     {
-#if ENABLE_EXCEPTIONS
       if (action is null)
         Log.ExceptionArgumentNull("Invalid action");
-#endif
+
       for (int i = 0; i < size; ++i)
         action(data[i]);
     }
@@ -295,10 +283,9 @@ namespace FronkonGames.GameWork.Foundation
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public bool Contains(T item, IEqualityComparer<T> comparer)
     {
-#if ENABLE_EXCEPTIONS
       if (comparer is null)
         Log.ExceptionArgumentNull("Null comparer.");
-#endif
+
       if (item is null)
       {
         for (int i = 0; i < size; ++i)
@@ -346,7 +333,6 @@ namespace FronkonGames.GameWork.Foundation
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public int FindIndex(int start, int count, Predicate<T> searchMatch)
     {
-#if ENABLE_EXCEPTIONS
       if (start < 0 || start > size)
         Log.ExceptionIndexOutOfRange($"Invalid start index {start}");
 
@@ -355,7 +341,7 @@ namespace FronkonGames.GameWork.Foundation
 
       if (searchMatch is null)
         Log.ExceptionArgumentNull("Invalid searchMach");
-#endif
+
       int endIndex = start + count;
       for (int index = start; index < endIndex; ++index)
       {
@@ -387,13 +373,12 @@ namespace FronkonGames.GameWork.Foundation
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public int IndexOf(T item, int start, int count)
     {
-#if ENABLE_EXCEPTIONS
       if (start < 0 || (uint)start > (uint)size)
         Log.ExceptionIndexOutOfRange($"Invalid starting index {start}");
 
       if (count < 0 || start > (size - count))
         Log.ExceptionArgumentOutOfRange($"Invalid range [{start} - {start + count}]");
-#endif
+
       return Array.IndexOf(data, item, start, count);
     }
 
@@ -402,10 +387,9 @@ namespace FronkonGames.GameWork.Foundation
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public T Find(Predicate<T> searchMatch)
     {
-#if ENABLE_EXCEPTIONS
       if (searchMatch is null)
         Log.ExceptionArgumentNull("Invalid searchMatch");
-#endif
+
       for (int i = 0; i < size; ++i)
       {
         if (searchMatch(data[i]) == true)
@@ -421,10 +405,9 @@ namespace FronkonGames.GameWork.Foundation
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public ArrayList<T> FindAll(Predicate<T> searchMatch)
     {
-#if ENABLE_EXCEPTIONS
       if (searchMatch is null)
         Log.ExceptionArgumentNull("Invalid searchMatch");
-#endif
+
       ArrayList<T> matchedElements = new();
 
       for (int i = 0; i < size; ++i)
@@ -443,13 +426,12 @@ namespace FronkonGames.GameWork.Foundation
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public ArrayList<T> GetRange(int start, int count)
     {
-#if ENABLE_EXCEPTIONS
       if (start < 0 || (uint)start > (uint)size)
         Log.ExceptionIndexOutOfRange($"Invalid starting index {start}");
 
       if (count < 0 || start > (size - count))
         Log.ExceptionArgumentOutOfRange($"Invalid range [{start} - {start + count}]");
-#endif
+
       ArrayList<T> newArrayList = new(count);
       Array.Copy(data, start, newArrayList.data, 0, count);
       newArrayList.size = count;
@@ -519,20 +501,7 @@ namespace FronkonGames.GameWork.Foundation
     private void ResizeCapacity(int newCapacity)
     {
       if (newCapacity != data.Length && newCapacity > size)
-      {
-#if ENABLE_EXCEPTIONS
-        try
-        {
-          Array.Resize<T>(ref data, newCapacity);
-        }
-        catch
-        {
-          throw;
-        }
-#else
         Array.Resize<T>(ref data, newCapacity);
-#endif
-      }
     }
 
     public IEnumerator<T> GetEnumerator()

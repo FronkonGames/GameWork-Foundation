@@ -31,7 +31,7 @@ namespace FronkonGames.GameWork.Foundation
     public static T Instance => Lazy.Value;
 
     /// <summary> Instance created? </summary>
-    public static bool IsCreated => lazy?.IsValueCreated == true;
+    public static bool IsCreated => lazy != null && lazy.IsValueCreated == true;
 
     private static Lazy<T> Lazy
     {
