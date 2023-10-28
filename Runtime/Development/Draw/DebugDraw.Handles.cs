@@ -14,7 +14,6 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 using System;
 using UnityEngine;
 
@@ -27,6 +26,8 @@ namespace FronkonGames.GameWork.Foundation
     private interface IHandleDraw
     {
       void Draw();
+
+      void DrawGL();
     }
 
     private struct LineHandle : IHandleDraw
@@ -46,6 +47,18 @@ namespace FronkonGames.GameWork.Foundation
           UnityEditor.Handles.DrawLine(a, b, Settings.Draw.LineThickness);
         else
           UnityEditor.Handles.DrawDottedLine(a, b, Settings.Draw.LineGapSize);
+#else
+        throw new NotSupportedException("Only available in Editor version.");
+#endif
+      }
+
+      public void DrawGL()
+      {
+#if UNITY_EDITOR
+        //wireMaterial.color = color;
+        GL.Color(color);
+        GL.Vertex(a);
+        GL.Vertex(b);
 #else
         throw new NotSupportedException("Only available in Editor version.");
 #endif
@@ -70,6 +83,14 @@ namespace FronkonGames.GameWork.Foundation
           UnityEditor.Handles.DrawSolidDisc(center, normal, radius);
         else
           UnityEditor.Handles.DrawWireDisc(center, normal, radius);
+#else
+        throw new NotSupportedException("Only available in Editor version.");
+#endif
+      }
+
+      public void DrawGL()
+      {
+#if UNITY_EDITOR
 #else
         throw new NotSupportedException("Only available in Editor version.");
 #endif
@@ -100,6 +121,14 @@ namespace FronkonGames.GameWork.Foundation
         throw new NotSupportedException("Only available in Editor version.");
 #endif
       }
+
+      public void DrawGL()
+      {
+#if UNITY_EDITOR
+#else
+        throw new NotSupportedException("Only available in Editor version.");
+#endif
+      }
     }
 
     private struct SphereHandle : IHandleDraw
@@ -119,6 +148,14 @@ namespace FronkonGames.GameWork.Foundation
         throw new NotSupportedException("Only available in Editor version.");
 #endif
       }
+
+      public void DrawGL()
+      {
+#if UNITY_EDITOR
+#else
+        throw new NotSupportedException("Only available in Editor version.");
+#endif
+      }
     }
 
     private struct CubeHandle : IHandleDraw
@@ -133,6 +170,14 @@ namespace FronkonGames.GameWork.Foundation
         UnityEditor.Handles.color = color;
         UnityEditor.Handles.color = UnityEditor.Handles.color.SetA(Settings.Draw.Transparency);
         UnityEditor.Handles.DrawWireCube(center, size);
+#else
+        throw new NotSupportedException("Only available in Editor version.");
+#endif
+      }
+
+      public void DrawGL()
+      {
+#if UNITY_EDITOR
 #else
         throw new NotSupportedException("Only available in Editor version.");
 #endif
@@ -162,6 +207,14 @@ namespace FronkonGames.GameWork.Foundation
           GUI.Label(screenPos, guiContent, TextStyle);
           UnityEditor.Handles.EndGUI();
         }
+#else
+        throw new NotSupportedException("Only available in Editor version.");
+#endif
+      }
+
+      public void DrawGL()
+      {
+#if UNITY_EDITOR
 #else
         throw new NotSupportedException("Only available in Editor version.");
 #endif

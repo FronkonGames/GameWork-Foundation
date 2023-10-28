@@ -27,11 +27,12 @@ These are the foundations on which [Game:Work Core](https://github.com/FronkonGa
 - Multiple utilities to improve your developments: [checkers](https://github.com/FronkonGames/GameWork-Foundation/tree/main/Runtime/Development/Check), [debug draw](https://github.com/FronkonGames/GameWork-Foundation/tree/main/Runtime/Development/Draw), [profiling](https://github.com/FronkonGames/GameWork-Foundation/tree/main/Runtime/Development/Profiling) and a console with custom commands.
 - A lot of .Net and Unity types [extensions](https://github.com/FronkonGames/GameWork-Foundation/tree/main/Runtime/Extensions).
 - The most used [design patterns](https://github.com/FronkonGames/GameWork-Foundation/tree/main/Runtime/Patterns), in generic versions so that they are easy to adapt to your needs.
+- Utilities to speed up prototyping time.
 - Commented code with test units.
 
 ## 🔧 Requisites
 
-- Unity 2021.3 or higher.
+- Unity 2022.3 or higher.
 - Test Framework 1.1.31 or higher.
 
 ## ⚙️ Installation
@@ -89,7 +90,7 @@ The functionality is divided into folders, this is its structure:
 |   |   |\_Creational.............. Creation patterns.
 |   |    \_Structural.............. Structure patterns.
 |    \_Unity....................... Utilities for Unity.
-|       |\_MonoBehaviours.......... MonoBehaviours utilities.
+|       |\_Components.............. Useful components.
 |        \_Utils................... Misc.
 |
  \_Editor.......................... Editor utilities.
@@ -336,6 +337,22 @@ if (hits > 0)
   playerHits.Draw(playerRay);
 ```
 
+### Components
+
+Useful components to support the development of prototypes:
+
+<p align="center"><img src="Media/development.components.gif"/></p>
+
+* [Free Camera](./Runtime/Unity/Components/FreeCamera.cs): a simple free camera.
+* [Screenshooter](./Runtime/Unity/Components/Screenshooter.cs): asynchronous screen capture.
+* [FPS Counter](./Runtime/Unity/Components/FPSCounter.cs): calculates the SPF and displays it.
+* [Collision Test](./Runtime/Unity/Components/CollisionTest.cs): triggers events when collisions are detected.
+* [Trigger Test](./Runtime/Unity/Components/TriggerTest.cs): triggers events.
+* [Face To](./Runtime/Unity/Components/FaceTo.cs): orients the object so that it faces a target.
+* [Follower](./Runtime/Unity/Components/Follower.cs): follow a target.
+* [Mover](./Runtime/Unity/Components/Mover.cs): moves object linearly.
+* [Rotator](./Runtime/Unity/Components/Rotator.cs): rotates an object.
+
 ### Development Console
 
 A developer console for executing commands.
@@ -396,7 +413,7 @@ Output the message: "**Task 'Some hungry code' consume 4.00 kb**".
 
 Algorithms and data structures.
 
-- Structures: ArrayList.
+- Structures: [ArrayList](./Runtime/Algorithms/Structures/ArrayList.cs).
 
 ### Patterns
 

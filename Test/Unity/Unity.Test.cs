@@ -14,7 +14,6 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 using System;
 using System.Collections;
 using NUnit.Framework;
@@ -22,9 +21,7 @@ using UnityEngine.TestTools;
 using FronkonGames.GameWork.Foundation;
 using UnityEngine;
 
-/// <summary>
-/// Unity utils tests.
-/// </summary>
+/// <summary> Unity utils tests. </summary>
 public class UnityTests
 {
   private const string BoolKey = "PlayerPrefsUtilsTest.Bool";
@@ -37,9 +34,7 @@ public class UnityTests
   private const string DateTimeKey = "PlayerPrefsUtilsTest.DateTime";
   private const string QuaternionKey = "PlayerPrefsUtilsTest.Quaternion";
 
-  /// <summary>
-  /// PlayerPrefsUtils test.
-  /// </summary>
+  /// <summary> PlayerPrefsUtils test. </summary>
   [UnityTest]
   public IEnumerator PlayerPrefs()
   {
@@ -85,6 +80,19 @@ public class UnityTests
     
     RemoveAllTestKeys();
     
+    yield return null;
+  }
+
+  /// <summary> CommandLineUtils test. </summary>
+  [UnityTest]
+  public IEnumerator CommandLine()
+  {
+    Assert.AreEqual(CommandLineUtils.GetArguments().Length, 7);
+    Assert.IsTrue(CommandLineUtils.HasArgument("noparams"));
+    Assert.IsFalse(CommandLineUtils.HasArgument("unknown"));
+    Assert.AreEqual(CommandLineUtils.GetValue("string"), "text");
+    Assert.AreEqual(CommandLineUtils.GetValue("unknown", "default"), "default");
+
     yield return null;
   }
 

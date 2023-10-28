@@ -17,6 +17,8 @@
 #if UNITY_EDITOR
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEditor;
 
 namespace FronkonGames.GameWork.Foundation
 {
@@ -49,12 +51,15 @@ namespace FronkonGames.GameWork.Foundation
     {
       handles = new(Settings.Draw.Capacity);
 
-      UnityEditor.SceneView.duringSceneGui += (_) =>
+      SceneView.duringSceneGui += (_) =>
       {
-        using (new UnityEditor.Handles.DrawingScope())
+        using (new Handles.DrawingScope())
         {
-          for (int i = 0; i < handles.Count; ++i)
-            handles[i].Draw();
+          if (Settings.Draw.DrawInSceneView == true && Event.current.type == EventType.Repaint)
+          {
+            for (int i = 0; i < handles.Count; ++i)
+              handles[i].Draw();
+          }
         }
 
         CheckFrameChange();
@@ -72,7 +77,7 @@ namespace FronkonGames.GameWork.Foundation
       }
     }
 
-    private static void DrawHandle(IHandleDraw handle)
+    private static void ChangeDrawHandle(IHandleDraw handle)
     {
       CheckFrameChange();
 

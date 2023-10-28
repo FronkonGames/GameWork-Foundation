@@ -14,69 +14,105 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-using System.Collections.Generic;
-using FronkonGames.GameWork.Foundation;
 using UnityEngine;
+using UnityEngine.UI;
 
-namespace FronkonGames.GameWork.Core
+namespace FronkonGames.GameWork.Foundation
 {
   /// <summary> Calculate FPS. </summary>
-  public sealed class CalculateFPS : BaseMonoBehaviour
+  public sealed class FPSCounter : BaseMonoBehaviour
   {
-    /// <summary> Last FPS. </summary>
+    /// <summary> Current FPS. </summary>
     /// <value>FPS.</value>
-    public float CurrentFPS { get; private set; }
+    public int CurrentFPS { get; private set; }
 
     /// <summary> Average FPS. </summary>
     /// <value>FPS.</value>
-    public float AverageFPS { get; private set; }
+    public int AverageFPS { get; private set; }
+
+    /// <summary> Time the last frame lasted, in milliseconds. </summary>
+    /// <value>ms.</value>
+    public int FrameTime { get; private set; }
+
+    [SerializeField]
+    private Text label;
 
     private int frames;
     private float deltaTime;
 
-    private readonly Queue<float> history = new(Settings.FPS.HistoryFrames);
-    private IEnumerator<float> historyEnumerator;
+    private float waitToStart;
+
+    private readonly int[] history = new int[Settings.FPS.HistoryFrames];
+    private int historyIndex;
 
     /// <summary> Reset the counters. </summary>
-    public void Reset()
+    public void ResetCounters()
     {
-      CurrentFPS = 0.0f;
-      AverageFPS = 0.0f;
+      CurrentFPS = 0;
+      AverageFPS = 0;
+      FrameTime = 0;
       frames = 0;
       deltaTime = 0.0f;
+      waitToStart = 0.0f;
 
-      history.Clear();
-      historyEnumerator = history.GetEnumerator();
+      history.Fill(-1);
+      historyIndex = 0;
     }
 
     private void OnEnable()
     {
-      Reset();
+      ResetCounters();
+
+      waitToStart = Settings.FPS.WaitingToStartCounting;
     }
 
     private void Update()
     {
+      if (waitToStart > 0.0f)
+      {
+        waitToStart -= Time.unscaledDeltaTime;
+
+        return;
+      }
+
       ++frames;
       deltaTime += Time.unscaledDeltaTime;
 
       float lapse = 1.0f / Settings.FPS.UpdatePerSecond;
       if (deltaTime > lapse)
       {
-        CurrentFPS = frames / deltaTime;
+        CurrentFPS = Mathf.CeilToInt(frames / deltaTime);
         frames = 0;
         deltaTime -= lapse;
 
-        int count = history.Count;
-        if (count >= Settings.FPS.HistoryFrames)
-          history.Dequeue();
+        if (historyIndex < Settings.FPS.HistoryFrames)
+          history[historyIndex++] = CurrentFPS;
+        else
+        {
+          historyIndex = 0;
+          history[historyIndex] = CurrentFPS;
+        }
 
-        history.Enqueue(CurrentFPS);
-
-        float total = 0.0f;
-        while (historyEnumerator.MoveNext() == true)
-          total += historyEnumerator.Current;
+        int total = 0, count = 0;
+        for (int i = 0; i < Settings.FPS.HistoryFrames; ++i)
+        {
+          if (history[i] > 0)
+          {
+            total += history[i];
+            count++;
+          }
+          else
+            break;
+        }
 
         AverageFPS = total / count;
+        FrameTime = Mathf.CeilToInt(1000.0f * Time.deltaTime);
+
+        if (label != null)
+        {
+          label.color = CurrentFPS < Settings.FPS.BadFPS ? Settings.FPS.BadColor : CurrentFPS < Settings.FPS.WarningFPS ? Settings.FPS.WarningColor : Settings.FPS.GoodColor;
+          label.text = $"{CurrentFPS:000}FPS {AverageFPS:000}AVG {FrameTime:00}ms";
+        }
       }
     }
   }

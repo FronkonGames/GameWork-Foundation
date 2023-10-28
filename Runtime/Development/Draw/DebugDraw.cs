@@ -61,7 +61,7 @@ namespace FronkonGames.GameWork.Foundation
     /// <param name="rotation">Rotation</param>
     [Conditional("UNITY_EDITOR")]
     private static void Line(Vector3 a, Vector3 b, Color? color = null, Quaternion? rotation = null) =>
-      DrawHandle(new LineHandle
+      ChangeDrawHandle(new LineHandle
       {
         a = rotation == null ? a : (Quaternion)rotation * a,
         b = rotation == null ? b : (Quaternion)rotation * b,
@@ -91,7 +91,7 @@ namespace FronkonGames.GameWork.Foundation
     /// <param name="rotation">Rotation</param>
     [Conditional("UNITY_EDITOR")]
     public static void DottedLine(Vector3 a, Vector3 b, Color? color = null, Quaternion? rotation = null) =>
-      DrawHandle(new LineHandle
+      ChangeDrawHandle(new LineHandle
       {
         a = rotation == null ? a : (Quaternion)rotation * a,
         b = rotation == null ? b : (Quaternion)rotation * b,
@@ -173,11 +173,25 @@ namespace FronkonGames.GameWork.Foundation
     /// <remarks>Only available in the Editor</remarks>
     /// <param name="center">Center</param>
     /// <param name="radius">Radius</param>
+    [Conditional("UNITY_EDITOR")]
+    public static void Circle(Vector3 center, float radius) =>
+      ChangeDrawHandle(new CircleHandle
+      {
+        center = center,
+        normal = Vector3.up,
+        radius = radius,
+        color = Settings.Draw.CircleColor
+      });
+
+    /// <summary> Draw a wire circle. </summary>
+    /// <remarks>Only available in the Editor</remarks>
+    /// <param name="center">Center</param>
+    /// <param name="radius">Radius</param>
     /// <param name="color">Color</param>
     /// <param name="rotation">Rotation</param>
     [Conditional("UNITY_EDITOR")]
     public static void Circle(Vector3 center, float radius, Color? color = null, Quaternion? rotation = null) =>
-      DrawHandle(new CircleHandle
+      ChangeDrawHandle(new CircleHandle
       {
         center = center,
         normal = rotation == null ? Vector3.up : (Quaternion)rotation * Vector3.forward,
@@ -193,7 +207,7 @@ namespace FronkonGames.GameWork.Foundation
     /// <param name="normal">Normal</param>
     [Conditional("UNITY_EDITOR")]
     public static void Circle(Vector3 center, float radius, Color? color = null, Vector3? normal = null) =>
-      DrawHandle(new CircleHandle
+      ChangeDrawHandle(new CircleHandle
       {
         center = center,
         normal = normal ?? Vector3.up,
@@ -209,7 +223,7 @@ namespace FronkonGames.GameWork.Foundation
     /// <param name="rotation">Rotation</param>
     [Conditional("UNITY_EDITOR")]
     public static void SolidCircle(Vector3 center, float radius, Color? color = null, Quaternion? rotation = null) =>
-      DrawHandle(new CircleHandle
+      ChangeDrawHandle(new CircleHandle
       {
         center = center,
         normal = rotation == null ? Vector3.up : (Quaternion)rotation * Vector3.forward,
@@ -226,7 +240,7 @@ namespace FronkonGames.GameWork.Foundation
     /// <param name="normal">Normal</param>
     [Conditional("UNITY_EDITOR")]
     public static void SolidCircle(Vector3 center, float radius, Color? color = null, Vector3? normal = null) =>
-      DrawHandle(new CircleHandle
+      ChangeDrawHandle(new CircleHandle
       {
         center = center,
         normal = normal ?? Vector3.up,
@@ -257,7 +271,7 @@ namespace FronkonGames.GameWork.Foundation
     /// <param name="rotation">Rotation</param>
     [Conditional("UNITY_EDITOR")]
     public static void SolidSphere(Vector3 center, float radius, Color? color = null, Quaternion? rotation = null) =>
-      DrawHandle(new SphereHandle
+      ChangeDrawHandle(new SphereHandle
       {
         center = center,
         radius = radius,
@@ -274,7 +288,7 @@ namespace FronkonGames.GameWork.Foundation
     /// <param name="color">Color</param>
     [Conditional("UNITY_EDITOR")]
     public static void Arc(Vector3 center, Quaternion rotation, float radius, float angle, Color? color = null) =>
-      DrawHandle(new ArcHandle
+      ChangeDrawHandle(new ArcHandle
       {
         center = center,
         normal = rotation * Vector3.up,
@@ -293,7 +307,7 @@ namespace FronkonGames.GameWork.Foundation
     /// <param name="color">Color</param>
     [Conditional("UNITY_EDITOR")]
     public static void SolidArc(Vector3 center, Quaternion rotation, float radius, float angle, Color? color = null) =>
-      DrawHandle(new ArcHandle
+      ChangeDrawHandle(new ArcHandle
       {
         center = center,
         normal = rotation * Vector3.up,
@@ -311,7 +325,7 @@ namespace FronkonGames.GameWork.Foundation
     /// <param name="color">Color</param>
     [Conditional("UNITY_EDITOR")]
     public static void Cube(Vector3 center, Vector3 size, Color? color = null) =>
-      DrawHandle(new CubeHandle
+      ChangeDrawHandle(new CubeHandle
       {
         center = center,
         size = size,
@@ -443,7 +457,7 @@ namespace FronkonGames.GameWork.Foundation
     /// <param name="color">Color</param>
     [Conditional("UNITY_EDITOR")]
     public static void Text(Vector3 position, string text, Color? color = null) =>
-      DrawHandle(new TextHandle
+      ChangeDrawHandle(new TextHandle
       {
         position = position,
         text = text,

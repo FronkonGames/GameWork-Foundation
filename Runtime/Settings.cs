@@ -35,13 +35,23 @@ namespace FronkonGames.GameWork.Foundation
     /// <summary> FPS calculation. </summary>
     public static class FPS
     {
+      public static float WaitingToStartCounting = 2.0f;
       public static int UpdatePerSecond = 2;
       public static int HistoryFrames = 100;
+
+      public static int WarningFPS = 30;
+      public static int BadFPS = 20;
+
+      public static Color GoodColor = new(0.2f, 0.8f, 0.2f);
+      public static Color WarningColor = new(0.4f, 0.4f, 0.2f);
+      public static Color BadColor = new(0.8f, 0.2f, 0.2f);
     }
 
     /// <summary> Debug Draw. </summary>
     public static class Draw
     {
+      public static bool DrawInSceneView = true;
+
       public static int Capacity = 500;
       public static float Transparency = 0.7f;
       public static float PointSize = 0.5f;
