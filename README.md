@@ -341,7 +341,7 @@ if (hits > 0)
 
 Useful components to support the development of prototypes:
 
-<p align="center"><video src="Media/development.components.gif"/></p>
+<p align="center"><img src="Media/development.components.gif"/></p>
 
 * [First person](./Runtime/Unity/Components/FirstPersonCamera.cs), [third person](./Runtime/Unity/Components/ThirdPersonCamera.cs) and [free](./Runtime/Unity/Components/FreeCamera.cs) cameras.
 * [Screenshooter](./Runtime/Unity/Components/Screenshooter.cs): asynchronous screen capture.
