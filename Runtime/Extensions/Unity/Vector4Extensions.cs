@@ -74,6 +74,14 @@ namespace FronkonGames.GameWork.Foundation
                                                             Mathf.Round(self.z),
                                                             Mathf.Round(self.w));
 
+    /// <summary> Apply the modulo operator. </summary>
+    /// <param name="self">Value.</param>
+    /// <returns>A new vector.</returns>
+    public static Vector4 Remainder(this Vector4 self, Vector4 modulus) => new(self.x % modulus.x,
+                                                                               self.y % modulus.y,
+                                                                               self.z % modulus.z,
+                                                                               self.w % modulus.w);
+
     /// <summary> Vector4 to string. </summary>
     /// <param name="self">Value</param>
     /// <returns>string</returns>

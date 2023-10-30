@@ -19,7 +19,7 @@ using UnityEngine;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary> Free camera. </summary>
+  /// <summary> Simple free camera. </summary>
   [RequireComponent(typeof(Camera))]
   public class FreeCamera : BaseMonoBehaviour
   {
@@ -37,6 +37,9 @@ namespace FronkonGames.GameWork.Foundation
 
     [SerializeField]
     private float turboMultiply = 5.0f;
+
+    [SerializeField]
+    private bool cursorLock = true;
 
     private Vector3 currentSpeed;
     private Vector3 currentRotation;
@@ -64,9 +67,10 @@ namespace FronkonGames.GameWork.Foundation
     private void Start()
     {
       currentSpeed = Vector3.zero;
-      currentRotation = transform.rotation.eulerAngles;
       speed = movementSpeed;
     }
+
+    private void OnEnable() => currentRotation = this.transform.rotation.eulerAngles;
 
     private void Update()
     {
@@ -75,7 +79,6 @@ namespace FronkonGames.GameWork.Foundation
 
       currentTurbo = Mathf.Lerp(currentTurbo, Input.GetKey(KeyCode.LeftShift) == true ? turboMultiply : 1.0f, Time.smoothDeltaTime * 5.0f);
 
-      forward *= currentTurbo;
       right *= currentTurbo;
 
       if (Input.GetMouseButton(1) == true)
@@ -112,15 +115,21 @@ namespace FronkonGames.GameWork.Foundation
 
     public void FixedUpdate()
     {
-      if (Input.GetMouseButton(1) == true)
+      if (cursorLock == true)
       {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-      }
-      else
-      {
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+        if (Input.GetMouseButton(1) == true)
+        {
+          if (Application.isFocused == true)
+          {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+          }
+        }
+        else
+        {
+          Cursor.lockState = CursorLockMode.None;
+          Cursor.visible = true;
+        }
       }
     }
   }

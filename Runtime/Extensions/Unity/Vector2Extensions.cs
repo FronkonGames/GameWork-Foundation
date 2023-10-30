@@ -59,6 +59,11 @@ namespace FronkonGames.GameWork.Foundation
     /// <returns>A new rounded vector.</returns>
     public static Vector2 Rounded(this Vector2 self) => new(Mathf.Round(self.x), Mathf.Round(self.y));
 
+    /// <summary> Apply the modulo operator. </summary>
+    /// <param name="self">Value.</param>
+    /// <returns>A new vector.</returns>
+    public static Vector2 Remainder(this Vector2 self, Vector2 modulus) => new(self.x % modulus.x, self.y % modulus.y);
+
     /// <summary> Vector2 to string. </summary>
     /// <param name="self">Value</param>
     /// <returns>string</returns>

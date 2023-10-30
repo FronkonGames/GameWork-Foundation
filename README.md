@@ -341,9 +341,9 @@ if (hits > 0)
 
 Useful components to support the development of prototypes:
 
-<p align="center"><img src="Media/development.components.gif"/></p>
+<p align="center">https://github.com/FronkonGames/GameWork-Foundation/raw/main/Media/development.components.mp4</p>
 
-* [Free Camera](./Runtime/Unity/Components/FreeCamera.cs): a simple free camera.
+* [First person](./Runtime/Unity/Components/FirstPersonCamera.cs), [third person](./Runtime/Unity/Components/ThirdPersonCamera.cs) and [free](./Runtime/Unity/Components/FreeCamera.cs) cameras.
 * [Screenshooter](./Runtime/Unity/Components/Screenshooter.cs): asynchronous screen capture.
 * [FPS Counter](./Runtime/Unity/Components/FPSCounter.cs): calculates the SPF and displays it.
 * [Collision Test](./Runtime/Unity/Components/CollisionTest.cs): triggers events when collisions are detected.
@@ -352,6 +352,7 @@ Useful components to support the development of prototypes:
 * [Follower](./Runtime/Unity/Components/Follower.cs): follow a target.
 * [Mover](./Runtime/Unity/Components/Mover.cs): moves object linearly.
 * [Rotator](./Runtime/Unity/Components/Rotator.cs): rotates an object.
+* [Material scroller](./Runtime/Unity/Components/MaterialScroller.cs): moves a texture at a linear speed.
 
 ### Development Console
 

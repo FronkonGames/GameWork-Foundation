@@ -1,6 +1,6 @@
 {
   "name": "com.frokongames.gamework.foundation",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "displayName": "Game:Work Foundation",
   "decription": "Architecture-agnostic code and tools to make Unity based games.",
   "references": [ ],

@@ -73,6 +73,20 @@ namespace FronkonGames.GameWork.Foundation
     [SerializeField]
     private bool ignoreZ;
 
+    private Vector3 targetPosition;
+    private Vector3 direction;
+
+    private void CheckFollowing(float sqrDistance)
+    {
+      bool following = sqrDistance > (minDistanceToTarget * minDistanceToTarget);
+      if (following != IsFollowing)
+      {
+        IsFollowing = following;
+        if (following == false && rigidbody.velocity.sqrMagnitude > 0.0f)
+          rigidbody.velocity = Vector3.zero;
+      }
+    }
+
     private void Update()
     {
       if (target != null)
@@ -84,45 +98,28 @@ namespace FronkonGames.GameWork.Foundation
         {
           DebugDraw.Circle(this.transform.position, minDistanceToTarget);
 
-          IsFollowing = sqrDistance > (minDistanceToTarget * minDistanceToTarget);
+          CheckFollowing(sqrDistance);
         }
 
         if (maxDistanceToTarget > 0.0f)
         {
           DebugDraw.Circle(this.transform.position, maxDistanceToTarget);
 
-          IsFollowing = IsFollowing == true && sqrDistance < (maxDistanceToTarget * maxDistanceToTarget);
+          CheckFollowing(sqrDistance);
         }
 
         if (IsFollowing == true)
         {
-          Vector3 targetPosition = target.transform.position;
+          targetPosition = target.transform.position;
           targetPosition.x = ignoreX == true ? this.transform.position.x : targetPosition.x;
           targetPosition.y = ignoreY == true ? this.transform.position.y : targetPosition.y;
           targetPosition.z = ignoreZ == true ? this.transform.position.z : targetPosition.z;
 
-          Vector3 direction = (targetPosition - this.transform.position).normalized;
+          direction = (targetPosition - this.transform.position).normalized;
           DebugDraw.Arrow(this.transform.position, direction);
 
-          switch (movementType)
-          {
-            case MovementType.Transform:
-              transform.position = Vector3.MoveTowards(this.transform.position, targetPosition, moveSpeed * Time.deltaTime);
-              break;
-            case MovementType.MovePosition:
-              if (rigidbody != null)
-                rigidbody.MovePosition(Vector3.MoveTowards(this.transform.position, targetPosition, moveSpeed * Time.deltaTime));
-              else
-                transform.position = Vector3.MoveTowards(this.transform.position, targetPosition, moveSpeed * Time.deltaTime);
-              break;
-            case MovementType.AddForce:
-              if (rigidbody != null)
-                rigidbody.AddForce(force * Time.deltaTime * direction);
-              else
-                transform.position = Vector3.MoveTowards(this.transform.position, targetPosition, moveSpeed * Time.deltaTime);
-              break;
-              default: break;
-          }
+          if (movementType == MovementType.Transform || rigidbody == null)
+            transform.position = Vector3.MoveTowards(this.transform.position, targetPosition, moveSpeed * Time.deltaTime);
 
           if (lookAtTarget == true)
           {
@@ -132,6 +129,17 @@ namespace FronkonGames.GameWork.Foundation
             transform.rotation = Quaternion.LookRotation(newDirection);
           }
         }
+      }
+    }
+
+    private void FixedUpdate()
+    {
+      if (rigidbody != null && IsFollowing == true)
+      {
+        if (movementType == MovementType.MovePosition)
+          rigidbody.MovePosition(Vector3.MoveTowards(this.transform.position, targetPosition, moveSpeed * Time.deltaTime));
+        else if (movementType == MovementType.AddForce)
+          rigidbody.AddForce(force * Time.deltaTime * direction);
       }
     }
   }

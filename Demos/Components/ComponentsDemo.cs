@@ -15,24 +15,78 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace FronkonGames.GameWork.Foundation
 {
   /// <summary> Components demo. </summary>
   public class ComponentsDemo : BaseMonoBehaviour
   {
-    public void OnMoverExits(GameObject sender, Collider col)
+    [SerializeField]
+    private FreeCamera freeCamera;
+
+    [SerializeField]
+    private ThirdPersonCamera thirdPersonCamera;
+
+    [SerializeField]
+    private FirstPersonCamera firstPersonCamera;
+
+    [SerializeField]
+    private Text switchCamerasButtonText;
+
+    private enum CamerasCycle
     {
-      Mover mover = col.gameObject.GetComponent<Mover>();
-      if (mover != null)
-        mover.Speed *= -1.0f;
+      Free,
+      Orbit,
+      FPS,
     }
 
-    public void OnFollowerCollide(GameObject sender, Collision col)
+    private CamerasCycle currentCamera = CamerasCycle.Free;
+
+    private void OnEnable()
     {
-      Follower follower = col.gameObject.GetComponent<Follower>();
-      if (follower != null)
-        follower.rigidbody.AddForce(-5.0f * col.contacts[0].normal + new Vector3(0.0f, 5.0f, 0.0f), ForceMode.Impulse);
+      switchCamerasButtonText.text = $"Switch cameras ({currentCamera})";
+    }
+
+    public void OnMoverExits(GameObject sender, Collider col)
+    {
+      col.gameObject.transform.forward = -col.gameObject.transform.forward;
+    }
+
+    public void OnPlayerCollide(GameObject sender, Collision col)
+    {
+      if (col.gameObject.TryGetComponent<BaseMonoBehaviour>(out var behaviour) == true)
+      {
+        if (behaviour.rigidbody != null)
+          behaviour.rigidbody.AddForce(-5.0f * col.contacts[0].normal + new Vector3(0.0f, 5.0f, 0.0f), ForceMode.Impulse);
+      }
+    }
+
+    public void SwitchCameras()
+    {
+      switch (currentCamera)
+      {
+        case CamerasCycle.Free:
+          freeCamera.enabled = false;
+          thirdPersonCamera.enabled = true;
+          firstPersonCamera.gameObject.SetActive(false);
+          currentCamera = CamerasCycle.Orbit;
+          break;
+        case CamerasCycle.Orbit:
+          freeCamera.enabled = false;
+          thirdPersonCamera.enabled = false;
+          firstPersonCamera.gameObject.SetActive(true);
+          currentCamera = CamerasCycle.FPS;
+          break;
+        case CamerasCycle.FPS:
+          freeCamera.enabled = true;
+          thirdPersonCamera.enabled = false;
+          firstPersonCamera.gameObject.SetActive(false);
+          currentCamera = CamerasCycle.Free;
+          break;
+      }
+
+      switchCamerasButtonText.text = $"Switch cameras ({currentCamera})";
     }
   }
 }

@@ -15,53 +15,64 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary> Trigger tester. </summary>
-  public class TriggerTest : BaseMonoBehaviour
+  /// <summary> Simple first person camera. </summary>
+  [RequireComponent(typeof(Camera))]
+  public class FirstPersonCamera : BaseMonoBehaviour
   {
     [SerializeField]
-    private LayerMask layerFilter = -1;
+    private float smoothRotation = 10.0f;
 
     [SerializeField]
-    private string nameFilter;
-
-    [Space, SerializeField]
-    private UnityEvent<GameObject, Collider> onTriggerEnter;
-
-    [Space, SerializeField]
-    private UnityEvent<GameObject, Collider> onTriggerStay;
+    private Vector2 mouseSensitivity = Vector2.one;
 
     [SerializeField]
-    private UnityEvent<GameObject, Collider> onTriggerExit;
+    private Vector2 pitchLimits = new(-80.0f, 80.0f);
 
-    private bool PassFilter(GameObject gameObject)
+    [SerializeField]
+    private bool cursorLock = true;
+
+    private Vector2 mouse;
+
+    private void OnEnable()
     {
-      if (string.IsNullOrEmpty(nameFilter) == false && string.Compare(nameFilter, gameObject.name) != 0)
-        return false;
+      mouse = new Vector2(this.transform.rotation.eulerAngles.x, this.transform.rotation.eulerAngles.y);
 
-      return gameObject.layer.IsInLayerMask(layerFilter);
+      this.transform.rotation = Quaternion.Euler(mouse.y, mouse.x, 0.0f);
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void Update()
     {
-      if (PassFilter(other.gameObject) == true)
-        onTriggerEnter?.Invoke(gameObject, other);
-    }
-
-    private void OnTriggerStay(Collider other)
-    {
-      if (PassFilter(other.gameObject) == true)
-        onTriggerStay?.Invoke(gameObject, other);
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-      if (PassFilter(other.gameObject) == true)
+      if (Input.GetMouseButton(1) == true)
       {
-        onTriggerExit?.Invoke(gameObject, other);
+        mouse.x += Input.GetAxis("Mouse X") * mouseSensitivity.x;
+        mouse.y -= Input.GetAxis("Mouse Y") * mouseSensitivity.y;
+
+        mouse.y = mouse.y.Clamp(pitchLimits.x, pitchLimits.y);
+
+        this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.Euler(mouse.y, mouse.x, 0.0f), smoothRotation * Time.deltaTime);
+      }
+    }
+
+    public void FixedUpdate()
+    {
+      if (cursorLock == true)
+      {
+        if (Input.GetMouseButton(1) == true)
+        {
+          if (Application.isFocused == true)
+          {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+          }
+        }
+        else
+        {
+          Cursor.lockState = CursorLockMode.None;
+          Cursor.visible = true;
+        }
       }
     }
   }

@@ -72,6 +72,21 @@ namespace FronkonGames.GameWork.Foundation
     /// <summary> Draw a ray with marks where there are impacts. </summary>
     /// <remarks>Only available in the Editor</remarks>
     /// <param name="self">Ray</param>
+    /// <param name="hit">Ray hit</param>
+    /// <param name="color">Color</param>
+    [Conditional("UNITY_EDITOR")]
+    public static void Draw(this Ray self, RaycastHit hit, Color? color = null)
+    {
+      self.Draw(color);
+
+      Circle(hit.point, Settings.Draw.HitRadius * 0.5f, color ?? Settings.Draw.HitColor, hit.normal);
+      Circle(hit.point, Settings.Draw.HitRadius, color ?? Settings.Draw.HitColor, hit.normal);
+      Line(hit.point, hit.point + (hit.normal * Settings.Draw.HitLength), color ?? Settings.Draw.HitColor);
+    }
+
+    /// <summary> Draw a ray with marks where there are impacts. </summary>
+    /// <remarks>Only available in the Editor</remarks>
+    /// <param name="self">Ray</param>
     /// <param name="hits">Ray hits</param>
     /// <param name="maxHits">Maximum impacts to be drawn (0 = all).</param>
     /// <param name="color">Color</param>

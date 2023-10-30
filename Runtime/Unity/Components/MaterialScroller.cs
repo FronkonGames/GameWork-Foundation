@@ -14,20 +14,46 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-using System.Collections;
-using NUnit.Framework;
-using UnityEngine.TestTools;
-using FronkonGames.GameWork.Foundation;
+using UnityEngine;
 
-/// <summary> Extensions test. </summary>
-public partial class ExtensionsTests
+namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary> Vector3 extensions test. </summary>
-  [UnityTest]
-  public IEnumerator Vector3()
+  /// <summary> Moves a texture at a linear speed. </summary>
+  public class MaterialScroller : BaseMonoBehaviour
   {
-    // @TODO.
-    
-    yield return null;
+    [SerializeField]
+    private Material material;
+
+    [SerializeField]
+    private Vector2 scrollSpeed;
+
+    [SerializeField]
+    private string textureName = "_MainTex";
+
+    private Vector2 textureOffset;
+
+    private void Start()
+    {
+      if (material == null)
+      {
+        Renderer renderer = this.gameObject.GetComponent<Renderer>();
+        if (renderer != null)
+          material = renderer.sharedMaterial;
+      }
+
+      if (material != null)
+        textureOffset = material.GetTextureOffset(textureName);
+    }
+
+    private void Update()
+    {
+      if (material != null)
+      {
+        textureOffset += scrollSpeed * Time.deltaTime;
+        textureOffset = textureOffset.Remainder(Vector2.one);
+
+        material.SetTextureOffset(textureName, textureOffset);
+      }
+    }
   }
 }

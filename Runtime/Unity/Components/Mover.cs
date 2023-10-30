@@ -18,24 +18,27 @@ using UnityEngine;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary> Moves object linearly. </summary>
+  /// <summary> Moves an object in his direction. </summary>
   public class Mover : BaseMonoBehaviour
   {
-    public Vector3 Speed { get => speed; set { speed = value; } }
+    /// <summary> Speed. </summary>
+    public float Speed { get => speed; set { speed = value; } }
 
     [SerializeField]
-    private Vector3 speed;
+    private float speed = 0.0f;
 
     private void Update()
     {
+      DebugDraw.Arrow(this.transform.position, this.transform.forward);
+
       if (rigidbody == null)
-        this.transform.Translate(speed * Time.deltaTime, Space.Self);
+        this.transform.Translate(speed * Time.deltaTime * this.transform.forward, Space.Self);
     }
 
     private void FixedUpdate()
     {
       if (rigidbody != null)
-        rigidbody.velocity = this.transform.TransformDirection(speed);
+        rigidbody.velocity = speed * this.transform.forward;
     }
   }
 }
