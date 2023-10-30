@@ -341,7 +341,7 @@ if (hits > 0)
 
 Useful components to support the development of prototypes:
 
-<p align="center">https://github.com/FronkonGames/GameWork-Foundation/raw/main/Media/development.components.mp4</p>
+<p align="center"><video src='./Media/development.components.mp4'/></p>
 
 * [First person](./Runtime/Unity/Components/FirstPersonCamera.cs), [third person](./Runtime/Unity/Components/ThirdPersonCamera.cs) and [free](./Runtime/Unity/Components/FreeCamera.cs) cameras.
 * [Screenshooter](./Runtime/Unity/Components/Screenshooter.cs): asynchronous screen capture.
