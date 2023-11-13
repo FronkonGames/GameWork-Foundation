@@ -25,7 +25,6 @@ namespace FronkonGames.GameWork.Foundation
     public static class Log
     {
       public static readonly LogLevel DefaultLevel = LogLevel.Info;
-      public static readonly bool ShowStackTrace = true;
 
       public static readonly Color InfoColor = new(0.12f, 0.49f, 0.67f);
       public static readonly Color WarningColor = new(1.0f, 0.52f, 0.29f);
@@ -48,20 +47,24 @@ namespace FronkonGames.GameWork.Foundation
     }
 
     /// <summary> Debug Draw. </summary>
-    public static class Draw
+    public static class DebugDraw
     {
       public static readonly bool DrawInSceneView = true;
+      public static readonly bool DrawInGameView = true;
 
-      public static readonly int Capacity = 500;
+      public static readonly int Capacity = 5000;
+      public static readonly string Profiler = "FronkonGames.GameWork.Foundation.DebugDraw";
+      public static readonly int TextCapacity = 100;
       public static readonly float Transparency = 0.7f;
+      public static readonly float OccludedColor = 0.1f;
       public static readonly float PointSize = 0.5f;
+      public static readonly int Divisions = 64;
       public static readonly Color AxisXColor = Color.red;
       public static readonly Color AxisYColor = Color.green;
       public static readonly Color AxisZColor = Color.blue;
       public static readonly Color LineColor = new(0.941f, 0.796f, 0.788f);
 
-      public static readonly float LineGapSize = 4.0f;
-      public static readonly float LineThickness = 0.0f;
+      public static readonly float LineGapSize = 0.05f;
       public static readonly Color ArrowColor = new(0.043f, 0.561f, 0.988f);
       public static readonly float ArrowTipSize = 0.25f;
       public static readonly float ArrowWidth = 0.5f;
@@ -78,8 +81,6 @@ namespace FronkonGames.GameWork.Foundation
       public static readonly float DiamondSize = 0.5f;
       public static readonly Color ConeColor = "#f3ed80".FromHex();
       public static readonly Color BoundsColor = "#f1c59c".FromHex();
-      public static readonly Color TextColor = "#f5f5f5".FromHex();
-      public static readonly int TextSize = 24;
     }
 #if UNITY_EDITOR
     /// <summary> Editor styles. </summary>

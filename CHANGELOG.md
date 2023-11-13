@@ -5,19 +5,40 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## 1.0.12 - 2023-10-30
+## 0.0.13 - 2023-10-31
 
 ### Added
-- Componentes: third / first person cameras, material scroller.
+- Service Locator pattern.
+- Check.IsAssignableFrom().
+- Log.ExceptionArgument(), Log.ExceptionKeyNotFound().
+- Utility to get the version and commit number from Git.
+- Tag attribute.
+- Prototype components: Swing.
+
+### Changed
+- DebugDraw refactor.
+- BaseMonoBehaviour renamed to CachedMonoBehaviour
+- Runtime/Unity/Components moved to Runtime/Development/Prototype.
+- Prototype components put inside the namespace 'FronkonGames.GameWork.Foundation.Prototype' to avoid conflicts with the class names.
+- FPS counter changed by Hardware monitor.
+
+### Fixed
+- Log.Exception() does not throw exceptions.
+- Small fixes.
+
+## 0.0.12 - 2023-10-30
+
+### Added
+- Prototype components: third / first person cameras, material scroller.
 
 ### Fixed
 - Small fixes.
 
-## 1.0.11 - 2023-10-28
+## 0.0.11 - 2023-10-28
 
 ### Added
 - Command line parsing.
-- Componentes: collision / trigger tester, face to, follower, rotator, mover, FPS counter, free camera, screenshooter.
+- Prototype components: collision / trigger tester, face to, follower, rotator, mover, FPS counter, free camera, screenshooter.
 
 ### Changed
 - Updated to Unity 2022.3.
@@ -25,7 +46,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 - CalculateFPS class.
 
-## 1.0.10 - 2023-05-08
+## 0.0.10 - 2023-05-08
 
 ### Added
 - Custom Inspector.
@@ -35,7 +56,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Small fixes.
 
-## 1.0.9 - 2023-04-28
+## 0.0.9 - 2023-04-28
 
 ### Added
 - Custom Inspector.
@@ -47,7 +68,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Small fixes.
 
-## 1.0.8 - 2023-04-23
+## 0.0.8 - 2023-04-23
 
 ### Added
 - Profiler memory stamps, sample and marker.
@@ -64,13 +85,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Log.Info and Check message format.
 - Small fixes.
 
-## 1.0.7 - 2023-04-20
+## 0.0.7 - 2023-04-20
 
 ### Added
 - Strategy pattern.
 - Visitor pattern.
 
-## 1.0.6 - 2023-04-15
+## 0.0.6 - 2023-04-15
 
 ### Added
 - KeyCodeAttribute, with keystroke detection.
@@ -85,12 +106,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Color unit test.
 - Transform.FlipPositive typo.
 
-## 1.0.5 - 2023-03-19
+## 0.0.5 - 2023-03-19
 
 ### Fixed
 - Reset() button SettingValue does not save the value.
 
-## 1.0.4 - 2023-03-19
+## 0.0.4 - 2023-03-19
 
 ### Changed
 - All the IHandleDraw programs throw exceptions in executable mode (should only be used in the Editor).
@@ -99,7 +120,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Error in DestroyCommand.Execute() in executable versions.
 - PlayerPrefsUtils.GetDateTime() parameter out implicit.
 
-## 1.0.3 - 2023-03-19
+## 0.0.3 - 2023-03-19
 
 ### Added
 - All configuration variables centralized in 'Edit > Preferences > Game:Work > Foundation'.
@@ -117,7 +138,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Color.ToHex() starts with '#'.
 
-## 1.0.2 - 2023-03-17
+## 0.0.2 - 2023-03-17
 
 ### Added
 - PersistentMonoBehaviourSingleton, persistent singleton between scene changes.
@@ -125,7 +146,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - MonoBehaviourSingleton internal reference released when object destroyed [#1](https://github.com/FronkonGames/GameWork-Foundation/issues/1) (_Thanks to @TJHeuvel_).
 
-## 1.0.1 - 2023-03-14
+## 0.0.1 - 2023-03-14
 
 ### Added
 
@@ -142,6 +163,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - MathConstants.GoldenRatio syntax error.
 - Missing comments.
 
-## 1.0.0 - 2022-09-06
+## 0.0.0 - 2022-09-06
 
 _Initial release._

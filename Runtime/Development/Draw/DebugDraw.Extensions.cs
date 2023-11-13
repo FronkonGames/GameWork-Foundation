@@ -21,75 +21,45 @@ namespace FronkonGames.GameWork.Foundation
 {
   /// <summary> Drawing of objects for development. </summary>
   /// <remarks>Only available in the Editor</remarks>
-  public static partial class DebugDraw
+  public static class DebugDrawExtensions
   {
     /// <summary> Draw a point with a three-axis cross. </summary>
-    /// <remarks>Only available in the Editor</remarks>
-    /// <param name="self">Point</param>
-    /// <param name="size">Size</param>
-    /// <param name="color">Color</param>
     [Conditional("UNITY_EDITOR")]
-    public static void Draw(this Vector3 self, float? size = null, Color? color = null) => Point(self, size, color);
+    public static void Draw(this Vector3 self, float? size = null, Color? color = null) => DebugDraw.Point(self, size, Quaternion.identity, color);
 
     /// <summary> Draw an array of points using three-axis crosshairs. </summary>
-    /// <remarks>Only available in the Editor</remarks>
-    /// <param name="self">Points</param>
-    /// <param name="size">Size</param>
-    /// <param name="color">Color</param>
     [Conditional("UNITY_EDITOR")]
-    public static void Draw(this Vector3[] self, float? size, Color? color = null) => Points(self, size, color);
+    public static void Draw(this Vector3[] self, float? size, Color? color = null) => DebugDraw.Points(self, size, Quaternion.identity, color);
 
     /// <summary>  Draw an arrow indicating the forward direction. </summary>
-    /// <remarks>Only available in the Editor</remarks>
-    /// <param name="self">Transform</param>
-    /// <param name="length">Length</param>
-    /// <param name="color">Color</param>
     [Conditional("UNITY_EDITOR")]
     public static void Draw(this Transform self, float length = 1.0f, Color? color = null)
-      => Arrow(self.position, self.rotation, length, Settings.Draw.ArrowTipSize, Settings.Draw.ArrowWidth, color);
+      => DebugDraw.Arrow(self.position, self.rotation, length, Settings.DebugDraw.ArrowTipSize, Settings.DebugDraw.ArrowWidth, color);
 
     /// <summary> Draw bounds. </summary>
-    /// <remarks>Only available in the Editor</remarks>
-    /// <param name="self">Bounds</param>
-    /// <param name="color">Color</param>
     [Conditional("UNITY_EDITOR")]
-    public static void Draw(this Bounds self, Color? color = null) => Bounds(self, color);
+    public static void Draw(this Bounds self, Color? color = null) => DebugDraw.Bounds(self, color);
 
     /// <summary> Draw bounds. </summary>
-    /// <remarks>Only available in the Editor</remarks>
-    /// <param name="self">Bounds</param>
-    /// <param name="color">Color</param>
     [Conditional("UNITY_EDITOR")]
-    public static void Draw(this BoundsInt self, Color? color = null) => Bounds(new Bounds(self.center, self.size), color);
+    public static void Draw(this BoundsInt self, Color? color = null) => DebugDraw.Bounds(new Bounds(self.center, self.size), color);
 
     /// <summary> Draw a ray. </summary>
-    /// <remarks>Only available in the Editor</remarks>
-    /// <param name="self">Ray</param>
-    /// <param name="color">Color</param>
     [Conditional("UNITY_EDITOR")]
-    public static void Draw(this Ray self, Color? color = null) => Ray(self.origin, Quaternion.LookRotation(self.direction), color);
+    public static void Draw(this Ray self, Color? color = null) => DebugDraw.Ray(self.origin, Quaternion.LookRotation(self.direction), color);
 
     /// <summary> Draw a ray with marks where there are impacts. </summary>
-    /// <remarks>Only available in the Editor</remarks>
-    /// <param name="self">Ray</param>
-    /// <param name="hit">Ray hit</param>
-    /// <param name="color">Color</param>
     [Conditional("UNITY_EDITOR")]
     public static void Draw(this Ray self, RaycastHit hit, Color? color = null)
     {
-      self.Draw(color);
+      Quaternion rotation = Quaternion.LookRotation(hit.normal);
 
-      Circle(hit.point, Settings.Draw.HitRadius * 0.5f, color ?? Settings.Draw.HitColor, hit.normal);
-      Circle(hit.point, Settings.Draw.HitRadius, color ?? Settings.Draw.HitColor, hit.normal);
-      Line(hit.point, hit.point + (hit.normal * Settings.Draw.HitLength), color ?? Settings.Draw.HitColor);
+      DebugDraw.Circle(hit.point, Settings.DebugDraw.HitRadius * 0.5f, rotation, color ?? Settings.DebugDraw.HitColor);
+      DebugDraw.Circle(hit.point, Settings.DebugDraw.HitRadius, rotation, color ?? Settings.DebugDraw.HitColor);
+      DebugDraw.Line(hit.point, hit.point + (hit.normal * Settings.DebugDraw.HitLength), Quaternion.identity, color ?? Settings.DebugDraw.HitColor);
     }
 
     /// <summary> Draw a ray with marks where there are impacts. </summary>
-    /// <remarks>Only available in the Editor</remarks>
-    /// <param name="self">Ray</param>
-    /// <param name="hits">Ray hits</param>
-    /// <param name="maxHits">Maximum impacts to be drawn (0 = all).</param>
-    /// <param name="color">Color</param>
     [Conditional("UNITY_EDITOR")]
     public static void Draw(this Ray self, RaycastHit[] hits, int maxHits = 0, Color? color = null)
     {
@@ -98,22 +68,38 @@ namespace FronkonGames.GameWork.Foundation
         if (maxHits <= 0)
           maxHits = hits.Length;
 
-        self.Draw(color);
-
         for (int i = 0; i < maxHits; ++i)
         {
-          Circle(hits[i].point, Settings.Draw.HitRadius * 0.5f, color ?? Settings.Draw.HitColor, hits[i].normal);
-          Circle(hits[i].point, Settings.Draw.HitRadius, color ?? Settings.Draw.HitColor, hits[i].normal);
-          Line(hits[i].point, hits[i].point + (hits[i].normal * Settings.Draw.HitLength), color ?? Settings.Draw.HitColor);
+          Quaternion rotation = hits[i].normal.sqrMagnitude > Mathf.Epsilon ? Quaternion.LookRotation(hits[i].normal) : Quaternion.identity;
+
+          DebugDraw.Circle(hits[i].point, Settings.DebugDraw.HitRadius * 0.5f, rotation, color ?? Settings.DebugDraw.HitColor);
+          DebugDraw.Circle(hits[i].point, Settings.DebugDraw.HitRadius, rotation, color ?? Settings.DebugDraw.HitColor);
+          DebugDraw.Line(hits[i].point, hits[i].point + (hits[i].normal * Settings.DebugDraw.HitLength), Quaternion.identity, color ?? Settings.DebugDraw.HitColor);
         }
       }
     }
 
-    /// <summary> Draw the name of the GameObject. </summary>
-    /// <remarks>Only available in the Editor</remarks>
-    /// <param name="self">GameObject</param>
-    /// <param name="color">Color</param>
+    /// <summary> Draw a collision with marks where there are impacts. </summary>
     [Conditional("UNITY_EDITOR")]
-    public static void DrawName(this GameObject self, Color? color = null) => Text(self.transform.position, self.name, color);
+    public static void Draw(this Collision self, Color? color = null)
+    {
+      int contacts = self.contactCount;
+      for (int i = 0; i < contacts; ++i)
+      {
+        Quaternion rotation = self.contacts[i].normal.sqrMagnitude > Mathf.Epsilon ? Quaternion.LookRotation(self.contacts[i].normal) : Quaternion.identity;
+
+        DebugDraw.Circle(self.contacts[i].point, Settings.DebugDraw.HitRadius * 0.5f, rotation, color ?? Settings.DebugDraw.HitColor);
+        DebugDraw.Circle(self.contacts[i].point, Settings.DebugDraw.HitRadius, rotation, color ?? Settings.DebugDraw.HitColor);
+        DebugDraw.Line(self.gameObject.transform.position, self.contacts[i].point, Quaternion.identity, color ?? Settings.DebugDraw.HitColor);
+      }
+    }
+
+    /// <summary> Draw the bounds of the collider. </summary>
+    [Conditional("UNITY_EDITOR")]
+    public static void Draw(this Collider self) => DebugDraw.Bounds(self.bounds);
+
+    /// <summary> Draw the name of the GameObject. </summary>
+    [Conditional("UNITY_EDITOR")]
+    public static void DrawName(this GameObject self, GUIStyle style = null) => DebugDraw.Text(self.transform.position, self.name);
   }
 }

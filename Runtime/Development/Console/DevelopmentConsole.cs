@@ -20,7 +20,7 @@ using UnityEngine;
 namespace FronkonGames.GameWork.Foundation
 {
   /// <summary> Development Console. </summary>
-  public class DevelopmentConsole : BaseMonoBehaviour
+  public class DevelopmentConsole : CachedMonoBehaviour
   {
     /// <summary> Show console. </summary>
     public bool Show

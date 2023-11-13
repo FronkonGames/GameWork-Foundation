@@ -27,7 +27,7 @@ These are the foundations on which [Game:Work Core](https://github.com/FronkonGa
 - Multiple utilities to improve your developments: [checkers](./Runtime/Development/Check), [debug draw](./Runtime/Development/Draw), [profiling](./Runtime/Development/Profiling) and a console with custom commands.
 - A lot of .Net and Unity types [extensions](./Runtime/Extensions).
 - The most used [design patterns](./Runtime/Patterns), in generic versions so that they are easy to adapt to your needs.
-- [Utilities](./Runtime/Unity/Components/) to speed up prototyping time.
+- [Utilities](./Runtime/Development/Prototype/) to speed up prototyping time.
 - Commented code with test units.
 
 ## 🔧 Requisites
@@ -76,11 +76,13 @@ The functionality is divided into folders, this is its structure:
 |   |\_Algorithms.................. Algorithms.
 |   |    \_Structures.............. Data structures.
 |   |\_Attributes.................. Attributes for fields and class properties.
+|   |\_Components.................. Components.
 |   |\_Development................. Developer utilities.
 |   |   |\_Check................... Assert extension.
 |   |   |\_Console................. Development console.
 |   |   |\_Draw.................... Utilities for drawing gameplay information.
-|   |    \_Profiling............... To find bottlenecks.
+|   |   |\_Profiling............... To find bottlenecks.
+|   |    \_Prototype............... Useful components for prototypes.
 |   |\_Extensions.................. Utility extensions.
 |   |   |\_System.................. C# extensions.
 |   |    \_Unity................... Unity extensions.
@@ -89,12 +91,11 @@ The functionality is divided into folders, this is its structure:
 |   |   |\_Behavioral.............. Behavioural patterns.
 |   |   |\_Creational.............. Creation patterns.
 |   |    \_Structural.............. Structure patterns.
-|    \_Unity....................... Utilities for Unity.
-|       |\_Components.............. Useful components.
-|        \_Utils................... Misc.
+|    \_Utils....................... Utilities.
 |
  \_Editor.......................... Editor utilities.
     |\_Drawers..................... Custom attribute viewers.
+    |\_Fonts....................... Font for debug.
      \_Inspector................... Editor appearance utilities.
 ```
 
@@ -319,7 +320,7 @@ Take a look at the [Check class folder](./Runtime/Development/Check).
 
 Visualize in the Editor Scene window useful information of your game, in a simple way and without affecting the final performance of the game.
 
-<p align="center"><img src="Media/debug.draw.png"/></p>
+<p align="center"><img src="Media/debug.draw.gif"/></p>
 
 ```c#
 // Displays an array of points.
@@ -337,22 +338,22 @@ if (hits > 0)
   playerHits.Draw(playerRay);
 ```
 
-### Components
+### Prototype
 
 Useful components to support the development of prototypes:
 
 <p align="center"><img src="Media/development.components.gif"/></p>
 
-* [First person](./Runtime/Unity/Components/FirstPersonCamera.cs), [third person](./Runtime/Unity/Components/ThirdPersonCamera.cs) and [free](./Runtime/Unity/Components/FreeCamera.cs) cameras.
-* [Screenshooter](./Runtime/Unity/Components/Screenshooter.cs): asynchronous screen capture.
-* [FPS Counter](./Runtime/Unity/Components/FPSCounter.cs): calculates the SPF and displays it.
-* [Collision Test](./Runtime/Unity/Components/CollisionTest.cs): triggers events when collisions are detected.
-* [Trigger Test](./Runtime/Unity/Components/TriggerTest.cs): triggers events.
-* [Face To](./Runtime/Unity/Components/FaceTo.cs): orients the object so that it faces a target.
-* [Follower](./Runtime/Unity/Components/Follower.cs): follow a target.
-* [Mover](./Runtime/Unity/Components/Mover.cs): moves object linearly.
-* [Rotator](./Runtime/Unity/Components/Rotator.cs): rotates an object.
-* [Material scroller](./Runtime/Unity/Components/MaterialScroller.cs): moves a texture at a linear speed.
+* [First person](./Runtime/Development/Prototype/FirstPersonCamera.cs), [third person](./Runtime/Development/Prototype/ThirdPersonCamera.cs) and [free](./Runtime/Development/Prototype/FreeCamera.cs) cameras.
+* [Screenshooter](./Runtime/Development/Prototype/Screenshooter.cs): asynchronous screen capture.
+* [Hardware monitor](./Runtime/Development/Prototype/HardwareMonitor.cs): shows various performance data.
+* [Collision Test](./Runtime/Development/Prototype/CollisionTest.cs): triggers events when collisions are detected.
+* [Trigger Test](./Runtime/Development/Prototype/TriggerTest.cs): triggers events.
+* [Face To](./Runtime/Development/Prototype/FaceTo.cs): orients the object so that it faces a target.
+* [Follower](./Runtime/Development/Prototype/Follower.cs): follow a target.
+* [Mover](./Runtime/Development/Prototype/Mover.cs): moves object linearly.
+* [Rotator](./Runtime/Development/Prototype/Rotator.cs): rotates an object.
+* [Material scroller](./Runtime/Development/Prototype/MaterialScroller.cs): moves a texture at a linear speed.
 
 ### Development Console
 
@@ -421,7 +422,7 @@ Algorithms and data structures.
 The most used design patterns:
 
 - Behavioral: [Command](./Runtime/Patterns/Behavioral/Command), [Observer](./Runtime/Patterns/Behavioral/Observer), [Strategy](./Runtime/Patterns/Behavioral/Strategy), [Visitor](./Runtime/Patterns/Behavioral/Visitor).
-- Creational: [Singleton](./Runtime/Patterns/Creational/Singleton).
+- Creational: [Service Locator](./Runtime/Patterns/Creational/ServiceLocator/), [Singleton](./Runtime/Patterns/Creational/Singleton).
 - Structural: [Decorator](./Runtime/Patterns/Structural/Decorator).
 
 All using generics.

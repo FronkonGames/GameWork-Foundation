@@ -16,12 +16,13 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Define to have Logs ONLY in Developer builds.
-#define LOGS_DEVELOPER_BUILD
+//#define LOGS_DEVELOPER_BUILD
 
 // Define to have Logs in the Editor.
 #define LOGS_EDITOR
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Diagnostics;
 using CallerName = System.Runtime.CompilerServices.CallerMemberNameAttribute;
@@ -56,9 +57,9 @@ namespace FronkonGames.GameWork.Foundation
     public static LogLevel Level { get; set; } = Settings.Log.DefaultLevel;
 
 #if UNITY_EDITOR
-    private static void LogInfo(string source, string message)     => Debug.Log($"{source} <color={Settings.Log.InfoColor.ToHex()}>{message}</color>");
-    private static void LogWarning(string source, string message)  => Debug.LogWarning($"{source} <color={Settings.Log.WarningColor.ToHex()}>{message}</color>");
-    private static void LogError(string source, string message)    => Debug.LogError($"{source} <color={Settings.Log.ErrorColor.ToHex()}>{message}</color>");
+    private static void LogInfo(string source, string message)      => Debug.Log($"{source} <color={Settings.Log.InfoColor.ToHex()}>{message}</color>");
+    private static void LogWarning(string source, string message)   => Debug.LogWarning($"{source} <color={Settings.Log.WarningColor.ToHex()}>{message}</color>");
+    private static void LogError(string source, string message)     => Debug.LogError($"{source} <color={Settings.Log.ErrorColor.ToHex()}>{message}</color>");
 #else
     private static void LogInfo(string source, string message)     => Debug.Log($"{source} {message}");
     private static void LogWarning(string source, string message)  => Debug.LogWarning($"{source} {message}");
@@ -116,7 +117,7 @@ namespace FronkonGames.GameWork.Foundation
         LogError($"[{Path.GetFileNameWithoutExtension(sourceFile)}:{member}:{line}]", message);
     }
 
-    /// <summary> Error message, exception and stack trace. </summary>
+    /// <summary> Throw exception. </summary>
     /// <param name="message">Message</param>
     /// <param name="e">Exception</param>
     [DebuggerStepThrough]
@@ -130,15 +131,25 @@ namespace FronkonGames.GameWork.Foundation
                                                                      [CallerPath] string sourceFile = "",
                                                                      [CallerLine] int line = 0)
     {
-      LogError($"[{Path.GetFileNameWithoutExtension(sourceFile)}:{member}:{line}]", message);
-
-      e ??= new Exception(message);
-
+      e ??= new Exception($"[{Path.GetFileNameWithoutExtension(sourceFile)}:{member}:{line}] {message}");
       Debug.LogException(e);
 
-      if (Settings.Log.ShowStackTrace == true)
-        Debug.LogError(e.StackTrace);
+      throw e;
     }
+
+    /// <summary> Argument exception and stack trace. </summary>
+    /// <param name="message">Message</param>
+    [DebuggerStepThrough]
+#if LOGS_DEVELOPER_BUILD
+    [Conditional("DEVELOPMENT_BUILD")]
+#endif
+#if LOGS_EDITOR
+    [Conditional("UNITY_EDITOR")]
+#endif
+    public static void ExceptionArgument(string message, [CallerName] string member = "",
+                                                         [CallerPath] string sourceFile = "",
+                                                         [CallerLine] int line = 0) =>
+        Exception(message, new ArgumentException(), member, sourceFile, line);
 
     /// <summary> ArgumentOutOfRange exception and stack trace. </summary>
     /// <param name="message">Message</param>
@@ -181,5 +192,19 @@ namespace FronkonGames.GameWork.Foundation
                                                              [CallerPath] string sourceFile = "",
                                                              [CallerLine] int line = 0) =>
         Exception(message, new ArgumentNullException(), member, sourceFile, line);
+
+    /// <summary> Key not found exception and stack trace. </summary>
+    /// <param name="message">Message</param>
+    [DebuggerStepThrough]
+#if LOGS_DEVELOPER_BUILD
+    [Conditional("DEVELOPMENT_BUILD")]
+#endif
+#if LOGS_EDITOR
+    [Conditional("UNITY_EDITOR")]
+#endif
+    public static void ExceptionKeyNotFound(string message, [CallerName] string member = "",
+                                                            [CallerPath] string sourceFile = "",
+                                                            [CallerLine] int line = 0) =>
+        Exception(message, new KeyNotFoundException(), member, sourceFile, line);
   }
 }

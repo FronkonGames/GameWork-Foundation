@@ -48,7 +48,7 @@ public class CheckTests
   [UnityTest]
   public IEnumerator Type()
   {
-    object objectNotNull = new object();
+    object objectNotNull = new();
     object objectNull = null;
 
     Assert.DoesNotThrow(() => Check.IsNull(objectNull));
@@ -58,8 +58,8 @@ public class CheckTests
     Assert.Throws<Exception>(() => Check.IsNotNull(objectNull));
 
     List<int> listNull = null;
-    List<int> listIntEmpty = new List<int>();
-    List<int> listInt = new List<int> { 1, 2, 3, 4 };
+    List<int> listIntEmpty = new();
+    List<int> listInt = new() { 1, 2, 3, 4 };
 
     Assert.Throws<Exception>(() => Check.IsNotNullOrEmpty(listNull));
     Assert.Throws<Exception>(() => Check.IsNotNullOrEmpty(listIntEmpty));

@@ -16,362 +16,301 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 using System.Diagnostics;
 using UnityEngine;
-using Debug = UnityEngine.Debug;
 
 namespace FronkonGames.GameWork.Foundation
 {
   /// <summary> Drawing of objects for development. </summary>
   /// <remarks>Only available in the Editor</remarks>
-  public static partial class DebugDraw
+  [ExecuteInEditMode, HideInInspector, DefaultExecutionOrder(int.MaxValue)]
+  public partial class DebugDraw : CachedMonoBehaviour
   {
-    /// <summary> Draw a point with a three-axis cross. </summary>
-    /// <remarks>Only available in the Editor</remarks>
-    /// <param name="position">Position</param>
-    /// <param name="size">Cross size</param>
-    /// <param name="color">Color</param>
-    /// <param name="rotation">Rotation</param>
+    /// <summary> Draw a three-axis cross. </summary>
     [Conditional("UNITY_EDITOR")]
-    public static void Point(Vector3 position, float? size = null, Color? color = null, Quaternion? rotation = null)
+    public static void Axis(Vector3 position, float size, Quaternion rotation)
     {
-      float halfSize = (size ?? Settings.Draw.PointSize) * 0.5f;
+      float halfSize = size * 0.5f;
 
-      Line(position + Vector3.right * halfSize, position - Vector3.right * halfSize, color ?? Settings.Draw.AxisXColor, rotation);
-      Line(position + Vector3.up * halfSize, position - Vector3.up * halfSize, color ?? Settings.Draw.AxisYColor, rotation);
-      Line(position + Vector3.forward * halfSize, position - Vector3.forward * halfSize, color ?? Settings.Draw.AxisZColor, rotation);
+      Line(position + rotation * Vector3.right * halfSize, position - rotation * Vector3.right * halfSize, null, Color.red);
+      Line(position + rotation * Vector3.up * halfSize, position - rotation * Vector3.up * halfSize, null, Color.green);
+      Line(position + rotation * Vector3.forward * halfSize, position - rotation * Vector3.forward * halfSize, null, Color.blue);
+    }
+
+    /// <summary> Draw a three-axis cross. </summary>
+    [Conditional("UNITY_EDITOR")]
+    public static void Axis(Vector3 position, float? size = null, Quaternion? rotation = null) =>
+      Axis(position, size ?? Settings.DebugDraw.PointSize, rotation ?? Quaternion.identity);
+
+    /// <summary> Draw a point with a three-axis cross. </summary>
+    [Conditional("UNITY_EDITOR")]
+    public static void Point(Vector3 position, float size, Quaternion rotation, Color color, bool continuous)
+    {
+      float halfSize = size * 0.5f;
+
+      Line(position + rotation * Vector3.right * halfSize, position - rotation * Vector3.right * halfSize, null, color, continuous);
+      Line(position + rotation * Vector3.up * halfSize, position - rotation * Vector3.up * halfSize, null, color, continuous);
+      Line(position + rotation * Vector3.forward * halfSize, position - rotation * Vector3.forward * halfSize, null, color, continuous);
+    }
+
+    /// <summary> Draw a point with a three-axis cross. </summary>
+    [Conditional("UNITY_EDITOR")]
+    public static void Point(Vector3 position, float? size = null, Quaternion? rotation = null, Color ? color = null, bool continuous = true) =>
+      Point(position,
+            size ?? Settings.DebugDraw.PointSize,
+            rotation ?? Quaternion.identity,
+            color ?? Settings.DebugDraw.AxisXColor,
+            continuous);
+
+    /// <summary> Draw an array of points using three-axis crosshairs. </summary>
+    [Conditional("UNITY_EDITOR")]
+    public static void Points(Vector3[] points, float size, Quaternion rotation, Color color, bool continuous)
+    {
+      for (int i = 0; i < points.Length; ++i)
+        Point(points[i], size, rotation, color, continuous);
     }
 
     /// <summary> Draw an array of points using three-axis crosshairs. </summary>
-    /// <remarks>Only available in the Editor</remarks>
-    /// <param name="points">Point array</param>
-    /// <param name="size">Cross size</param>
-    /// <param name="color">Color</param>
-    /// <param name="rotation">Rotation</param>
     [Conditional("UNITY_EDITOR")]
-    public static void Points(Vector3[] points, float? size = null, Color? color = null, Quaternion? rotation = null)
+    public static void Points(Vector3[] points, float? size = null, Quaternion? rotation = null, Color ? color = null, bool continuous = true) =>
+      Points(points,
+             size ?? Settings.DebugDraw.PointSize,
+             rotation ?? Quaternion.identity,
+             color ?? Settings.DebugDraw.AxisXColor,
+             continuous);
+
+    /// <summary> Draw a line. </summary>
+    [Conditional("UNITY_EDITOR")]
+    public static void Line(Vector3 a, Vector3 b, Quaternion? rotation = null, Color ? color = null, bool continuous = true)
     {
-      for (int i = 0; i < points.Length; ++i)
-        Point(points[i], size, color, rotation);
+      int index = Instance.GetLineIndex();
+      if (index != -1)
+      {
+        lineJobs[index].start = rotation != null ? (Quaternion)rotation * a : a;
+        lineJobs[index].end = rotation != null ? (Quaternion)rotation * b : b;
+        lineJobs[index].color = color ?? Settings.DebugDraw.LineColor;
+        lineJobs[index].continuous = continuous;
+        lineJobs[index].frame = Time.frameCount;
+      }
     }
 
-    /// <summary> Draw a solid line. </summary>
-    /// <remarks>Only available in the Editor</remarks>
-    /// <param name="a">Start</param>
-    /// <param name="b">End</param>
-    /// <param name="color">Color</param>
-    /// <param name="rotation">Rotation</param>
+    /// <summary> Draw an array of lines. </summary>
     [Conditional("UNITY_EDITOR")]
-    private static void Line(Vector3 a, Vector3 b, Color? color = null, Quaternion? rotation = null) =>
-      ChangeDrawHandle(new LineHandle
-      {
-        a = rotation == null ? a : (Quaternion)rotation * a,
-        b = rotation == null ? b : (Quaternion)rotation * b,
-        color = color ?? Settings.Draw.LineColor,
-        solid = true
-      });
-
-    /// <summary> Draw an array of solid lines. </summary>
-    /// <remarks>Only available in the Editor</remarks>
-    /// <param name="lines">Lines array</param>
-    /// <param name="color">Color</param>
-    /// <param name="rotation">Rotation</param>
-    [Conditional("UNITY_EDITOR")]
-    private static void Lines(Vector3[] lines, Color? color = null, Quaternion? rotation = null)
+    public static void Lines(Vector3[] lines, Quaternion? rotation = null, Color ? color = null, bool continuous = true)
     {
       for (int i = 0; i < lines.Length - 1; ++i)
-        Line(lines[i], lines[i + 1], color, rotation);
+        Line(lines[i], lines[i + 1], rotation, color, continuous);
     }
 
-    /// <summary>
-    /// Draw a dashed line.
-    /// </summary>
-    /// <remarks>Only available in the Editor</remarks>
-    /// <param name="a">Start</param>
-    /// <param name="b">End</param>
-    /// <param name="color">Color</param>
-    /// <param name="rotation">Rotation</param>
+    /// <summary> Draw a triangle. </summary>
     [Conditional("UNITY_EDITOR")]
-    public static void DottedLine(Vector3 a, Vector3 b, Color? color = null, Quaternion? rotation = null) =>
-      ChangeDrawHandle(new LineHandle
-      {
-        a = rotation == null ? a : (Quaternion)rotation * a,
-        b = rotation == null ? b : (Quaternion)rotation * b,
-        color = color ?? Settings.Draw.LineColor,
-        solid = false
-      });
-
-    /// <summary> Draw an array of dashed lines. </summary>
-    /// <remarks>Only available in the Editor</remarks>
-    /// <param name="lines">Lines array</param>
-    /// <param name="color">Color</param>
-    /// <param name="rotation">Rotation</param>
-    [Conditional("UNITY_EDITOR")]
-    public static void DottedLines(Vector3[] lines, Color? color = null, Quaternion? rotation = null)
+    public static void Triangle(Vector3 a, Vector3 b, Vector3 c, Quaternion? rotation = null, Color? color = null, bool continuous = true)
     {
-      for (int i = 0; i < lines.Length - 1; ++i)
-        DottedLine(lines[i], lines[i + 1], color, rotation);
+      int index = Instance.GetTriangleIndex();
+      if (index != -1)
+      {
+        triangleJobs[index].a = rotation != null ? (Quaternion)rotation * a : a;
+        triangleJobs[index].b = rotation != null ? (Quaternion)rotation * b : b;
+        triangleJobs[index].c = rotation != null ? (Quaternion)rotation * c : c;
+        triangleJobs[index].color = color ?? Settings.DebugDraw.LineColor;
+        triangleJobs[index].continuous = continuous;
+        triangleJobs[index].frame = Time.frameCount;
+      }
     }
 
     /// <summary> Draw a line using an arrow. </summary>
-    /// <remarks>Only available in the Editor</remarks>
-    /// <param name="position">Position</param>
-    /// <param name="direction">Direction</param>
-    /// <param name="length">Line length</param>
-    /// <param name="size">Arrow tip size</param>
-    /// <param name="width">Arrow width</param>
-    /// <param name="color">Color</param>
     [Conditional("UNITY_EDITOR")]
     public static void Arrow(Vector3 position, Vector3 direction, float length = 1.0f, float? size = null, float? width = null, Color? color = null)
     {
-      float sideLen = length - length * (size ?? Settings.Draw.ArrowTipSize);
-      Vector3 widthOffset = Vector3.Cross(direction, Vector3.up) * (width ?? Settings.Draw.ArrowWidth);
+      float sideLen = length - length * (size ?? Settings.DebugDraw.ArrowTipSize);
+      Vector3 widthOffset = Vector3.Cross(direction, Vector3.up) * (width ?? Settings.DebugDraw.ArrowWidth);
       Vector3 tip = position + direction * length;
       Vector3 upCornerInRight = position - widthOffset * 0.3f + direction * sideLen;
       Vector3 upCornerInLeft = position + widthOffset * 0.3f + direction * sideLen;
       Vector3 upCornerOutRight = position - widthOffset * 0.5f + direction * sideLen;
       Vector3 upCornerOutLeft = position + widthOffset * 0.5f + direction * sideLen;
 
-      Line(position, upCornerInRight, color ?? Settings.Draw.ArrowColor);
-      Line(upCornerInRight, upCornerOutRight, color ?? Settings.Draw.ArrowColor);
-      Line(upCornerOutRight, tip, color ?? Settings.Draw.ArrowColor);
-      Line(tip, upCornerOutLeft, color ?? Settings.Draw.ArrowColor);
-      Line(upCornerOutLeft, upCornerInLeft, color ?? Settings.Draw.ArrowColor);
-      Line(upCornerInLeft, position, color ?? Settings.Draw.ArrowColor);
+      Line(position, upCornerInRight, Quaternion.identity, color ?? Settings.DebugDraw.ArrowColor);
+      Line(upCornerInRight, upCornerOutRight, Quaternion.identity, color ?? Settings.DebugDraw.ArrowColor);
+      Line(upCornerOutRight, tip, Quaternion.identity, color ?? Settings.DebugDraw.ArrowColor);
+      Line(tip, upCornerOutLeft, Quaternion.identity, color ?? Settings.DebugDraw.ArrowColor);
+      Line(upCornerOutLeft, upCornerInLeft, Quaternion.identity, color ?? Settings.DebugDraw.ArrowColor);
+      Line(upCornerInLeft, position, Quaternion.identity, color ?? Settings.DebugDraw.ArrowColor);
     }
 
     /// <summary> Draw a line using an arrow. </summary>
-    /// <remarks>Only available in the Editor</remarks>
-    /// <param name="position">Position</param>
-    /// <param name="rotation">Rotation</param>
-    /// <param name="length">Line length</param>
-    /// <param name="size">Arrow tip size</param>
-    /// <param name="width">Arrow width</param>
-    /// <param name="color">Color</param>
     [Conditional("UNITY_EDITOR")]
     public static void Arrow(Vector3 position, Quaternion rotation, float length = 1.0f, float? size = null, float? width = null, Color? color = null)
       => Arrow(position, rotation * Vector3.forward, length, size, width, color);
 
-    /// <summary> Draw a line using an arrow. </summary>
-    /// <remarks>Only available in the Editor</remarks>
-    /// <param name="position"></param>
-    /// <param name="rotation"></param>
-    /// <param name="color"></param>
+    /// <summary> Draw a ray. </summary>
     [Conditional("UNITY_EDITOR")]
     public static void Ray(Vector3 position, Quaternion rotation, Color? color = null) =>
-      Line(position, (rotation * Vector3.forward) * Settings.Draw.RayLength, color ?? Settings.Draw.RayColor);
+      Line(position, rotation * Vector3.forward * Settings.DebugDraw.RayLength, Quaternion.identity, color ?? Settings.DebugDraw.RayColor);
 
-    /// <summary> Draw a ray.
-    /// </summary>
-    /// <remarks>Only available in the Editor</remarks>
-    /// <param name="position">Position</param>
-    /// <param name="direction">Direction</param>
-    /// <param name="color">Color</param>
+    /// <summary> Draw a ray. </summary>
     [Conditional("UNITY_EDITOR")]
     public static void Ray(Vector3 position, Vector3 direction, Color? color = null) =>
-      Line(position, direction * Settings.Draw.RayLength, color ?? Settings.Draw.RayColor);
+      Line(position, position + (direction * direction.magnitude), Quaternion.identity, color ?? Settings.DebugDraw.RayColor);
 
     /// <summary> Draw a wire circle. </summary>
-    /// <remarks>Only available in the Editor</remarks>
-    /// <param name="center">Center</param>
-    /// <param name="radius">Radius</param>
     [Conditional("UNITY_EDITOR")]
-    public static void Circle(Vector3 center, float radius) =>
-      ChangeDrawHandle(new CircleHandle
-      {
-        center = center,
-        normal = Vector3.up,
-        radius = radius,
-        color = Settings.Draw.CircleColor
-      });
-
-    /// <summary> Draw a wire circle. </summary>
-    /// <remarks>Only available in the Editor</remarks>
-    /// <param name="center">Center</param>
-    /// <param name="radius">Radius</param>
-    /// <param name="color">Color</param>
-    [Conditional("UNITY_EDITOR")]
-    public static void Circle(Vector3 center, float radius, Color? color = null) =>
-      ChangeDrawHandle(new CircleHandle
-      {
-        center = center,
-        normal = Vector3.up,
-        radius = radius,
-        color = color ?? Settings.Draw.CircleColor
-      });
-
-    /// <summary> Draw a wire circle. </summary>
-    /// <remarks>Only available in the Editor</remarks>
-    /// <param name="center">Center</param>
-    /// <param name="radius">Radius</param>
-    /// <param name="color">Color</param>
-    /// <param name="rotation">Rotation</param>
-    [Conditional("UNITY_EDITOR")]
-    public static void Circle(Vector3 center, float radius, Color color, Quaternion? rotation = null) =>
-      ChangeDrawHandle(new CircleHandle
-      {
-        center = center,
-        normal = rotation == null ? Vector3.up : (Quaternion)rotation * Vector3.forward,
-        radius = radius,
-        color = color
-      });
-
-    /// <summary> Draw a wire circle. </summary>
-    /// <remarks>Only available in the Editor</remarks>
-    /// <param name="center">Center</param>
-    /// <param name="radius">Radius</param>
-    /// <param name="color">Color</param>
-    /// <param name="normal">Normal</param>
-    [Conditional("UNITY_EDITOR")]
-    public static void Circle(Vector3 center, float radius, Color color, Vector3? normal = null) =>
-      ChangeDrawHandle(new CircleHandle
-      {
-        center = center,
-        normal = normal ?? Vector3.up,
-        radius = radius,
-        color = color
-      });
-
-    /// <summary> Draw a solid circle. </summary>
-    /// <remarks>Only available in the Editor</remarks>
-    /// <param name="center">Center</param>
-    /// <param name="radius">Radius</param>
-    /// <param name="color">Color</param>
-    /// <param name="rotation">Rotation</param>
-    [Conditional("UNITY_EDITOR")]
-    public static void SolidCircle(Vector3 center, float radius, Color? color = null, Quaternion? rotation = null) =>
-      ChangeDrawHandle(new CircleHandle
-      {
-        center = center,
-        normal = rotation == null ? Vector3.up : (Quaternion)rotation * Vector3.forward,
-        radius = radius,
-        color = color ?? Settings.Draw.CircleColor,
-        solid = true
-      });
-
-    /// <summary> Draw a solid circle. </summary>
-    /// <remarks>Only available in the Editor</remarks>
-    /// <param name="center">Center</param>
-    /// <param name="radius">Radius</param>
-    /// <param name="color">Color</param>
-    /// <param name="normal">Normal</param>
-    [Conditional("UNITY_EDITOR")]
-    public static void SolidCircle(Vector3 center, float radius, Color? color = null, Vector3? normal = null) =>
-      ChangeDrawHandle(new CircleHandle
-      {
-        center = center,
-        normal = normal ?? Vector3.up,
-        radius = radius,
-        color = color ?? Settings.Draw.CircleColor,
-        solid = true
-      });
-
-    /// <summary> Draw a wire sphere formed by three circles. </summary>
-    /// <remarks>Only available in the Editor</remarks>
-    /// <param name="center">Center</param>
-    /// <param name="radius">Radius</param>
-    /// <param name="color">Color</param>
-    /// <param name="rotation">Rotation</param>
-    [Conditional("UNITY_EDITOR")]
-    public static void Sphere(Vector3 center, float radius, Color? color = null, Quaternion? rotation = null)
+    public static void Circle(Vector3 center, float radius, Quaternion rotation, Color color, bool continuous)
     {
-      Circle(center, radius, color ?? Settings.Draw.AxisYColor, rotation);
-      Circle(center, radius, color ?? Settings.Draw.AxisXColor, (rotation ?? Quaternion.identity) * Quaternion.Euler(0.0f, 0.0f, 90.0f));
-      Circle(center, radius, color ?? Settings.Draw.AxisZColor, (rotation ?? Quaternion.identity) * Quaternion.Euler(0.0f, 90.0f, 90.0f));
+      Vector3 forward = (rotation * Vector3.forward).normalized;
+      Vector3 right = (rotation * Vector3.right).normalized;
+
+      Vector3 b = center + (forward * radius);
+      float angleStep = Mathf.PI * 2.0f / Settings.DebugDraw.Divisions;
+
+      for (int i = 0; i < Settings.DebugDraw.Divisions; ++i)
+      {
+        float angle = (i == Settings.DebugDraw.Divisions - 1) ? 0.0f : (i + 1) * angleStep;
+
+        Vector3 next = new Vector3(Mathf.Sin(angle), 0.0f, Mathf.Cos(angle)) * radius;
+        Vector3 a = center + (right * next.x) + (forward * next.z);
+
+        Line(a, b, Quaternion.identity, color, continuous);
+
+        b = a;
+      }
     }
 
-    /// <summary> Draw a solid sphere. </summary>
-    /// <remarks>Only available in the Editor</remarks>
-    /// <param name="center">Center</param>
-    /// <param name="radius">Radius</param>
-    /// <param name="color">Color</param>
-    /// <param name="rotation">Rotation</param>
+    /// <summary> Draw a wire circle. </summary>
     [Conditional("UNITY_EDITOR")]
-    public static void SolidSphere(Vector3 center, float radius, Color? color = null, Quaternion? rotation = null) =>
-      ChangeDrawHandle(new SphereHandle
-      {
-        center = center,
-        radius = radius,
-        color = color ?? Settings.Draw.CircleColor,
-        rotation = rotation ?? Quaternion.identity
-      });
+    public static void Circle(Vector3 center, float radius, Quaternion? rotation = null, Color ? color = null, bool continuous = true) =>
+      Circle(center, radius, rotation ?? Quaternion.identity, color ?? Settings.DebugDraw.CircleColor, continuous);
 
-    /// <summary> Draw an wire arc centered on the forward vector. </summary>
-    /// <remarks>Only available in the Editor</remarks>
-    /// <param name="center">Center</param>
-    /// <param name="rotation">Rotation</param>
-    /// <param name="radius">Radius</param>
-    /// <param name="angle">Angle</param>
-    /// <param name="color">Color</param>
+    /// <summary> Draw a solid circle. </summary>
     [Conditional("UNITY_EDITOR")]
-    public static void Arc(Vector3 center, Quaternion rotation, float radius, float angle, Color? color = null) =>
-      ChangeDrawHandle(new ArcHandle
+    public static void CircleColid(Vector3 center, float radius, Quaternion rotation, Color color)
+    {
+      Vector3 normal = rotation == null ? Vector3.up : rotation * Vector3.up;
+      Vector3 forward = Vector3.Cross(normal, normal.x < normal.z ? Vector3.right : Vector3.forward).normalized;
+      Vector3 right = Vector3.Cross(forward, normal).normalized;
+
+      Vector3 b = center + (forward * radius);
+      float angleStep = Mathf.PI * 2.0f / Settings.DebugDraw.Divisions;
+
+      for (int i = 0; i < Settings.DebugDraw.Divisions; ++i)
       {
-        center = center,
-        normal = rotation * Vector3.up,
-        from = (rotation * Quaternion.Euler(-angle * 0.5f, 0.0f, 0.0f)) * Vector3.forward,
-        angle = angle,
-        radius = radius,
-        color = color ?? Settings.Draw.ArcColor
-      });
+        float angle = (i == Settings.DebugDraw.Divisions - 1) ? 0.0f : (i + 1) * angleStep;
+
+        Vector3 next = new Vector3(Mathf.Sin(angle), 0f, Mathf.Cos(angle)) * radius;
+        Vector3 a = center + (right * next.x) + (forward * next.z);
+
+        Triangle(a, b, center, null, color);
+
+        b = a;
+      }
+    }
+
+    /// <summary> Draw a solid circle. </summary>
+    [Conditional("UNITY_EDITOR")]
+    public static void CircleSolid(Vector3 center, float radius, Quaternion? rotation = null, Color ? color = null) =>
+      CircleColid(center, radius, rotation ?? Quaternion.identity, color ?? Settings.DebugDraw.CircleColor);
+
+    /// <summary> Draw a wire sphere. </summary>
+    [Conditional("UNITY_EDITOR")]
+    public static void Sphere(Vector3 center, float radius, Quaternion? rotation = null, Color ? color = null)
+    {
+      if (SphereWire == null)
+        CreateSphereWireMesh();
+
+      int index = Instance.GetMeshIndex();
+      if (index != -1)
+      {
+        meshJobs[index].vertices = SphereWire;
+        meshJobs[index].color = color ?? Settings.DebugDraw.SphereColor;
+        meshJobs[index].matrix = Matrix4x4.TRS(center, rotation ?? Quaternion.identity, Vector3.one * radius);
+        meshJobs[index].frame = Time.frameCount;
+      }
+    }
+
+    /// <summary> Draw an arc centered on the forward vector. </summary>
+    [Conditional("UNITY_EDITOR")]
+    public static void Arc(Vector3 center, float radius, float angle, Quaternion rotation, Color color, bool continuous)
+    {
+      Vector3 from = rotation * Quaternion.Euler(0.0f, -angle * 0.5f, 0.0f) * Vector3.forward;
+      from.Normalize();
+      Quaternion rot = Quaternion.AngleAxis(angle / (Settings.DebugDraw.Divisions / 4 - 1), rotation * Vector3.up);
+      Vector3 vector = from;
+
+      Line(center, center + vector * radius, Quaternion.identity, color);
+
+      int num = Settings.DebugDraw.Divisions / 4;
+      for (int i = 1; i < num; ++i)
+      {
+        Vector3 a = center + vector * radius;
+        vector = rot * vector;
+        Vector3 b = center + vector * radius;
+
+        Line(a, b, Quaternion.identity, color);
+      }
+
+      Line(center, center + vector * radius, Quaternion.identity, color);
+    }
+
+    /// <summary> Draw an arc centered on the forward vector. </summary>
+    [Conditional("UNITY_EDITOR")]
+    public static void Arc(Vector3 center, float radius, float angle, Quaternion? rotation = null, Color ? color = null, bool continuous = true) =>
+      Arc(center, radius, angle, rotation ?? Quaternion.identity, color ?? Settings.DebugDraw.ArcColor, continuous);
 
     /// <summary> Draw an solid arc centered on the forward vector. </summary>
-    /// <remarks>Only available in the Editor</remarks>
-    /// <param name="center">Center</param>
-    /// <param name="rotation">Rotation</param>
-    /// <param name="radius">Radius</param>
-    /// <param name="angle">Angle</param>
-    /// <param name="color">Color</param>
     [Conditional("UNITY_EDITOR")]
-    public static void SolidArc(Vector3 center, Quaternion rotation, float radius, float angle, Color? color = null) =>
-      ChangeDrawHandle(new ArcHandle
+    public static void ArcSolid(Vector3 center, float radius, float angle, Quaternion rotation, Color color)
+    {
+      Vector3 from = rotation * Quaternion.Euler(0.0f, -angle * 0.5f, 0.0f) * Vector3.forward;
+      from.Normalize();
+      Quaternion rot = Quaternion.AngleAxis(angle / (Settings.DebugDraw.Divisions / 4 - 1), rotation * Vector3.up);
+      Vector3 vector = from;
+
+      int num = Settings.DebugDraw.Divisions / 4;
+      for (int i = 1; i < num; ++i)
       {
-        center = center,
-        normal = rotation * Vector3.up,
-        from = (rotation * Quaternion.Euler(0.0f, -angle * 0.5f, 0.0f)) * Vector3.forward,
-        angle = angle,
-        radius = radius,
-        color = color ?? Settings.Draw.ArcColor,
-        solid = true
-      });
+        Vector3 b = center + vector * radius;
+        vector = rot * vector;
+        Vector3 c = center + vector * radius;
+
+        Triangle(center, b, c, null, color);
+      }
+    }
+
+    /// <summary> Draw an solid arc centered on the forward vector. </summary>
+    [Conditional("UNITY_EDITOR")]
+    public static void ArcSolid(Vector3 center, float radius, float angle, Quaternion? rotation = null, Color ? color = null) =>
+      ArcSolid(center, radius, angle, rotation ?? Quaternion.identity, color ?? Settings.DebugDraw.ArcColor);
 
     /// <summary> Draw a wire cube. </summary>
-    /// <remarks>Only available in the Editor</remarks>
-    /// <param name="center">Center</param>
-    /// <param name="size">Size</param>
-    /// <param name="color">Color</param>
     [Conditional("UNITY_EDITOR")]
-    public static void Cube(Vector3 center, Vector3 size, Color? color = null) =>
-      ChangeDrawHandle(new CubeHandle
+    public static void Cube(Vector3 center, Vector3 size, Quaternion? rotation = null, Color ? color = null)
+    {
+      if (CubeWire == null)
+        CreateCubeWireMesh();
+
+      int index = Instance.GetMeshIndex();
+      if (index != -1)
       {
-        center = center,
-        size = size,
-        color = color ?? Settings.Draw.CubeColor
-      });
+        meshJobs[index].vertices = CubeWire;
+        meshJobs[index].color = color ?? Settings.DebugDraw.CubeColor;
+        meshJobs[index].matrix = Matrix4x4.TRS(center, rotation ?? Quaternion.identity, size);
+        meshJobs[index].frame = Time.frameCount;
+      }
+    }
 
     /// <summary> Draw a wire cube. </summary>
-    /// <remarks>Only available in the Editor</remarks>
-    /// <param name="center">Center</param>
-    /// <param name="size">Size</param>
-    /// <param name="color">Color</param>
     [Conditional("UNITY_EDITOR")]
-    public static void Cube(Vector3 center, float size, Color? color = null) =>
-      Cube(center, Vector3.one * size, color ?? Settings.Draw.CubeColor);
+    public static void Cube(Vector3 center, float size, Quaternion? rotation = null, Color ? color = null) =>
+      Cube(center, Vector3.one * size, rotation, color ?? Settings.DebugDraw.CubeColor);
 
     /// <summary> Draw a wire diamond. </summary>
-    /// <remarks>Only available in the Editor</remarks>
-    /// <param name="center">Center</param>
-    /// <param name="size">Size</param>
-    /// <param name="color">Color</param>
-    /// <param name="rotation">Rotation</param>
     [Conditional("UNITY_EDITOR")]
-    public static void Diamond(Vector3 center, float? size = null, Color? color = null, Quaternion? rotation = null)
+    public static void Diamond(Vector3 center, float size, Quaternion rotation, Color color, bool continuous)
     {
-      float diamondSize = size ?? Settings.Draw.DiamondSize;
-      Vector3 u = center + Vector3.up * diamondSize;
-      Vector3 d = center + Vector3.down * diamondSize;
-      Vector3 r = center + Vector3.right * diamondSize;
-      Vector3 l = center + Vector3.left * diamondSize;
-      Vector3 f = center + Vector3.forward * diamondSize;
-      Vector3 b = center + Vector3.back * diamondSize;
+      Vector3 u = center + Vector3.up * size;
+      Vector3 d = center + Vector3.down * size;
+      Vector3 r = center + Vector3.right * size;
+      Vector3 l = center + Vector3.left * size;
+      Vector3 f = center + Vector3.forward * size;
+      Vector3 b = center + Vector3.back * size;
 
       Lines(new[]
       {
@@ -379,7 +318,7 @@ namespace FronkonGames.GameWork.Foundation
         u, f, l,
         u, l, b,
         u, b, r
-      }, color ?? Settings.Draw.DiamondColor, rotation);
+      }, rotation, color, continuous);
 
       Lines(new[]
       {
@@ -387,20 +326,19 @@ namespace FronkonGames.GameWork.Foundation
         d, r, b,
         d, b, l,
         d, l, f
-      }, color ?? Settings.Draw.DiamondColor, rotation);
+      }, rotation, color, continuous);
     }
 
-    /// <summary> Draw a wire cone. </summary>
-    /// <remarks>Only available in the Editor</remarks>
-    /// <param name="position">Position</param>
-    /// <param name="rotation">Rotation</param>
-    /// <param name="angle">Angle</param>
-    /// <param name="color">Color</param>
+    /// <summary> Draw a wire diamond. </summary>
     [Conditional("UNITY_EDITOR")]
-    public static void Cone(Vector3 position, Quaternion rotation, float angle, Color? color = null)
+    public static void Diamond(Vector3 center, float? size = null, Quaternion? rotation = null, Color ? color = null, bool continuous = true) =>
+      Diamond(center, size ?? Settings.DebugDraw.DiamondSize, rotation ?? Quaternion.identity, color ?? Settings.DebugDraw.DiamondColor, continuous);
+
+    /// <summary> Draw a wire cone. </summary>
+    [Conditional("UNITY_EDITOR")]
+    public static void Cone(Vector3 position, float angle, float length, Quaternion rotation, Color color, bool continuous)
     {
       Vector3 direction = rotation * Vector3.forward;
-      float length = direction.magnitude;
 
       Vector3 forward = direction;
       Vector3 up = Vector3.Slerp(forward, -forward, 0.5f);
@@ -410,73 +348,70 @@ namespace FronkonGames.GameWork.Foundation
 
       Vector3 slerpedVector = Vector3.Slerp(forward, up, angle / 90.0f);
 
-      var farPlane = new Plane(-direction, position + forward);
-      var distRay = new Ray(position, slerpedVector);
+      Plane farPlane = new(-direction, position + forward);
+      Ray distRay = new(position, slerpedVector);
 
       farPlane.Raycast(distRay, out float dist);
 
-      Color coneColor = color ?? Settings.Draw.ConeColor;
-      Debug.DrawRay(position, slerpedVector.normalized * dist, coneColor);
-      Debug.DrawRay(position, Vector3.Slerp(forward, -up, angle / 90.0f).normalized * dist, coneColor);
-      Debug.DrawRay(position, Vector3.Slerp(forward, right, angle / 90.0f).normalized * dist, coneColor);
-      Debug.DrawRay(position, Vector3.Slerp(forward, -right, angle / 90.0f).normalized * dist, coneColor);
+      Ray(position, slerpedVector.normalized * dist, color);
+      Ray(position, Vector3.Slerp(forward, -up, angle / 90.0f).normalized * dist, color);
+      Ray(position, Vector3.Slerp(forward, right, angle / 90.0f).normalized * dist, color);
+      Ray(position, Vector3.Slerp(forward, -right, angle / 90.0f).normalized * dist, color);
 
-      Circle(position + forward, (forward - (slerpedVector.normalized * dist)).magnitude, coneColor, rotation);
-      Circle(position + (forward * 0.5f), ((forward * 0.5f) - (slerpedVector.normalized * (dist * 0.5f))).magnitude, coneColor, rotation);      
+      Circle(position + forward, (forward - (slerpedVector.normalized * dist)).magnitude, rotation * Quaternion.Euler(90.0f, 0.0f, 0.0f), color, continuous);
     }
 
+    /// <summary> Draw a wire cone. </summary>
+    [Conditional("UNITY_EDITOR")]
+    public static void Cone(Vector3 position, float angle, float length, Quaternion? rotation = null, Color? color = null, bool continuous = true) =>
+      Cone(position, angle, length, rotation ?? Quaternion.identity, color ?? Settings.DebugDraw.ConeColor, continuous);
+
     /// <summary> Draw bounds. </summary>
-    /// <remarks>Only available in the Editor</remarks>
-    /// <param name="b">Bounds</param>
-    /// <param name="color">Color</param>
     [Conditional("UNITY_EDITOR")]
     public static void Bounds(Bounds b, Color? color = null)
     {
-      Color boundsColor = color ?? Settings.Draw.BoundsColor;
+      Color boundsColor = color ?? Settings.DebugDraw.BoundsColor;
 
       Vector3 lbf = new(b.min.x, b.min.y, b.max.z);
       Vector3 ltb = new(b.min.x, b.max.y, b.min.z);
       Vector3 rbb = new(b.max.x, b.min.y, b.min.z);
-      Line(b.min, lbf, boundsColor);
-      Line(b.min, ltb, boundsColor);
-      Line(b.min, rbb, boundsColor);
-      
+      Line(b.min, lbf, Quaternion.identity, boundsColor);
+      Line(b.min, ltb, Quaternion.identity, boundsColor);
+      Line(b.min, rbb, Quaternion.identity, boundsColor);
+
       Vector3 rtb = new(b.max.x, b.max.y, b.min.z);
       Vector3 rbf = new(b.max.x, b.min.y, b.max.z);
       Vector3 ltf = new(b.min.x, b.max.y, b.max.z);
-      Line(b.max, rtb, boundsColor);
-      Line(b.max, rbf, boundsColor);
-      Line(b.max, ltf, boundsColor);
+      Line(b.max, rtb, Quaternion.identity, boundsColor);
+      Line(b.max, rbf, Quaternion.identity, boundsColor);
+      Line(b.max, ltf, Quaternion.identity, boundsColor);
 
-      Line(rbb, rbf, boundsColor);
-      Line(rbb, rtb, boundsColor);
+      Line(rbb, rbf, Quaternion.identity, boundsColor);
+      Line(rbb, rtb, Quaternion.identity, boundsColor);
 
-      Line(lbf, rbf, boundsColor);
-      Line(lbf, ltf, boundsColor);
+      Line(lbf, rbf, Quaternion.identity, boundsColor);
+      Line(lbf, ltf, Quaternion.identity, boundsColor);
 
-      Line(ltb, rtb, boundsColor);
-      Line(ltb, ltf, boundsColor);
+      Line(ltb, rtb, Quaternion.identity, boundsColor);
+      Line(ltb, ltf, Quaternion.identity, boundsColor);
     }
 
     /// <summary> Draw bounds. </summary>
-    /// <remarks>Only available in the Editor</remarks>
-    /// <param name="b"></param>
-    /// <param name="color"></param>
     [Conditional("UNITY_EDITOR")]
     public static void Bounds(BoundsInt b, Color color) => Bounds(new Bounds(b.center, b.size), color);
 
     /// <summary> Draw text. </summary>
-    /// <remarks>Only available in the Editor</remarks>
-    /// <param name="position">Position</param>
-    /// <param name="text">Text</param>
-    /// <param name="color">Color</param>
     [Conditional("UNITY_EDITOR")]
-    public static void Text(Vector3 position, string text, Color? color = null) =>
-      ChangeDrawHandle(new TextHandle
+    public static void Text(Vector3 position, string text, GUIStyle style = null)
+    {
+      int index = Instance.GetTextIndex();
+      if (index != -1)
       {
-        position = position,
-        text = text,
-        color = color ?? Settings.Draw.TextColor
-      });
+        textJobs[index].text = text;
+        textJobs[index].position = position;
+        textJobs[index].style = style;
+        textJobs[index].frame = Time.frameCount;
+      }
+    }
   }
 }

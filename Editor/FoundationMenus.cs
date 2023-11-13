@@ -22,6 +22,9 @@ namespace FronkonGames.GameWork.Foundation
   /// <summary> Foundation menus. </summary>
   public static class FoundationMenus
   {
+    [MenuItem("Help/Game:Work/Foundation//Tools/Refresh version")]
+    public static void RefreshVersion() => Version.Refresh();
+
     /// <summary> Open the repository. </summary>
     [MenuItem("Help/Game:Work/Foundation/Open repository")]
     public static void OpenRepository() => Application.OpenURL("https://github.com/FronkonGames/GameWork-Foundation");

@@ -61,5 +61,15 @@ namespace FronkonGames.GameWork.Foundation
                                                        [CallerFilePath]string sourceFile = "",
                                                        [CallerLineNumber]int line = 0) =>
       Assert(type != null && value != null && type.IsInstanceOfType(value) == true, $"{Path.GetFileName(sourceFile)}:{member}:{line} '{nameof(value)}' must be of type '{type?.Name}'.");
+
+    /// <summary> Type can be assigned from object. </summary>
+    /// <param name="type">Type</param>
+    /// <param name="value">Value</param>
+    /// <remarks>Only executed if UNITY_ASSERTIONS is defined.</remarks>
+    [DebuggerStepThrough, Conditional("UNITY_ASSERTIONS")]
+    public static void IsAssignableFrom(Type type, object value, [CallerMemberName] string member = "",
+                                                       [CallerFilePath] string sourceFile = "",
+                                                       [CallerLineNumber] int line = 0) =>
+      Assert(type != null && value != null && type.IsAssignableFrom(value.GetType()) == true, $"{Path.GetFileName(sourceFile)}:{member}:{line} '{nameof(value)}' is not assignable from the given type '{type?.Name}'.");
   }
 }

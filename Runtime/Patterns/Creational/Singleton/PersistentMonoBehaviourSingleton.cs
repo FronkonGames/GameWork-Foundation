@@ -25,7 +25,7 @@ namespace FronkonGames.GameWork.Foundation
   /// </remarks>
   /// <typeparam name="T">Singleton type</typeparam>
   [DisallowMultipleComponent]
-  public abstract class PersistentMonoBehaviourSingleton<T> : BaseMonoBehaviour where T : BaseMonoBehaviour
+  public abstract class PersistentMonoBehaviourSingleton<T> : MonoBehaviour where T : MonoBehaviour
   {
     /// <summary> Instance. </summary>
     public static T Instance => Lazy.Value;
