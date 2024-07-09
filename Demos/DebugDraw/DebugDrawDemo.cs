@@ -17,8 +17,8 @@
 using UnityEngine;
 using FronkonGames.GameWork.Foundation;
 using Random = UnityEngine.Random;
-using FronkonGames.TinyTween;
-using TMPro;
+//using FronkonGames.TinyTween;
+//using TMPro;
 
 /// <summary> Draw test. </summary>
 [ExecuteInEditMode]

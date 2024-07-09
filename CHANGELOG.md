@@ -5,19 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## 0.0.13 - 2023-10-31
+## 0.0.13 - 2024-07-09
 
 ### Added
+- Tailwind colors.
 - Service Locator pattern.
 - Check.IsAssignableFrom().
 - Log.ExceptionArgument(), Log.ExceptionKeyNotFound().
 - Utility to get the version and commit number from Git.
 - Tag attribute.
 - Prototype components: Swing.
+- Added '[Prototype Asset Pack](https://assethunts.itch.io/prototype)' by [AssetHunts](https://assethunts.itch.io/).
+- Added '[Mannequin Character Pack](https://assethunts.itch.io/mannequinfree)' by [AssetHunts](https://assethunts.itch.io/).
 
 ### Changed
 - DebugDraw refactor.
-- BaseMonoBehaviour renamed to CachedMonoBehaviour
+- CachedMonoBehaviour renamed to CachedMonoBehaviour
 - Runtime/Unity/Components moved to Runtime/Development/Prototype.
 - Prototype components put inside the namespace 'FronkonGames.GameWork.Foundation.Prototype' to avoid conflicts with the class names.
 - FPS counter changed by Hardware monitor.
@@ -29,7 +32,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## 0.0.12 - 2023-10-30
 
 ### Added
-- Prototype components: third / first person cameras, material scroller.
+- Prototype components: third / first person cameras, material scrolls.
 
 ### Fixed
 - Small fixes.
@@ -130,7 +133,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - New attributes: Field, FieldGreat, FieldLess, FieldGreatEqual, FieldLessEqual, Slider, MinMaxSlider, MessageBox.
 
 ### Changed
-- Best way to cache components in BaseMonoBehaviour.
+- Best way to cache components in CachedMonoBehaviour.
 - Simplified TimeBlock and MemoryBlock messages.
 - Only the log messages are colored, not the file information, line number, etc.
 - Added 'tooltip' field to LabelAttribute.

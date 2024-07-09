@@ -24,7 +24,7 @@ using UnityEngine.Rendering;
 namespace FronkonGames.GameWork.Foundation
 {
   /// <summary> Drawing of objects for development. </summary>
-  /// <remarks>Only available in the Editor</remarks>
+  /// <remarks> Only available in the Editor. </remarks>
   public partial class DebugDraw : CachedMonoBehaviour
   {
     private struct LineJob

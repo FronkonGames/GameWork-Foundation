@@ -20,7 +20,7 @@ using UnityEngine;
 namespace FronkonGames.GameWork.Foundation
 {
   /// <summary> Drawing of objects for development. </summary>
-  /// <remarks>Only available in the Editor</remarks>
+  /// <remarks> Only available in the Editor. </remarks>
   public static class DebugDrawExtensions
   {
     /// <summary> Draw a point with a three-axis cross. </summary>
