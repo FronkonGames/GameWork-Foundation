@@ -436,5 +436,5 @@ All using generics.
 Code released under [MIT License](https://github.com/FronkonGames/GameWork-Foundation/blob/main/LICENSE.md).
 
 '[Prototype Asset Pack](https://assethunts.itch.io/prototype)' by [AssetHunts](https://assethunts.itch.io/).
-'[Mannequin Character Pack](https://assethunts.itch.io/mannequinfree)' by [AssetHunts](https://assethunts.itch.io/).
-'[Prototype Textures](https://www.kenney.nl/assets/prototype-textures)' by [Kenney](https://www.kenney.nl/).
+
+'[Prototype Textures](https://www.kenney.nl/assets/prototype-textures)' and '[Mannequin Character Pack](https://assethunts.itch.io/mannequinfree)' by [AssetHunts](https://assethunts.itch.io/).
