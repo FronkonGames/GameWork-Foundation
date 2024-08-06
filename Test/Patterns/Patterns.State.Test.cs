@@ -18,38 +18,68 @@ using System.Collections;
 using NUnit.Framework;
 using UnityEngine.TestTools;
 using FronkonGames.GameWork.Foundation;
-using UnityEngine;
 
 /// <summary> Patterns tests. </summary>
 public partial class PatternsTests
 {
-  [ExecuteInEditMode]
-  private class MonoBehaviourSingletonTest : MonoBehaviourSingleton<MonoBehaviourSingletonTest> { };
-  
-  /// <summary> Singleton test. </summary>
+  class StartState : State { }
+  class IntroState : State { }
+  class MenuState  : State { }
+  class GameState  : State { }
+  class PauseState : State { }
+  class QuitState  : State { }
+
+  class TrueCondition : ICondition { public bool Check() => true; }
+
+  class FalseCondition : ICondition { public bool Check() => false; }
+
+  /// <summary> State tests. </summary>
   [UnityTest]
-  public IEnumerator Singleton()
+  public IEnumerator State()
   {
-    Assert.IsFalse(MonoBehaviourSingletonTest.IsCreated);
+    StartState startState = new();
+    IntroState introState = new();
+    MenuState menuState = new();
+    GameState gameState = new();
+    QuitState quitState = new();
 
-    GameObject gameObject = new();
-    MonoBehaviourSingletonTest monoBehaviourSingletonTest = gameObject.AddComponent<MonoBehaviourSingletonTest>();
+    TrueCondition trueCondition = new();
+    FalseCondition falseCondition = new();
 
-    Assert.NotNull(MonoBehaviourSingletonTest.Instance);
-    Assert.AreEqual(monoBehaviourSingletonTest.GetInstanceID(), MonoBehaviourSingletonTest.Instance.GetInstanceID());
-    Assert.IsTrue(MonoBehaviourSingletonTest.IsCreated);
+    StateMachine stateMachine = new();
 
-    gameObject.SafeDestroy();
+    stateMachine.AddTransition(startState, introState, trueCondition);
+    stateMachine.AddTransition(introState, menuState, trueCondition);
+    stateMachine.AddTransition(menuState, quitState, falseCondition);
+    stateMachine.AddTransition(menuState, gameState, trueCondition);
+    stateMachine.AddTransition(gameState, quitState, trueCondition);
 
-    Assert.IsFalse(MonoBehaviourSingletonTest.IsCreated);
+    Assert.IsNull(stateMachine.CurrentState);
 
-    monoBehaviourSingletonTest = MonoBehaviourSingletonTest.Instance;
+    stateMachine.ChangeState(startState);
 
-    Assert.NotNull(monoBehaviourSingletonTest);
-    Assert.IsTrue(MonoBehaviourSingletonTest.IsCreated);
-    Assert.AreEqual(monoBehaviourSingletonTest.GetInstanceID(), MonoBehaviourSingletonTest.Instance.GetInstanceID());
-    
+    Assert.AreEqual(startState, stateMachine.CurrentState);
+
+    stateMachine.Update();
+
+    Assert.AreEqual(introState, stateMachine.CurrentState);
+
+    stateMachine.Update();
+
+    Assert.AreEqual(menuState, stateMachine.CurrentState);
+
+    stateMachine.Update();
+
+    Assert.AreEqual(gameState, stateMachine.CurrentState);
+
+    stateMachine.Update();
+
+    Assert.AreEqual(quitState, stateMachine.CurrentState);
+
+    stateMachine.ChangeState(null);
+
+    Assert.IsNull(stateMachine.CurrentState);
+
     yield return null;
   }
 }
-

@@ -25,10 +25,30 @@ namespace FronkonGames.GameWork.Foundation
     // Int
 
     /// <summary> A random int within [min..max] (range is inclusive). </summary>
-    /// <param name="min">Minimo</param>
-    /// <param name="max">Maximo</param>
+    /// <param name="min">Minimum</param>
+    /// <param name="max">Maximum</param>
     /// <returns>Number</returns>
     public static int Range(int min, int max) => UnityRandom.Range(min, max);
+
+    /// <summary> Four-sided die. </summary>
+    /// <returns> Between 1 and 4. </returns>
+    public static int D4() => Range(1, 4);
+
+    /// <summary> Six-sided dice. </summary>
+    /// <returns> Between 1 and 6. </returns>
+    public static int D6() => Range(1, 6);
+
+    /// <summary> Ten-sided die. </summary>
+    /// <returns> Between 1 and 10. </returns>
+    public static int D10() => Range(1, 10);
+
+    /// <summary> Twenty-sided die. </summary>
+    /// <returns> Between 1 and 20. </returns>
+    public static int D20() => Range(1, 20);
+
+    /// <summary> Hundred-sided die. </summary>
+    /// <returns> Between 1 and 100. </returns>
+    public static int D100() => Range(1, 100);
 
     // 1D
 

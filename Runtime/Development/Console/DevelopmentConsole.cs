@@ -15,6 +15,7 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 namespace FronkonGames.GameWork.Foundation
@@ -44,13 +45,19 @@ namespace FronkonGames.GameWork.Foundation
     private bool show;
     private string input;
     private float lastInputTime = -1.0f;
-    private Vector2 scroll;
+
     private bool needFocus = true;
 
     private readonly List<string> history = new();
     private int historyPointer;
 
+    private Matrix4x4 originalGUIMatrix;
+
+    private GUIStyle styleTextArea, styleTextX;
+
     private const string TextInputName = "ConsoleTextInput";
+
+    private bool AcceptNewInput() => Time.time - lastInputTime > Settings.DevelopmentConsole.AcceptNewCommandTime;
 
     private void LateUpdate()
     {
@@ -68,33 +75,11 @@ namespace FronkonGames.GameWork.Foundation
       {
         ProcessInput();
 
+        PushGUIMatrix();
+
         ConsoleGUI();
-      }
-    }
 
-    private bool AcceptNewInput() => Time.time - lastInputTime > 0.1f;
-
-    private void ConsoleGUI()
-    {
-      GUILayout.BeginArea(new Rect(5, 5, Screen.width - 10, 28), GUI.skin.box);
-      {
-        GUILayout.BeginHorizontal();
-        {
-          GUI.SetNextControlName(TextInputName);
-          input = GUILayout.TextField(input);
-
-          if (GUILayout.Button("X", GUILayout.Width(30)) == true)
-            Show = false;
-        }
-        GUILayout.EndHorizontal();
-      }
-      GUILayout.EndArea();
-
-      if (needFocus == true)
-      {
-        GUI.FocusControl(TextInputName);
-
-        needFocus = false;
+        PullGUIMatrix();
       }
     }
 
@@ -128,6 +113,61 @@ namespace FronkonGames.GameWork.Foundation
       }
     }
 
+    private void PushGUIMatrix()
+    {
+      float ratioWidth = Screen.width / Settings.DevelopmentConsole.DesignScreenWidth;
+      float ratioHeight = Screen.height / Settings.DevelopmentConsole.DesignScreenHeight;
+
+      originalGUIMatrix = GUI.matrix;
+
+      GUI.matrix = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, new Vector3(ratioWidth, ratioHeight, 1.0f));
+    }
+
+    private void ConsoleGUI()
+    {
+      styleTextArea ??= new(EditorStyles.textArea)
+      {
+        fontSize = Settings.DevelopmentConsole.FontSize,
+        alignment = TextAnchor.MiddleLeft,
+        fontStyle = FontStyle.Italic,
+      };
+
+      styleTextX ??= new(EditorStyles.textArea)
+      {
+        fontSize = Settings.DevelopmentConsole.FontSize,
+        alignment = TextAnchor.MiddleCenter,
+        fontStyle = FontStyle.Bold,
+      };
+
+      GUILayout.BeginArea(new Rect(Settings.DevelopmentConsole.Margin,
+                                   Settings.DevelopmentConsole.Margin,
+                                   Settings.DevelopmentConsole.DesignScreenWidth - (Settings.DevelopmentConsole.Margin * 2.0f),
+                                   Settings.DevelopmentConsole.Height), GUI.skin.box);
+      {
+        GUILayout.BeginHorizontal();
+        {
+          float height = Settings.DevelopmentConsole.Height - (Settings.DevelopmentConsole.Margin * 2.0f);
+
+          GUI.SetNextControlName(TextInputName);
+          input = GUILayout.TextField(input, styleTextArea, GUILayout.ExpandHeight(true));
+
+          if (GUILayout.Button("X", styleTextX, GUILayout.Width(Settings.DevelopmentConsole.Height), GUILayout.Height(height)) == true)
+            Show = false;
+        }
+        GUILayout.EndHorizontal();
+      }
+      GUILayout.EndArea();
+
+      if (needFocus == true)
+      {
+        GUI.FocusControl(TextInputName);
+
+        needFocus = false;
+      }
+    }
+
+    private void PullGUIMatrix() => GUI.matrix = originalGUIMatrix;
+
     private void ProcessCommand()
     {
       if (string.IsNullOrEmpty(input) == false)
@@ -152,7 +192,7 @@ namespace FronkonGames.GameWork.Foundation
           if (command != null)
           {
             if (command.Execute(parts.Sub(1, parts.Length - 1)) == false)
-              Log.Warning($"Error executing command '{id}'");
+              Log.Warning($"Error executing command '{id}'. Usage: {command.Usage}");
           }
           else
             Log.Warning($"Invalid command '{id}'");

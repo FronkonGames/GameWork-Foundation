@@ -33,6 +33,7 @@ These are the foundations on which [Game:Work Core](https://github.com/FronkonGa
 ## 🔧 Requisites
 
 - Unity 2022.3 or higher.
+- Universal RP 14.0.11 or higher.
 - Test Framework 1.1.31 or higher.
 
 ## ⚙️ Installation
@@ -93,10 +94,16 @@ The functionality is divided into folders, this is its structure:
 |   |    \_Structural.............. Structure patterns.
 |    \_Utils....................... Utilities.
 |
- \_Editor.......................... Editor utilities.
-    |\_Drawers..................... Custom attribute viewers.
-    |\_Fonts....................... Font for debug.
-     \_Inspector................... Editor appearance utilities.
+|\_Editor.......................... Editor utilities.
+|   |\_Drawers..................... Custom attribute viewers.
+|   |\_Fonts....................... Font for debug.
+|    \_Inspector................... Editor appearance utilities.
+|
+|\_Settings........................ Project settings.
+|\_Demos........................... Demo scenes.
+|\_Media........................... Misc resources.
+ \_Test............................ Unit tests code.
+
 ```
 
 Check the comments for each file for more information.
@@ -421,7 +428,7 @@ Algorithms and data structures.
 
 The most used design patterns:
 
-- Behavioral: [Command](./Runtime/Patterns/Behavioral/Command), [Observer](./Runtime/Patterns/Behavioral/Observer), [Strategy](./Runtime/Patterns/Behavioral/Strategy), [Visitor](./Runtime/Patterns/Behavioral/Visitor).
+- Behavioral: [Command](./Runtime/Patterns/Behavioral/Command), [Observer](./Runtime/Patterns/Behavioral/Observer), [Strategy](./Runtime/Patterns/Behavioral/Strategy), [Visitor](./Runtime/Patterns/Behavioral/Visitor), [State](./Runtime/Patterns/Behavioral/State).
 - Creational: [Service Locator](./Runtime/Patterns/Creational/ServiceLocator/), [Singleton](./Runtime/Patterns/Creational/Singleton).
 - Structural: [Decorator](./Runtime/Patterns/Structural/Decorator).
 

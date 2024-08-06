@@ -26,9 +26,21 @@ namespace FronkonGames.GameWork.Foundation
     {
       public static readonly LogLevel DefaultLevel = LogLevel.Info;
 
-      public static readonly Color InfoColor    = new(0.12f, 0.49f, 0.67f);
-      public static readonly Color WarningColor = new(1.0f, 0.52f, 0.29f);
-      public static readonly Color ErrorColor   = new(1.0f, 0.2f, 0.47f);
+      public static readonly Color InfoColor    = Tailwind.Blue_400;
+      public static readonly Color WarningColor = Tailwind.Orange_400;
+      public static readonly Color ErrorColor   = Tailwind.Red_400;
+    }
+
+    /// <summary> Development console. </summary>
+    public static class DevelopmentConsole
+    {
+      public static readonly float AcceptNewCommandTime = 0.1f;
+
+      public static readonly int FontSize = 30;
+      public static readonly float Height = 48.0f;
+      public static readonly float Margin = 5.0f;
+      public static readonly float DesignScreenWidth = 1920.0f;
+      public static readonly float DesignScreenHeight = 1080.0f;
     }
 
     /// <summary> FPS calculation. </summary>
@@ -41,9 +53,9 @@ namespace FronkonGames.GameWork.Foundation
       public static readonly int WarningFPS = 30;
       public static readonly int BadFPS     = 20;
 
-      public static readonly Color GoodColor    = new(0.2f, 0.8f, 0.2f);
-      public static readonly Color WarningColor = new(0.4f, 0.4f, 0.2f);
-      public static readonly Color BadColor     = new(0.8f, 0.2f, 0.2f);
+      public static readonly Color GoodColor    = Tailwind.Green_500;
+      public static readonly Color WarningColor = Tailwind.Orange_500;
+      public static readonly Color BadColor     = Tailwind.Red_500;
     }
 
     /// <summary> Debug Draw. </summary>
@@ -62,25 +74,25 @@ namespace FronkonGames.GameWork.Foundation
       public static readonly Color AxisXColor    = Color.red;
       public static readonly Color AxisYColor    = Color.green;
       public static readonly Color AxisZColor    = Color.blue;
-      public static readonly Color LineColor     = new(0.941f, 0.796f, 0.788f);
+      public static readonly Color LineColor     = Tailwind.Neutral_500;
 
       public static readonly float LineGapSize   = 0.05f;
-      public static readonly Color ArrowColor    = new(0.043f, 0.561f, 0.988f);
+      public static readonly Color ArrowColor    = Tailwind.Orange_500;
       public static readonly float ArrowTipSize  = 0.25f;
       public static readonly float ArrowWidth    = 0.5f;
-      public static readonly Color RayColor      = "#a94241".FromHex();
+      public static readonly Color RayColor      = Tailwind.Amber_500;
       public static readonly float RayLength     = 1000.0f;
-      public static readonly Color HitColor      = "#C91211".FromHex();
+      public static readonly Color HitColor      = Tailwind.Yellow_200;
       public static readonly float HitRadius     = 0.1f;
       public static readonly float HitLength     = 0.25f;
-      public static readonly Color CircleColor   = "#affff1".FromHex();
-      public static readonly Color CubeColor     = "#bee6e4".FromHex();
-      public static readonly Color SphereColor   = "#f5df8c".FromHex();
-      public static readonly Color ArcColor      = "#90d3be".FromHex();
-      public static readonly Color DiamondColor  = "#f5d59a".FromHex();
+      public static readonly Color CircleColor   = Tailwind.Slate_500;
+      public static readonly Color CubeColor     = Tailwind.Slate_500;
+      public static readonly Color SphereColor   = Tailwind.Slate_500;
+      public static readonly Color ArcColor      = Tailwind.Slate_500;
+      public static readonly Color DiamondColor  = Tailwind.Slate_500;
       public static readonly float DiamondSize   = 0.5f;
-      public static readonly Color ConeColor     = "#f3ed80".FromHex();
-      public static readonly Color BoundsColor   = "#f1c59c".FromHex();
+      public static readonly Color ConeColor     = Tailwind.Slate_500;
+      public static readonly Color BoundsColor   = Tailwind.Slate_500;
     }
 #if UNITY_EDITOR
     /// <summary> Editor parameters. </summary>

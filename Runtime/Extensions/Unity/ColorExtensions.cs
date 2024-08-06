@@ -86,12 +86,7 @@ namespace FronkonGames.GameWork.Foundation
 
     /// <summary> To hex string. </summary>
     /// <returns>String</returns>
-    public static string ToHex(this Color self)
-    {
-      Color32 color32 = self;
-
-      return $"#{color32.r:X2}{color32.g:X2}{color32.b:X2}";
-    }
+    public static string ToHex(this Color self) => $"#{ColorUtility.ToHtmlStringRGB(self)}";
 
     /// <summary> Color to string. </summary>
     /// <param name="self">Value</param>

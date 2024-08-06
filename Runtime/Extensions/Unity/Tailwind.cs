@@ -26,17 +26,17 @@ namespace FronkonGames.GameWork.Foundation
   /// </summary>
   public static class Tailwind
   {
-    public static Color State_50 = FromHTML("#f8fafc");
-    public static Color State_100 = FromHTML("#f1f5f9");
-    public static Color State_200 = FromHTML("#e2e8f0");
-    public static Color State_300 = FromHTML("#cbd5e1");
-    public static Color State_400 = FromHTML("#94a3b8");
-    public static Color State_500 = FromHTML("#64748b");
-    public static Color State_600 = FromHTML("#475569");
-    public static Color State_700 = FromHTML("#334155");
-    public static Color State_800 = FromHTML("#1e293b");
-    public static Color State_900 = FromHTML("#0f172a");
-    public static Color State_950 = FromHTML("#020617");
+    public static Color Slate_50 = FromHTML("#f8fafc");
+    public static Color Slate_100 = FromHTML("#f1f5f9");
+    public static Color Slate_200 = FromHTML("#e2e8f0");
+    public static Color Slate_300 = FromHTML("#cbd5e1");
+    public static Color Slate_400 = FromHTML("#94a3b8");
+    public static Color Slate_500 = FromHTML("#64748b");
+    public static Color Slate_600 = FromHTML("#475569");
+    public static Color Slate_700 = FromHTML("#334155");
+    public static Color Slate_800 = FromHTML("#1e293b");
+    public static Color Slate_900 = FromHTML("#0f172a");
+    public static Color Slate_950 = FromHTML("#020617");
 
     public static Color Gray_50 = FromHTML("#f9fafb");
     public static Color Gray_100 = FromHTML("#f3f4f6");
@@ -290,8 +290,8 @@ namespace FronkonGames.GameWork.Foundation
     public static Color Rose_900 = FromHTML("#881337");
     public static Color Rose_950 = FromHTML("#4c0519");
 
-    private static Color FromHTML(string hex) => new(Convert.ToByte(hex[1..3], 16),
-                                                     Convert.ToByte(hex[3..5], 16),
-                                                     Convert.ToByte(hex[5..7], 16));
+    private static Color FromHTML(string hex) => new(Convert.ToByte(hex[1..3], 16) / 255.0f,
+                                                     Convert.ToByte(hex[3..5], 16) / 255.0f,
+                                                     Convert.ToByte(hex[5..7], 16) / 255.0f);
   }
 }

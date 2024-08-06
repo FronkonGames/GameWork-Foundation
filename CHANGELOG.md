@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.0.14 - 2024-08-06
+
+### Added
+- State pattern.
+- 4, 6, 10, 10, 20 and 100-sided dice added to Rand.
+- Development console configuration parameters added to Settings.
+
+### Changed
+- SRP changed from Built-In to Universal RP (14.0.11).
+
+### Fixed
+- The development console scales correctly with the resolution.
+- Tailwind.FromHTML() fixed.
+- Small fixes.
+
 ## 0.0.13 - 2024-07-09
 
 ### Added

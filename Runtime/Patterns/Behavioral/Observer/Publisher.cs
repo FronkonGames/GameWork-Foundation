@@ -28,7 +28,7 @@ namespace FronkonGames.GameWork.Foundation
     public void AddObserver(IObserver observer) => observers.Add(observer);
 
     /// <summary> Add observers. </summary>
-    /// <param name="observer">Array of abservers</param>
+    /// <param name="observer">Array of observers</param>
     public void AddObservers(IEnumerable<IObserver> observers) => this.observers.AddRange(observers);
 
     /// <summary> Remove an observer. </summary>
@@ -57,7 +57,7 @@ namespace FronkonGames.GameWork.Foundation
     public void AddObserver(IObserver<T> observer) => observers.Add(observer);
 
     /// <summary> Add observers. </summary>
-    /// <param name="observer">Array of abservers</param>
+    /// <param name="observer">Array of observers</param>
     public void AddObservers(IEnumerable<IObserver<T>> observers) => this.observers.AddRange(observers);
 
     /// <summary> Remove an observer. </summary>
@@ -86,7 +86,7 @@ namespace FronkonGames.GameWork.Foundation
     public void AddObserver(IObserver<T0, T1> observer) => observers.Add(observer);
 
     /// <summary> Add observers. </summary>
-    /// <param name="observer">Array of abservers</param>
+    /// <param name="observer">Array of observers</param>
     public void AddObservers(IEnumerable<IObserver<T0, T1>> observers) => this.observers.AddRange(observers);
 
     /// <summary> Remove an observer. </summary>
@@ -115,7 +115,7 @@ namespace FronkonGames.GameWork.Foundation
     public void AddObserver(IObserver<T0, T1, T2> observer) => observers.Add(observer);
 
     /// <summary> Add observers. </summary>
-    /// <param name="observer">Array of abservers</param>
+    /// <param name="observer">Array of observers</param>
     public void AddObservers(IEnumerable<IObserver<T0, T1, T2>> observers) => this.observers.AddRange(observers);
 
     /// <summary> Remove an observer. </summary>

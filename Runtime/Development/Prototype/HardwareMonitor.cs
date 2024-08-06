@@ -110,6 +110,10 @@ namespace FronkonGames.GameWork.Foundation.Prototype
       historyIndex = 0;
     }
 
+    /// <summary> Returns the panel. </summary>
+    /// <returns> Parent panel or null. </returns>
+    public GameObject GetPanel() => processorLabel != null ? processorLabel.transform.parent.gameObject : null;
+
     private void UpdateProcessor()
     {
       if (processorLabel != null)
