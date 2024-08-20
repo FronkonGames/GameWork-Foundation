@@ -14,9 +14,7 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#if UNITY_EDITOR
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Profiling;
 using UnityEngine.Rendering;
@@ -75,7 +73,7 @@ namespace FronkonGames.GameWork.Foundation
     private static TriangleJob[] triangleJobs;
     private static MeshJob[] meshJobs;
     private static TextJob[] textJobs;
-
+#if UNITY_EDITOR
     private Material materialVisible, materialOccluded;
 
     private float occludedTransparency = 1.0f;
@@ -184,22 +182,22 @@ namespace FronkonGames.GameWork.Foundation
 
     private void SubmitTexts()
     {
-      Handles.BeginGUI();
+      UnityEditor.Handles.BeginGUI();
 
       for (int i = 0; i < Settings.DebugDraw.TextCapacity; ++i)
       {
         if (textJobs[i].Alive == true)
         {
-          Vector3 position = HandleUtility.WorldToGUIPointWithDepth(textJobs[i].position);
+          Vector3 position = UnityEditor.HandleUtility.WorldToGUIPointWithDepth(textJobs[i].position);
           if (position.z >= 0.0f)
           {
-            GUIContent content = EditorGUIUtility.TrTempContent(textJobs[i].text);
-            GUI.Label(HandleUtility.WorldPointToSizedRect(textJobs[i].position, content, textJobs[i].style ?? GUI.skin.label), content, textJobs[i].style ?? GUI.skin.label);
+            GUIContent content = UnityEditor.EditorGUIUtility.TrTempContent(textJobs[i].text);
+            GUI.Label(UnityEditor.HandleUtility.WorldPointToSizedRect(textJobs[i].position, content, textJobs[i].style ?? GUI.skin.label), content, textJobs[i].style ?? GUI.skin.label);
           }
         }
       }
 
-      Handles.EndGUI();
+      UnityEditor.Handles.EndGUI();
     }
 
     private int GetLineIndex()
@@ -264,6 +262,14 @@ namespace FronkonGames.GameWork.Foundation
       for (int i = 0; textJobs != null && i < textJobs.Length; ++i)
         textJobs[i].frame = -1;
     }
+#else
+    private int GetLineIndex() => 0;
+
+    private int GetTriangleIndex() => 0;
+
+    private int GetMeshIndex() => 0;
+
+    private int GetTextIndex() => 0;
+#endif
   }
 }
-#endif

@@ -125,14 +125,14 @@ namespace FronkonGames.GameWork.Foundation
 
     private void ConsoleGUI()
     {
-      styleTextArea ??= new(EditorStyles.textArea)
+      styleTextArea ??= new(GUI.skin.textArea)
       {
         fontSize = Settings.DevelopmentConsole.FontSize,
         alignment = TextAnchor.MiddleLeft,
         fontStyle = FontStyle.Italic,
       };
 
-      styleTextX ??= new(EditorStyles.textArea)
+      styleTextX ??= new(GUI.skin.textArea)
       {
         fontSize = Settings.DevelopmentConsole.FontSize,
         alignment = TextAnchor.MiddleCenter,

@@ -193,8 +193,11 @@ namespace FronkonGames.GameWork.Foundation.Prototype
         memory1Label.text = $"RESERVED 0000MB  ALLOC 0000MB";
 
 #if !UNITY_EDITOR
-      if (drawCallLabel != null)
-        drawCallLabel.text = "Draw Calls is only available in the Editor";
+      if (drawCall1Label != null)
+        drawCall1Label.text = "Draw Calls is only available in the Editor";
+      
+      if (drawCall2Label != null)
+        drawCall2Label.text = string.Empty;
 #endif
 
       waitToStart = Settings.FPS.WaitingToStartCounting;

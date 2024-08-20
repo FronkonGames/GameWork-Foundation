@@ -14,9 +14,7 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#if UNITY_EDITOR
 using UnityEngine;
-using UnityEditor;
 using UnityEngine.Rendering;
 
 namespace FronkonGames.GameWork.Foundation
@@ -29,6 +27,7 @@ namespace FronkonGames.GameWork.Foundation
     {
       get
       {
+#if UNITY_EDITOR
         if (instance == null)
         {
           instance = FindAnyObjectByType<DebugDraw>();
@@ -38,16 +37,17 @@ namespace FronkonGames.GameWork.Foundation
             instance = manager.AddComponent<DebugDraw>();
           }
         }
-
+#endif
         return instance;
       }
     }
 
     internal static DebugDraw instance;
 
+#if UNITY_EDITOR
     private void Awake()
     {
-      EditorApplication.playModeStateChanged += OnModeStateChanged;
+      UnityEditor.EditorApplication.playModeStateChanged += OnModeStateChanged;
       UnityEditor.SceneManagement.EditorSceneManager.sceneOpening += OnSceneOpening;
 
       if (GraphicsSettings.renderPipelineAsset == null)
@@ -58,7 +58,7 @@ namespace FronkonGames.GameWork.Foundation
 
     private void OnDestroy()
     {
-      EditorApplication.playModeStateChanged += OnModeStateChanged;
+      UnityEditor.EditorApplication.playModeStateChanged += OnModeStateChanged;
       UnityEditor.SceneManagement.EditorSceneManager.sceneOpening -= OnSceneOpening;
 
       if (GraphicsSettings.renderPipelineAsset == null)
@@ -69,9 +69,9 @@ namespace FronkonGames.GameWork.Foundation
 
     private void OnRendered(ScriptableRenderContext context, Camera camera) => OnDebugRender(camera);
 
-    private void OnModeStateChanged(PlayModeStateChange state) => Clear();
+    private void OnModeStateChanged(UnityEditor.PlayModeStateChange state) => Clear();
 
     private void OnSceneOpening(string path, UnityEditor.SceneManagement.OpenSceneMode mode) => Clear();
+#endif
   }
 }
-#endif

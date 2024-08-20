@@ -1,15 +1,18 @@
-﻿{
-  "name": "FronkonGames.GameWork.Foundation.Editor",
-  "references":
-  [
-    "FronkonGames.GameWork.Foundation"
-  ],
-  "optionalUnityReferences": [],
-  "includePlatforms": [],
-  "excludePlatforms": [],
-  "allowUnsafeCode": false,
-  "overrideReferences": false,
-  "precompiledReferences": [],
-  "autoReferenced": true,
-  "defineConstraints": []
+{
+    "name": "FronkonGames.GameWork.Foundation.Editor",
+    "rootNamespace": "",
+    "references": [
+        "FronkonGames.GameWork.Foundation"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }
