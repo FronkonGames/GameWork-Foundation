@@ -48,6 +48,13 @@ public partial class MathTests
       Assert.IsTrue(sign.NearlyEquals(1.0f) || sign.NearlyEquals(-1.0f));
     }
 
+    for (int i = 0; i < Tries; ++i)
+    {
+      float dir = Rand.Direction1D;
+      
+      Assert.IsTrue(dir.NearlyEquals(1.0f) || dir.NearlyEquals(-1.0f));
+    }
+
     const float min = 0.0f;
     const float max = 10.0f;
     for (int i = 0; i < Tries; ++i)
@@ -55,6 +62,101 @@ public partial class MathTests
       float value = Rand.Range(min, max);
 
       Assert.IsTrue(value >= min && value <= max);
+    }
+
+    // Int range
+    for (int i = 0; i < Tries; ++i)
+    {
+      int value = Rand.Range(1, 6);
+
+      Assert.IsTrue(value >= 1 && value <= 6);
+    }
+
+    // Dice
+    for (int i = 0; i < Tries; ++i)
+    {
+      Assert.IsTrue(Rand.D4() >= 1 && Rand.D4() <= 4);
+      Assert.IsTrue(Rand.D6() >= 1 && Rand.D6() <= 6);
+      Assert.IsTrue(Rand.D10() >= 1 && Rand.D10() <= 10);
+      Assert.IsTrue(Rand.D20() >= 1 && Rand.D20() <= 20);
+      Assert.IsTrue(Rand.D100() >= 1 && Rand.D100() <= 100);
+    }
+
+    // 2D
+    for (int i = 0; i < Tries; ++i)
+    {
+      Vector2 circle = Rand.OnUnitCircle;
+
+      Assert.IsTrue(circle.sqrMagnitude.NearlyEquals(1.0f, 0.01f));
+    }
+
+    for (int i = 0; i < Tries; ++i)
+    {
+      Vector2 dir2D = Rand.Direction2D;
+
+      Assert.IsTrue(dir2D.sqrMagnitude.NearlyEquals(1.0f, 0.01f));
+    }
+
+    for (int i = 0; i < Tries; ++i)
+    {
+      Vector2 inCircle = Rand.InUnitCircle;
+
+      Assert.IsTrue(inCircle.sqrMagnitude <= 1.0f);
+    }
+
+    for (int i = 0; i < Tries; ++i)
+    {
+      Vector2 inSquare = Rand.InUnitSquare;
+
+      Assert.IsTrue(inSquare.x >= 0.0f && inSquare.x <= 1.0f);
+      Assert.IsTrue(inSquare.y >= 0.0f && inSquare.y <= 1.0f);
+    }
+
+    // 3D
+    for (int i = 0; i < Tries; ++i)
+    {
+      Vector3 sphere = Rand.OnUnitSphere;
+
+      Assert.IsTrue(sphere.sqrMagnitude.NearlyEquals(1.0f, 0.01f));
+    }
+
+    for (int i = 0; i < Tries; ++i)
+    {
+      Vector3 dir3D = Rand.Direction3D;
+
+      Assert.IsTrue(dir3D.sqrMagnitude.NearlyEquals(1.0f, 0.01f));
+    }
+
+    for (int i = 0; i < Tries; ++i)
+    {
+      Vector3 inSphere = Rand.InUnitSphere;
+
+      Assert.IsTrue(inSphere.sqrMagnitude <= 1.0f);
+    }
+
+    for (int i = 0; i < Tries; ++i)
+    {
+      Vector3 inCube = Rand.InUnitCube;
+
+      Assert.IsTrue(inCube.x >= 0.0f && inCube.x <= 1.0f);
+      Assert.IsTrue(inCube.y >= 0.0f && inCube.y <= 1.0f);
+      Assert.IsTrue(inCube.z >= 0.0f && inCube.z <= 1.0f);
+    }
+
+    // Angle
+    for (int i = 0; i < Tries; ++i)
+    {
+      float angle = Rand.Angle;
+
+      Assert.IsTrue(angle >= 0.0f && angle <= FronkonGames.GameWork.Foundation.MathConstants.Tau);
+    }
+
+    // Rotation
+    for (int i = 0; i < Tries; ++i)
+    {
+      Quaternion rotation = Rand.Rotation;
+
+      Assert.IsTrue(Mathf.Abs(Quaternion.Dot(rotation, rotation) - 1.0f) < 0.01f);
     }
 
     yield return null;

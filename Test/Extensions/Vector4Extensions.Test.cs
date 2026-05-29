@@ -16,6 +16,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 using System.Collections;
 using NUnit.Framework;
+using UnityEngine;
 using UnityEngine.TestTools;
 using FronkonGames.GameWork.Foundation;
 
@@ -26,8 +27,36 @@ public partial class ExtensionsTests
   [UnityTest]
   public IEnumerator Vector4()
   {
-    // @TODO.
-    
+    Vector4 positive = new(1.0f, 2.0f, 3.0f, 4.0f);
+    Vector4 negative = new(-1.0f, -2.0f, -3.0f, -4.0f);
+
+    Assert.AreEqual(new Vector4(1.0f, 2.0f, 3.0f, 4.0f), positive.Abs());
+    Assert.AreEqual(new Vector4(1.0f, 2.0f, 3.0f, 4.0f), negative.Abs());
+
+    Assert.AreEqual(new Vector4(2.0f, 3.0f, 4.0f, 5.0f), new Vector4(1.1f, 2.1f, 3.1f, 4.1f).Ceil());
+    Assert.AreEqual(new Vector4(1.0f, 2.0f, 3.0f, 4.0f), new Vector4(1.0f, 2.0f, 3.0f, 4.0f).Ceil());
+
+    Assert.AreEqual(new Vector4(0.5f, 0.5f, 0.5f, 0.5f), new Vector4(0.5f, 0.5f, 0.5f, 0.5f).Clamp01());
+    Assert.AreEqual(UnityEngine.Vector4.zero, new Vector4(-1.0f, -2.0f, -3.0f, -4.0f).Clamp01());
+    Assert.AreEqual(UnityEngine.Vector4.one, new Vector4(2.0f, 3.0f, 4.0f, 5.0f).Clamp01());
+
+    Assert.AreEqual(new Vector4(1.0f, 2.0f, 3.0f, 4.0f), new Vector4(1.5f, 2.5f, 3.5f, 4.5f).Floor());
+    Assert.AreEqual(new Vector4(-2.0f, -3.0f, -4.0f, -5.0f), new Vector4(-1.5f, -2.5f, -3.5f, -4.5f).Floor());
+
+    Assert.AreEqual(new Vector4(2.0f, 3.0f, 4.0f, 5.0f), new Vector4(1.6f, 2.6f, 3.6f, 4.6f).Rounded());
+    Assert.AreEqual(new Vector4(1.0f, 2.0f, 3.0f, 4.0f), new Vector4(1.4f, 2.4f, 3.4f, 4.4f).Rounded());
+
+    Assert.AreEqual(new Vector4(1.0f, 2.0f, 3.0f, 0.0f), new Vector4(5.0f, 6.0f, 7.0f, 8.0f).Remainder(new Vector4(4.0f, 4.0f, 4.0f, 4.0f)));
+
+    Assert.IsTrue(positive.NearlyEquals(new Vector4(1.0f, 2.0f, 3.0f, 4.0f)));
+    Assert.IsFalse(positive.NearlyEquals(new Vector4(1.1f, 2.1f, 3.1f, 4.1f)));
+
+    Assert.AreEqual("(1.00, 2.00, 3.00, 4.00)", positive.ToString());
+
+    Assert.AreEqual(new Vector4(1.0f, 2.0f, 3.0f, 4.0f), new Vector4(1.0f, 2.0f, 3.0f, 4.0f).Clamp(UnityEngine.Vector4.zero, new Vector4(5.0f, 5.0f, 5.0f, 5.0f)));
+    Assert.AreEqual(UnityEngine.Vector4.zero, new Vector4(-1.0f, -2.0f, -3.0f, -4.0f).Clamp(UnityEngine.Vector4.zero, UnityEngine.Vector4.one));
+    Assert.AreEqual(UnityEngine.Vector4.one, new Vector4(5.0f, 6.0f, 7.0f, 8.0f).Clamp(UnityEngine.Vector4.zero, UnityEngine.Vector4.one));
+
     yield return null;
   }
 }

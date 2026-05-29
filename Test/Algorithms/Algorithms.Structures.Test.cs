@@ -87,7 +87,6 @@ public partial class AlgorithmsTests
     array1.ForEach(item => sum += item);
     Assert.AreEqual(result, sum);
 
-#if false
     int ops = 1000000;
     int tmp = 0;
     ArrayList<int> array = new();
@@ -140,7 +139,6 @@ public partial class AlgorithmsTests
     Log.Info($"RandAccess({timeRandAccessList / timeRandAccessArray * 100.0f:.02}%): {timeRandAccessArray} ArrayList, {timeRandAccessList}ms List.");
     Log.Info($"RandInsert({timeRandInsertList / timeRandInsertArray * 100.0f:.02}%): {timeRandInsertArray} ArrayList, {timeRandInsertList}ms List.");
     Log.Info($"RandRemove({timeRandRemoveList / timeRandRemoveArray * 100.0f:.02}%): {timeRandRemoveArray} ArrayList, {timeRandRemoveList}ms List.");
-#endif
 
     yield return null;
   }

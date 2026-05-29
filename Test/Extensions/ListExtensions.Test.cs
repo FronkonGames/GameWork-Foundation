@@ -48,6 +48,20 @@ public partial class ExtensionsTests
     Assert.AreEqual(listA.Max(), 9);
     Assert.AreEqual(listA.Min(), 0);
 
+    List<int> swapList = new() { 0, 1, 2, 3, 4 };
+    swapList.Swap(0, 4);
+    Assert.AreEqual(4, swapList[0]);
+    Assert.AreEqual(0, swapList[4]);
+    swapList.Swap(1, 3);
+    Assert.AreEqual(3, swapList[1]);
+    Assert.AreEqual(1, swapList[3]);
+
+    List<int> removeList = new() { 1, 2, 3, 4, 5 };
+    removeList.RemoveRange(new[] { 2, 4 });
+    Assert.AreEqual(3, removeList.Count);
+    Assert.IsFalse(removeList.Contains(2));
+    Assert.IsFalse(removeList.Contains(4));
+
     yield return null;
   }
 }

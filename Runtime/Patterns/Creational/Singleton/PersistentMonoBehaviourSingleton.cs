@@ -21,7 +21,7 @@ namespace FronkonGames.GameWork.Foundation
 {
   /// <summary> Generic lazy persistent between scenes MonoBehaviour singleton thread-safe. </summary>
   /// <remarks>
-  /// FindObjectOfType is executed the first time you call Instance, so it is not recommended to do it in Update() or similar.
+  /// FindFirstObjectByType is executed the first time you call Instance, so it is not recommended to do it in Update() or similar.
   /// </remarks>
   /// <typeparam name="T">Singleton type</typeparam>
   [DisallowMultipleComponent]
@@ -43,7 +43,7 @@ namespace FronkonGames.GameWork.Foundation
 
     private static T LazyCreate()
     {
-      T instance = FindObjectOfType<T>(true);
+      T instance = FindFirstObjectByType<T>(FindObjectsInactive.Include);
       if (instance is null)
       {
         GameObject ownerObject = new(typeof(T).Name);

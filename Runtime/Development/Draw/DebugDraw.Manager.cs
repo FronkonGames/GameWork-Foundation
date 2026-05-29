@@ -50,7 +50,7 @@ namespace FronkonGames.GameWork.Foundation
       UnityEditor.EditorApplication.playModeStateChanged += OnModeStateChanged;
       UnityEditor.SceneManagement.EditorSceneManager.sceneOpening += OnSceneOpening;
 
-      if (GraphicsSettings.renderPipelineAsset == null)
+      if (GraphicsSettings.defaultRenderPipeline == null)
         Camera.onPostRender += OnDebugRender;
       else
         RenderPipelineManager.endCameraRendering += OnRendered;
@@ -61,7 +61,7 @@ namespace FronkonGames.GameWork.Foundation
       UnityEditor.EditorApplication.playModeStateChanged += OnModeStateChanged;
       UnityEditor.SceneManagement.EditorSceneManager.sceneOpening -= OnSceneOpening;
 
-      if (GraphicsSettings.renderPipelineAsset == null)
+      if (GraphicsSettings.defaultRenderPipeline == null)
         Camera.onPostRender -= OnDebugRender;
       else
         RenderPipelineManager.endCameraRendering -= OnRendered;

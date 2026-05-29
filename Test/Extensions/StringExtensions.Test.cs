@@ -16,6 +16,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 using System.Collections;
 using NUnit.Framework;
+using UnityEngine;
 using UnityEngine.TestTools;
 using FronkonGames.GameWork.Foundation;
 
@@ -98,6 +99,26 @@ public partial class ExtensionsTests
 
     Assert.AreEqual("Hello word!".Similarity("Hello word!"), 0);
     Assert.AreNotEqual("Hello word!".Similarity("Hell to word!"), 0);
+
+    byte[] bytes = "Test".ToByteArray();
+    Assert.AreEqual(8, bytes.Length);
+
+    Assert.AreEqual(new UnityEngine.Vector4(1.0f, 2.0f, 3.0f, 4.0f), "1,2,3,4".ToVector4());
+    Assert.AreEqual(UnityEngine.Vector4.zero, "".ToVector4());
+
+    Assert.AreEqual(new UnityEngine.Quaternion(0.0f, 0.0f, 0.0f, 1.0f), "0,0,0,1".ToQuaternion());
+    Assert.AreEqual(UnityEngine.Quaternion.identity, "".ToQuaternion());
+
+    Assert.AreEqual("Camel Case String", "CamelCaseString".ToWords());
+
+    Assert.AreEqual("test", "test".RemoveInvalidFileCharacters());
+
+    string absPath = "Assets/Test".ToAbsolutePath();
+    Assert.IsTrue(absPath.Contains("Assets"));
+
+    string fullPath = $"{Application.dataPath}/SubFolder";
+    string relPath = fullPath.ToRelativePath();
+    Assert.IsTrue(relPath.StartsWith("Assets"));
 
     yield return null;
   }

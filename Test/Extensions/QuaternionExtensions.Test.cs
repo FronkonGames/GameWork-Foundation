@@ -42,7 +42,11 @@ public partial class ExtensionsTests
     Assert.IsFalse(quaternionA.NearlyEquals(quaternionC));
     Assert.IsTrue(quaternionC.NearlyEquals(quaternionD));
     Assert.IsFalse(quaternionC.NearlyEquals(quaternionE));
-    
+
+    UnityEngine.Quaternion q = new(0.0f, 0.0f, 0.0f, 1.0f);
+    string qStr = q.ToString();
+    Assert.IsTrue(qStr.Contains("0") && qStr.Contains("1"));
+
     yield return null;
   }
 }

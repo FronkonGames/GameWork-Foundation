@@ -26,13 +26,13 @@ These are the foundations on which [Game:Work Core](https://github.com/FronkonGa
 - Many [attributes](./Runtime/Attributes) to make your classes more usable in the editor. Custom [Inspector](./Editor/Inspector) to help you create your own inspectors.
 - Multiple utilities to improve your developments: [checkers](./Runtime/Development/Check), [debug draw](./Runtime/Development/Draw), [profiling](./Runtime/Development/Profiling) and a console with custom commands.
 - A lot of .Net and Unity types [extensions](./Runtime/Extensions).
-- The most used [design patterns](./Runtime/Patterns), in generic versions so that they are easy to adapt to your needs.
+- The most used [design patterns](./Runtime/Patterns) (15 patterns), in generic versions so that they are easy to adapt to your needs.
 - [Utilities](./Runtime/Development/Prototype/) to speed up prototyping time.
 - Commented code with test units.
 
 ## 🔧 Requisites
 
-- Unity 2022.3 or higher.
+- Unity 6000.0 or higher.
 - Universal RP 14.0.11 or higher.
 - Test Framework 1.1.31 or higher.
 
@@ -91,7 +91,8 @@ The functionality is divided into folders, this is its structure:
 |   |\_Patterns.................... Design patterns.
 |   |   |\_Behavioral.............. Behavioural patterns.
 |   |   |\_Creational.............. Creation patterns.
-|   |    \_Structural.............. Structure patterns.
+|   |   |\_Structural.............. Structure patterns.
+|   |    \_Optimization............ Optimization patterns.
 |    \_Utils....................... Utilities.
 |
 |\_Editor.......................... Editor utilities.
@@ -426,13 +427,12 @@ Algorithms and data structures.
 
 ### Patterns
 
-The most used design patterns:
+The most used design patterns, all using generics:
 
-- Behavioral: [Command](./Runtime/Patterns/Behavioral/Command), [Observer](./Runtime/Patterns/Behavioral/Observer), [Strategy](./Runtime/Patterns/Behavioral/Strategy), [Visitor](./Runtime/Patterns/Behavioral/Visitor), [State](./Runtime/Patterns/Behavioral/State).
-- Creational: [Service Locator](./Runtime/Patterns/Creational/ServiceLocator/), [Singleton](./Runtime/Patterns/Creational/Singleton).
-- Structural: [Decorator](./Runtime/Patterns/Structural/Decorator).
-
-All using generics.
+- Behavioral: [Chain of Responsibility](./Runtime/Patterns/Behavioral/ChainOfResponsibility), [Command](./Runtime/Patterns/Behavioral/Command), [Mediator](./Runtime/Patterns/Behavioral/Mediator), [Memento](./Runtime/Patterns/Behavioral/Memento), [Observer](./Runtime/Patterns/Behavioral/Observer), [State](./Runtime/Patterns/Behavioral/State), [Strategy](./Runtime/Patterns/Behavioral/Strategy), [Visitor](./Runtime/Patterns/Behavioral/Visitor).
+- Creational: [Builder](./Runtime/Patterns/Creational/Builder), [Factory](./Runtime/Patterns/Creational/Factory), [Service Locator](./Runtime/Patterns/Creational/ServiceLocator/), [Singleton](./Runtime/Patterns/Creational/Singleton).
+- Structural: [Composite](./Runtime/Patterns/Structural/Composite), [Decorator](./Runtime/Patterns/Structural/Decorator).
+- Optimization: [Object Pool](./Runtime/Patterns/Optimization/ObjectPool).
 
 ### Unit tests
 

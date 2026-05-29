@@ -1,0 +1,51 @@
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Copyright (c) Martin Bustos @FronkonGames <fronkongames@gmail.com>
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+// documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
+// rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
+// permit persons to whom the Software is furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all copies or substantial portions of
+// the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+// WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+// COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+using System.Collections;
+using NUnit.Framework;
+using UnityEngine;
+using UnityEngine.TestTools;
+using FronkonGames.GameWork.Foundation;
+
+/// <summary> Extensions test. </summary>
+public partial class ExtensionsTests
+{
+  /// <summary> LayerMask extensions test. </summary>
+  [UnityTest]
+  public IEnumerator LayerMaskExtensions()
+  {
+    LayerMask defaultMask = ~0;
+    Assert.IsTrue(defaultMask.CheckLayermask(0));
+    Assert.IsTrue(defaultMask.CheckLayermask(1));
+
+    LayerMask noMask = 0;
+    Assert.IsFalse(noMask.CheckLayermask(0));
+
+    LayerMask layer0Only = 1 << 0;
+    Assert.IsTrue(layer0Only.CheckLayermask(0));
+    Assert.IsFalse(layer0Only.CheckLayermask(1));
+
+    GameObject go = new("LayerTest");
+    go.layer = 5;
+    LayerMask layer5Mask = 1 << 5;
+    Assert.IsTrue(layer5Mask.CheckLayermask(go));
+    Assert.IsFalse(layer5Mask.CheckLayermask(0));
+
+    go.SafeDestroy();
+
+    yield return null;
+  }
+}

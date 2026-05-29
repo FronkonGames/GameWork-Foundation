@@ -48,7 +48,31 @@ public partial class ExtensionsTests
     Assert.AreEqual(UnityEngine.Color.white, UnityEngine.Color.white.SetSaturation(0.0f));
     Assert.AreEqual(UnityEngine.Color.red, UnityEngine.Color.red.SetSaturation(1.0f));
     Assert.AreEqual(UnityEngine.Color.white, UnityEngine.Color.red.SetSaturation(0.0f));
-    
+
+    Assert.AreEqual(0.5f, UnityEngine.Color.red.SetValue(0.5f).r, 0.01f);
+
+    Assert.AreEqual(UnityEngine.Color.magenta, "#FF00FF".FromHex());
+    Assert.AreEqual(UnityEngine.Color.red, "#FF0000".FromHex());
+
+    string hex = UnityEngine.Color.magenta.ToHex();
+    Assert.AreEqual("#FF00FF", hex);
+    Assert.AreEqual(UnityEngine.Color.magenta, hex.FromHex());
+
+    string colorStr = UnityEngine.Color.white.ToString();
+    Assert.IsTrue(colorStr.Contains("1"));
+
+    Assert.AreEqual(new UnityEngine.Color(1.0f, 0.0f, 0.0f, 1.0f), UnityEngine.Color.red.Opaque());
+    Assert.AreEqual(1.0f, UnityEngine.Color.red.Opaque().a);
+
+    Assert.AreEqual(new UnityEngine.Color(1.0f, 0.0f, 0.0f, 0.5f), UnityEngine.Color.red.WithAlpha(0.5f));
+
+    UnityEngine.Color random = ColorExtensions.Random();
+    Assert.AreEqual(1.0f, random.a);
+
+    UnityEngine.Color randomInst = UnityEngine.Color.black;
+    UnityEngine.Color randomResult = randomInst.Random();
+    Assert.AreEqual(1.0f, randomResult.a);
+
     yield return null;
   }
 }

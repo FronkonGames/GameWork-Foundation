@@ -34,7 +34,7 @@ namespace FronkonGames.GameWork.Foundation
       get
       {
         if (console is null)
-          console = FindObjectOfType<DevelopmentConsole>();
+          console = FindAnyObjectByType<DevelopmentConsole>();
 
         return console;
       }

@@ -21,7 +21,7 @@ namespace FronkonGames.GameWork.Foundation
 {
   /// <summary> Generic lazy non-persistent between scenes MonoBehaviour singleton thread-safe. </summary>
   /// <remarks>
-  /// FindObjectOfType is executed the first time you call Instance, so it is not recommended to do it in Update() or similar.
+  /// FindFirstObjectByType is executed the first time you call Instance, so it is not recommended to do it in Update() or similar.
   /// </remarks>
   /// <typeparam name="T">Singleton type</typeparam>
   [DisallowMultipleComponent]
@@ -41,7 +41,7 @@ namespace FronkonGames.GameWork.Foundation
 
     private static Lazy<T> lazy;
 
-    private static T LazyCreate() => FindObjectOfType<T>(true) ?? new GameObject(typeof(T).Name).AddComponent<T>();
+    private static T LazyCreate() => FindFirstObjectByType<T>(FindObjectsInactive.Include) ?? new GameObject(typeof(T).Name).AddComponent<T>();
 
     /// <remarks> Don't forget to call 'base.OnDestroy()' in the overloaded method. </remarks>
     protected virtual void OnDestroy() => Lazy = null;

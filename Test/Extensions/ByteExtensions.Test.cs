@@ -42,6 +42,11 @@ public partial class ExtensionsTests
     Assert.AreEqual(((byte)0b00).ToggleBit(1), (byte)0b10);
     Assert.AreEqual(((byte)0b10).ToggleBit(1), (byte)0b00);
 
+    Assert.AreEqual("00000000", ((byte)0).ToBinaryString());
+    Assert.AreEqual("00000001", ((byte)1).ToBinaryString());
+    Assert.AreEqual("11111111", ((byte)255).ToBinaryString());
+    Assert.AreEqual("01010101", ((byte)85).ToBinaryString());
+
     yield return null;
   }
 }

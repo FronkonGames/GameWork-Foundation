@@ -46,7 +46,7 @@ namespace FronkonGames.GameWork.Foundation.Prototype
     private void FixedUpdate()
     {
       if (rigidbody != null)
-        rigidbody.velocity = speed * this.transform.forward;
+        rigidbody.linearVelocity = speed * this.transform.forward;
     }
   }
 }

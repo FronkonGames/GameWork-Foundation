@@ -1,0 +1,47 @@
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Copyright (c) Martin Bustos @FronkonGames <fronkongames@gmail.com>
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+// documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
+// rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
+// permit persons to whom the Software is furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all copies or substantial portions of
+// the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+// WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+// COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+using System;
+
+namespace FronkonGames.GameWork.Foundation
+{
+  /// <summary> Base handler for Chain of Responsibility. Provides chain management. </summary>
+  /// <typeparam name="TRequest">The request type.</typeparam>
+  /// <typeparam name="TResponse">The response type.</typeparam>
+  public abstract class Handler<TRequest, TResponse> : IHandler<TRequest, TResponse>
+  {
+    private IHandler<TRequest, TResponse> next;
+
+    /// <summary> Set the next handler in the chain. </summary>
+    public IHandler<TRequest, TResponse> SetNext(IHandler<TRequest, TResponse> nextHandler)
+    {
+      next = nextHandler;
+      return nextHandler;
+    }
+
+    /// <summary> Handle the request. Override to implement your logic. </summary>
+    public abstract TResponse Handle(TRequest request);
+
+    /// <summary> Pass the request to the next handler if it exists. </summary>
+    protected TResponse HandleNext(TRequest request)
+    {
+      if (next != null)
+        return next.Handle(request);
+
+      return default;
+    }
+  }
+}
