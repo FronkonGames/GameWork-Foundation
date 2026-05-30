@@ -43,6 +43,12 @@ public partial class ExtensionsTests
     List<GameObject> allIncludingSelf = go.GetAllChildrenAndSelf();
     Assert.AreEqual(3, allIncludingSelf.Count);
 
+    go.SetActiveSelf(true);
+    Assert.IsTrue(go.activeSelf);
+    GameObject namedChild = new("NamedChild");
+    namedChild.transform.SetParent(go.transform);
+    Assert.AreEqual(namedChild, go.GetChildByName("Named"));
+
     go.SafeDestroy();
     child1.SafeDestroy();
     child2.SafeDestroy();

@@ -25,8 +25,9 @@ These are the foundations on which [Game:Work Core](https://github.com/FronkonGa
 - Architecture agnostic, use it in any code.
 - Many [attributes](./Runtime/Attributes) to make your classes more usable in the editor. Custom [Inspector](./Editor/Inspector) to help you create your own inspectors.
 - Multiple utilities to improve your developments: [checkers](./Runtime/Development/Check), [debug draw](./Runtime/Development/Draw), [profiling](./Runtime/Development/Profiling) and a console with custom commands.
-- A lot of .Net and Unity types [extensions](./Runtime/Extensions).
+- A lot of .Net and Unity types [extensions](./Runtime/Extensions) (System, Unity, functional, enum, collider, texture, animator, MonoBehaviour, and more).
 - The most used [design patterns](./Runtime/Patterns) (15 patterns), in generic versions so that they are easy to adapt to your needs.
+- [Data Holders](./Runtime/Data/Holders) system with typed ScriptableObject holders and generic Option class for local/global value configuration.
 - [Utilities](./Runtime/Development/Prototype/) to speed up prototyping time.
 - Commented code with test units.
 
@@ -78,6 +79,9 @@ The functionality is divided into folders, this is its structure:
 |   |    \_Structures.............. Data structures.
 |   |\_Attributes.................. Attributes for fields and class properties.
 |   |\_Components.................. Components.
+|   |\_Data......................... Data utilities.
+|   |   |\_Holders.................. ScriptableObject value holders.
+|   |    \_Serialization............ Serializable types for Unity (DateTime, Time, Dictionary).
 |   |\_Development................. Developer utilities.
 |   |   |\_Check................... Assert extension.
 |   |   |\_Console................. Development console.
@@ -423,7 +427,7 @@ Output the message: "**Task 'Some hungry code' consume 4.00 kb**".
 
 Algorithms and data structures.
 
-- Structures: [ArrayList](./Runtime/Algorithms/Structures/ArrayList.cs).
+- Structures: [ArrayList](./Runtime/Algorithms/Structures/ArrayList.cs), [FastList](./Runtime/Algorithms/Structures/FastList.cs).
 
 ### Patterns
 
@@ -434,7 +438,43 @@ The most used design patterns, all using generics:
 - Structural: [Composite](./Runtime/Patterns/Structural/Composite), [Decorator](./Runtime/Patterns/Structural/Decorator).
 - Optimization: [Object Pool](./Runtime/Patterns/Optimization/ObjectPool).
 
+### Data Holders
+
+Typed ScriptableObject holders for decoupled data configuration:
+
+```c#
+// Create a holder asset: Create > GameWork > Data Holders > Float Holder
+[CreateAssetMenu(menuName = "GameWork/Data Holders/Float Holder")]
+public class FloatHolder : ScriptableObject, IValueHolder<float>
+{
+  [SerializeField] private float value = 0f;
+  public float GetValue() => value;
+  public void SetValue(float newValue) => value = newValue;
+}
+
+// Use Option for flexible local/global configuration
+[System.Serializable]
+public class Option<TValue, THolder> where THolder : ScriptableObject, IValueHolder<TValue>
+{
+  // Mode: Disabled, LocalValue, GlobalValue
+  // Value returns local or global based on mode
+}
+```
+
+Available holders: Bool, Int, Float, String, Color, Vector2/3/4, Quaternion, GameObject, Transform, AudioClip, Material, Sprite, Texture, LayerMask, Collider, Collider2D, Rigidbody, Rigidbody2D, RectTransform.
+
+### Serialization
+
+Serializable wrappers for .NET types that Unity cannot serialize directly:
+
+- **SerializableDateTime**: Wraps `System.DateTime` into serializable int fields. Supports implicit conversion to/from `DateTime`.
+- **SerializableTime**: Wraps `TimeSpan` as a serializable struct with days/hours/minutes/seconds/milliseconds. Factory methods: `FromSeconds`, `FromTicks`, `FromTimeSpan`, `FromDateTime`.
+- **SerializableDictionary**: A serializable `Dictionary<TKey, TValue>` using `ISerializationCallbackReceiver`. Factory methods: `FromDictionary`, `FromKeyPairValueList`.
+- **SerializableKeyValuePair**: A serializable `KeyValuePair<TKey, TValue>` with implicit conversions.
+
 ### Unit tests
+
+More than 400 tests.
 
 <p align="center"><img src="Media/unittests.png"/></p>
 

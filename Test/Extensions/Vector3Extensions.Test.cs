@@ -61,6 +61,11 @@ public partial class ExtensionsTests
     Assert.AreEqual(new Vector3(0.0f, 0.0f, 0.0f), new Vector3(-1.0f, -2.0f, -3.0f).Clamp(UnityEngine.Vector3.zero, UnityEngine.Vector3.one));
     Assert.AreEqual(UnityEngine.Vector3.one, new Vector3(5.0f, 6.0f, 7.0f).Clamp(UnityEngine.Vector3.zero, UnityEngine.Vector3.one));
 
+    Assert.AreEqual(2.0f, new Vector3(1.0f, 2.0f, 3.0f).Median(), 0.01f);
+    UnityEngine.Vector3 rotated = new Vector3(0.0f, 0.0f, 1.0f).RotateY(90.0f);
+    Assert.IsTrue(Mathf.Abs(rotated.x - 1.0f) < 0.01f);
+    Assert.IsTrue(Mathf.Abs(rotated.z) < 0.01f);
+
     yield return null;
   }
 }

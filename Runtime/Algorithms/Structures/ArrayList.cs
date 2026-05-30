@@ -20,7 +20,42 @@ using System.Runtime.CompilerServices;
 
 namespace FronkonGames.GameWork.Foundation
 {
-  /// <summary> Generic array-based list. </summary>
+  /// <summary>
+  /// A general-purpose array-backed list with a List<T>-like API and ordered removal.
+  ///
+  /// Benefits over List<T>:
+  /// - Lightweight class with no interface overhead beyond IEnumerable<T>.
+  /// - Direct index access via the indexer and predictable 2x capacity growth.
+  /// - Rich search and mutation helpers: Find, FindAll, GetRange, Reverse, Resize, Insert.
+  /// - RemoveAt preserves element order (unlike swap-remove lists).
+  ///
+  /// Trade-offs:
+  /// - RemoveAt is O(N) because elements are shifted after removal.
+  /// - Allocates a new backing array on growth (not pooled like FastList<T>).
+  /// - foreach uses a yield-based enumerator (allocates on the heap).
+  /// - Prefer FastList<T> when you need zero-GC pooling and O(1) unordered removal.
+  ///
+  /// Usage:
+  /// <code>
+  /// // Basic usage
+  /// var list = new ArrayList<int>(8);
+  /// list.Add(10);
+  /// list.Add(20);
+  /// list.Insert(1, 15);
+  /// list.RemoveAt(0); // O(N), order preserved
+  ///
+  /// // Search and filter
+  /// int index = list.IndexOf(15);
+  /// int found = list.FindIndex(x => x > 10);
+  /// ArrayList<int> matches = list.FindAll(x => x % 2 == 0);
+  ///
+  /// // Convert or copy
+  /// int[] array = list.ToArray();
+  /// List<int> copy = list.ToList();
+  /// ArrayList<int> slice = list.GetRange(0, 2);
+  /// </code>
+  /// </summary>
+  /// <typeparam name="T">Element type.</typeparam>
   public class ArrayList<T> : IEnumerable<T>
   {
     /// <summary> Number of elements. </summary>

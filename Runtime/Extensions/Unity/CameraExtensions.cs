@@ -19,56 +19,40 @@ using UnityEngine;
 namespace FronkonGames.GameWork.Foundation
 {
   /// <summary> Camera extensions. </summary>
-  public static class CameraExtensions
+  public static class CameraExt
   {
-    /// <summary> GUI position to world position. </summary>
-    /// <param name="guiPosition"> GUI space position. </param>
-    /// <returns>World position.</returns>
-    public static Vector3 GUIPositionToWorldPosition(this Camera self, Vector2 guiPosition) =>
-      self.ScreenPointToRay(guiPosition).GetPoint(0.0f);
-
-    /// <summary> GUI offset to world position. </summary>
-    /// <param name="guiDelta"> GUI delta position. </param>
-    /// <returns>World position.</returns>
-    public static Vector3 GUIDeltaToWorldDelta(this Camera self, Vector2 guiDelta)
+    /// <summary> Calculates viewport extents with an optional margin. Useful for frustum culling. </summary>
+    /// <param name="camera">Camera.</param>
+    /// <param name="viewportMargin">Optional margin added to each side of the viewport.</param>
+    /// <returns>Viewport extents in world units.</returns>
+    public static Vector2 GetViewportExtentsWithMargin(this Camera camera, Vector2? viewportMargin = null)
     {
-      Vector3 screenDelta = GUIUtility.GUIToScreenPoint(guiDelta);
-      Ray worldRay = self.ScreenPointToRay(screenDelta);
+      float halfHeight = camera.orthographic ? camera.orthographicSize : camera.WorldToScreenPoint(camera.transform.position + camera.transform.forward * camera.nearClipPlane).y / camera.pixelHeight * camera.nearClipPlane;
+      float halfWidth = halfHeight * camera.aspect;
 
-      Vector3 worldDelta = worldRay.GetPoint(0.0f);
-      worldDelta -= self.ScreenPointToRay(Vector3.zero).GetPoint(0.0f);
+      Vector2 margin = viewportMargin ?? Vector2.zero;
 
-      return worldDelta;
+      return new Vector2(halfWidth + margin.x, halfHeight + margin.y);
     }
 
-    /// <summary> Is object visible? </summary>
-    /// <param name="renderer">Renderer object.</param>
-    /// <returns> True or false. </returns>
-    public static bool IsObjectVisible(this Camera self, Renderer renderer) =>
-      GeometryUtility.TestPlanesAABB(GeometryUtility.CalculateFrustumPlanes(self), renderer.bounds);
-
-    /// <summary> Is point visible? </summary>
-    /// <param name="point">Point.</param>
-    /// <returns> True or false. </returns>
-    public static bool IsPointVisible(this Camera self, Vector3 point)
+    /// <summary> Returns the world position at the center of the camera's view. </summary>
+    /// <param name="camera">Camera.</param>
+    /// <returns>World position at the center of the viewport.</returns>
+    public static Vector3 GetCenterWorldPosition(this Camera camera)
     {
-      Vector3 p = self.WorldToViewportPoint(point);
-
-      return p.x >= 0.0f && p.x <= 1.0f && p.y >= 0.0f && p.y <= 1.0f;
+      return camera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, camera.nearClipPlane));
     }
 
-    /// <summary> Visible rectangle. </summary>
-    /// <returns>Orthographic rect.</returns>
-    public static Rect OrthographicVisibleRect(this Camera self)
+    /// <summary> Returns the world position at a screen point. </summary>
+    /// <param name="camera">Camera.</param>
+    /// <param name="screenPosition">Screen position in pixels.</param>
+    /// <param name="depth">Distance from the camera along its forward axis.</param>
+    /// <returns>World position corresponding to the screen point.</returns>
+    public static Vector3 ScreenToWorldPosition(this Camera camera, Vector3 screenPosition, float depth)
     {
-      Check.True(self.orthographic);
+      screenPosition.z = depth;
 
-      return new Rect(self.transform.position - new Vector3(self.aspect * self.orthographicSize, self.orthographicSize),
-        new Vector2
-        (
-          self.aspect * self.orthographicSize * 2.0f,
-          self.orthographicSize * 2.0f
-        ));
+      return camera.ScreenToWorldPoint(screenPosition);
     }
   }
 }

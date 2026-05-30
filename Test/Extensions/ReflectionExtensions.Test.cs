@@ -18,7 +18,6 @@ using System.Collections;
 using System.Reflection;
 using NUnit.Framework;
 using UnityEngine.TestTools;
-using UnityEngine;
 using FronkonGames.GameWork.Foundation;
 
 /// <summary> Extensions test. </summary>

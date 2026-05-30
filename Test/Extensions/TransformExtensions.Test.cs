@@ -78,6 +78,29 @@ public partial class ExtensionsTests
     t.ResetLocal();
     Assert.AreEqual(UnityEngine.Vector3.zero, t.localPosition);
 
+    GameObject source = new("Source");
+    source.transform.position = new Vector3(1.0f, 2.0f, 3.0f);
+    source.transform.rotation = UnityEngine.Quaternion.Euler(10.0f, 20.0f, 30.0f);
+    source.transform.localScale = new Vector3(2.0f, 3.0f, 4.0f);
+    t.CopyDataFrom(source.transform);
+    Assert.AreEqual(source.transform.position, t.position);
+    Assert.IsTrue(source.transform.rotation.NearlyEquals(t.rotation));
+    t.CopyDataFrom(source.transform, copyScale: true);
+    Assert.AreEqual(source.transform.localScale, t.localScale);
+    source.SafeDestroy();
+
+    Assert.IsFalse(t.IsDefault());
+    t.ResetWorld();
+    Assert.IsTrue(t.IsDefault());
+    GameObject child = new("ChildFind");
+    child.transform.SetParent(t);
+    Assert.IsTrue(t.TryFindChildWithName("ChildFind", out Transform found));
+    Assert.AreEqual(child.transform, found);
+    Assert.AreEqual(parent.transform, t.GetMainParent());
+    t.ScaleTo(new Vector3(2.0f, 2.0f, 2.0f));
+    Assert.AreEqual(new Vector3(2.0f, 2.0f, 2.0f), t.localScale);
+    child.SafeDestroy();
+
     go.SafeDestroy();
     parent.SafeDestroy();
 

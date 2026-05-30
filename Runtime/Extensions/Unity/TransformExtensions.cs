@@ -15,6 +15,7 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 namespace FronkonGames.GameWork.Foundation
@@ -30,6 +31,14 @@ namespace FronkonGames.GameWork.Foundation
         return self.name;
 
       return $"{self.parent.GetPath()}/{self.name}";
+    }
+
+    /// <summary> Copies position and rotation from another transform. Optionally copies local scale. </summary>
+    public static void CopyDataFrom(this Transform transform, Transform source, bool copyScale = false)
+    {
+      transform.SetPositionAndRotation(source.position, source.rotation);
+      if (copyScale)
+        transform.localScale = source.localScale;
     }
 
     /// <summary> Find a child by name, recursively. </summary>
@@ -89,34 +98,40 @@ namespace FronkonGames.GameWork.Foundation
 
     /// <summary> Sets the X-axis. </summary>
     /// <param name="x">X axis</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void SetX(this Transform self, float x) => self.position = new Vector3(x, self.position.y, self.position.z);
 
     /// <summary> Sets the Y-axis. </summary>
     /// <param name="self">Transform</param>
     /// <param name="y">Y axis.</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void SetY(this Transform self, float y) => self.position = new Vector3(self.position.x, y, self.position.z);
 
     /// <summary> Sets the Z-axis. </summary>
     /// <param name="self">Transform</param>
     /// <param name="z">Z axis</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void SetZ(this Transform self, float z) => self.position = new Vector3(self.position.x, self.position.y, z);
 
     /// <summary> Sets the XY-axis. </summary>
     /// <param name="self">Transform</param>
     /// <param name="x">X axis</param>
     /// <param name="y">Y axis</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void SetXY(this Transform self, float x, float y) => self.position = new Vector3(x, y, self.position.z);
 
     /// <summary> Sets the XZ-axis. </summary>
     /// <param name="self">Transform</param>
     /// <param name="x">X axis</param>
     /// <param name="y">Z axis</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void SetXZ(this Transform self, float x, float z) => self.position = new Vector3(x, self.position.y, z);
 
     /// <summary> Sets the YZ-axis. </summary>
     /// <param name="self">Transform</param>
     /// <param name="x">Y axis</param>
     /// <param name="y">Z axis</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void SetYZ(this Transform self, float y, float z) => self.position = new Vector3(self.position.x, y, z);
 
     /// <summary> Sets the XYZ-axis. </summary>
@@ -124,24 +139,28 @@ namespace FronkonGames.GameWork.Foundation
     /// <param name="x">X axis</param>
     /// <param name="y">Y axis</param>
     /// <param name="z">Z axis</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void SetXYZ(this Transform self, float x, float y, float z) => self.position = new Vector3(x, y, z);
 
     /// <summary> Translates this transform along the X axis. </summary>
     /// <param name="self">Transform</param>
     /// <param name="y">Y axis</param>
     /// <param name="local">Use localPosition instead position</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void TranslateX(this Transform self, float x, bool local = false) => self.TranslateXYZ(x, 0.0f, 0.0f, local);
 
     /// <summary> Translates this transform along the Y axis. </summary>
     /// <param name="self">Transform</param>
     /// <param name="y">Y axis</param>
     /// <param name="local">Use localPosition instead position</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void TranslateY(this Transform self, float y, bool local = false) => self.TranslateXYZ(0.0f, y, 0.0f, local);
 
     /// <summary> Translates this transform along the Z axis. </summary>
     /// <param name="self">Transform</param>
     /// <param name="z">Z axis</param>
     /// <param name="local">Use localPosition instead position</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void TranslateZ(this Transform self, float z, bool local = false) => self.TranslateXYZ(0.0f, 0.0f, z, local);
 
     /// <summary> Translates this transform along the X and Y axes. </summary>
@@ -149,6 +168,7 @@ namespace FronkonGames.GameWork.Foundation
     /// <param name="x">X axis</param>
     /// <param name="y">Y axis</param>
     /// <param name="local">Use localPosition instead position</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void TranslateXY(this Transform self, float x, float y, bool local = false) => self.TranslateXYZ(x, y, 0.0f, local);
 
     /// <summary> Translates this transform along the X and Z axes. </summary>
@@ -156,6 +176,7 @@ namespace FronkonGames.GameWork.Foundation
     /// <param name="x">X axis</param>
     /// <param name="z">Z axis</param>
     /// <param name="local">Use localPosition instead position</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void TranslateXZ(this Transform self, float x, float z, bool local = false) => self.TranslateXYZ(x, 0.0f, z, local);
 
     /// <summary> Translates this transform along the Y and Z axes. </summary>
@@ -163,6 +184,7 @@ namespace FronkonGames.GameWork.Foundation
     /// <param name="y">Y axis</param>
     /// <param name="z">Z axis</param>
     /// <param name="local">Use localPosition instead position</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void TranslateYZ(this Transform self, float y, float z, bool local = false) => self.TranslateXYZ(0.0f, y, z, local);
 
     /// <summary> Translates this transform along the X, Y and Z axis. </summary>
@@ -184,34 +206,40 @@ namespace FronkonGames.GameWork.Foundation
     /// <summary> Sets the local X position of this transform. </summary>
     /// <param name="self">Transform</param>
     /// <param name="x">X axis</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void SetLocalX(this Transform self, float x) => self.localPosition = new Vector3(x, self.localPosition.y, self.localPosition.z);
 
     /// <summary> Sets the local Y position of this transform. </summary>
     /// <param name="self">Transform</param>
     /// <param name="y">Y axis</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void SetLocalY(this Transform self, float y) => self.localPosition = new Vector3(self.localPosition.x, y, self.localPosition.z);
 
     /// <summary> Sets the local Z position of this transform. </summary>
     /// <param name="self">Transform</param>
     /// <param name="z">Z axis</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void SetLocalZ(this Transform self, float z) => self.localPosition = new Vector3(self.localPosition.x, self.localPosition.y, z);
 
     /// <summary> Sets the local X and Y position of this transform. </summary>
     /// <param name="self">Transform</param>
     /// <param name="x">X axis</param>
     /// <param name="y">Y axis</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void SetLocalXY(this Transform self, float x, float y) => self.localPosition = new Vector3(x, y, self.localPosition.z);
 
     /// <summary> Sets the local X and Z position of this transform. </summary>
     /// <param name="self">Transform</param>
     /// <param name="x">X axis</param>
     /// <param name="z">Z axis</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void SetLocalXZ(this Transform self, float x, float z) => self.localPosition = new Vector3(x, self.localPosition.z, z);
 
     /// <summary> Sets the local Y and Z position of this transform. </summary>
     /// <param name="self">Transform</param>
     /// <param name="y">Y axis</param>
     /// <param name="z">Z axis</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void SetLocalYZ(this Transform self, float y, float z) => self.localPosition = new Vector3(self.localPosition.x, y, z);
 
     /// <summary> Sets the local X, Y and Z position of this transform. </summary>
@@ -219,39 +247,46 @@ namespace FronkonGames.GameWork.Foundation
     /// <param name="x">X axis</param>
     /// <param name="y">Y axis</param>
     /// <param name="z">Z axis</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void SetLocalXYZ(this Transform self, float x, float y, float z) => self.localPosition = new Vector3(x, y, z);
 
     /// <summary> Sets the local X scale of this transform. </summary>
     /// <param name="self">Transform</param>
     /// <param name="x">X axis</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void SetScaleX(this Transform self, float x) => self.localScale = new Vector3(x, self.localScale.y, self.localScale.z);
 
     /// <summary> Sets the local Y scale of this transform. </summary>
     /// <param name="self">Transform</param>
     /// <param name="y">Y axis</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void SetScaleY(this Transform self, float y) => self.localScale = new Vector3(self.localScale.x, y, self.localScale.z);
 
     /// <summary> Sets the local Z scale of this transform. </summary>
     /// <param name="self">Transform</param>
     /// <param name="z">Z axis</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void SetScaleZ(this Transform self, float z) => self.localScale = new Vector3(self.localScale.x, self.localScale.y, z);
 
     /// <summary> Sets the local X and Y scale of this transform. </summary>
     /// <param name="self">Transform</param>
     /// <param name="x">X axis</param>
     /// <param name="y">Y axis</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void SetScaleXY(this Transform self, float x, float y) => self.localScale = new Vector3(x, y, self.localScale.z);
 
     /// <summary> Sets the local X and Z scale of this transform. </summary>
     /// <param name="self">Transform</param>
     /// <param name="x">X axis</param>
     /// <param name="z">Z axis</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void SetScaleXZ(this Transform self, float x, float z) => self.localScale = new Vector3(x, self.localScale.y, z);
 
     /// <summary> Sets the local Y and Z scale of this transform. </summary>
     /// <param name="self">Transform</param>
     /// <param name="y">Y axis</param>
     /// <param name="z">Z axis</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void SetScaleYZ(this Transform self, float y, float z) => self.localScale = new Vector3(self.localScale.x, y, z);
 
     /// <summary> Sets the local X, Y and Z scale of this transform. </summary>
@@ -259,54 +294,64 @@ namespace FronkonGames.GameWork.Foundation
     /// <param name="x">X axis</param>
     /// <param name="y">Y axis</param>
     /// <param name="z">Z axis</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void SetScaleXYZ(this Transform self, float x, float y, float z) => self.localScale = new Vector3(x, y, z);
 
     /// <summary> Scale this transform in the X direction. </summary>
     /// <param name="self">Transform</param>
     /// <param name="x">X axis</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ScaleByX(this Transform self, float x) => self.localScale = new Vector3(self.localScale.x * x, self.localScale.y, self.localScale.z);
 
     /// <summary> Scale this transform in the Y direction. </summary>
     /// <param name="self">Transform</param>
     /// <param name="y">Y axis</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ScaleByY(this Transform self, float y) => self.localScale = new Vector3(self.localScale.x, self.localScale.y * y, self.localScale.z);
 
     /// <summary> Scale this transform in the Z direction. </summary>
     /// <param name="self">Transform</param>
     /// <param name="z">Z axis</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ScaleByZ(this Transform self, float z) => self.localScale = new Vector3(self.localScale.x, self.localScale.y, self.localScale.z * z);
 
     /// <summary> Scale this transform in the X, Y direction. </summary>
     /// <param name="self">Transform</param>
     /// <param name="x">X axis</param>
     /// <param name="y">Y axis</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ScaleByXY(this Transform self, float x, float y) => self.localScale = new Vector3(self.localScale.x * x, self.localScale.y * y, self.localScale.z);
 
     /// <summary> Scale this transform in the X, Z directions. </summary>
     /// <param name="self">Transform</param>
     /// <param name="x">X axis</param>
     /// <param name="z">Z axis</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ScaleByXZ(this Transform self, float x, float z) => self.localScale = new Vector3(self.localScale.x * x, self.localScale.y, self.localScale.z * z);
 
     /// <summary> Scale this transform in the Y and Z directions. </summary>
     /// <param name="self">Transform</param>
     /// <param name="y">Y axis</param>
     /// <param name="z">Z axis</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ScaleByYZ(this Transform self, float y, float z) => self.localScale = new Vector3(self.localScale.x, self.localScale.y * y, self.localScale.z * z);
 
     /// <summary> Scale this transform in the X and Y directions. </summary>
     /// <param name="self">Transform</param>
     /// <param name="r"></param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ScaleByXY(this Transform self, float r) => self.ScaleByXY(r, r);
 
     /// <summary> Scale this transform in the X and Z directions. </summary>
     /// <param name="self">Transform</param>
     /// <param name="r"></param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ScaleByXZ(this Transform self, float r) => self.ScaleByXZ(r, r);
 
     /// <summary> Scale this transform in the Y and Z directions. </summary>
     /// <param name="self">Transform</param>
     /// <param name="r"></param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ScaleByYZ(this Transform self, float r) => self.ScaleByYZ(r, r);
 
     /// <summary> Scale this transform in the X, Y and Z directions. </summary>
@@ -314,109 +359,132 @@ namespace FronkonGames.GameWork.Foundation
     /// <param name="x">X axis</param>
     /// <param name="y">Y axis</param>
     /// <param name="z">Z axis</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ScaleByXYZ(this Transform self, float x, float y, float z) => self.localScale = new Vector3(x, y, z);
 
     /// <summary> Scale this transform in the X, Y and Z directions. </summary>
     /// <param name="self">Transform</param>
     /// <param name="r"></param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ScaleByXYZ(this Transform self, float r) => self.ScaleByXYZ(r, r, r);
 
     /// <summary> Negates the X scale. </summary>
     /// <param name="self">Transform</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void FlipX(this Transform self) => self.SetScaleX(-self.localScale.x);
 
     /// <summary> Negates the Y scale. </summary>
     /// <param name="self">Transform</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void FlipY(this Transform self) => self.SetScaleY(-self.localScale.y);
 
     /// <summary> Negates the Z scale. </summary>
     /// <param name="self">Transform</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void FlipZ(this Transform self) => self.SetScaleZ(-self.localScale.z);
 
     /// <summary> Negates the X and Y scale. </summary>
     /// <param name="self">Transform</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void FlipXY(this Transform self) => self.SetScaleXY(-self.localScale.x, -self.localScale.y);
 
     /// <summary> Negates the X and Z scale. </summary>
     /// <param name="self">Transform</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void FlipXZ(this Transform self) => self.SetScaleXZ(-self.localScale.x, -self.localScale.z);
 
     /// <summary> Negates the Y and Z scale. </summary>
     /// <param name="self">Transform</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void FlipYZ(this Transform self) => self.SetScaleYZ(-self.localScale.y, -self.localScale.z);
 
     /// <summary> Negates the X, Y and Z scale. </summary>
     /// <param name="self">Transform</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void FlipXYZ(this Transform self) => self.SetScaleXYZ(-self.localScale.z, -self.localScale.y, -self.localScale.z);
 
     /// <summary> Sets all scale values to the absolute values. </summary>
     /// <param name="self">Transform</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void FlipPositive(this Transform self) => self.localScale = new Vector3(Mathf.Abs(self.localScale.x),
-                                                                                          Mathf.Abs(self.localScale.y),
-                                                                                          Mathf.Abs(self.localScale.z));
+                                                                                         Mathf.Abs(self.localScale.y),
+                                                                                         Mathf.Abs(self.localScale.z));
 
     /// <summary> Resets the local scale of this transform in to 1 1 1. </summary>
     /// <param name="self">Transform</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ResetScale(this Transform self) => self.localScale = Vector3.one;
 
     /// <summary> Rotates the transform around the X axis. </summary>
     /// <param name="self">Transform</param>
     /// <param name="angle">Degrees angle</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void RotateAroundX(this Transform self, float angle) => self.Rotate(new Vector3(angle, 0.0f, 0.0f));
 
     /// <summary> Rotates the transform around the Y axis. </summary>
     /// <param name="self">Transform</param>
     /// <param name="angle">Degrees angle</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void RotateAroundY(this Transform self, float angle) => self.Rotate(new Vector3(0.0f, angle, 0.0f));
 
     /// <summary> Rotates the transform around the Z axis. </summary>
     /// <param name="self">Transform</param>
     /// <param name="angle">Degrees angle</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void RotateAroundZ(this Transform self, float angle) => self.Rotate(new Vector3(0.0f, 0.0f, angle));
 
     /// <summary> Sets the X rotation. </summary>
     /// <param name="self">Transform</param>
     /// <param name="angle">Degrees angle</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void SetRotationX(this Transform self, float angle) => self.eulerAngles = new Vector3(angle, 0.0f, 0.0f);
 
     /// <summary> Sets the Y rotation. </summary>
     /// <param name="self">Transform</param>
     /// <param name="angle">Degrees angle</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void SetRotationY(this Transform self, float angle) => self.eulerAngles = new Vector3(0.0f, angle, 0.0f);
 
     /// <summary> Adds a modifier to the current y rotation </summary>
     /// <param name="self">Transform</param>
     /// <param name="y">Y axis</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void AddYRotation(this Transform self, float y) => self.eulerAngles = new Vector3(self.eulerAngles.x,
-                                                                                                    self.eulerAngles.y + y,
-                                                                                                    self.eulerAngles.z);
+                                                                                                     self.eulerAngles.y + y,
+                                                                                                     self.eulerAngles.z);
 
     /// <summary> Sets the Z rotation. </summary>
     /// <param name="self">Transform</param>
     /// <param name="angle">Degrees angle</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void SetRotationZ(this Transform self, float angle) => self.eulerAngles = new Vector3(0.0f, 0.0f, angle);
 
     /// <summary> Sets the local X rotation. </summary>
     /// <param name="self">Transform</param>
     /// <param name="angle">Degrees angle</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void SetLocalRotationX(this Transform self, float angle) => self.localRotation = Quaternion.Euler(new Vector3(angle, 0.0f, 0.0f));
 
     /// <summary> Sets the local Y rotation. </summary>
     /// <param name="self">Transform</param>
     /// <param name="angle">Degrees angle</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void SetLocalRotationY(this Transform self, float angle) => self.localRotation = Quaternion.Euler(new Vector3(0.0f, angle, 0.0f));
 
     /// <summary> Sets the local Z rotation. </summary>
     /// <param name="self">Transform</param>
     /// <param name="angle">Degrees angle</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void SetLocalRotationZ(this Transform self, float angle) => self.localRotation = Quaternion.Euler(new Vector3(0.0f, 0.0f, angle));
 
     /// <summary> Resets the rotation to 0, 0, 0. </summary>
     /// <param name="self">Transform</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ResetRotation(this Transform self) => self.rotation = Quaternion.identity;
 
     /// <summary> Resets the local rotation to 0, 0, 0. </summary>
     /// <param name="self">Transform</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ResetLocalRotation(this Transform self) => self.localRotation = Quaternion.identity;
 
     /// <summary> Reset the transforms position, rotation and scale. </summary>
@@ -458,6 +526,145 @@ namespace FronkonGames.GameWork.Foundation
         children[i] = self.GetChild(i);
 
       return children;
+    }
+
+    /// <summary> Multiplies local scale component-wise and returns the transform. </summary>
+    public static Transform ScaleTo(this Transform transform, Vector3 localScale)
+    {
+      transform.localScale = transform.localScale.Multiply(localScale);
+      return transform;
+    }
+
+    /// <summary> Destroys the game object after a delay and returns the transform. </summary>
+    public static Transform DestroyAfter(this Transform transform, float seconds)
+    {
+      Object.Destroy(transform.gameObject, seconds);
+      return transform;
+    }
+
+    /// <summary> Destroys all transforms after a delay. </summary>
+    public static T DestroyAfter<T>(this T transforms, float seconds) where T : IEnumerable<Transform>
+    {
+      foreach (Transform transform in transforms)
+        transform.DestroyAfter(seconds);
+
+      return transforms;
+    }
+
+    /// <summary> Tries to find a child transform by exact name, recursively. </summary>
+    public static bool TryFindChildWithName(this Transform transform, string name, out Transform result)
+    {
+      result = transform.FindChildRecursive(name);
+      return result != null;
+    }
+
+    /// <summary> Sets the parent on all transforms in the array. </summary>
+    public static void SetParent(this Transform[] transforms, Transform parent)
+    {
+      for (int i = 0; i < transforms.Length; i++)
+        transforms[i].SetParent(parent);
+    }
+
+    /// <summary> Destroys all children after a delay. </summary>
+    public static void DestroyChildren(this Transform transform, float delay)
+    {
+      for (int i = transform.childCount - 1; i >= 0; i--)
+        Object.Destroy(transform.GetChild(i).gameObject, delay);
+    }
+
+    /// <summary> Returns true if position, rotation and local scale are at default values. </summary>
+    public static bool IsDefault(this Transform transform)
+      => transform.position == Vector3.zero
+        && transform.rotation == Quaternion.identity
+        && transform.localScale == Vector3.one;
+
+    /// <summary> Applies world position, rotation and local scale. </summary>
+    public static void Apply(this Transform transform, Vector3 position, Quaternion rotation, Vector3 localScale)
+    {
+      transform.position = position;
+      transform.rotation = rotation;
+      transform.localScale = localScale;
+
+#if UNITY_EDITOR
+      if (Application.isPlaying == false)
+        UnityEditor.EditorUtility.SetDirty(transform);
+#endif
+    }
+
+    /// <summary> Returns world positions of all direct children. </summary>
+    public static Vector3[] GetChildrenPositions(this Transform transform)
+    {
+      Vector3[] positions = new Vector3[transform.childCount];
+
+      for (int i = 0; i < positions.Length; i++)
+        positions[i] = transform.GetChild(i).position;
+
+      return positions;
+    }
+
+    /// <summary> Creates and parents a new child game object. </summary>
+    public static Transform AddChild(this Transform transform, string name)
+    {
+      GameObject child = new(name);
+      Transform childTransform = child.transform;
+      childTransform.SetParent(transform);
+      return childTransform;
+    }
+
+    /// <summary> Sets local scale so the transform matches the desired world scale. </summary>
+    public static void ScaleGlobal(this Transform transform, Vector3 scale)
+    {
+      Transform parent = transform.parent;
+
+      while (parent != null)
+      {
+        Vector3 parentScale = parent.localScale;
+        scale = new Vector3(
+          parentScale.x != 0.0f ? scale.x / parentScale.x : scale.x,
+          parentScale.y != 0.0f ? scale.y / parentScale.y : scale.y,
+          parentScale.z != 0.0f ? scale.z / parentScale.z : scale.z);
+        parent = parent.parent;
+      }
+
+      transform.localScale = scale;
+    }
+
+    /// <summary> Returns the topmost parent, or null if there is no parent. </summary>
+    public static Transform GetMainParent(this Transform transform)
+    {
+      Transform parent = null;
+      Transform current = transform.parent;
+
+      while (current != null)
+      {
+        parent = current;
+        current = current.parent;
+      }
+
+      return parent;
+    }
+
+    /// <summary> Converts a transform array to game objects. </summary>
+    public static GameObject[] ToGameObjects(this Transform[] transforms)
+    {
+      GameObject[] gameObjects = new GameObject[transforms.Length];
+
+      for (int i = 0; i < transforms.Length; i++)
+        gameObjects[i] = transforms[i].gameObject;
+
+      return gameObjects;
+    }
+
+    /// <summary> Returns the transform as a RectTransform when possible. </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static RectTransform AsRectTransform(this Transform transform) => transform as RectTransform;
+
+    /// <summary> Returns sizeDelta when the transform is a RectTransform. </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Vector2 SizeDelta(this Transform transform)
+    {
+      RectTransform rectTransform = transform as RectTransform;
+      return rectTransform != null ? rectTransform.sizeDelta : Vector2.zero;
     }
   }
 }

@@ -35,6 +35,22 @@ public partial class ExtensionsTests
     Assert.AreEqual(1, single.Count());
     Assert.AreEqual(5, multiple.Count());
 
+    LinkedList<int> list = new(new[] { 1, 2, 3 });
+    List<int> nodeValues = new();
+    foreach (LinkedListNode<int> node in list.EnumerateNodes())
+      nodeValues.Add(node.Value);
+    CollectionAssert.AreEqual(new[] { 1, 2, 3 }, nodeValues);
+
+    List<int> rangeValues = new();
+    foreach (int i in (2..5))
+      rangeValues.Add(i);
+    CollectionAssert.AreEqual(new[] { 2, 3, 4 }, rangeValues);
+
+    List<int> countValues = new();
+    foreach (int i in 3)
+      countValues.Add(i);
+    CollectionAssert.AreEqual(new[] { 0, 1, 2 }, countValues);
+
     yield return null;
   }
 }

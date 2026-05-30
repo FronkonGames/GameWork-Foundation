@@ -22,11 +22,11 @@ namespace FronkonGames.GameWork.Foundation
   /// <summary> Foundation menus. </summary>
   public static class FoundationMenus
   {
-    [MenuItem("Help/Fronkon Games/Game:Work/Foundation//Tools/Refresh version")]
+    [MenuItem("Help/" + Settings.Menus.GameWorkFoundationFolder + "/Tools/Refresh version")]
     public static void RefreshVersion() => Version.Refresh();
 
     /// <summary> Open the repository. </summary>
-    [MenuItem("Help/Fronkon Games/Game:Work/Foundation/Open repository")]
+    [MenuItem("Help/" + Settings.Menus.GameWorkFoundationFolder + "/Open repository")]
     public static void OpenRepository() => Application.OpenURL("https://github.com/FronkonGames/GameWork-Foundation");
   }
 }

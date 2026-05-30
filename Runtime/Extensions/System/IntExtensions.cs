@@ -15,6 +15,7 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 using System;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 namespace FronkonGames.GameWork.Foundation
@@ -29,28 +30,33 @@ namespace FronkonGames.GameWork.Foundation
     /// <summary> Value sign. </summary>
     /// <param name="self">Value</param>
     /// <returns>1 if greater than or equal to 0, -1 if less than 0.</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static int Sign(this int self) => self >= 0 ? 1 : -1;
 
     /// <summary> Returns the maximum value. </summary>
     /// <param name="a">Value</param>
     /// <param name="b">Value</param>
     /// <returns>Int</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static int Max(this int a, int b) => a < b ? b : a;
 
     /// <summary> Returns the minimum value. </summary>
     /// <param name="a">Value</param>
     /// <param name="b">Value</param>
     /// <returns>Int</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static int Min(this int a, int b) => a < b ? a : b;
 
     /// <summary> Returns the absolute value. </summary>
     /// <param name="self">Value</param>
     /// <returns>Int</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static int Abs(this int self) => Math.Abs(self);
 
     /// <summary> Returns the rounded value. </summary>
     /// <param name="snap"> Rounding distance </param>
     /// <returns>Int</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static int Snap(this int self, int snap) => snap > 0 ? Mathf.RoundToInt((float)self / snap) * snap : self;
 
     /// <summary> Constrain the value to a range. </summary>
@@ -83,11 +89,13 @@ namespace FronkonGames.GameWork.Foundation
     /// <summary> Value is even. </summary>
     /// <param name="self">Value</param>
     /// <returns>True/false</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool IsEven(this int self) => self % 2 == 0;
 
     /// <summary> Value is odd. </summary>
     /// <param name="self">Value</param>
     /// <returns>True/false</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool IsOdd(this int self) => self % 2 != 0;
 
     /// <summary> Next power of two. </summary>
@@ -110,6 +118,7 @@ namespace FronkonGames.GameWork.Foundation
     /// <summary> Calculate the mask of a layer. </summary>
     /// <param name="self">Value</param>
     /// <returns>Int</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static int GetMask(this int self) => 1 << self;
 
     /// <summary>Calculates the mask of a set of layers. </summary>
@@ -128,6 +137,7 @@ namespace FronkonGames.GameWork.Foundation
     /// <param name="self">Value</param>
     /// <param name="layermask">Layer mask</param>
     /// <returns>Layer included</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool IsInLayerMask(this int self, LayerMask layermask) => layermask == (layermask | (1 << self));
 
     /// <summary> Layer included? </summary>
@@ -161,11 +171,77 @@ namespace FronkonGames.GameWork.Foundation
     /// <summary> Seconds to a text string. </summary>
     /// <param name="self">Value</param>
     /// <returns>String</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static string SecondsToHumanReadable(this int self) => $"{self / 3600:00}:{(self / 60) % 60:00}:{self % 60:00}";
 
     /// <summary> Returns the number of digits in the number. </summary>
     /// <param name="self">Value.</param>
     /// <returns>The number of digits in the number.</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static int NumDigits(this int self) => Mathf.FloorToInt(Mathf.Log10((float)self.Abs()) + 1.0f);
+
+    /// <summary> Returns true if the value equals any of the given values. </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool IsAny(this int value, params int[] values)
+    {
+      for (int i = 0; i < values.Length; i++)
+      {
+        if (value == values[i])
+          return true;
+      }
+
+      return false;
+    }
+
+    /// <summary> Converts milliseconds to seconds. </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static float ToSeconds(this int milliseconds) => milliseconds * 0.001f;
+
+    /// <summary> Snaps up to the nearest multiple of snapValue. </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static int SnapToCeil(this int value, int snapValue)
+      => Mathf.CeilToInt((float)value / snapValue) * snapValue;
+
+    /// <summary> Snaps down to the nearest multiple of snapValue. </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static int SnapToFloor(this int value, int snapValue)
+      => Mathf.FloorToInt((float)value / snapValue) * snapValue;
+
+    /// <summary> Remaps a value from one range to another. </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static float Remap(this int value, float from1, float to1, float from2, float to2)
+      => ((float)value).Remap(from1, to1, from2, to2);
+
+    /// <summary> Normalizes to 0-1 range. </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static float Remap01(this int value, float from1, float to1)
+      => Mathf.Approximately(to1, from1) ? value : Mathf.Clamp((value - from1) / (to1 - from1), 0.0f, 1.0f);
+
+    /// <summary> Remaps unclamped from one range to another as int. </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static int RemapIntUnclamped(this int value, float from1, float to1, float from2, float to2)
+      => (int)value.RemapUnclamped(from1, to1, from2, to2);
+
+    /// <summary> Remaps unclamped from one range to another. </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static float RemapUnclamped(this int value, float from1, float to1, float from2, float to2)
+    {
+      if (Mathf.Approximately(to1, from1))
+        return from2;
+
+      float scale = (to2 - from2) / (to1 - from1);
+      return from2 + (value - from1) * scale;
+    }
+
+    /// <summary> Remaps from one range to another as int. </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static int RemapInt(this int value, float from1, float to1, float from2, float to2)
+      => (int)value.Remap(from1, to1, from2, to2);
+
+    /// <summary> Formats the value as a byte size suffix (e.g. KB, MB). </summary>
+    public static string SizeSuffix(this int value, int decimalPlaces = 2) => ((long)value).SizeSuffix(decimalPlaces);
+
+    /// <summary> Formats the value as a currency suffix (e.g. K, M, B). </summary>
+    public static string CurrencySuffix(this int value, int decimalPlaces = 0) => ((long)value).CurrencySuffix(decimalPlaces);
   }
 }

@@ -15,6 +15,7 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 using System;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 namespace FronkonGames.GameWork.Foundation
@@ -75,6 +76,41 @@ namespace FronkonGames.GameWork.Foundation
 
     [NonSerialized]
     private RectTransform cachedRectTransform;
+
+    /// <summary> Get component of type T. </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public T Get<T>() => GetComponent<T>();
+
+    /// <summary> Get all components of type T. </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public T[] Gets<T>() => GetComponents<T>();
+
+    /// <summary> Get component of type T in children. </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public T ChildrenGet<T>() => GetComponentInChildren<T>();
+
+    /// <summary> Get all components of type T in children. </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public T[] ChildrenGets<T>() => GetComponentsInChildren<T>();
+
+    /// <summary> Get component of type T in parent. </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public T ParentGet<T>() => GetComponentInParent<T>();
+
+    /// <summary> Get all components of type T in parent. </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public T[] ParentGets<T>() => GetComponentsInParent<T>();
+
+    /// <summary> Find first object of type T. </summary>
+    /// <param name="findObjectsInactive">Find objects inactive.</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public T Find<T>(FindObjectsInactive findObjectsInactive = FindObjectsInactive.Include) where T : UnityEngine.Object => FindFirstObjectByType<T>(findObjectsInactive);
+
+    /// <summary> Find all objects of type T. </summary>
+    /// <param name="findObjectsInactive">Find objects inactive.</param>
+    /// <param name="sortMode">Sort mode.</param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public T[] Finds<T>(FindObjectsInactive findObjectsInactive = FindObjectsInactive.Include, FindObjectsSortMode sortMode = FindObjectsSortMode.None) where T : UnityEngine.Object => FindObjectsByType<T>(findObjectsInactive, sortMode);
 
     /// <summary> Clear all cached components. </summary>
     public void ClearCachedComponents()

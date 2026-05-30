@@ -15,6 +15,7 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 using System;
+using System.Runtime.CompilerServices;
 
 namespace FronkonGames.GameWork.Foundation
 {
@@ -52,6 +53,7 @@ namespace FronkonGames.GameWork.Foundation
     /// <param name="min">The minimum value.</param>
     /// <param name="max">The maximum value.</param>
     /// <returns>True if the value is in the range (min..max).</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool IsBetweenExclusive<T>(this T self, T min, T max) where T : IComparable<T> => self.IsBetween(min, max, false, false);
   }
 }

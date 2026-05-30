@@ -20,14 +20,10 @@ using UnityEngine;
 using UnityEngine.TestTools;
 using FronkonGames.GameWork.Foundation;
 
-/// <summary>
-/// Extensions test.
-/// </summary>
+/// <summary> Extensions test. </summary>
 public partial class ExtensionsTests
 {
-  /// <summary>
-  /// String extensions test.
-  /// </summary>
+  /// <summary> String extensions test. </summary>
   [UnityTest]
   public IEnumerator String()
   {
@@ -119,6 +115,11 @@ public partial class ExtensionsTests
     string fullPath = $"{Application.dataPath}/SubFolder";
     string relPath = fullPath.ToRelativePath();
     Assert.IsTrue(relPath.StartsWith("Assets"));
+
+    Assert.IsTrue(((string)null).IsNullOrEmptyOrWhiteSpace());
+    Assert.IsTrue(string.Empty.IsNullOrEmptyOrWhiteSpace());
+    Assert.IsTrue("   ".IsNullOrEmptyOrWhiteSpace());
+    Assert.IsFalse("hello".IsNullOrEmptyOrWhiteSpace());
 
     yield return null;
   }

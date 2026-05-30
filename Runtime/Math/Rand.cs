@@ -14,6 +14,7 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityRandom = UnityEngine.Random;
 
@@ -28,26 +29,32 @@ namespace FronkonGames.GameWork.Foundation
     /// <param name="min">Minimum</param>
     /// <param name="max">Maximum</param>
     /// <returns>Number</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static int Range(int min, int max) => UnityRandom.Range(min, max);
 
     /// <summary> Four-sided die. </summary>
     /// <returns> Between 1 and 4. </returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static int D4() => Range(1, 4);
 
     /// <summary> Six-sided dice. </summary>
     /// <returns> Between 1 and 6. </returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static int D6() => Range(1, 6);
 
     /// <summary> Ten-sided die. </summary>
     /// <returns> Between 1 and 10. </returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static int D10() => Range(1, 10);
 
     /// <summary> Twenty-sided die. </summary>
     /// <returns> Between 1 and 20. </returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static int D20() => Range(1, 20);
 
     /// <summary> Hundred-sided die. </summary>
     /// <returns> Between 1 and 100. </returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static int D100() => Range(1, 100);
 
     // 1D
@@ -65,6 +72,7 @@ namespace FronkonGames.GameWork.Foundation
     /// <param name="min"></param>
     /// <param name="max"></param>
     /// <returns></returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static float Range(float min, float max) => UnityRandom.Range(min, max);
 
     // 2D

@@ -14,6 +14,7 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 namespace FronkonGames.GameWork.Foundation
@@ -24,11 +25,13 @@ namespace FronkonGames.GameWork.Foundation
     /// <summary> GameObject in the layer? </summary>
     /// <param name="other">GameObject</param>
     /// <returns>True/false</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool CheckLayermask(this LayerMask self, GameObject other) => CheckLayermask(self, other.layer);
 
     /// <summary> In the layer? </summary>
     /// <param name="layer">Value</param>
     /// <returns>True/false</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool CheckLayermask(this LayerMask self, int layer) => ((1 << layer) & self) != 0;
   }
 }

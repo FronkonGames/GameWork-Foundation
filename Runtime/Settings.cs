@@ -26,9 +26,9 @@ namespace FronkonGames.GameWork.Foundation
     {
       public static readonly LogLevel DefaultLevel = LogLevel.Info;
 
-      public static readonly Color InfoColor    = Tailwind.Blue_400;
-      public static readonly Color WarningColor = Tailwind.Orange_400;
-      public static readonly Color ErrorColor   = Tailwind.Red_400;
+      public static readonly Color InfoColor       = Tailwind.Blue_400;
+      public static readonly Color WarningColor    = Tailwind.Orange_400;
+      public static readonly Color ErrorColor      = Tailwind.Red_400;
     }
 
     /// <summary> Development console. </summary>
@@ -36,11 +36,11 @@ namespace FronkonGames.GameWork.Foundation
     {
       public static readonly float AcceptNewCommandTime = 0.1f;
 
-      public static readonly int FontSize = 30;
-      public static readonly float Height = 48.0f;
-      public static readonly float Margin = 5.0f;
-      public static readonly float DesignScreenWidth = 1920.0f;
-      public static readonly float DesignScreenHeight = 1080.0f;
+      public static readonly int FontSize               = 30;
+      public static readonly float Height               = 48.0f;
+      public static readonly float Margin               = 5.0f;
+      public static readonly float DesignScreenWidth    = 1920.0f;
+      public static readonly float DesignScreenHeight   = 1080.0f;
     }
 
     /// <summary> FPS calculation. </summary>
@@ -85,15 +85,22 @@ namespace FronkonGames.GameWork.Foundation
       public static readonly Color HitColor      = Tailwind.Yellow_200;
       public static readonly float HitRadius     = 0.1f;
       public static readonly float HitLength     = 0.25f;
-      public static readonly Color CircleColor   = Tailwind.Slate_500;
-      public static readonly Color CubeColor     = Tailwind.Slate_500;
-      public static readonly Color SphereColor   = Tailwind.Slate_500;
-      public static readonly Color ArcColor      = Tailwind.Slate_500;
-      public static readonly Color DiamondColor  = Tailwind.Slate_500;
+      public static readonly Color CircleColor   = Tailwind.Gray_500;
+      public static readonly Color CubeColor     = Tailwind.Gray_500;
+      public static readonly Color SphereColor   = Tailwind.Gray_500;
+      public static readonly Color ArcColor      = Tailwind.Gray_500;
+      public static readonly Color DiamondColor  = Tailwind.Gray_500;
       public static readonly float DiamondSize   = 0.5f;
-      public static readonly Color ConeColor     = Tailwind.Slate_500;
-      public static readonly Color BoundsColor   = Tailwind.Slate_500;
+      public static readonly Color ConeColor     = Tailwind.Gray_500;
+      public static readonly Color BoundsColor   = Tailwind.Gray_500;
     }
+
+    /// <summary> Menus. </summary>
+    public static class Menus
+    {
+      public const string GameWorkFoundationFolder = "Fronkon Games/Game:Work/Foundation";
+    }
+
 #if UNITY_EDITOR
     /// <summary> Editor parameters. </summary>
     public static class Editor

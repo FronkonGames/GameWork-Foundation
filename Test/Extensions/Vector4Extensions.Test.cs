@@ -57,6 +57,19 @@ public partial class ExtensionsTests
     Assert.AreEqual(UnityEngine.Vector4.zero, new Vector4(-1.0f, -2.0f, -3.0f, -4.0f).Clamp(UnityEngine.Vector4.zero, UnityEngine.Vector4.one));
     Assert.AreEqual(UnityEngine.Vector4.one, new Vector4(5.0f, 6.0f, 7.0f, 8.0f).Clamp(UnityEngine.Vector4.zero, UnityEngine.Vector4.one));
 
+    Vector4 vector = new(1.0f, 2.0f, 3.0f, 4.0f);
+    Vector4 withX = vector.WithX(10.0f);
+    Assert.AreEqual(10.0f, withX.x, 0.01f);
+    Assert.AreEqual(2.0f, withX.y, 0.01f);
+
+    Vector4 withZw = vector.WithZW(30.0f, 40.0f);
+    Assert.AreEqual(30.0f, withZw.z, 0.01f);
+    Assert.AreEqual(40.0f, withZw.w, 0.01f);
+
+    Vector4 adjAll = vector.AdjAll(5.0f);
+    Assert.AreEqual(6.0f, adjAll.x, 0.01f);
+    Assert.AreEqual(9.0f, adjAll.w, 0.01f);
+
     yield return null;
   }
 }

@@ -16,8 +16,9 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 namespace FronkonGames.GameWork.Foundation
@@ -40,6 +41,7 @@ namespace FronkonGames.GameWork.Foundation
 
     /// <summary> Does it have the attribute? </summary>
     /// <returns> True or false. </returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool HasAttribute<T>(this FieldInfo self, bool inherit = true) where T : Attribute => self.GetCustomAttributes(typeof(T), inherit).Length > 0;
 
     /// <summary> Returns property or null. </summary>
@@ -74,12 +76,14 @@ namespace FronkonGames.GameWork.Foundation
     /// <param name="self"> The object. </param>
     /// <param name="propertyName"> Property name. </param>
     /// <returns> Property or null. </returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static PropertyInfo GetProperty(this object self, string propertyName) => self.GetType().GetProperty(propertyName, BindingFlags.NonPublic | BindingFlags.Instance);
 
     /// <summary> Returns private field by name or null. </summary>
     /// <param name="self"> The object. </param>
     /// <param name="fieldName"> Field name. </param>
     /// <returns> Field or null. </returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static FieldInfo GetField(this object self, string fieldName) => self.GetType().GetField(fieldName, BindingFlags.NonPublic | BindingFlags.Instance);
   }
 }

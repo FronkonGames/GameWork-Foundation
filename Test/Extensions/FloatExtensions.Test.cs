@@ -19,14 +19,10 @@ using NUnit.Framework;
 using UnityEngine.TestTools;
 using FronkonGames.GameWork.Foundation;
 
-/// <summary>
-/// Extensions tests.
-/// </summary>
+/// <summary> Extensions tests. </summary>
 public partial class ExtensionsTests
 {
-  /// <summary>
-  /// Float extensions test.
-  /// </summary>
+  /// <summary> Float extensions test. </summary>
   [UnityTest]
   public IEnumerator Float()
   {

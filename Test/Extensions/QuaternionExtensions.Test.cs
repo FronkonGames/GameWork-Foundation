@@ -19,14 +19,10 @@ using NUnit.Framework;
 using UnityEngine.TestTools;
 using FronkonGames.GameWork.Foundation;
 
-/// <summary>
-/// Extensions test.
-/// </summary>
+/// <summary> Extensions test. </summary>
 public partial class ExtensionsTests
 {
-  /// <summary>
-  /// Quaternion extensions test.
-  /// </summary>
+  /// <summary> Quaternion extensions test. </summary>
   [UnityTest]
   public IEnumerator Quaternion()
   {

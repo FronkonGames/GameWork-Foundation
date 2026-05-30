@@ -5,32 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.0.17 - 2026-05-31
+
+### Added
+- Serializable DateTime, Time, KeyValuePair, and Dictionary for Unity serialization.
+- New extensions.
+- Unit tests for all new features.
+
+### Changed
+- Texture2D.Resize renamed to Texture2D.Resized to avoid conflict with Unity's deprecated method.
+
 ## 0.0.16 - 2026-05-29
 
 ### Added
-- Builder pattern (generic fluent builder).
-- Factory pattern (generic factory with dictionary-based creators).
-- Composite pattern (generic tree structure).
-- Mediator pattern (generic message and request-response).
-- Memento pattern (generic state capture and restore).
-- Chain of Responsibility pattern (generic handler chain).
-- Object Pool pattern (generic reusable object pool).
-- Extensive unit tests for all new patterns.
-- Unit tests for Vector2/3/4 extensions (Abs, Ceil, Clamp, Floor, Rounded, Remainder, NearlyEquals, ToString).
-- Unit tests for Color extensions (SetValue, FromHex, Opaque, WithAlpha, Random).
-- Unit tests for String extensions (ToByteArray, ToVector4, ToQuaternion, ToWords, RemoveInvalidFileCharacters, ToAbsolutePath, ToRelativePath).
-- Unit tests for Byte extensions (ToBinaryString).
-- Unit tests for List extensions (Swap, RemoveRange).
-- Unit tests for Comparable, Enumerable, Reflection extensions.
-- Unit tests for Transform, GameObject, LayerMask, Quaternion extensions.
-- Unit tests for MathUtils (trigonometry functions).
-- Unit tests for MathConstants (all constant values).
-- Unit tests for Profiling (SampleBlock, MarkerBlock).
-- Comprehensive Rand tests (int range, dice, 2D/3D vectors, angle, rotation).
+- New patterns: Builder, Factory, Composite, Mediator, Memento, Chain of Responsibility, Object Pool pattern.
+- Unit tests for all new features.
 
 ### Changed
 - Migrated FindObjectOfType to FindFirstObjectByType/FindAnyObjectByType (Unity 6 deprecation).
-- Updated README with all 15 patterns and new directory structure.
+- Updated README.
 
 ### Fixed
 - Fixed tests for banker's rounding edge cases (Mathf.Round).

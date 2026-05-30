@@ -14,6 +14,7 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+using System;
 using System.Collections;
 using NUnit.Framework;
 using UnityEngine.TestTools;
@@ -98,6 +99,33 @@ public partial class ExtensionsTests
     Assert.AreEqual((-1).NumDigits(), 1);
     Assert.AreEqual(10.NumDigits(), 2);
     Assert.AreEqual(100.NumDigits(), 3);
+
+    Assert.AreEqual(15, 13.SnapToCeil(5));
+    Assert.AreEqual(10, 13.SnapToFloor(5));
+    Assert.AreEqual(50.0f, 5.Remap(0.0f, 10.0f, 0.0f, 100.0f), 0.001f);
+    Assert.AreEqual(0.5f, 5.Remap01(0.0f, 10.0f), 0.001f);
+    Assert.AreEqual(50, 5.RemapInt(0.0f, 10.0f, 0.0f, 100.0f));
+    Assert.IsTrue(5.IsAny(1, 5, 9));
+    Assert.IsFalse(5.IsAny(1, 2, 3));
+    Assert.AreEqual(1.5f, 1500.ToSeconds(), 0.001f);
+    Assert.AreEqual("0 bytes", 0.SizeSuffix());
+    StringAssert.Contains("K", 1500.CurrencySuffix());
+
+    Assert.AreEqual("0 bytes", 0L.SizeSuffix());
+    StringAssert.Contains("KB", 2048L.SizeSuffix());
+    Assert.AreEqual("999", 999L.CurrencySuffix());
+
+    yield return null;
+  }
+
+  /// <summary> DateTime extensions test. </summary>
+  [UnityTest]
+  public IEnumerator DateTimeExtensions()
+  {
+    DateTime epoch = new(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+    DateTime dateTime = epoch.AddSeconds(100.0);
+
+    Assert.AreEqual(100, dateTime.ToUnixEpoch());
 
     yield return null;
   }

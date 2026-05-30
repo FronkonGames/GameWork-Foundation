@@ -25,6 +25,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using CallerName = System.Runtime.CompilerServices.CallerMemberNameAttribute;
 using CallerPath = System.Runtime.CompilerServices.CallerFilePathAttribute;
 using CallerLine  = System.Runtime.CompilerServices.CallerLineNumberAttribute;
@@ -145,9 +146,10 @@ namespace FronkonGames.GameWork.Foundation
 #if LOGS_EDITOR
     [Conditional("UNITY_EDITOR")]
 #endif
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ExceptionArgument(string message, [CallerName] string member = "",
-                                                         [CallerPath] string sourceFile = "",
-                                                         [CallerLine] int line = 0) =>
+                                                          [CallerPath] string sourceFile = "",
+                                                          [CallerLine] int line = 0) =>
         Exception(message, new ArgumentException(), member, sourceFile, line);
 
     /// <summary> ArgumentOutOfRange exception and stack trace. </summary>
@@ -159,9 +161,10 @@ namespace FronkonGames.GameWork.Foundation
 #if LOGS_EDITOR
     [Conditional("UNITY_EDITOR")]
 #endif
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ExceptionArgumentOutOfRange(string message, [CallerName] string member = "",
-                                                                   [CallerPath] string sourceFile = "",
-                                                                   [CallerLine] int line = 0) =>
+                                                                    [CallerPath] string sourceFile = "",
+                                                                    [CallerLine] int line = 0) =>
         Exception(message, new ArgumentOutOfRangeException(), member, sourceFile, line);
 
     /// <summary> IndexOutOfRange exception and stack trace. </summary>
@@ -173,9 +176,10 @@ namespace FronkonGames.GameWork.Foundation
 #if LOGS_EDITOR
     [Conditional("UNITY_EDITOR")]
 #endif
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ExceptionIndexOutOfRange(string message, [CallerName] string member = "",
-                                                                [CallerPath] string sourceFile = "",
-                                                                [CallerLine] int line = 0) =>
+                                                                 [CallerPath] string sourceFile = "",
+                                                                 [CallerLine] int line = 0) =>
         Exception(message, new IndexOutOfRangeException(), member, sourceFile, line);
 
     /// <summary> ArgumentNull exception and stack trace. </summary>
@@ -187,9 +191,10 @@ namespace FronkonGames.GameWork.Foundation
 #if LOGS_EDITOR
     [Conditional("UNITY_EDITOR")]
 #endif
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ExceptionArgumentNull(string message, [CallerName] string member = "",
-                                                             [CallerPath] string sourceFile = "",
-                                                             [CallerLine] int line = 0) =>
+                                                              [CallerPath] string sourceFile = "",
+                                                              [CallerLine] int line = 0) =>
         Exception(message, new ArgumentNullException(), member, sourceFile, line);
 
     /// <summary> Key not found exception and stack trace. </summary>
@@ -201,9 +206,10 @@ namespace FronkonGames.GameWork.Foundation
 #if LOGS_EDITOR
     [Conditional("UNITY_EDITOR")]
 #endif
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ExceptionKeyNotFound(string message, [CallerName] string member = "",
-                                                            [CallerPath] string sourceFile = "",
-                                                            [CallerLine] int line = 0) =>
+                                                             [CallerPath] string sourceFile = "",
+                                                             [CallerLine] int line = 0) =>
         Exception(message, new KeyNotFoundException(), member, sourceFile, line);
   }
 }

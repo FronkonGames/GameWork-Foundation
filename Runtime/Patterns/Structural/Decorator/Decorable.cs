@@ -14,6 +14,7 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+using System.Runtime.CompilerServices;
 
 namespace FronkonGames.GameWork.Foundation
 {
@@ -25,6 +26,7 @@ namespace FronkonGames.GameWork.Foundation
     public IDecorator Decorator { get; set; }
 
     /// <summary> Perform the operation if there is an associated behavior. </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void Operation() => Decorator?.Operation();
   }
 
@@ -37,6 +39,7 @@ namespace FronkonGames.GameWork.Foundation
 
     /// <summary> Perform the operation if there is an associated behavior. </summary>
     /// <value>Value</value>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public R Operation() => Decorator != null ? Decorator.Operation() : default;
   }
 
@@ -50,6 +53,7 @@ namespace FronkonGames.GameWork.Foundation
     /// <summary> Perform the operation if there is an associated behavior. </summary>
     /// <param name="value">Value</param>
     /// <returns>Value</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public R Operation(T value) => Decorator != null ? Decorator.Operation(value) : default;
   }
 
@@ -64,6 +68,7 @@ namespace FronkonGames.GameWork.Foundation
     /// <param name="value0">First value</param>
     /// <param name="value1">Second value</param>
     /// <returns>Value</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public R Operation(T0 value0, T1 value1) => Decorator != null ? Decorator.Operation(value0, value1) : default;
   }
 }

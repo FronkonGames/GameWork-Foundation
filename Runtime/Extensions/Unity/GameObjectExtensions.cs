@@ -15,6 +15,7 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 namespace FronkonGames.GameWork.Foundation
@@ -24,14 +25,17 @@ namespace FronkonGames.GameWork.Foundation
   {
     /// <summary> Returns a component of a GameObject. If it does not exist, it adds it. </summary>
     /// <returns>Component</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     static public T GetOrAddComponent<T>(this Component self) where T : Component => self.GetComponent<T>() ?? self.gameObject.AddComponent<T>();
 
     /// <summary> Returns a component of a GameObject. If it does not exist, it adds it. </summary>
     /// <returns>Component</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     static public T GetOrAddComponent<T>(this GameObject self) where T : Component => GetOrAddComponent<T>(self.transform);
 
     /// <summary> Returns a component of the parent of a GameObject, ignoring itself. </summary>
     /// <returns>Component</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static T GetComponentInParentIgnoreSelf<T>(this GameObject self) => self.transform.parent.GetComponentInParent<T>();
 
     /// <summary> Return a list of all child objects. </summary>
@@ -130,6 +134,108 @@ namespace FronkonGames.GameWork.Foundation
       }
 
       return null;
+    }
+
+    /// <summary> Destroys the object after a delay and returns it. </summary>
+    public static GameObject DestroyAfter(this GameObject gameObject, float seconds)
+    {
+      Object.Destroy(gameObject, seconds);
+      return gameObject;
+    }
+
+    /// <summary> Sets active only when the current state differs. </summary>
+    public static void SetActiveSelf(this GameObject gameObject, bool value)
+    {
+      if (gameObject.activeSelf != value)
+        gameObject.SetActive(value);
+    }
+
+    /// <summary> Sets active to the inverse of the given value when the state differs. </summary>
+    public static void SetActiveSelfInverted(this GameObject gameObject, bool value) => gameObject.SetActiveSelf(value == false);
+
+    /// <summary> Activates the game object. </summary>
+    public static void SetActiveTrue(this GameObject gameObject) => gameObject.SetActive(true);
+
+    /// <summary> Deactivates the game object. </summary>
+    public static void SetActiveFalse(this GameObject gameObject) => gameObject.SetActive(false);
+
+    /// <summary> Tries to get a component in a parent. </summary>
+    public static bool TryGetComponentInParent<T>(this GameObject gameObject, out T component) where T : Component
+    {
+      component = gameObject.GetComponentInParent<T>();
+      return component != null;
+    }
+
+    /// <summary> Sets the active state on all game objects in the collection. </summary>
+    public static void SetActive(this ICollection<GameObject> objects, bool value)
+    {
+      foreach (GameObject gameObject in objects)
+        gameObject.SetActive(value);
+    }
+
+    /// <summary> Tries to get a component from the first object in the collection that has it. </summary>
+    public static bool TryGetComponent<T>(this ICollection<GameObject> gameObjects, out T component) where T : Component
+    {
+      component = null;
+
+      foreach (GameObject gameObject in gameObjects)
+      {
+        component = gameObject.GetComponent<T>();
+
+        if (component != null)
+          return true;
+      }
+
+      return false;
+    }
+
+    /// <summary> Returns the first direct child whose name contains the given string. </summary>
+    public static GameObject GetChildByName(this GameObject gameObject, string name)
+    {
+      Transform transform = gameObject.transform;
+
+      for (int i = 0; i < transform.childCount; i++)
+      {
+        GameObject child = transform.GetChild(i).gameObject;
+
+        if (child.name.Contains(name))
+          return child;
+      }
+
+      return null;
+    }
+
+    /// <summary> Sets the layer on all game objects in the array. </summary>
+    public static void SetLayer(this GameObject[] gameObjects, int layer)
+    {
+      for (int i = 0; i < gameObjects.Length; i++)
+      {
+        if (gameObjects[i].layer == layer)
+          continue;
+
+#if UNITY_EDITOR
+        if (Application.isPlaying == false)
+          UnityEditor.EditorUtility.SetDirty(gameObjects[i]);
+#endif
+
+        gameObjects[i].layer = layer;
+      }
+    }
+
+    /// <summary> Multiplies local scale and returns the game object. </summary>
+    public static GameObject ScaleTo(this GameObject gameObject, Vector3 localScale)
+    {
+      gameObject.transform.ScaleTo(localScale);
+      return gameObject;
+    }
+
+    /// <summary> Destroys all game objects after a delay. </summary>
+    public static T DestroyAfter<T>(this T gameObjects, float seconds) where T : IEnumerable<GameObject>
+    {
+      foreach (GameObject gameObject in gameObjects)
+        gameObject.DestroyAfter(seconds);
+
+      return gameObjects;
     }
   }
 }

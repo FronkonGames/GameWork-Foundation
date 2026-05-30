@@ -19,9 +19,7 @@ using NUnit.Framework;
 using UnityEngine.TestTools;
 using FronkonGames.GameWork.Foundation;
 
-/// <summary>
-/// Extensions test.
-/// </summary>
+/// <summary> Extensions test. </summary>
 public partial class ExtensionsTests
 {
   public class Foo
@@ -31,9 +29,7 @@ public partial class ExtensionsTests
     public Foo(int value) => Value = value;
   };
   
-  /// <summary>
-  /// Array extensions test.
-  /// </summary>
+  /// <summary> Array extensions test. </summary>
   [UnityTest]
   public IEnumerator Array()
   {
@@ -120,7 +116,17 @@ public partial class ExtensionsTests
 
     arrayC.Clear();
     Assert.AreEqual(0.0f, arrayC.Sum());
-    
+
+    Assert.IsTrue(new[] { 1, 2, 3 }.TryIndexOf(2, out int index));
+    Assert.AreEqual(1, index);
+    Assert.IsFalse(new[] { 1, 2, 3 }.TryIndexOf(9, out _));
+
+    float[] samples = { 1.0f, 3.0f, 8.0f };
+    Assert.AreEqual(1, samples.FindClosestIndex(2.5f));
+
+    CollectionAssert.AreEqual(new[] { 0, 1, 2, 3, 4 }, ArrayExtensions.CreateSequence(5));
+    CollectionAssert.AreEqual(new[] { 1, 3 }, new[] { 1, 2, 3 }.Exclude(2));
+
     yield return null;
   }
 }

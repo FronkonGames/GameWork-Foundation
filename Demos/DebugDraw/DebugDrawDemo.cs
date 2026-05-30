@@ -17,8 +17,6 @@
 using UnityEngine;
 using FronkonGames.GameWork.Foundation;
 using Random = UnityEngine.Random;
-//using FronkonGames.TinyTween;
-//using TMPro;
 
 /// <summary> Draw test. </summary>
 [ExecuteInEditMode]
@@ -131,24 +129,6 @@ public sealed class DebugDrawDemo : MonoBehaviour
       enemies[i].DrawName();
 
     player.DrawName();
-
-    /*
-    DebugDraw.Cube(new Vector3(0.0f, 0.5f, 0.0f), 1.0f);
-
-    player.DrawName();
-    player.transform.Draw(3.0f);
-
-    for (int i = 0; i < enemies.Length; ++i)
-    {
-      enemies[i].DrawName();
-      DebugDraw.SolidArc(enemies[i].transform.position, 3.0f, arcAngle, enemies[i].transform.rotation);
-      player.GetComponent<Renderer>().bounds.Draw();
-    }
-
-    DebugDraw.Circle(new Vector3(0.0f, 0.5f, 0.0f), 4.0f, null, null, false);
-
-    PlayerRaycast();
-    */
   }
 
   private void UpdateRandomPoints()

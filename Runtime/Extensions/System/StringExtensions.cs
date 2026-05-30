@@ -17,6 +17,7 @@
 using System;
 using System.IO;
 using System.IO.Compression;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -31,6 +32,11 @@ namespace FronkonGames.GameWork.Foundation
     private static readonly string[] TrueValues = { "true", "ok", "yes", "1" };
 
     private const string UserNamePattern = @"^[a-zA-Z][a-zA-Z0-9]";
+
+    /// <summary> Returns true if the string is null, empty, or whitespace. </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool IsNullOrEmptyOrWhiteSpace(this string value)
+      => string.IsNullOrEmpty(value) || string.IsNullOrWhiteSpace(value);
 
     /// <summary> Checks if string is true-like (true, ok, yes, 1). </summary>
     /// <returns>True or false</returns>
@@ -277,6 +283,7 @@ namespace FronkonGames.GameWork.Foundation
     /// <summary> Index within the range of the string. </summary>
     /// <param name="index">Index</param>
     /// <returns>True/false</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool IsIndexValid(this string self, int index) => self != null && index >= 0 && index < self.Length;
 
     /// <summary>
@@ -288,6 +295,7 @@ namespace FronkonGames.GameWork.Foundation
 
     /// <summary> Is a valid email. </summary>
     /// <returns>True/false</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool IsValidEmail(this string self) => Regex.IsMatch(self, @"[a-zA-Z0-9\.-_]+@[a-zA-Z0-9\.-_]+");
 
     /// <summary> Calculate hash number from text. </summary>
@@ -306,10 +314,12 @@ namespace FronkonGames.GameWork.Foundation
 
     /// <summary> First character or default. </summary>
     /// <returns>First character or default.</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static char First(this string self) => string.IsNullOrEmpty(self) ? default : self[0];
 
     /// <summary> Last character or default. </summary>
     /// <returns>Last character or default.</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static char Last(this string self) => string.IsNullOrEmpty(self) ? default : self[self.Length - 1];
 
     /// <summary> First character uppercase. </summary>
@@ -338,14 +348,17 @@ namespace FronkonGames.GameWork.Foundation
 
     /// <summary> Remove illegal characters for files. </summary>
     /// <returns>Valid file / path</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static string RemoveInvalidFileCharacters(this string self) => string.Concat(self.Split(Path.GetInvalidFileNameChars())).Trim();
 
     /// <summary> Relative to project path to absolute path. </summary>
     /// <returns>Absolute path</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static string ToAbsolutePath(this string self) => $"{Application.dataPath[..^"Assets".Length]}{self}";
 
     /// <summary> Absolute path to relative to project path. </summary>
     /// <returns>Relative path</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static string ToRelativePath(this string self) => self[(Application.dataPath.Length - "Assets".Length)..];
 
     /// <summary> Compress the text, using gzip. </summary>
@@ -533,5 +546,41 @@ namespace FronkonGames.GameWork.Foundation
 
       return new Rect(0, 0, width, height);
     }
+
+    /// <summary> Converts the string to title case (first letter uppercase, rest lowercase). </summary>
+    /// <returns>Title cased string</returns>
+    public static string ToTitleCase(this string self)
+    {
+      if (string.IsNullOrEmpty(self) == true)
+        return self;
+
+      return CultureInfo.InvariantCulture.TextInfo.ToTitleCase(self.ToLowerInvariant());
+    }
+
+    /// <summary> Converts the string to camelCase (first letter lowercase). </summary>
+    /// <returns>Camel case string</returns>
+    public static string ToCamelCaseLower(this string self)
+    {
+      self = self.Replace("-", " ").Replace("_", " ");
+      self = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(self);
+      self = self.Replace(" ", string.Empty);
+
+      return char.ToLowerInvariant(self[0]) + self[1..];
+    }
+
+    /// <summary> Converts each word to start with an uppercase letter. </summary>
+    /// <returns>Upper cased each word string</returns>
+    public static string ToUpperCaseEachWord(this string self)
+    {
+      if (string.IsNullOrEmpty(self) == true)
+        return self;
+
+      return CultureInfo.InvariantCulture.TextInfo.ToTitleCase(self.ToLowerInvariant());
+    }
+
+    /// <summary> Removes all whitespace from the string. </summary>
+    /// <returns>String without whitespace</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static string RemoveWhitespace(this string self) => Regex.Replace(self, @"\s+", string.Empty);
   }
 }

@@ -15,6 +15,7 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 using System;
+using System.Runtime.CompilerServices;
 
 namespace FronkonGames.GameWork.Foundation
 {
@@ -68,6 +69,7 @@ namespace FronkonGames.GameWork.Foundation
     /// <summary> Byte a string. </summary>
     /// <param name="b">Value</param>
     /// <returns>String.</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static string ToBinaryString(this byte b) => Convert.ToString(b, 2).PadLeft(8, '0');
   }
 }

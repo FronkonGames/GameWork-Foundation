@@ -15,6 +15,7 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 using System.Collections;
+using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
@@ -56,6 +57,39 @@ public partial class ExtensionsTests
     Assert.AreEqual(new Vector2(1.0f, 2.0f), new Vector2(1.0f, 2.0f).Clamp(new Vector2(0.0f, 0.0f), new Vector2(3.0f, 3.0f)));
     Assert.AreEqual(new Vector2(0.0f, 0.0f), new Vector2(-1.0f, -2.0f).Clamp(UnityEngine.Vector2.zero, UnityEngine.Vector2.one));
     Assert.AreEqual(new Vector2(1.0f, 1.0f), new Vector2(5.0f, 6.0f).Clamp(UnityEngine.Vector2.zero, UnityEngine.Vector2.one));
+
+    Vector2 remapValue = new(5.0f, 25.0f);
+    Vector2 remapped = remapValue.Remap(UnityEngine.Vector2.zero, new Vector2(10.0f, 50.0f), new Vector2(100.0f, 0.0f), new Vector2(200.0f, 10.0f));
+    Assert.AreEqual(150.0f, remapped.x, 0.01f);
+    Assert.AreEqual(5.0f, remapped.y, 0.01f);
+
+    Vector2 remapped01 = remapValue.Remap01(UnityEngine.Vector2.zero, new Vector2(10.0f, 50.0f));
+    Assert.AreEqual(0.5f, remapped01.x, 0.01f);
+    Assert.AreEqual(0.5f, remapped01.y, 0.01f);
+
+    Vector2 multiplied = new Vector2(2.0f, 3.0f).Multiply(2.5);
+    Assert.AreEqual(5.0f, multiplied.x, 0.01f);
+    Assert.AreEqual(7.5f, multiplied.y, 0.01f);
+
+    Vector2[] vectors = { new(2.0f, 4.0f), new(4.0f, 6.0f), new(6.0f, 8.0f) };
+    Vector2 average = vectors.Average();
+    Assert.AreEqual(4.0f, average.x, 0.01f);
+    Assert.AreEqual(6.0f, average.y, 0.01f);
+
+    Vector3 toVector3 = new Vector2(1.0f, 2.0f).ToVector3(3.0f);
+    Assert.AreEqual(3.0f, toVector3.z, 0.01f);
+
+    Vector2 swizzled = new Vector2(1.0f, 2.0f).SwizzleYX();
+    Assert.AreEqual(2.0f, swizzled.x, 0.01f);
+    Assert.AreEqual(1.0f, swizzled.y, 0.01f);
+
+    Vector2Int compareLess = new(1, 5);
+    Assert.Less(compareLess.CompareTo(new Vector2Int(2, 1)), 0);
+    Assert.AreEqual(0, new Vector2Int(3, 4).CompareTo(new Vector2Int(3, 4)));
+    Assert.AreEqual(3, new Vector2Int(1, 2).ToVector3Int(3).z);
+    Assert.AreEqual(6, new Vector2Int(1, 2).AdjAll(5).x);
+    Assert.IsTrue(new List<Vector2> { new(2, 4), new(4, 8) }.TryCalculateAverage(out Vector2 avg));
+    Assert.AreEqual(3.0f, avg.x, 0.01f);
 
     yield return null;
   }

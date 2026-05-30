@@ -1,0 +1,10 @@
+{
+  "name": "FronkonGames.GameWork.Foundation.Data.Holders.Test",
+  "references": [
+    "FronkonGames.GameWork.Foundation"
+  ],
+  "optionalUnityReferences": [ "TestAssemblies" ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false
+}

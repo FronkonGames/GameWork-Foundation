@@ -15,6 +15,7 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 namespace FronkonGames.GameWork.Foundation
 {
@@ -41,6 +42,7 @@ namespace FronkonGames.GameWork.Foundation
     public virtual T GetChild(int index) => children[index];
 
     /// <summary> Get all children. </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public IReadOnlyList<T> GetChildren() => children.AsReadOnly();
   }
 }

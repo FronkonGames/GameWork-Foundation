@@ -16,6 +16,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine.Assertions;
 
 namespace FronkonGames.GameWork.Foundation
@@ -155,16 +156,19 @@ namespace FronkonGames.GameWork.Foundation
     /// <summary> Returns a random element. </summary>
     /// <param name="self"> The array. </param>
     /// <returns> Value or default. </returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static T Random<T>(this T[] self) => self.Length > 0 ? self[Rand.Range(0, self.Length)] : default;
 
     /// <summary> Sets array to default. </summary>
     /// <param name="self"> The array. </param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void Clear<T>(this T[] self) => Array.Clear(self, 0, self.Length);
 
     /// <summary> Sets a range of elements in the array to default. </summary>
     /// <param name="self"> The array. </param>
     /// <param name="index"> Start of the range. </param>
     /// <param name="count"> Number of elements to be cleaned. </param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void Clear<T>(this T[] self, int index, int count) => Array.Clear(self, index, count);
 
     /// <summary> Copies one array into another. </summary>
@@ -183,16 +187,19 @@ namespace FronkonGames.GameWork.Foundation
     /// <param name="offset"> Offset. </param>
     /// <param name="length"> Length. </param>
     /// <returns> Subarray. </returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static T[] Sub<T>(this T[] self, int offset, int length) => new ArraySegment<T>(self, offset, length).ToArray();
 
     /// <summary> Swaps a pair of elements. </summary>
     /// <param name="self"> The array. </param>
     /// <param name="i"> First element. </param>
     /// <param name="j"> Second element. </param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void Swap<T>(this T[] self, int i, int j) => (self[i], self[j]) = (self[j], self[i]);
 
     /// <summary> Reverses an array of items in place. </summary>
     /// <param name="self"> The array. </param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void Reverse<T>(this T[] self) => Reverse(self, 0, self.Length);
 
     /// <summary> Reverses the order of the items within the specified range in place. </summary>
@@ -296,6 +303,79 @@ namespace FronkonGames.GameWork.Foundation
       }
 
       return min;
+    }
+
+    /// <summary> Tries to find the index of an element. </summary>
+    public static bool TryIndexOf<T>(this T[] array, T value, out int index)
+    {
+      for (index = 0; index < array.Length; index++)
+      {
+        if (EqualityComparer<T>.Default.Equals(array[index], value))
+          return true;
+      }
+
+      return false;
+    }
+
+    /// <summary> Returns the index of the closest value in the array. </summary>
+    public static int FindClosestIndex(this float[] array, float target)
+    {
+      if (array == null || array.Length == 0)
+        return 0;
+
+      int closestIndex = 0;
+      float minDiff = Math.Abs(array[0] - target);
+
+      for (int i = 1; i < array.Length; i++)
+      {
+        float diff = Math.Abs(array[i] - target);
+        if (diff < minDiff)
+        {
+          minDiff = diff;
+          closestIndex = i;
+        }
+      }
+
+      return closestIndex;
+    }
+
+    /// <summary> Creates an array filled with 0..length-1. </summary>
+    public static int[] CreateSequence(int length)
+    {
+      int[] result = new int[length];
+
+      for (int i = 0; i < length; i++)
+        result[i] = i;
+
+      return result;
+    }
+
+    /// <summary> Returns a new array excluding the given values. </summary>
+    public static T[] Exclude<T>(this T[] array, params T[] values)
+    {
+      if (array == null || array.Length == 0)
+        return Array.Empty<T>();
+
+      List<T> result = new(array.Length);
+
+      for (int i = 0; i < array.Length; i++)
+      {
+        bool excluded = false;
+
+        for (int j = 0; j < values.Length; j++)
+        {
+          if (EqualityComparer<T>.Default.Equals(array[i], values[j]))
+          {
+            excluded = true;
+            break;
+          }
+        }
+
+        if (excluded == false)
+          result.Add(array[i]);
+      }
+
+      return result.ToArray();
     }
   }
 }

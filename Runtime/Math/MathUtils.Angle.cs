@@ -14,6 +14,7 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 namespace FronkonGames.GameWork.Foundation
@@ -24,6 +25,7 @@ namespace FronkonGames.GameWork.Foundation
     /// <summary> Angle to direction in the XY plane. </summary>
     /// <param name="radian">Radian angle</param>
     /// <returns>Direction</returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Vector2 AngToDir(float radian) => new(Cos(radian), Sin(radian));
   }
 }

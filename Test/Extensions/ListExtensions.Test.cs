@@ -62,6 +62,24 @@ public partial class ExtensionsTests
     Assert.IsFalse(removeList.Contains(2));
     Assert.IsFalse(removeList.Contains(4));
 
+    List<int> emptyList = new();
+    Assert.IsTrue(emptyList.IsEmptyOrNull());
+    Assert.IsTrue(emptyList.IsEmpty());
+
+    List<int> nullList = null;
+    Assert.IsTrue(nullList.IsEmptyOrNull());
+
+    List<int> nonEmpty = new() { 1, 2, 3 };
+    Assert.IsFalse(nonEmpty.IsEmptyOrNull());
+    Assert.IsFalse(nonEmpty.IsEmpty());
+
+    List<int> dupes = new() { 1, 2, 2, 3, 3, 3 };
+    dupes.RemoveDuplicates();
+    Assert.AreEqual(3, dupes.Count);
+    Assert.IsTrue(dupes.Contains(1));
+    Assert.IsTrue(dupes.Contains(2));
+    Assert.IsTrue(dupes.Contains(3));
+
     yield return null;
   }
 }

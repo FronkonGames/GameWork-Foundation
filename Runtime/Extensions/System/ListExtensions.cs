@@ -16,6 +16,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 namespace FronkonGames.GameWork.Foundation
 {
@@ -42,8 +43,26 @@ namespace FronkonGames.GameWork.Foundation
         self.Remove(item);
     }
 
+    /// <summary> Is the list null or empty? </summary>
+    public static bool IsEmptyOrNull<T>(this IList<T> self) => self == null || self.Count == 0;
+
+    /// <summary> Is the list empty? </summary>
+    public static bool IsEmpty<T>(this IList<T> self) => self.Count == 0;
+
+    /// <summary> Remove duplicate entries from the list. </summary>
+    public static void RemoveDuplicates<T>(this IList<T> self)
+    {
+      HashSet<T> seen = new();
+      for (int i = self.Count - 1; i >= 0; i--)
+      {
+        if (seen.Add(self[i]) == false)
+          self.RemoveAt(i);
+      }
+    }
+
     /// <summary> Reverses a list of items in place. </summary>
     /// <param name="self"> The list. </param>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void Reverse<T>(this IList<T> self) => Reverse(self, 0, self.Count);
 
     /// <summary> Reverses a list of items. </summary>
@@ -115,6 +134,168 @@ namespace FronkonGames.GameWork.Foundation
       }
 
       return min;
+    }
+
+    /// <summary> Removes and returns the first element. </summary>
+    /// <param name="self"> The list. </param>
+    /// <returns> The removed first element. </returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static T Pop<T>(this IList<T> list)
+    {
+      if (list.Count == 0)
+        return default;
+
+      T value = list[0];
+      list.RemoveAt(0);
+      return value;
+    }
+
+    /// <summary> Removes and returns the last element. </summary>
+    /// <param name="list"> The list. </param>
+    /// <returns> The removed last element. </returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static T PopLast<T>(this IList<T> list)
+    {
+      int count = list.Count;
+      if (count == 0)
+        return default;
+
+      int index = count - 1;
+      T value = list[index];
+      list.RemoveAt(index);
+      return value;
+    }
+
+    /// <summary> Returns true if the index is valid for this list. </summary>
+    /// <param name="list"> The list. </param>
+    /// <param name="index"> The index to check. </param>
+    /// <returns> True if the index is within range. </returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool HasIndex<T>(this IList<T> list, int index) => index >= 0 && index < list.Count;
+
+    /// <summary> Safely gets element at index, returning default(T) if out of range. </summary>
+    /// <param name="list"> The list. </param>
+    /// <param name="index"> The index. </param>
+    /// <returns> The element or default(T). </returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static T Get<T>(this IList<T> list, int index) => list.HasIndex(index) ? list[index] : default;
+
+    /// <summary> Tries to get element at index. </summary>
+    /// <param name="list"> The list. </param>
+    /// <param name="index"> The index. </param>
+    /// <param name="value"> The output value. </param>
+    /// <returns> True if the element was retrieved. </returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool TryGet<T>(this IList<T> list, int index, out T value)
+    {
+      if (list.HasIndex(index))
+      {
+        value = list[index];
+        return true;
+      }
+
+      value = default;
+      return false;
+    }
+
+    /// <summary> Returns a shallow clone of the list. </summary>
+    /// <param name="list"> The list. </param>
+    /// <returns> A new list with the same elements. </returns>
+    public static List<T> Clone<T>(this IList<T> list)
+    {
+      List<T> clone = new List<T>(list.Count);
+      for (int i = 0; i < list.Count; i++)
+        clone.Add(list[i]);
+      return clone;
+    }
+
+    /// <summary> Finds a random element matching the predicate using reservoir sampling. </summary>
+    /// <param name="list"> The list. </param>
+    /// <param name="match"> The predicate to match. </param>
+    /// <returns> A random matching element, or default(T) if none match. </returns>
+    public static T FindRandom<T>(this IList<T> list, Predicate<T> match)
+    {
+      T result = default;
+      int count = 0;
+
+      for (int i = 0; i < list.Count; i++)
+      {
+        if (match(list[i]))
+        {
+          count++;
+          if (Rand.Range(0, count) == 0)
+            result = list[i];
+        }
+      }
+
+      return result;
+    }
+
+    /// <summary> Returns the next index (cyclic). </summary>
+    /// <param name="list"> The list. </param>
+    /// <param name="index"> The current index. </param>
+    /// <returns> The next index, wrapping to 0 if at the end. </returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static int NextIndex<T>(this IList<T> list, int index) => (index + 1) % list.Count;
+
+    /// <summary> Returns the previous index (cyclic). </summary>
+    /// <param name="list"> The list. </param>
+    /// <param name="index"> The current index. </param>
+    /// <returns> The previous index, wrapping to the end if at 0. </returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static int PreviousIndex<T>(this IList<T> list, int index) => (index - 1 + list.Count) % list.Count;
+
+    /// <summary> Returns the next element cyclically. </summary>
+    /// <param name="list"> The list. </param>
+    /// <param name="value"> The current value. </param>
+    /// <returns> The next element in the list. </returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static T Next<T>(this IList<T> list, T value)
+    {
+      int index = list.IndexOf(value);
+      return list[(index + 1) % list.Count];
+    }
+
+    /// <summary> Returns the previous element cyclically. </summary>
+    /// <param name="list"> The list. </param>
+    /// <param name="value"> The current value. </param>
+    /// <returns> The previous element in the list. </returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static T Previous<T>(this IList<T> list, T value)
+    {
+      int index = list.IndexOf(value);
+      return list[(index - 1 + list.Count) % list.Count];
+    }
+
+    /// <summary> Returns the number of unique elements. </summary>
+    public static int UniqueCount<T>(this List<T> list) => list.UniqueCount(item => item.GetHashCode());
+
+    /// <summary> Returns the number of unique elements using a custom hash function. </summary>
+    public static int UniqueCount<T>(this List<T> list, Func<T, int> getHashCode)
+    {
+      HashSet<int> unique = new(list.Count);
+
+      for (int i = 0; i < list.Count; i++)
+        unique.Add(getHashCode(list[i]));
+
+      return unique.Count;
+    }
+
+    /// <summary> Returns true if all elements are unique. </summary>
+    public static bool AreAllUnique<T>(this List<T> list) => list.AreAllUnique(item => item.GetHashCode());
+
+    /// <summary> Returns true if all elements are unique using a custom hash function. </summary>
+    public static bool AreAllUnique<T>(this List<T> list, Func<T, int> getHashCode)
+    {
+      HashSet<int> unique = new(list.Count);
+
+      for (int i = 0; i < list.Count; i++)
+      {
+        if (unique.Add(getHashCode(list[i])) == false)
+          return false;
+      }
+
+      return true;
     }
   }
 }
