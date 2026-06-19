@@ -26,7 +26,7 @@ These are the foundations on which [Game:Work Core](https://github.com/FronkonGa
 - Many [attributes](./Runtime/Attributes) to make your classes more usable in the editor. Custom [Inspector](./Editor/Inspector) to help you create your own inspectors.
 - Multiple utilities to improve your developments: [checkers](./Runtime/Development/Check), [debug draw](./Runtime/Development/Draw), [profiling](./Runtime/Development/Profiling) and a console with custom commands.
 - A lot of .Net and Unity types [extensions](./Runtime/Extensions) (System, Unity, functional, enum, collider, texture, animator, MonoBehaviour, and more).
-- The most used [design patterns](./Runtime/Patterns) (15 patterns), in generic versions so that they are easy to adapt to your needs.
+- The most used design patterns (15 patterns), in generic versions so that they are easy to adapt to your needs.
 - [Data Holders](./Runtime/Data/Holders) system with typed ScriptableObject holders and generic Option class for local/global value configuration.
 - [Utilities](./Runtime/Development/Prototype/) to speed up prototyping time.
 - Commented code with test units.
@@ -64,7 +64,7 @@ Just clone the repository into your Assets folder:
 git clone https://github.com/FronkonGames/GameWork-Foundation.git 
 ```
 
-### Zip
+### Unity Assets Store
 
 Download the [latest release](https://github.com/FronkonGames/GameWork-Foundation/releases) and unzip it into the Assets directory.
 
@@ -102,7 +102,8 @@ The functionality is divided into folders, this is its structure:
 |\_Editor.......................... Editor utilities.
 |   |\_Drawers..................... Custom attribute viewers.
 |   |\_Fonts....................... Font for debug.
-|    \_Inspector................... Editor appearance utilities.
+|   |\_Inspector................... Editor appearance utilities.
+|    \_Tools....................... Editor tools (screenshots, etc.).
 |
 |\_Settings........................ Project settings.
 |\_Demos........................... Demo scenes.
@@ -113,370 +114,29 @@ The functionality is divided into folders, this is its structure:
 
 Check the comments for each file for more information.
 
-### Attributes
-
-<table>
-<tr><th align="left">
-
-```c#
-[Title("Attributes Demo")]
-```
-</th><th><img src="Media/attributes.title.png"/></th></tr><tr><th align="left">
-
-```c#
-[MessageBox("MessageBox test", MessageType.Info)]
-```
-</th><th><img src="Media/attributes.messagebox.png"/></th></tr><tr><th align="left">
-
-```c#
-[Label("Int field")]
-[Field(50)]
-public int intField;
-
-[Label("Int less than 0")]
-[FieldLess(0, -1)]
-public int intLess = -1;
-
-[Label("Int less equal than 0")]
-[FieldLessEqual(0, 0)]
-public int intLessEqual;
-
-[Label("Int greater than 0")]
-[FieldGreat(0, 10)]
-public int intGreater;
-
-[Label("Int greater equal than 10")]
-[FieldGreat(10, 10)]
-public int intGreaterEqual;
-
-[Label("Int")]
-[Slider(0, 10, 10)]
-public int intSlider;
-
-[Label("Int snap 10")]
-[Slider(0, 100, 50, 10)]
-public int intSnap;
-
-[Label("Ints min/max")]
-[MinMaxSlider(0, 100, 0, 100)]
-public int intMin = 0;
-
-[HideInInspector]
-public int intMax = 100;
-
-[Label("Float field")]
-[Field(1.0f)]
-public float floatField;
-
-[Label("Float less than 0")]
-[FieldLess(0.0f, -1.0f)]
-public float floatLess = 1.0f;
-
-[Label("Float less equal than 0")]
-[FieldLessEqual(0.0f, 0.0f)]
-public float floatLessEqual;
-
-[Label("Float greater than 0")]
-[FieldGreat(0.0f, 1.0f)]
-public float floatGreater;
-
-[Label("Float greater equal than 0")]
-[FieldGreatEqual(0.0f, 0.0f)]
-public float floatGreaterEqual;
-
-[Label("Float")]
-[Slider(0.0f, 1.0f, 1.0f)]
-public float floatSlider;
-
-[Label("Float snap 0.5")]
-[Slider(0.0f, 1.0f, 0.5f, 0.1f)]
-public float floatSnap;
-
-[Label("Floats min/max")]
-[MinMaxSlider(0.0f, 1.0f)]
-public float floatMin = 0.0f;
-
-[HideInInspector]
-public float floatMax = 1.0f;
-```
-</th><th><img src="Media/attributes.variables.png"/></th></tr><tr><th align="left">
-
-```c#
-[Label("Nice name")]
-public string badName;
-```
-</th><th><img src="Media/attributes.label.png"/></th></tr><tr><th align="left">
-
-```c#
-[Password]
-public string password;
-```
-</th><th><img src="Media/attributes.password.png"/></th></tr><tr><th align="left">
-
-```c#
-[Indent(0)]
-public string noIndent;
-
-[Indent(1)]
-public string indented;
-```
-</th><th><img src="Media/attributes.indent.png"/></th></tr><tr><th align="left">
-
-```c#
-[NotNull]
-public GameObject cantBeNull;
-```
-</th><th><img src="Media/attributes.notnull.png"/></th></tr><tr><th align="left">
-
-```c#
-[File]
-public string filePath;
-
-[Folder]
-public string folderPath;
-```
-</th><th><img src="Media/attributes.file.png"/></th></tr><tr><th align="left">
-
-```c#
-[Scene]
-public int sceneIndex;
-```
-</th><th><img src="Media/attributes.scene.png"/></th></tr><tr><th align="left">
-
-```c#
-[NotEditable]
-public string notEditable;
-
-[OnlyEditableInEditor]
-public string editableInEdit;
-
-[OnlyEditableInPlay]
-public string editableInPlay;
-```
-</th><th><img src="Media/attributes.noteditable.png"/></th></tr><tr><th align="left">
-
-```c#
-public bool toggle;
-
-[EnableIf(nameof(toggle))]
-public string enableIf;
-
-[DisableIf(nameof(toggle))]
-public string disableIf;
-```
-</th><th><img src="Media/attributes.enableif.png"/></th></tr><tr><th align="left">
-
-```c#
-public bool toggle;
-
-[ShowIf(nameof(toggle))]
-public string showIf;
-```
-</th><th><img src="Media/attributes.showif.png"/></th></tr><tr><th align="left">
-
-```c#
-public bool toggle;
-
-[HideIf(nameof(toggle))]
-public string hideIf;
-```
-</th><th><img src="Media/attributes.hideif.png"/></th></tr><tr><th align="left">
-
-```c#
-[KeyCode]
-public KeyCode keyCode;
-```
-</th><th><img src="Media/attributes.keycode.gif"/></th></tr><tr><th align="left">
-
-```c#
-[NotEditable]
-public int counter;
-
-[Button(nameof(Increase))]
-public string buttonInc;
-
-[Button(nameof(Reset))]
-public string buttonReset;
-
-public void Increase() => counter++;
-public void Reset()    => counter = 0;
-```
-</th><th><img src="Media/attributes.button.gif"/></th></tr>
-
-</table>
-
-### Custom Inspector
-
-A simple way to create your own inspectors by quickly accessing all the private fields of your components.
-
-<p align="center"><img src="Media/inspector.png"/></p>
-
-### Check
-
-Checks the values of the variables that a function receives. If the condition is not met, **an exception is thrown**. Only active when '**UNITY_ASSERTIONS**' is defined (default only in the Editor).
-
-```c#
-public void GetImpact(GameObject gameObject, float damage, Vector3 impact)
-{
-    Check.IsNotNull(gameObject);
-    Check.IsWithin(damage, 0.0f, 100.0f);
-    Check.Greater(impact, Vector3.zero);
-    
-    ...
-}
-```
-
-Take a look at the [Check class folder](./Runtime/Development/Check).
-
-### Draw
-
-Visualize in the Editor Scene window useful information of your game, in a simple way and without affecting the final performance of the game.
-
-<p align="center"><img src="Media/debug.draw.gif"/></p>
-
-```c#
-// Displays an array of points.
-points.Draw();
-
-// Displays the player's direction.
-player.transform.Draw();
-
-// Displays the name of the GameObject.
-player.DrawName();
-
-// Displays RaycastHits.
-int hits = Physics.RaycastNonAlloc(playerRay, playerHits, 100.0f);
-if (hits > 0)
-  playerHits.Draw(playerRay);
-```
-
-### Prototype
-
-Useful components to support the development of prototypes:
-
-<p align="center"><img src="Media/development.components.gif"/></p>
-
-* [First person](./Runtime/Development/Prototype/FirstPersonCamera.cs), [third person](./Runtime/Development/Prototype/ThirdPersonCamera.cs) and [free](./Runtime/Development/Prototype/FreeCamera.cs) cameras.
-* [Screenshooter](./Runtime/Development/Prototype/Screenshooter.cs): asynchronous screen capture.
-* [Hardware monitor](./Runtime/Development/Prototype/HardwareMonitor.cs): shows various performance data.
-* [Collision Test](./Runtime/Development/Prototype/CollisionTest.cs): triggers events when collisions are detected.
-* [Trigger Test](./Runtime/Development/Prototype/TriggerTest.cs): triggers events.
-* [Face To](./Runtime/Development/Prototype/FaceTo.cs): orients the object so that it faces a target.
-* [Follower](./Runtime/Development/Prototype/Follower.cs): follow a target.
-* [Mover](./Runtime/Development/Prototype/Mover.cs): moves object linearly.
-* [Rotator](./Runtime/Development/Prototype/Rotator.cs): rotates an object.
-* [Material scroller](./Runtime/Development/Prototype/MaterialScroller.cs): moves a texture at a linear speed.
-
-### Development Console
-
-A developer console for executing commands.
-
-<p align="center"><img src="Media/development.console.gif"/></p>
-
-Simply add a GameObject with the [DevelopmentConsole](./Runtime/Development/Console/DevelopmentConsole.cs) component and assign the commands you want to use to it.
-
-Commands are ScriptableObjects that you can create from [DevelopmentCommand](./Runtime/Development/Console/DevelopmentCommand.cs).
-See the commands included in [this folder](./Runtime/Development/Console/Commands/).
-
-```c#
-/// <summary>
-/// Quit application.
-/// </summary>
-[CreateAssetMenu(fileName = "Quit", menuName = "Game:Work/Development/Command/Quit")]
-public class QuitCommand : DevelopmentCommand
-{
-    public QuitCommand()
-    {
-      Id = "quit";
-      Usage = "quit";
-      Description = "Quit application.";
-    }
-
-    public override bool Execute(string[] args)
-    {
-        Application.Quit();
-    
-        return true;
-    }
-}
-```
-
-### Profiling
-
-It measures in a simple way the time it takes for a block of code to execute, or the memory it consumes.
-
-```c#
-using (Profiling.Time("Some slow code"))
-{
-    ...
-}
-```
-
-Output the message: "**Task 'Some slow code' took 27.66ms (0 frames)**"
-
-```c#
-using (Profiling.Memory("Some hungry code"))
-{
-    ...
-}
-```
-
-Output the message: "**Task 'Some hungry code' consume 4.00 kb**". 
-
-### Algorithms
-
-Algorithms and data structures.
-
-- Structures: [ArrayList](./Runtime/Algorithms/Structures/ArrayList.cs), [FastList](./Runtime/Algorithms/Structures/FastList.cs).
-
-### Patterns
-
-The most used design patterns, all using generics:
-
-- Behavioral: [Chain of Responsibility](./Runtime/Patterns/Behavioral/ChainOfResponsibility), [Command](./Runtime/Patterns/Behavioral/Command), [Mediator](./Runtime/Patterns/Behavioral/Mediator), [Memento](./Runtime/Patterns/Behavioral/Memento), [Observer](./Runtime/Patterns/Behavioral/Observer), [State](./Runtime/Patterns/Behavioral/State), [Strategy](./Runtime/Patterns/Behavioral/Strategy), [Visitor](./Runtime/Patterns/Behavioral/Visitor).
-- Creational: [Builder](./Runtime/Patterns/Creational/Builder), [Factory](./Runtime/Patterns/Creational/Factory), [Service Locator](./Runtime/Patterns/Creational/ServiceLocator/), [Singleton](./Runtime/Patterns/Creational/Singleton).
-- Structural: [Composite](./Runtime/Patterns/Structural/Composite), [Decorator](./Runtime/Patterns/Structural/Decorator).
-- Optimization: [Object Pool](./Runtime/Patterns/Optimization/ObjectPool).
-
-### Data Holders
-
-Typed ScriptableObject holders for decoupled data configuration:
-
-```c#
-// Create a holder asset: Create > GameWork > Data Holders > Float Holder
-[CreateAssetMenu(menuName = "GameWork/Data Holders/Float Holder")]
-public class FloatHolder : ScriptableObject, IValueHolder<float>
-{
-  [SerializeField] private float value = 0f;
-  public float GetValue() => value;
-  public void SetValue(float newValue) => value = newValue;
-}
-
-// Use Option for flexible local/global configuration
-[System.Serializable]
-public class Option<TValue, THolder> where THolder : ScriptableObject, IValueHolder<TValue>
-{
-  // Mode: Disabled, LocalValue, GlobalValue
-  // Value returns local or global based on mode
-}
-```
-
-Available holders: Bool, Int, Float, String, Color, Vector2/3/4, Quaternion, GameObject, Transform, AudioClip, Material, Sprite, Texture, LayerMask, Collider, Collider2D, Rigidbody, Rigidbody2D, RectTransform.
-
-### Serialization
-
-Serializable wrappers for .NET types that Unity cannot serialize directly:
-
-- **SerializableDateTime**: Wraps `System.DateTime` into serializable int fields. Supports implicit conversion to/from `DateTime`.
-- **SerializableTime**: Wraps `TimeSpan` as a serializable struct with days/hours/minutes/seconds/milliseconds. Factory methods: `FromSeconds`, `FromTicks`, `FromTimeSpan`, `FromDateTime`.
-- **SerializableDictionary**: A serializable `Dictionary<TKey, TValue>` using `ISerializationCallbackReceiver`. Factory methods: `FromDictionary`, `FromKeyPairValueList`.
-- **SerializableKeyValuePair**: A serializable `KeyValuePair<TKey, TValue>` with implicit conversions.
-
-### Unit tests
-
-More than 400 tests.
-
-<p align="center"><img src="Media/unittests.png"/></p>
+### Documentation
+
+- [Attributes](./Runtime/Attributes/README.md)
+- [Custom Inspector](./Editor/Inspector/README.md)
+- [Property Drawers](./Editor/Drawers/README.md)
+- [Editor Tools](./Editor/Tools/README.md)
+- [Check](./Runtime/Development/Check/README.md)
+- [Draw](./Runtime/Development/Draw/README.md)
+- [Prototype](./Runtime/Development/Prototype/README.md)
+- [Development Console](./Runtime/Development/Console/README.md)
+- [Profiling](./Runtime/Development/Profiling/README.md)
+- [Algorithms](./Runtime/Algorithms/README.md)
+- [Math](./Runtime/Math/README.md)
+- [Utils](./Runtime/Utils/README.md)
+- [Behavioral patterns](./Runtime/Patterns/Behavioral/README.md)
+- [Creational patterns](./Runtime/Patterns/Creational/README.md)
+- [Structural patterns](./Runtime/Patterns/Structural/README.md)
+- [Optimization patterns](./Runtime/Patterns/Optimization/README.md)
+- [Data Holders](./Runtime/Data/Holders/README.md)
+- [Serialization](./Runtime/Data/Serialization/README.md)
+- [System extensions](./Runtime/Extensions/System/README.md)
+- [Unity extensions](./Runtime/Extensions/Unity/README.md)
+- [Unit tests](./Test/README.md)
 
 ## 📜 License
 

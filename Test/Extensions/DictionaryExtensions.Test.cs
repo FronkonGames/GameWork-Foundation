@@ -68,6 +68,24 @@ public partial class ExtensionsTests
     Assert.AreEqual(3, dict["a"]);
     Assert.AreEqual(1, dict["c"]);
 
+    Dictionary<string, float> weights = new() { { "a", 2.0f }, { "b", 2.0f } };
+    Dictionary<string, float> normalized = weights.Normalize();
+    Assert.AreEqual(0.5f, normalized["a"], 0.001f);
+    Assert.AreEqual(0.5f, normalized["b"], 0.001f);
+
+    Dictionary<string, int> mapped = weights.SelectDictionary(value => (int)value);
+    Assert.AreEqual(2, mapped["a"]);
+    Assert.AreEqual(2, mapped["b"]);
+
+    Dictionary<string, float> merged = new List<IDictionary<string, float>>
+    {
+      new Dictionary<string, float> { { "a", 1.0f }, { "b", 2.0f } },
+      new Dictionary<string, float> { { "a", 3.0f }, { "c", 4.0f } },
+    }.SumTogether();
+    Assert.AreEqual(4.0f, merged["a"], 0.001f);
+    Assert.AreEqual(2.0f, merged["b"], 0.001f);
+    Assert.AreEqual(4.0f, merged["c"], 0.001f);
+
     yield return null;
   }
 }

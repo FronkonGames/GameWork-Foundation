@@ -20,7 +20,7 @@ using UnityEngine;
 namespace FronkonGames.GameWork.Foundation
 {
   /// <summary> ScriptableObject holder for a Transform value. </summary>
-  [CreateAssetMenu(menuName = Settings.Menus.GameWorkFoundationFolder + "/Data Holders/Transform Holder", fileName = "Transform Holder")]
+  [CreateAssetMenu(menuName = Settings.Menus.EditorFolder + "/Data Holders/Transform Holder", fileName = "Transform Holder")]
   public class TransformHolder : ScriptableObject, IValueHolder<Transform>
   {
     [SerializeField]

@@ -243,5 +243,47 @@ namespace FronkonGames.GameWork.Foundation
 
     /// <summary> Formats the value as a currency suffix (e.g. K, M, B). </summary>
     public static string CurrencySuffix(this int value, int decimalPlaces = 0) => ((long)value).CurrencySuffix(decimalPlaces);
+
+#if UNITY_EDITOR
+    /// <summary> Save the int to editor prefs. </summary>
+    /// <param name="key">Key</param>
+    public static void ToEditorPrefs(this int self, string key)
+    {
+      if (string.IsNullOrEmpty(key) == false)
+        UnityEditor.EditorPrefs.SetInt(key, self);
+    }
+
+    /// <summary> Get the int from editor prefs. </summary>
+    /// <param name="key">Key</param>
+    /// <param name="defaultValue">Default value</param>
+    /// <returns>Editor prefs value</returns>
+    public static int FromEditorPrefs(this string key, int defaultValue = default)
+    {
+      if (string.IsNullOrEmpty(key) == false)
+        return UnityEditor.EditorPrefs.GetInt(key, defaultValue);
+
+      return defaultValue;
+    }
+#endif
+
+    /// <summary> Save the int to player prefs. </summary>
+    /// <param name="key">Key</param>
+    public static void ToPlayerPrefs(this int self, string key)
+    {
+      if (string.IsNullOrEmpty(key) == false)
+        PlayerPrefs.SetInt(key, self);
+    }
+
+    /// <summary> Get the int from player prefs. </summary>
+    /// <param name="key">Key</param>
+    /// <param name="defaultValue">Default value</param>
+    /// <returns>Player prefs value</returns>
+    public static int FromPlayerPrefs(this string key, int defaultValue = default)
+    {
+      if (string.IsNullOrEmpty(key) == false)
+        return PlayerPrefs.GetInt(key, defaultValue);
+
+      return defaultValue;
+    }
   }
 }

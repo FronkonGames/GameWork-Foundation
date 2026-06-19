@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.0.18 - 2026-06-19
+
+### Added
+- `Screenshooter` tool.
+- Better documentation.
+- New extensions.
+- Weighted random, Gaussian sampling and enum random helpers in `Rand` and `EnumExtensions`.
+- LINQ batch helpers: `Buffer`, `RollingWindow`, `TryPullFromDictionary`.
+- Dictionary helpers: `SelectDictionary`, `Normalize`, `SumTogether`.
+- RAII disposable helpers: `ActionDisposable`, `DestroyOnDispose`, `EnableThenDisable`, `DisposeTemporaryTexture`.
+- `GizmoDraw`, helpers for `OnDrawGizmos`.
+- Unit tests for the new extensions.
+
+### Changed
+- Updated to Unity 6000.0.76b1.
+- Methods from Log class no longer show at Callstack.
+
 ## 0.0.17 - 2026-05-31
 
 ### Added

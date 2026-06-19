@@ -159,6 +159,40 @@ public partial class MathTests
       Assert.IsTrue(Mathf.Abs(Quaternion.Dot(rotation, rotation) - 1.0f) < 0.01f);
     }
 
+    Assert.AreEqual(0, Rand.PickWeighted(new[] { 1.0f }));
+    Assert.AreEqual(0, Rand.PickWeighted(new[] { 10.0f, 0.0f, 0.0f }));
+
+    int firstWeightHits = 0;
+    for (int i = 0; i < Tries; ++i)
+    {
+      if (Rand.PickWeighted(new[] { 100.0f, 1.0f }) == 0)
+        firstWeightHits++;
+    }
+
+    Assert.Greater(firstWeightHits, Tries * 0.9f);
+
+    float normalSum = 0.0f;
+    const float mean = 5.0f;
+    const float stdDev = 2.0f;
+    for (int i = 0; i < Tries; ++i)
+      normalSum += Rand.NextNormal(mean, stdDev);
+
+    Assert.AreEqual(mean, normalSum / Tries, 0.25f);
+
+    Assert.IsTrue(Rand.Chance(100.0f, 100.0f));
+    Assert.IsFalse(Rand.Chance(0.0f, 100.0f));
+    Assert.IsTrue(Rand.ChancePercent(100.0f));
+    Assert.IsFalse(Rand.ChancePercent(0.0f));
+
+    for (int i = 0; i < Tries; ++i)
+    {
+      float lerped = Rand.Lerp(0.0f, 10.0f);
+      Assert.IsTrue(lerped >= 0.0f && lerped <= 10.0f);
+
+      Vector3 lerpedVector = Rand.Lerp(Vector3.zero, Vector3.one);
+      Assert.IsTrue(lerpedVector.x >= 0.0f && lerpedVector.x <= 1.0f);
+    }
+
     yield return null;
   }
 }

@@ -42,6 +42,12 @@ namespace FronkonGames.GameWork.Foundation
     /// <summary> Does it have the attribute? </summary>
     /// <returns> True or false. </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool HasAttribute<T>(this MemberInfo self, bool inherit = true) where T : Attribute
+      => self.GetCustomAttributes(typeof(T), inherit).Length > 0;
+
+    /// <summary> Does it have the attribute? </summary>
+    /// <returns> True or false. </returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool HasAttribute<T>(this FieldInfo self, bool inherit = true) where T : Attribute => self.GetCustomAttributes(typeof(T), inherit).Length > 0;
 
     /// <summary> Returns property or null. </summary>

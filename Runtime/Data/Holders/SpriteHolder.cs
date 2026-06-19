@@ -20,7 +20,7 @@ using UnityEngine;
 namespace FronkonGames.GameWork.Foundation
 {
   /// <summary> ScriptableObject holder for a Sprite value. </summary>
-  [CreateAssetMenu(menuName = Settings.Menus.GameWorkFoundationFolder + "/Data Holders/Sprite Holder", fileName = "Sprite Holder")]
+  [CreateAssetMenu(menuName = Settings.Menus.EditorFolder + "/Data Holders/Sprite Holder", fileName = "Sprite Holder")]
   public class SpriteHolder : ScriptableObject, IValueHolder<Sprite>
   {
     [SerializeField]

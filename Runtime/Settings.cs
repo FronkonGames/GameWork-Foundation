@@ -98,7 +98,7 @@ namespace FronkonGames.GameWork.Foundation
     /// <summary> Menus. </summary>
     public static class Menus
     {
-      public const string GameWorkFoundationFolder = "Fronkon Games/Game:Work/Foundation";
+      public const string EditorFolder = "Fronkon Games/Game:Work/Foundation";
     }
 
 #if UNITY_EDITOR
@@ -123,6 +123,8 @@ namespace FronkonGames.GameWork.Foundation
       public static readonly string RefreshIcon = "d_Refresh";
       
       public const float SpaceSeparation = 5.0f;
+
+      public const string EditorPrefs = "FronkonGames.GameWork.Foundation";
     }
 #endif
   }

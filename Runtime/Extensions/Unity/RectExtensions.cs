@@ -110,5 +110,63 @@ namespace FronkonGames.GameWork.Foundation
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Rect Expanded(this Rect rect, float amount) =>
       new(rect.x - amount, rect.y - amount, rect.width + amount * 2f, rect.height + amount * 2f);
+
+    /// <summary> Returns a copy with x, y, width, and height rounded to the nearest integer. </summary>
+    /// <param name="rect"> The source rect. </param>
+    /// <returns> A rect with rounded coordinates. </returns>
+    public static Rect WithRoundedCoordinates(this Rect rect) =>
+      new(Mathf.Round(rect.x), Mathf.Round(rect.y), Mathf.Round(rect.width), Mathf.Round(rect.height));
+
+    /// <summary> Splits the rect vertically into left and right parts. </summary>
+    /// <param name="originalRect"> The rect to split. </param>
+    /// <param name="cutDistance"> Width of the cut slice. </param>
+    /// <param name="fromRightSide"> When true, the cut is taken from the right edge. </param>
+    /// <returns> Left and right rects after the cut. </returns>
+    public static (Rect leftRect, Rect rightRect) CutVertically(this Rect originalRect, float cutDistance, bool fromRightSide = false)
+    {
+      Vector2 leftRectPos = originalRect.position;
+      Vector2 cutDistanceSize = new(cutDistance, originalRect.height);
+      Vector2 leftoverSize = new(originalRect.width - cutDistance, originalRect.height);
+      Rect leftRect;
+      Rect rightRect;
+
+      if (fromRightSide == true)
+      {
+        leftRect = new Rect(leftRectPos, leftoverSize);
+        rightRect = new Rect(new Vector2(originalRect.x + leftRect.width, originalRect.y), cutDistanceSize);
+      }
+      else
+      {
+        leftRect = new Rect(leftRectPos, cutDistanceSize);
+        rightRect = new Rect(new Vector2(originalRect.x + leftRect.width, originalRect.y), leftoverSize);
+      }
+
+      return (leftRect, rightRect);
+    }
+
+    /// <summary> Returns a copy narrowed by horizontal padding on both sides. </summary>
+    /// <param name="rect"> The source rect. </param>
+    /// <param name="leftPadding"> Padding removed from the left edge. </param>
+    /// <param name="rightPadding"> Padding removed from the right edge. </param>
+    /// <returns> A padded rect. </returns>
+    public static Rect AddHorizontalPadding(this Rect rect, float leftPadding, float rightPadding)
+    {
+      rect.xMin += leftPadding;
+      rect.xMax -= rightPadding;
+
+      return rect;
+    }
+
+    /// <summary> Returns a copy vertically centered with the given height. </summary>
+    /// <param name="rect"> The source rect. </param>
+    /// <param name="height"> Target height. </param>
+    /// <returns> A vertically centered rect. </returns>
+    public static Rect AlignMiddleVertically(this Rect rect, float height)
+    {
+      rect.y = rect.y + rect.height * 0.5f - height * 0.5f;
+      rect.height = height;
+
+      return rect;
+    }
   }
 }

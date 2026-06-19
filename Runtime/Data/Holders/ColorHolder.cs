@@ -20,7 +20,7 @@ using UnityEngine;
 namespace FronkonGames.GameWork.Foundation
 {
   /// <summary> ScriptableObject holder for a Color value. </summary>
-  [CreateAssetMenu(menuName = Settings.Menus.GameWorkFoundationFolder + "/Data Holders/Color Holder", fileName = "Color Holder")]
+  [CreateAssetMenu(menuName = Settings.Menus.EditorFolder + "/Data Holders/Color Holder", fileName = "Color Holder")]
   public class ColorHolder : ScriptableObject, IValueHolder<Color>
   {
     [SerializeField]

@@ -20,7 +20,7 @@ using UnityEngine;
 namespace FronkonGames.GameWork.Foundation
 {
   /// <summary> ScriptableObject holder for a Vector2 value. </summary>
-  [CreateAssetMenu(menuName = Settings.Menus.GameWorkFoundationFolder + "/Data Holders/Vector2 Holder", fileName = "Vector2 Holder")]
+  [CreateAssetMenu(menuName = Settings.Menus.EditorFolder + "/Data Holders/Vector2 Holder", fileName = "Vector2 Holder")]
   public class Vector2Holder : ScriptableObject, IValueHolder<Vector2>
   {
     [SerializeField]

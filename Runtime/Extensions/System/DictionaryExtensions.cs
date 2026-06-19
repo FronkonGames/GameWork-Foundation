@@ -16,6 +16,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace FronkonGames.GameWork.Foundation
 {
@@ -90,6 +91,54 @@ namespace FronkonGames.GameWork.Foundation
         self[key1] = value2;
         self[key2] = value1;
       }
+    }
+
+    /// <summary> Creates a new dictionary by transforming each value. </summary>
+    /// <typeparam name="TKey"> Key type. </typeparam>
+    /// <typeparam name="TIn"> Input value type. </typeparam>
+    /// <typeparam name="TOut"> Output value type. </typeparam>
+    /// <param name="source"> Source dictionary. </param>
+    /// <param name="valueSelector"> Value transform. </param>
+    /// <returns> Transformed dictionary. </returns>
+    public static Dictionary<TKey, TOut> SelectDictionary<TKey, TIn, TOut>(this IDictionary<TKey, TIn> source, Func<TIn, TOut> valueSelector)
+    {
+      return source.ToDictionary(pair => pair.Key, pair => valueSelector(pair.Value));
+    }
+
+    /// <summary> Normalizes float dictionary values so they sum to 1.0f. </summary>
+    /// <typeparam name="TKey"> Key type. </typeparam>
+    /// <param name="source"> Source dictionary. </param>
+    /// <returns> Normalized dictionary. </returns>
+    public static Dictionary<TKey, float> Normalize<TKey>(this IDictionary<TKey, float> source)
+    {
+      float sum = source.Values.Sum();
+
+      if (sum == 0.0f)
+        throw new InvalidOperationException("Cannot normalize a dictionary whose values sum to zero.");
+
+      return source.SelectDictionary(value => value / sum);
+    }
+
+    /// <summary> Sums values across multiple float dictionaries by key. </summary>
+    /// <typeparam name="TKey"> Key type. </typeparam>
+    /// <param name="source"> Dictionaries to merge. </param>
+    /// <returns> Combined dictionary. </returns>
+    public static Dictionary<TKey, float> SumTogether<TKey>(this IEnumerable<IDictionary<TKey, float>> source)
+    {
+      Dictionary<TKey, float> result = new();
+
+      foreach (IDictionary<TKey, float> dictionary in source)
+      {
+        foreach (KeyValuePair<TKey, float> pair in dictionary)
+        {
+          if (result.ContainsKey(pair.Key) == false)
+            result[pair.Key] = 0.0f;
+
+          result[pair.Key] += pair.Value;
+        }
+      }
+
+      return result;
     }
   }
 }

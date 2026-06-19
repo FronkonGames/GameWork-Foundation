@@ -20,7 +20,7 @@ using UnityEngine;
 namespace FronkonGames.GameWork.Foundation
 {
   /// <summary> ScriptableObject holder for a bool value. </summary>
-  [CreateAssetMenu(menuName = Settings.Menus.GameWorkFoundationFolder + "/Data Holders/Bool Holder", fileName = "Bool Holder")]
+  [CreateAssetMenu(menuName = Settings.Menus.EditorFolder + "/Data Holders/Bool Holder", fileName = "Bool Holder")]
   public class BoolHolder : ScriptableObject, IValueHolder<bool>
   {
     [SerializeField]

@@ -423,5 +423,36 @@ namespace FronkonGames.GameWork.Foundation.Tests
       for (int i = 0; i < result.Length; i++)
         Assert.AreEqual(Color.red, result[i]);
     }
+
+    /// <summary> GetHdrIntensity returns log2 of max RGB component. </summary>
+    [Test]
+    public void GetHdrIntensity_ReturnsLog2OfMaxComponent()
+    {
+      Color color = new Color(2.0f, 1.0f, 0.5f, 1.0f);
+
+      Assert.AreEqual(1.0f, color.GetHdrIntensity(), Tolerance);
+    }
+
+    /// <summary> AdjustHdrIntensity scales RGB by exposure stops. </summary>
+    [Test]
+    public void AdjustHdrIntensity_ScalesByExposureStops()
+    {
+      Color color = new Color(1.0f, 0.5f, 0.25f, 1.0f);
+      Color brighter = color.AdjustHdrIntensity(1.0f);
+
+      Assert.AreEqual(2.0f, brighter.r, Tolerance);
+      Assert.AreEqual(1.0f, brighter.g, Tolerance);
+      Assert.AreEqual(0.5f, brighter.b, Tolerance);
+    }
+
+    /// <summary> AtHdrIntensity sets target exposure. </summary>
+    [Test]
+    public void AtHdrIntensity_SetsTargetExposure()
+    {
+      Color color = new Color(4.0f, 2.0f, 1.0f, 1.0f);
+      Color result = color.AtHdrIntensity(1.0f);
+
+      Assert.AreEqual(1.0f, result.GetHdrIntensity(), Tolerance);
+    }
   }
 }

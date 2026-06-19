@@ -91,6 +91,10 @@ public partial class ExtensionsTests
     Assert.IsTrue(new List<Vector2> { new(2, 4), new(4, 8) }.TryCalculateAverage(out Vector2 avg));
     Assert.AreEqual(3.0f, avg.x, 0.01f);
 
+    Vector2 rotated = new Vector2(1.0f, 0.0f).Rotate(MathConstants.PiHalf);
+    Assert.IsTrue(rotated.x.NearlyEquals(0.0f, 0.01f));
+    Assert.IsTrue(rotated.y.NearlyEquals(1.0f, 0.01f));
+
     yield return null;
   }
 }

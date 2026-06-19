@@ -401,5 +401,40 @@ namespace FronkonGames.GameWork.Foundation
     /// <summary> Returns a new color with green and blue channels replaced. </summary>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Color WithGB(this Color color, float g, float b) => new(color.r, g, b, color.a);
+
+    /// <summary> Returns the HDR intensity (log2 of the max RGB component). </summary>
+    /// <param name="color"> HDR color. </param>
+    /// <returns> Intensity in exposure stops. </returns>
+    public static float GetHdrIntensity(this Color color)
+    {
+      float maxColorComponent = color.maxColorComponent;
+
+      if (maxColorComponent <= 0.0f)
+        return 0.0f;
+
+      return Mathf.Log(maxColorComponent) / Mathf.Log(2.0f);
+    }
+
+    /// <summary> Adjusts HDR intensity by the given number of exposure stops. </summary>
+    /// <param name="color"> HDR color. </param>
+    /// <param name="additionalIntensity"> Exposure stops to add. </param>
+    /// <returns> Color at the new intensity. </returns>
+    public static Color AdjustHdrIntensity(this Color color, float additionalIntensity)
+    {
+      float factor = Mathf.Pow(2.0f, additionalIntensity);
+
+      return new Color(color.r * factor, color.g * factor, color.b * factor, color.a);
+    }
+
+    /// <summary> Sets the HDR color to the target intensity in exposure stops. </summary>
+    /// <param name="color"> HDR color. </param>
+    /// <param name="newIntensity"> Target intensity. </param>
+    /// <returns> Color at the target intensity. </returns>
+    public static Color AtHdrIntensity(this Color color, float newIntensity)
+    {
+      float originalIntensity = color.GetHdrIntensity();
+
+      return color.AdjustHdrIntensity(newIntensity - originalIntensity);
+    }
   }
 }

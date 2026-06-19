@@ -22,6 +22,15 @@ namespace FronkonGames.GameWork.Foundation.Prototype
   /// <remarks> This component is intended for use in prototypes only. </remarks>
   public class MaterialScroller : CachedMonoBehaviour
   {
+    /// <summary> Material to animate. Auto-resolves from Renderer on Start if null. </summary>
+    public Material Material { get => material; set => material = value; }
+
+    /// <summary> UV offset delta per second. </summary>
+    public Vector2 ScrollSpeed { get => scrollSpeed; set => scrollSpeed = value; }
+
+    /// <summary> Shader texture property name. </summary>
+    public string TextureName { get => textureName; set => textureName = value; }
+
     [SerializeField]
     private Material material;
 

@@ -209,5 +209,47 @@ namespace FronkonGames.GameWork.Foundation
     /// <summary> Converts seconds to milliseconds. </summary>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static int ToMilliseconds(this float seconds) => (int)(seconds * 1000.0f);
+
+#if UNITY_EDITOR
+    /// <summary> Save the float to editor prefs. </summary>
+    /// <param name="key">Key</param>
+    public static void ToEditorPrefs(this float self, string key)
+    {
+      if (string.IsNullOrEmpty(key) == false)
+        UnityEditor.EditorPrefs.SetFloat(key, self);
+    }
+
+    /// <summary> Get the float from editor prefs. </summary>
+    /// <param name="key">Key</param>
+    /// <param name="defaultValue">Default value</param>
+    /// <returns>Editor prefs value</returns>
+    public static float FromEditorPrefs(this string key, float defaultValue = default)
+    {
+      if (string.IsNullOrEmpty(key) == false)
+        return UnityEditor.EditorPrefs.GetFloat(key, defaultValue);
+
+      return defaultValue;
+    }
+#endif
+
+    /// <summary> Save the float to player prefs. </summary>
+    /// <param name="key">Key</param>
+    public static void ToPlayerPrefs(this float self, string key)
+    {
+      if (string.IsNullOrEmpty(key) == false)
+        PlayerPrefs.SetFloat(key, self);
+    }
+
+    /// <summary> Get the float from player prefs. </summary>
+    /// <param name="key">Key</param>
+    /// <param name="defaultValue">Default value</param>
+    /// <returns>Player prefs value</returns>
+    public static float FromPlayerPrefs(this string key, float defaultValue = default)
+    {
+      if (string.IsNullOrEmpty(key) == false)
+        return PlayerPrefs.GetFloat(key, defaultValue);
+
+      return defaultValue;
+    }
   }
 }

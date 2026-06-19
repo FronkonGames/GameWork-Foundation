@@ -16,6 +16,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 using System.Collections;
 using NUnit.Framework;
+using UnityEngine;
 using UnityEngine.TestTools;
 using FronkonGames.GameWork.Foundation;
 
@@ -106,7 +107,44 @@ public partial class ExtensionsTests
     Assert.IsFalse((-2.0f).IsBetweenExclusive(0.0f, 1.0f));
 
     Assert.AreEqual(3.1415f.ToInvariantCulture(), "3.1415");
-    
+
+    const string playerPrefsKey = "Test.FloatExtensions.PlayerPrefs";
+    const string playerPrefsKeyMissing = "Test.FloatExtensions.PlayerPrefs.Missing";
+
+    3.14f.ToPlayerPrefs(playerPrefsKey);
+    Assert.AreEqual(3.14f, playerPrefsKey.FromPlayerPrefs(0.0f));
+    Assert.AreEqual(3.14f, playerPrefsKey.FromPlayerPrefs(1.0f));
+    Assert.AreEqual(1.0f, playerPrefsKeyMissing.FromPlayerPrefs(1.0f));
+    Assert.AreEqual(0.0f, playerPrefsKeyMissing.FromPlayerPrefs(0.0f));
+
+    Assert.DoesNotThrow(() => 1.0f.ToPlayerPrefs(string.Empty));
+    Assert.DoesNotThrow(() => 1.0f.ToPlayerPrefs(null));
+    Assert.AreEqual(1.0f, string.Empty.FromPlayerPrefs(1.0f));
+    Assert.AreEqual(1.0f, ((string)null).FromPlayerPrefs(1.0f));
+
+    PlayerPrefs.DeleteKey(playerPrefsKey);
+    PlayerPrefs.DeleteKey(playerPrefsKeyMissing);
+    PlayerPrefs.Save();
+
+#if UNITY_EDITOR
+    const string editorPrefsKey = "Test.FloatExtensions.EditorPrefs";
+    const string editorPrefsKeyMissing = "Test.FloatExtensions.EditorPrefs.Missing";
+
+    3.14f.ToEditorPrefs(editorPrefsKey);
+    Assert.AreEqual(3.14f, editorPrefsKey.FromEditorPrefs(0.0f));
+    Assert.AreEqual(3.14f, editorPrefsKey.FromEditorPrefs(1.0f));
+    Assert.AreEqual(1.0f, editorPrefsKeyMissing.FromEditorPrefs(1.0f));
+    Assert.AreEqual(0.0f, editorPrefsKeyMissing.FromEditorPrefs(0.0f));
+
+    Assert.DoesNotThrow(() => 1.0f.ToEditorPrefs(string.Empty));
+    Assert.DoesNotThrow(() => 1.0f.ToEditorPrefs(null));
+    Assert.AreEqual(1.0f, string.Empty.FromEditorPrefs(1.0f));
+    Assert.AreEqual(1.0f, ((string)null).FromEditorPrefs(1.0f));
+
+    UnityEditor.EditorPrefs.DeleteKey(editorPrefsKey);
+    UnityEditor.EditorPrefs.DeleteKey(editorPrefsKeyMissing);
+#endif
+
     yield return null;
   }
 }

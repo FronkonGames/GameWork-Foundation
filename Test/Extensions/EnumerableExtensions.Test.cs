@@ -51,6 +51,24 @@ public partial class ExtensionsTests
       countValues.Add(i);
     CollectionAssert.AreEqual(new[] { 0, 1, 2 }, countValues);
 
+    Dictionary<string, int> lookup = new() { { "a", 1 }, { "b", 2 } };
+    List<int> pulled = new(new[] { "a", "missing", "b" }.TryPullFromDictionary(lookup));
+    CollectionAssert.AreEqual(new[] { 1, 2 }, pulled);
+
+    List<int[]> buffered = new(new int[] { 1, 2, 3, 4, 5 }.Buffer(2));
+    Assert.AreEqual(2, buffered.Count);
+    CollectionAssert.AreEqual(new[] { 1, 2 }, buffered[0]);
+    CollectionAssert.AreEqual(new[] { 3, 4 }, buffered[1]);
+
+    List<IList<int>> windows = new(new int[] { 1, 2, 3, 4 }.RollingWindow(2));
+    Assert.AreEqual(3, windows.Count);
+    CollectionAssert.AreEqual(new[] { 1, 2 }, windows[0]);
+    CollectionAssert.AreEqual(new[] { 2, 3 }, windows[1]);
+    CollectionAssert.AreEqual(new[] { 3, 4 }, windows[2]);
+
+    List<string> selected = new(new[] { 1, 2, 3, 4 }.SelectWhere(value => (value % 2 == 0, $"even-{value}")));
+    CollectionAssert.AreEqual(new[] { "even-2", "even-4" }, selected);
+
     yield return null;
   }
 }

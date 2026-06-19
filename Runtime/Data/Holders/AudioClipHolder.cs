@@ -20,7 +20,7 @@ using UnityEngine;
 namespace FronkonGames.GameWork.Foundation
 {
   /// <summary> ScriptableObject holder for an AudioClip value. </summary>
-  [CreateAssetMenu(menuName = Settings.Menus.GameWorkFoundationFolder + "/Data Holders/AudioClip Holder", fileName = "AudioClip Holder")]
+  [CreateAssetMenu(menuName = Settings.Menus.EditorFolder + "/Data Holders/AudioClip Holder", fileName = "AudioClip Holder")]
   public class AudioClipHolder : ScriptableObject, IValueHolder<AudioClip>
   {
     [SerializeField]

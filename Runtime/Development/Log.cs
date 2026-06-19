@@ -29,7 +29,7 @@ using System.Runtime.CompilerServices;
 using CallerName = System.Runtime.CompilerServices.CallerMemberNameAttribute;
 using CallerPath = System.Runtime.CompilerServices.CallerFilePathAttribute;
 using CallerLine  = System.Runtime.CompilerServices.CallerLineNumberAttribute;
-
+using UnityEngine;
 using Debug = UnityEngine.Debug;
 
 namespace FronkonGames.GameWork.Foundation
@@ -68,7 +68,7 @@ namespace FronkonGames.GameWork.Foundation
 
     /// <summary> Information message. </summary>
     /// <param name="message">Message</param>
-    [DebuggerStepThrough]
+    [DebuggerStepThrough, HideInCallstack]
 #if LOGS_DEVELOPER_BUILD
     [Conditional("DEVELOPMENT_BUILD")]
 #endif
@@ -85,7 +85,7 @@ namespace FronkonGames.GameWork.Foundation
 
     /// <summary> Warning message. </summary>
     /// <param name="message">Message</param>
-    [DebuggerStepThrough]
+    [DebuggerStepThrough, HideInCallstack]
 #if LOGS_DEVELOPER_BUILD
     [Conditional("DEVELOPMENT_BUILD")]
 #endif
@@ -102,7 +102,7 @@ namespace FronkonGames.GameWork.Foundation
 
     /// <summary> Error message. </summary>
     /// <param name="message">Message</param>
-    [DebuggerStepThrough]
+    [DebuggerStepThrough, HideInCallstack]
 #if LOGS_DEVELOPER_BUILD
     [Conditional("DEVELOPMENT_BUILD")]
 #endif
@@ -120,7 +120,7 @@ namespace FronkonGames.GameWork.Foundation
     /// <summary> Throw exception. </summary>
     /// <param name="message">Message</param>
     /// <param name="e">Exception</param>
-    [DebuggerStepThrough]
+    [DebuggerStepThrough, HideInCallstack]
 #if LOGS_DEVELOPER_BUILD
     [Conditional("DEVELOPMENT_BUILD")]
 #endif
@@ -139,7 +139,7 @@ namespace FronkonGames.GameWork.Foundation
 
     /// <summary> Argument exception and stack trace. </summary>
     /// <param name="message">Message</param>
-    [DebuggerStepThrough]
+    [DebuggerStepThrough, HideInCallstack]
 #if LOGS_DEVELOPER_BUILD
     [Conditional("DEVELOPMENT_BUILD")]
 #endif
@@ -154,7 +154,7 @@ namespace FronkonGames.GameWork.Foundation
 
     /// <summary> ArgumentOutOfRange exception and stack trace. </summary>
     /// <param name="message">Message</param>
-    [DebuggerStepThrough]
+    [DebuggerStepThrough, HideInCallstack]
 #if LOGS_DEVELOPER_BUILD
     [Conditional("DEVELOPMENT_BUILD")]
 #endif
@@ -169,7 +169,7 @@ namespace FronkonGames.GameWork.Foundation
 
     /// <summary> IndexOutOfRange exception and stack trace. </summary>
     /// <param name="message">Message</param>
-    [DebuggerStepThrough]
+    [DebuggerStepThrough, HideInCallstack]
 #if LOGS_DEVELOPER_BUILD
     [Conditional("DEVELOPMENT_BUILD")]
 #endif
@@ -184,7 +184,7 @@ namespace FronkonGames.GameWork.Foundation
 
     /// <summary> ArgumentNull exception and stack trace. </summary>
     /// <param name="message">Message</param>
-    [DebuggerStepThrough]
+    [DebuggerStepThrough, HideInCallstack]
 #if LOGS_DEVELOPER_BUILD
     [Conditional("DEVELOPMENT_BUILD")]
 #endif
@@ -199,7 +199,7 @@ namespace FronkonGames.GameWork.Foundation
 
     /// <summary> Key not found exception and stack trace. </summary>
     /// <param name="message">Message</param>
-    [DebuggerStepThrough]
+    [DebuggerStepThrough, HideInCallstack]
 #if LOGS_DEVELOPER_BUILD
     [Conditional("DEVELOPMENT_BUILD")]
 #endif

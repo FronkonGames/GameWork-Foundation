@@ -82,5 +82,99 @@ namespace FronkonGames.GameWork.Foundation
         return current < end;
       }
     }
+
+    /// <summary> Yields dictionary values for keys that exist in the dictionary. </summary>
+    /// <typeparam name="TKey"> Key type. </typeparam>
+    /// <typeparam name="TValue"> Value type. </typeparam>
+    /// <param name="self"> Keys to look up. </param>
+    /// <param name="dictionary"> Source dictionary. </param>
+    /// <returns> Matching values. </returns>
+    public static IEnumerable<TValue> TryPullFromDictionary<TKey, TValue>(this IEnumerable<TKey> self, IDictionary<TKey, TValue> dictionary)
+    {
+      foreach (TKey item in self)
+      {
+        if (dictionary.TryGetValue(item, out TValue value) == true)
+          yield return value;
+      }
+    }
+
+    /// <summary> Partitions the sequence into fixed-size arrays. Trailing partial buffers are omitted. </summary>
+    /// <typeparam name="T"> Element type. </typeparam>
+    /// <param name="source"> Source sequence. </param>
+    /// <param name="bufferSize"> Size of each buffer. </param>
+    /// <returns> Full buffers only. </returns>
+    public static IEnumerable<T[]> Buffer<T>(this IEnumerable<T> source, int bufferSize)
+    {
+      if (bufferSize <= 0)
+        throw new ArgumentOutOfRangeException(nameof(bufferSize), "Buffer size must be greater than zero.");
+
+      IEnumerator<T> iterator = source.GetEnumerator();
+
+      while (true)
+      {
+        T[] workingList = new T[bufferSize];
+        int position;
+
+        for (position = 0; position < bufferSize && iterator.MoveNext() == true; position++)
+          workingList[position] = iterator.Current;
+
+        if (position < bufferSize)
+          yield break;
+
+        yield return workingList;
+      }
+    }
+
+    /// <summary> Emits a sliding window of the given size over the sequence. </summary>
+    /// <typeparam name="T"> Element type. </typeparam>
+    /// <param name="source"> Source sequence. </param>
+    /// <param name="window"> Window size. </param>
+    /// <returns> Window snapshots. </returns>
+    public static IEnumerable<IList<T>> RollingWindow<T>(this IEnumerable<T> source, int window)
+    {
+      if (window <= 0)
+        throw new ArgumentOutOfRangeException(nameof(window), "Window size must be greater than zero.");
+
+      IEnumerator<T> iterator = source.GetEnumerator();
+      int position = 0;
+      List<T> workingList = new(window);
+
+      while (position < window && iterator.MoveNext() == true)
+      {
+        workingList.Add(iterator.Current);
+        position++;
+      }
+
+      if (position < window)
+        yield break;
+
+      yield return workingList.ToArray();
+
+      while (iterator.MoveNext() == true)
+      {
+        workingList.RemoveAt(0);
+        workingList.Add(iterator.Current);
+        yield return workingList.ToArray();
+      }
+    }
+
+    /// <summary> Projects elements that pass an eligibility check in a single pass. </summary>
+    /// <typeparam name="TSource"> Source element type. </typeparam>
+    /// <typeparam name="TResult"> Result element type. </typeparam>
+    /// <param name="source"> Source sequence. </param>
+    /// <param name="predicate"> Returns eligibility and the projected value. </param>
+    /// <returns> Matching projected values. </returns>
+    public static IEnumerable<TResult> SelectWhere<TSource, TResult>(
+      this IEnumerable<TSource> source,
+      Func<TSource, (bool eligible, TResult result)> predicate)
+    {
+      foreach (TSource element in source)
+      {
+        (bool eligible, TResult result) = predicate(element);
+
+        if (eligible == true)
+          yield return result;
+      }
+    }
   }
 }

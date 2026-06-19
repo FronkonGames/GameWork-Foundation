@@ -20,7 +20,7 @@ using UnityEngine;
 namespace FronkonGames.GameWork.Foundation
 {
   /// <summary> ScriptableObject holder for a Texture value. </summary>
-  [CreateAssetMenu(menuName = Settings.Menus.GameWorkFoundationFolder + "/Data Holders/Texture Holder", fileName = "Texture Holder")]
+  [CreateAssetMenu(menuName = Settings.Menus.EditorFolder + "/Data Holders/Texture Holder", fileName = "Texture Holder")]
   public class TextureHolder : ScriptableObject, IValueHolder<Texture>
   {
     [SerializeField]

@@ -15,8 +15,10 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text;
@@ -32,6 +34,42 @@ namespace FronkonGames.GameWork.Foundation
     private static readonly string[] TrueValues = { "true", "ok", "yes", "1" };
 
     private const string UserNamePattern = @"^[a-zA-Z][a-zA-Z0-9]";
+
+    private const string FormattingCharacter = @"\p{Cf}";
+    private const string ConnectingCharacter = @"\p{Pc}";
+    private const string DecimalDigitCharacter = @"\p{Nd}";
+    private const string CombiningCharacter = @"\p{Mn}|\p{Mc}";
+    private const string LetterCharacter = @"\p{Lu}|\p{Ll}|\p{Lt}|\p{Lm}|\p{Lo}|\p{Nl}";
+    private const string IdentifierPartCharacter = LetterCharacter + "|" + DecimalDigitCharacter + "|" + ConnectingCharacter + "|" + CombiningCharacter + "|" + FormattingCharacter;
+    private const string IdentifierPartCharacters = "(" + IdentifierPartCharacter + ")+";
+    private const string IdentifierStartCharacter = "(" + LetterCharacter + "|_)";
+    private const string IdentifierOrKeyword = IdentifierStartCharacter + "(" + IdentifierPartCharacters + ")*";
+
+    private static readonly HashSet<string> CSharpKeywords = new()
+    {
+      "abstract", "event", "new", "struct",
+      "as", "explicit", "null", "switch",
+      "base", "extern", "object", "this",
+      "bool", "false", "operator", "throw",
+      "break", "finally", "out", "true",
+      "byte", "fixed", "override", "try",
+      "case", "float", "params", "typeof",
+      "catch", "for", "private", "uint",
+      "char", "foreach", "protected", "ulong",
+      "checked", "goto", "public", "unchecked",
+      "class", "if", "readonly", "unsafe",
+      "const", "implicit", "ref", "ushort",
+      "continue", "in", "return", "using",
+      "decimal", "int", "sbyte", "virtual",
+      "default", "interface", "sealed", "volatile",
+      "delegate", "internal", "short", "void",
+      "do", "is", "sizeof", "while",
+      "double", "lock", "stackalloc",
+      "else", "long", "static",
+      "enum", "namespace", "string"
+    };
+
+    private static readonly Regex ValidIdentifierRegex = new("^" + IdentifierOrKeyword + "$", RegexOptions.Compiled);
 
     /// <summary> Returns true if the string is null, empty, or whitespace. </summary>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -218,6 +256,50 @@ namespace FronkonGames.GameWork.Foundation
       self = self.Replace(" ", string.Empty);
 
       return self;
+    }
+
+#if UNITY_EDITOR
+    /// <summary> Save the string to editor prefs. </summary>
+    /// <param name="key">Key</param>
+    /// <returns>Editor prefs value</returns>
+    public static void ToEditorPrefs(this string self, string key)
+    {
+      if (string.IsNullOrEmpty(key) == false)
+        UnityEditor.EditorPrefs.SetString(key, self);
+    }
+
+    /// <summary> Get the string from editor prefs. </summary>
+    /// <param name="key">Key</param>
+    /// <param name="defaultValue">Default value</param>
+    /// <returns>Editor prefs value</returns>
+    public static string FromEditorPrefs(this string key, string defaultValue = default)
+    {
+      if (string.IsNullOrEmpty(key) == false && UnityEditor.EditorPrefs.HasKey(key) == true)
+        return UnityEditor.EditorPrefs.GetString(key, defaultValue);
+
+      return defaultValue;
+    }
+#endif
+
+    /// <summary> Save the string to player prefs. </summary>
+    /// <param name="key">Key</param>
+    /// <returns>Player prefs value</returns>
+    public static void ToPlayerPrefs(this string self, string key)
+    {
+      if (string.IsNullOrEmpty(key) == false)
+        PlayerPrefs.SetString(key, self);
+    }
+
+    /// <summary> Get the string from player prefs. </summary>
+    /// <param name="key">Key</param>
+    /// <param name="defaultValue">Default value</param>
+    /// <returns>Player prefs value</returns>
+    public static string FromPlayerPrefs(this string key, string defaultValue = default)
+    {
+      if (string.IsNullOrEmpty(key) == false && PlayerPrefs.HasKey(key) == true)
+        return PlayerPrefs.GetString(key, defaultValue);
+
+      return defaultValue;
     }
 
     /// <summary> "CamelCaseString" => "Camel case string" </summary>
@@ -582,5 +664,74 @@ namespace FronkonGames.GameWork.Foundation
     /// <returns>String without whitespace</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static string RemoveWhitespace(this string self) => Regex.Replace(self, @"\s+", string.Empty);
+
+    /// <summary> Returns true when the string is a valid C# identifier or dotted identifier path. </summary>
+    /// <param name="identifier"> Identifier to validate. </param>
+    /// <returns> True when the identifier is valid. </returns>
+    public static bool IsValidIdentifier(this string identifier)
+    {
+      if (identifier.Contains('.') == true)
+        return identifier.Split('.').All(IsValidIdentifierInternal);
+
+      return IsValidIdentifierInternal(identifier);
+    }
+
+    /// <summary> Returns the substring before the first occurrence of a character. </summary>
+    /// <param name="text"> Source string. </param>
+    /// <param name="character"> Character to search for. </param>
+    /// <returns> Substring before the character, or the original string when not found. </returns>
+    public static string GetSubstringBefore(this string text, char character)
+    {
+      int charIndex = text.IndexOf(character);
+
+      return charIndex == -1 ? text : text.Substring(0, charIndex);
+    }
+
+    /// <summary> Returns the substring after the first occurrence of a character. </summary>
+    /// <param name="text"> Source string. </param>
+    /// <param name="character"> Character to search for. </param>
+    /// <returns> Substring after the character, or the original string when not found. </returns>
+    public static string GetSubstringAfter(this string text, char character)
+    {
+      int charIndex = text.IndexOf(character);
+
+      return charIndex == -1 ? text : text.Substring(charIndex + 1, text.Length - charIndex - 1);
+    }
+
+    /// <summary> Returns the substring before the last occurrence of a character. </summary>
+    /// <param name="text"> Source string. </param>
+    /// <param name="character"> Character to search for. </param>
+    /// <returns> Substring before the last character, or the original string when not found. </returns>
+    public static string GetSubstringBeforeLast(this string text, char character)
+    {
+      int lastCharIndex = text.LastIndexOf(character);
+
+      return lastCharIndex == -1 ? text : text.Substring(0, lastCharIndex);
+    }
+
+    /// <summary> Returns the substring after the last occurrence of a character. </summary>
+    /// <param name="text"> Source string. </param>
+    /// <param name="character"> Character to search for. </param>
+    /// <returns> Substring after the last character, or the original string when not found. </returns>
+    public static string GetSubstringAfterLast(this string text, char character)
+    {
+      int lastCharIndex = text.LastIndexOf(character);
+
+      return lastCharIndex == -1 ? text : text.Substring(lastCharIndex + 1, text.Length - lastCharIndex - 1);
+    }
+
+    private static bool IsValidIdentifierInternal(string identifier)
+    {
+      if (string.IsNullOrWhiteSpace(identifier) == true)
+        return false;
+
+      string normalizedIdentifier = identifier.Normalize();
+
+      if (ValidIdentifierRegex.IsMatch(normalizedIdentifier) == true && CSharpKeywords.Contains(normalizedIdentifier) == false)
+        return true;
+
+      return normalizedIdentifier.StartsWith("@") == true
+        && ValidIdentifierRegex.IsMatch(normalizedIdentifier.Substring(1)) == true;
+    }
   }
 }

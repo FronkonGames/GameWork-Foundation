@@ -188,5 +188,19 @@ namespace FronkonGames.GameWork.Foundation
       result /= positions.Length;
       return true;
     }
+
+    /// <summary> Rotates the vector by the given angle in radians. </summary>
+    /// <param name="vector"> Source vector. </param>
+    /// <param name="angleRadians"> Rotation angle in radians. </param>
+    /// <returns> Rotated vector. </returns>
+    public static Vector2 Rotate(this Vector2 vector, float angleRadians)
+    {
+      float cos = Mathf.Cos(angleRadians);
+      float sin = Mathf.Sin(angleRadians);
+
+      return new Vector2(
+        cos * vector.x - sin * vector.y,
+        sin * vector.x + cos * vector.y);
+    }
   }
 }

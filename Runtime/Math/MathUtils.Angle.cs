@@ -27,5 +27,33 @@ namespace FronkonGames.GameWork.Foundation
     /// <returns>Direction</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Vector2 AngToDir(float radian) => new(Cos(radian), Sin(radian));
+
+    /// <summary> Clamps an angle in degrees, accounting for 360° wrap-around. </summary>
+    /// <param name="angle"> Angle in degrees. </param>
+    /// <param name="min"> Minimum angle in degrees. </param>
+    /// <param name="max"> Maximum angle in degrees. </param>
+    /// <returns> Clamped angle in degrees. </returns>
+    public static float ClampAngle(float angle, float min, float max)
+    {
+      float start = (min + max) * 0.5f - 180.0f;
+      float floor = Mathf.FloorToInt((angle - start) / 360.0f) * 360.0f;
+
+      return Mathf.Clamp(angle, min + floor, max + floor);
+    }
+
+    /// <summary> Normalizes then clamps an angle in degrees within the given range. </summary>
+    /// <param name="angle"> Angle in degrees. </param>
+    /// <param name="min"> Minimum angle in degrees. </param>
+    /// <param name="max"> Maximum angle in degrees. </param>
+    /// <param name="normalizeMin"> Normalization lower bound in degrees. </param>
+    /// <param name="normalizeMax"> Normalization upper bound in degrees. </param>
+    /// <returns> Clamped angle in degrees. </returns>
+    public static float ClampAngleNormalized(float angle, float min, float max, float normalizeMin = -180.0f, float normalizeMax = 180.0f)
+    {
+      float range = normalizeMax - normalizeMin;
+      angle = ((angle - normalizeMin) % range + range) % range + normalizeMin;
+
+      return Mathf.Clamp(angle, min, max);
+    }
   }
 }

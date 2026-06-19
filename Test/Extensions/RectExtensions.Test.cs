@@ -107,4 +107,42 @@ public class RectExtensionsTests
     Assert.AreEqual(20f, expanded.width, 0.001f);
     Assert.AreEqual(20f, expanded.height, 0.001f);
   }
+
+  [Test]
+  public void WithRoundedCoordinates_RoundsAllComponents()
+  {
+    Rect rounded = new Rect(1.2f, 2.6f, 3.4f, 4.5f).WithRoundedCoordinates();
+
+    Assert.AreEqual(1.0f, rounded.x, 0.001f);
+    Assert.AreEqual(3.0f, rounded.y, 0.001f);
+    Assert.AreEqual(3.0f, rounded.width, 0.001f);
+    Assert.AreEqual(4.0f, rounded.height, 0.001f);
+  }
+
+  [Test]
+  public void CutVertically_FromLeft_SplitsRect()
+  {
+    (Rect leftRect, Rect rightRect) = rect.CutVertically(3.0f);
+
+    Assert.AreEqual(new Rect(0.0f, 0.0f, 3.0f, 10.0f), leftRect);
+    Assert.AreEqual(new Rect(3.0f, 0.0f, 7.0f, 10.0f), rightRect);
+  }
+
+  [Test]
+  public void AddHorizontalPadding_NarrowsRect()
+  {
+    Rect padded = rect.AddHorizontalPadding(2.0f, 3.0f);
+
+    Assert.AreEqual(2.0f, padded.x, 0.001f);
+    Assert.AreEqual(5.0f, padded.width, 0.001f);
+  }
+
+  [Test]
+  public void AlignMiddleVertically_CentersHeight()
+  {
+    Rect aligned = rect.AlignMiddleVertically(4.0f);
+
+    Assert.AreEqual(3.0f, aligned.y, 0.001f);
+    Assert.AreEqual(4.0f, aligned.height, 0.001f);
+  }
 }

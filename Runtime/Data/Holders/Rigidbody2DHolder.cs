@@ -20,7 +20,7 @@ using UnityEngine;
 namespace FronkonGames.GameWork.Foundation
 {
   /// <summary> ScriptableObject holder for a Rigidbody2D value. </summary>
-  [CreateAssetMenu(menuName = Settings.Menus.GameWorkFoundationFolder + "/Data Holders/Rigidbody2D Holder", fileName = "Rigidbody2D Holder")]
+  [CreateAssetMenu(menuName = Settings.Menus.EditorFolder + "/Data Holders/Rigidbody2D Holder", fileName = "Rigidbody2D Holder")]
   public class Rigidbody2DHolder : ScriptableObject, IValueHolder<Rigidbody2D>
   {
     [SerializeField]

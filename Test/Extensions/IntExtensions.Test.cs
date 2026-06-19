@@ -115,6 +115,43 @@ public partial class ExtensionsTests
     StringAssert.Contains("KB", 2048L.SizeSuffix());
     Assert.AreEqual("999", 999L.CurrencySuffix());
 
+    const string playerPrefsKey = "Test.IntExtensions.PlayerPrefs";
+    const string playerPrefsKeyMissing = "Test.IntExtensions.PlayerPrefs.Missing";
+
+    42.ToPlayerPrefs(playerPrefsKey);
+    Assert.AreEqual(42, playerPrefsKey.FromPlayerPrefs(0));
+    Assert.AreEqual(42, playerPrefsKey.FromPlayerPrefs(7));
+    Assert.AreEqual(7, playerPrefsKeyMissing.FromPlayerPrefs(7));
+    Assert.AreEqual(0, playerPrefsKeyMissing.FromPlayerPrefs(0));
+
+    Assert.DoesNotThrow(() => 1.ToPlayerPrefs(string.Empty));
+    Assert.DoesNotThrow(() => 1.ToPlayerPrefs(null));
+    Assert.AreEqual(7, string.Empty.FromPlayerPrefs(7));
+    Assert.AreEqual(7, ((string)null).FromPlayerPrefs(7));
+
+    PlayerPrefs.DeleteKey(playerPrefsKey);
+    PlayerPrefs.DeleteKey(playerPrefsKeyMissing);
+    PlayerPrefs.Save();
+
+#if UNITY_EDITOR
+    const string editorPrefsKey = "Test.IntExtensions.EditorPrefs";
+    const string editorPrefsKeyMissing = "Test.IntExtensions.EditorPrefs.Missing";
+
+    42.ToEditorPrefs(editorPrefsKey);
+    Assert.AreEqual(42, editorPrefsKey.FromEditorPrefs(0));
+    Assert.AreEqual(42, editorPrefsKey.FromEditorPrefs(7));
+    Assert.AreEqual(7, editorPrefsKeyMissing.FromEditorPrefs(7));
+    Assert.AreEqual(0, editorPrefsKeyMissing.FromEditorPrefs(0));
+
+    Assert.DoesNotThrow(() => 1.ToEditorPrefs(string.Empty));
+    Assert.DoesNotThrow(() => 1.ToEditorPrefs(null));
+    Assert.AreEqual(7, string.Empty.FromEditorPrefs(7));
+    Assert.AreEqual(7, ((string)null).FromEditorPrefs(7));
+
+    UnityEditor.EditorPrefs.DeleteKey(editorPrefsKey);
+    UnityEditor.EditorPrefs.DeleteKey(editorPrefsKeyMissing);
+#endif
+
     yield return null;
   }
 

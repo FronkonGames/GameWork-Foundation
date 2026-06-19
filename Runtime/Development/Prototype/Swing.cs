@@ -22,6 +22,24 @@ namespace FronkonGames.GameWork.Foundation.Prototype
   /// <remarks> This component is intended for use in prototypes only. </remarks>
   public class Swing : CachedMonoBehaviour
   {
+    /// <summary> Yaw angle range in degrees. </summary>
+    public Vector2 MinMaxYaw { get => minMaxYaw; set => minMaxYaw = value; }
+
+    /// <summary> Yaw oscillation speed. </summary>
+    public float SpeedYaw { get => speedYaw; set => speedYaw = value; }
+
+    /// <summary> Pitch angle range in degrees. </summary>
+    public Vector2 MinMaxPitch { get => minMaxPitch; set => minMaxPitch = value; }
+
+    /// <summary> Pitch oscillation speed. </summary>
+    public float SpeedPitch { get => speedPitch; set => speedPitch = value; }
+
+    /// <summary> Roll angle range in degrees. </summary>
+    public Vector2 MinMaxRoll { get => minMaxRoll; set => minMaxRoll = value; }
+
+    /// <summary> Roll oscillation speed. </summary>
+    public float SpeedRoll { get => speedRoll; set => speedRoll = value; }
+
     [SerializeField]
     private Vector2 minMaxYaw = new(-30.0f, 30.0f);
 

@@ -41,5 +41,43 @@ namespace FronkonGames.GameWork.Foundation
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void SetXY<T>(this IList<T> self, int x, int y, int width, T value)
       => self[y * width + x] = value;
+
+    /// <summary> Adds the value when it is not already contained in the collection. </summary>
+    /// <typeparam name="T"> Element type. </typeparam>
+    /// <param name="list"> Target collection. </param>
+    /// <param name="value"> Value to add. </param>
+    /// <returns> True when the value was added. </returns>
+    public static bool AddIfMissing<T>(this ICollection<T> list, T value)
+    {
+      if (list.Contains(value) == true)
+        return false;
+
+      list.Add(value);
+      return true;
+    }
+  }
+
+  /// <summary> Read-only collection extensions. </summary>
+  public static class ReadOnlyCollectionExtensions
+  {
+    /// <summary> Returns the zero-based index of the element, or -1 when it is not found. </summary>
+    /// <typeparam name="T"> Element type. </typeparam>
+    /// <param name="collection"> Collection to search. </param>
+    /// <param name="elementToFind"> Element to locate. </param>
+    /// <returns> Index of the element, or -1. </returns>
+    public static int IndexOf<T>(this IReadOnlyCollection<T> collection, T elementToFind)
+    {
+      int index = 0;
+
+      foreach (T element in collection)
+      {
+        if (Equals(element, elementToFind) == true)
+          return index;
+
+        index++;
+      }
+
+      return -1;
+    }
   }
 }

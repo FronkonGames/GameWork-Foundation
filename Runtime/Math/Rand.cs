@@ -14,6 +14,8 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+using System;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityRandom = UnityEngine.Random;
@@ -112,5 +114,123 @@ namespace FronkonGames.GameWork.Foundation
 
     /// <summary>Returns a random uniformly distributed rotation</summary>
     public static Quaternion Rotation => UnityRandom.rotationUniform;
+
+    /// <summary> Picks a random index using the given weights. </summary>
+    /// <param name="weights"> Non-negative weights, one per index. </param>
+    /// <returns> Selected index. </returns>
+    public static int PickWeighted(float[] weights)
+    {
+      if (weights == null || weights.Length == 0)
+        throw new ArgumentException("Weights must not be null or empty.");
+
+      float totalWeight = 0.0f;
+
+      for (int i = 0; i < weights.Length; i++)
+        totalWeight += weights[i];
+
+      if (totalWeight <= 0.0f)
+        throw new ArgumentException("Total weight must be greater than zero.");
+
+      float randomPoint = Value * totalWeight;
+
+      for (int i = 0; i < weights.Length; i++)
+      {
+        if (randomPoint < weights[i])
+          return i;
+
+        randomPoint -= weights[i];
+      }
+
+      return weights.Length - 1;
+    }
+
+    /// <summary> Picks a random index using the given weights. </summary>
+    /// <param name="weights"> Non-negative weights, one per index. </param>
+    /// <returns> Selected index. </returns>
+    public static int PickWeighted(IList<float> weights)
+    {
+      if (weights == null || weights.Count == 0)
+        throw new ArgumentException("Weights must not be null or empty.");
+
+      float totalWeight = 0.0f;
+
+      for (int i = 0; i < weights.Count; i++)
+        totalWeight += weights[i];
+
+      if (totalWeight <= 0.0f)
+        throw new ArgumentException("Total weight must be greater than zero.");
+
+      float randomPoint = Value * totalWeight;
+
+      for (int i = 0; i < weights.Count; i++)
+      {
+        if (randomPoint < weights[i])
+          return i;
+
+        randomPoint -= weights[i];
+      }
+
+      return weights.Count - 1;
+    }
+
+    /// <summary> Returns a normally distributed random value (Box-Muller). </summary>
+    /// <param name="mean"> Mean of the distribution. </param>
+    /// <param name="stdDev"> Standard deviation. </param>
+    /// <returns> Random sample. </returns>
+    public static float NextNormal(float mean, float stdDev)
+    {
+      double u1 = 1.0 - UnityRandom.value;
+      double u2 = 1.0 - UnityRandom.value;
+      double randStdNormal = Math.Sqrt(-2.0 * Math.Log(u1)) * Math.Sin(2.0 * Math.PI * u2);
+
+      return (float)(mean + stdDev * randStdNormal);
+    }
+
+    /// <summary> Returns true when a random value in [0, denominator] is less than or equal to numerator. </summary>
+    /// <param name="numerator"> Success threshold. </param>
+    /// <param name="denominator"> Range maximum. </param>
+    /// <returns> True on success. </returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool Chance(float numerator, float denominator) => Range(0.0f, denominator) <= numerator;
+
+    /// <summary> Returns true approximately percentage percent of the time. </summary>
+    /// <param name="percentage"> Success rate from 0 to 100. </param>
+    /// <returns> True on success. </returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool ChancePercent(float percentage) => Chance(percentage, 100.0f);
+
+    /// <summary> Returns a random value between a and b. </summary>
+    /// <param name="a"> Start value. </param>
+    /// <param name="b"> End value. </param>
+    /// <returns> Interpolated random value. </returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static float Lerp(float a, float b) => Mathf.Lerp(a, b, Value);
+
+    /// <summary> Returns a random value between a and b. </summary>
+    /// <param name="range"> Range as (a, b). </param>
+    /// <returns> Interpolated random value. </returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static float Lerp(Vector2 range) => Lerp(range.x, range.y);
+
+    /// <summary> Returns a random vector between a and b. </summary>
+    /// <param name="a"> Start value. </param>
+    /// <param name="b"> End value. </param>
+    /// <returns> Interpolated random vector. </returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Vector2 Lerp(Vector2 a, Vector2 b) => Vector2.Lerp(a, b, Value);
+
+    /// <summary> Returns a random vector between a and b. </summary>
+    /// <param name="a"> Start value. </param>
+    /// <param name="b"> End value. </param>
+    /// <returns> Interpolated random vector. </returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Vector3 Lerp(Vector3 a, Vector3 b) => Vector3.Lerp(a, b, Value);
+
+    /// <summary> Returns a random color between a and b. </summary>
+    /// <param name="a"> Start color. </param>
+    /// <param name="b"> End color. </param>
+    /// <returns> Interpolated random color. </returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Color Lerp(Color a, Color b) => Color.Lerp(a, b, Value);
   }
 }

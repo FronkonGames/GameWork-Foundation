@@ -20,7 +20,7 @@ using UnityEngine;
 namespace FronkonGames.GameWork.Foundation
 {
   /// <summary> ScriptableObject holder for a Quaternion value. </summary>
-  [CreateAssetMenu(menuName = Settings.Menus.GameWorkFoundationFolder + "/Data Holders/Quaternion Holder", fileName = "Quaternion Holder")]
+  [CreateAssetMenu(menuName = Settings.Menus.EditorFolder + "/Data Holders/Quaternion Holder", fileName = "Quaternion Holder")]
   public class QuaternionHolder : ScriptableObject, IValueHolder<Quaternion>
   {
     [SerializeField]

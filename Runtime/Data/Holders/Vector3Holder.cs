@@ -20,7 +20,7 @@ using System.Runtime.CompilerServices;
 namespace FronkonGames.GameWork.Foundation
 {
   /// <summary> ScriptableObject holder for a Vector3 value. </summary>
-  [CreateAssetMenu(menuName = Settings.Menus.GameWorkFoundationFolder + "/Data Holders/Vector3 Holder", fileName = "Vector3 Holder")]
+  [CreateAssetMenu(menuName = Settings.Menus.EditorFolder + "/Data Holders/Vector3 Holder", fileName = "Vector3 Holder")]
   public class Vector3Holder : ScriptableObject, IValueHolder<Vector3>
   {
     [SerializeField]

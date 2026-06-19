@@ -22,6 +22,9 @@ namespace FronkonGames.GameWork.Foundation.Prototype
   /// <remarks> This component is intended for use in prototypes only. </remarks>
   public class Rotator : CachedMonoBehaviour
   {
+    /// <summary> Angular speed in degrees per second (local X, Y, Z). </summary>
+    public Vector3 AngularSpeed { get => angularSpeed; set => angularSpeed = value; }
+
     [SerializeField]
     private Vector3 angularSpeed;
 

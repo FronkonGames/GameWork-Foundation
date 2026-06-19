@@ -90,5 +90,61 @@ namespace FronkonGames.GameWork.Foundation
 
       return false;
     }
+
+    /// <summary> Picks a random enum value. </summary>
+    /// <typeparam name="T"> The enum type. </typeparam>
+    /// <returns> Random enum value. </returns>
+    public static T PickRandom<T>() where T : struct, Enum
+    {
+      Array values = Enum.GetValues(typeof(T));
+
+      return (T)values.GetValue(Rand.Range(0, values.Length));
+    }
+
+    /// <summary> Picks a random enum value using the given weights. </summary>
+    /// <typeparam name="T"> The enum type. </typeparam>
+    /// <param name="weights"> One weight per enum value, in declaration order. </param>
+    /// <returns> Weighted random enum value. </returns>
+    public static T PickWeighted<T>(float[] weights) where T : struct, Enum
+    {
+      Array values = Enum.GetValues(typeof(T));
+
+      if (weights == null || weights.Length != values.Length)
+        throw new ArgumentException("weights.Length must equal the number of values in the enum.");
+
+      int index = Rand.PickWeighted(weights);
+
+      return (T)values.GetValue(index);
+    }
+
+    /// <summary> Picks a random enum value between two exclusive bounds. </summary>
+    /// <typeparam name="T"> The enum type. </typeparam>
+    /// <param name="minExclusive"> Lower bound (exclusive). </param>
+    /// <param name="maxExclusive"> Upper bound (exclusive). </param>
+    /// <returns> Random enum value in range. </returns>
+    public static T PickBetween<T>(T minExclusive, T maxExclusive) where T : struct, Enum
+    {
+      int minIntVal = Convert.ToInt32(minExclusive) + 1;
+      int maxIntVal = Convert.ToInt32(maxExclusive);
+
+      if (minIntVal >= maxIntVal)
+        throw new ArgumentException("minExclusive must be less than maxExclusive.");
+
+      int enumVal = Rand.Range(minIntVal, maxIntVal);
+
+      return (T)Enum.ToObject(typeof(T), enumVal);
+    }
+
+    /// <summary> Picks a random enum value from zero up to an exclusive upper bound. </summary>
+    /// <typeparam name="T"> The enum type. </typeparam>
+    /// <param name="maxExclusive"> Upper bound (exclusive). </param>
+    /// <returns> Random enum value in range. </returns>
+    public static T PickUpTo<T>(T maxExclusive) where T : struct, Enum
+    {
+      int maxIntVal = Convert.ToInt32(maxExclusive);
+      int enumVal = Rand.Range(0, maxIntVal);
+
+      return (T)Enum.ToObject(typeof(T), enumVal);
+    }
   }
 }

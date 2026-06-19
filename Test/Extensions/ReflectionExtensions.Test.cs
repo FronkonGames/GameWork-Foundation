@@ -47,6 +47,10 @@ public partial class ExtensionsTests
     Assert.IsTrue(fieldWithLabel.HasAttribute<LabelAttribute>());
     Assert.IsFalse(fieldWithoutLabel.HasAttribute<LabelAttribute>());
 
+    MemberInfo member = fieldWithLabel;
+    Assert.IsTrue(member.HasAttribute<LabelAttribute>());
+    Assert.IsFalse(member.HasAttribute<System.ObsoleteAttribute>());
+
     Assert.IsNotNull(test.GetField("privateField"));
     Assert.IsNull(test.GetField("nonExistentField"));
 

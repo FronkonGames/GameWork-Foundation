@@ -121,6 +121,54 @@ public partial class ExtensionsTests
     Assert.IsTrue("   ".IsNullOrEmptyOrWhiteSpace());
     Assert.IsFalse("hello".IsNullOrEmptyOrWhiteSpace());
 
+    const string playerPrefsKey = "Test.StringExtensions.PlayerPrefs";
+    const string playerPrefsKeyMissing = "Test.StringExtensions.PlayerPrefs.Missing";
+
+    "Hello PlayerPrefs!".ToPlayerPrefs(playerPrefsKey);
+    Assert.AreEqual("Hello PlayerPrefs!", playerPrefsKey.FromPlayerPrefs(string.Empty));
+    Assert.AreEqual("Hello PlayerPrefs!", playerPrefsKey.FromPlayerPrefs("default"));
+    Assert.AreEqual("default", playerPrefsKeyMissing.FromPlayerPrefs("default"));
+    Assert.AreEqual(null, playerPrefsKeyMissing.FromPlayerPrefs(null));
+
+    Assert.DoesNotThrow(() => "value".ToPlayerPrefs(string.Empty));
+    Assert.DoesNotThrow(() => "value".ToPlayerPrefs(null));
+    Assert.AreEqual("default", string.Empty.FromPlayerPrefs("default"));
+    Assert.AreEqual("default", ((string)null).FromPlayerPrefs("default"));
+
+    PlayerPrefs.DeleteKey(playerPrefsKey);
+    PlayerPrefs.DeleteKey(playerPrefsKeyMissing);
+    PlayerPrefs.Save();
+
+#if UNITY_EDITOR
+    const string editorPrefsKey = "Test.StringExtensions.EditorPrefs";
+    const string editorPrefsKeyMissing = "Test.StringExtensions.EditorPrefs.Missing";
+
+    "Hello EditorPrefs!".ToEditorPrefs(editorPrefsKey);
+    Assert.AreEqual("Hello EditorPrefs!", editorPrefsKey.FromEditorPrefs(string.Empty));
+    Assert.AreEqual("Hello EditorPrefs!", editorPrefsKey.FromEditorPrefs("default"));
+    Assert.AreEqual("default", editorPrefsKeyMissing.FromEditorPrefs("default"));
+    Assert.AreEqual(null, editorPrefsKeyMissing.FromEditorPrefs(null));
+
+    Assert.DoesNotThrow(() => "value".ToEditorPrefs(string.Empty));
+    Assert.DoesNotThrow(() => "value".ToEditorPrefs(null));
+    Assert.AreEqual("default", string.Empty.FromEditorPrefs("default"));
+    Assert.AreEqual("default", ((string)null).FromEditorPrefs("default"));
+
+    UnityEditor.EditorPrefs.DeleteKey(editorPrefsKey);
+    UnityEditor.EditorPrefs.DeleteKey(editorPrefsKeyMissing);
+#endif
+
+    Assert.IsTrue("MyClass".IsValidIdentifier());
+    Assert.IsTrue("MyNamespace.MyClass".IsValidIdentifier());
+    Assert.IsTrue("@class".IsValidIdentifier());
+    Assert.IsFalse("class".IsValidIdentifier());
+    Assert.IsFalse(string.Empty.IsValidIdentifier());
+
+    Assert.AreEqual("path/file.txt", "folder/path/file.txt".GetSubstringAfter('/'));
+    Assert.AreEqual("folder", "folder/path/file.txt".GetSubstringBefore('/'));
+    Assert.AreEqual("file.txt", "folder/path/file.txt".GetSubstringAfterLast('/'));
+    Assert.AreEqual("folder/path", "folder/path/file.txt".GetSubstringBeforeLast('/'));
+
     yield return null;
   }
 }

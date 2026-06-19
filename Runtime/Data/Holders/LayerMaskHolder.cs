@@ -20,7 +20,7 @@ using UnityEngine;
 namespace FronkonGames.GameWork.Foundation
 {
   /// <summary> ScriptableObject holder for a LayerMask value. </summary>
-  [CreateAssetMenu(menuName = Settings.Menus.GameWorkFoundationFolder + "/Data Holders/LayerMask Holder", fileName = "LayerMask Holder")]
+  [CreateAssetMenu(menuName = Settings.Menus.EditorFolder + "/Data Holders/LayerMask Holder", fileName = "LayerMask Holder")]
   public class LayerMaskHolder : ScriptableObject, IValueHolder<LayerMask>
   {
     [SerializeField]

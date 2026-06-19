@@ -20,7 +20,7 @@ using UnityEngine;
 namespace FronkonGames.GameWork.Foundation
 {
   /// <summary> ScriptableObject holder for a Collider2D value. </summary>
-  [CreateAssetMenu(menuName = Settings.Menus.GameWorkFoundationFolder + "/Data Holders/Collider2D Holder", fileName = "Collider2D Holder")]
+  [CreateAssetMenu(menuName = Settings.Menus.EditorFolder + "/Data Holders/Collider2D Holder", fileName = "Collider2D Holder")]
   public class Collider2DHolder : ScriptableObject, IValueHolder<Collider2D>
   {
     [SerializeField]
