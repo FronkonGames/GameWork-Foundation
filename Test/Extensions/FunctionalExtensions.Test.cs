@@ -158,13 +158,12 @@ public class FunctionalExtensionsTests
   [Test]
   public void CancellationTokenSource_RecreateCreatesFreshToken()
   {
-    CancellationTokenSource source = new();
+    using CancellationTokenSource source = new();
     source.Cancel();
 
-    CancellationTokenSource recreated = source.Recreate();
+    using CancellationTokenSource recreated = source.Recreate();
 
     Assert.IsFalse(recreated.IsCancellationRequested);
-    recreated.Dispose();
   }
 
   private sealed class TestDisposable : IDisposable

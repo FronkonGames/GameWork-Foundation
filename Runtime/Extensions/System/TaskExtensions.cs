@@ -56,7 +56,8 @@ namespace FronkonGames.GameWork.Foundation
     /// </summary>
     /// <param name="task">The Task to run without awaiting.</param>
     /// <param name="onException">Optional callback invoked when an exception occurs.</param>
-    public static async void Forget(this Task task, Action<Exception> onException = null)
+    /// <returns>A Task that completes when <paramref name="task"/> completes or when an exception is handled.</returns>
+    public static async Task Forget(this Task task, Action<Exception> onException = null)
     {
       try
       {

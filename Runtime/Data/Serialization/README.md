@@ -102,7 +102,7 @@ A Unity-serializable replacement for `KeyValuePair<TKey, TValue>`. Used internal
 
 **Key features**
 
-- `[SerializeField]` public `key` and `value` fields (also exposed via `Key` / `Value` properties).
+- `[SerializeField]` private `key` and `value` fields (exposed via `Key` / `Value` properties).
 - Implicit conversion to and from `KeyValuePair<TKey, TValue>`.
 - `IEquatable` support for comparisons.
 

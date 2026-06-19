@@ -22,10 +22,12 @@ namespace FronkonGames.GameWork.Foundation
 {
   /// <summary> Serializable key-value pair for Unity serialization. </summary>
   [Serializable]
-  public class SerializableKeyValuePair<TKey, TValue> : IEquatable<SerializableKeyValuePair<TKey, TValue>>
+  public class SerializableKeyValuePair<TKey, TValue> : IEquatable<SerializableKeyValuePair<TKey, TValue>>, ISerializationCallbackReceiver
   {
-    [SerializeField] public TKey key;
-    [SerializeField] public TValue value;
+    [SerializeField] private TKey key;
+    [SerializeField] private TValue value;
+
+    private int cachedHashCode;
 
     /// <summary> The key. </summary>
     public TKey Key => key;
@@ -34,17 +36,25 @@ namespace FronkonGames.GameWork.Foundation
     public TValue Value
     {
       get => value;
-      set => this.value = value;
+      set
+      {
+        this.value = value;
+        cachedHashCode = ComputeHashCode();
+      }
     }
 
     /// <summary> Default constructor. </summary>
-    public SerializableKeyValuePair() { }
+    public SerializableKeyValuePair()
+    {
+      cachedHashCode = ComputeHashCode();
+    }
 
     /// <summary> Create with key and value. </summary>
     public SerializableKeyValuePair(TKey key, TValue value)
     {
       this.key = key;
       this.value = value;
+      cachedHashCode = ComputeHashCode();
     }
 
     /// <summary> Convert from standard KeyValuePair. </summary>
@@ -53,7 +63,7 @@ namespace FronkonGames.GameWork.Foundation
 
     /// <summary> Convert to standard KeyValuePair. </summary>
     public static implicit operator KeyValuePair<TKey, TValue>(SerializableKeyValuePair<TKey, TValue> other) =>
-      new(other.key, other.value);
+      new(other.Key, other.Value);
 
     /// <summary> Equality check. </summary>
     public bool Equals(SerializableKeyValuePair<TKey, TValue> other)
@@ -69,9 +79,20 @@ namespace FronkonGames.GameWork.Foundation
     public override bool Equals(object obj) => obj is SerializableKeyValuePair<TKey, TValue> other && Equals(other);
 
     /// <summary> Get hash code. </summary>
-    public override int GetHashCode() => HashCode.Combine(key, value);
+    public override int GetHashCode() => cachedHashCode;
 
     /// <summary> String representation. </summary>
     public override string ToString() => $"(Key: {key}, Value: {value})";
+
+    /// <summary> Refresh cached hash after Unity deserialization. </summary>
+    public void OnAfterDeserialize()
+    {
+      cachedHashCode = ComputeHashCode();
+    }
+
+    /// <summary> No-op before serialize. </summary>
+    public void OnBeforeSerialize() { }
+
+    private int ComputeHashCode() => HashCode.Combine(key, value);
   }
 }

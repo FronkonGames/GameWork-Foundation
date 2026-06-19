@@ -45,7 +45,10 @@ namespace FronkonGames.GameWork.Foundation
     /// <param name="point">The point to find the closest position to.</param>
     /// <returns>The closest point on the bounds surface or inside.</returns>
     public static Vector3 ClosestPoint(this Bounds self, Vector3 point)
-      => self.ClosestPoint(point);
+      => new Vector3(
+        Mathf.Clamp(point.x, self.min.x, self.max.x),
+        Mathf.Clamp(point.y, self.min.y, self.max.y),
+        Mathf.Clamp(point.z, self.min.z, self.max.z));
 
     /// <summary> Returns a new bounds expanded by the given amount on all sides. </summary>
     /// <param name="self">Bounds.</param>

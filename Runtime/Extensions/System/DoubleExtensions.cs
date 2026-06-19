@@ -91,7 +91,8 @@ namespace FronkonGames.GameWork.Foundation
     /// <param name="max">Maximum value</param>
     /// <returns>Double</returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static double Normalize(this double value, double min, double max) => max != min ? (value - min) / (max - min) : 0.0;
+    public static double Normalize(this double value, double min, double max)
+      => max.ApproximatelyEquals(min) == true ? 0.0 : (value - min) / (max - min);
 
     /// <summary> Converts degrees to radians. </summary>
     /// <param name="degrees">Degrees</param>

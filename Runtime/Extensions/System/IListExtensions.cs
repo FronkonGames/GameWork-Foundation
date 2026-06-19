@@ -34,7 +34,7 @@ namespace FronkonGames.GameWork.Foundation
     public static T At2D<T>(this IList<T> source, int x, int y, int width, int height)
     {
       if (x < 0 || x >= width || y < 0 || y >= height)
-        throw new IndexOutOfRangeException();
+        throw new ArgumentOutOfRangeException(nameof(x), x, $"Grid coordinate ({x}, {y}) is outside bounds {width}x{height}.");
 
       return source[y * width + x];
     }
@@ -52,7 +52,7 @@ namespace FronkonGames.GameWork.Foundation
     public static T At3D<T>(this IList<T> source, int x, int y, int z, int width, int height, int depth)
     {
       if (x < 0 || x >= width || y < 0 || y >= height || z < 0 || z >= depth)
-        throw new IndexOutOfRangeException();
+        throw new ArgumentOutOfRangeException(nameof(x), x, $"Grid coordinate ({x}, {y}, {z}) is outside bounds {width}x{height}x{depth}.");
 
       return source[(z * height + y) * width + x];
     }
@@ -112,7 +112,7 @@ namespace FronkonGames.GameWork.Foundation
     public static void Set2D<T>(this IList<T> source, int x, int y, int width, int height, T value)
     {
       if (x < 0 || x >= width || y < 0 || y >= height)
-        throw new IndexOutOfRangeException();
+        throw new ArgumentOutOfRangeException(nameof(x), x, $"Grid coordinate ({x}, {y}) is outside bounds {width}x{height}.");
 
       source[y * width + x] = value;
     }
@@ -130,7 +130,7 @@ namespace FronkonGames.GameWork.Foundation
     public static void Set3D<T>(this IList<T> source, int x, int y, int z, int width, int height, int depth, T value)
     {
       if (x < 0 || x >= width || y < 0 || y >= height || z < 0 || z >= depth)
-        throw new IndexOutOfRangeException();
+        throw new ArgumentOutOfRangeException(nameof(x), x, $"Grid coordinate ({x}, {y}, {z}) is outside bounds {width}x{height}x{depth}.");
 
       source[(z * height + y) * width + x] = value;
     }

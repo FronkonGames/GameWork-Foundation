@@ -47,10 +47,10 @@ public class IListExtensionsTests
   {
     List<int> grid = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8 };
 
-    Assert.Throws<IndexOutOfRangeException>(() => grid.At2D(-1, 0, 3, 3));
-    Assert.Throws<IndexOutOfRangeException>(() => grid.At2D(3, 0, 3, 3));
-    Assert.Throws<IndexOutOfRangeException>(() => grid.At2D(0, -1, 3, 3));
-    Assert.Throws<IndexOutOfRangeException>(() => grid.At2D(0, 3, 3, 3));
+    Assert.Throws<ArgumentOutOfRangeException>(() => grid.At2D(-1, 0, 3, 3));
+    Assert.Throws<ArgumentOutOfRangeException>(() => grid.At2D(3, 0, 3, 3));
+    Assert.Throws<ArgumentOutOfRangeException>(() => grid.At2D(0, -1, 3, 3));
+    Assert.Throws<ArgumentOutOfRangeException>(() => grid.At2D(0, 3, 3, 3));
   }
 
   [Test]
@@ -72,12 +72,12 @@ public class IListExtensionsTests
   {
     List<int> grid = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23 };
 
-    Assert.Throws<IndexOutOfRangeException>(() => grid.At3D(-1, 0, 0, 2, 3, 4));
-    Assert.Throws<IndexOutOfRangeException>(() => grid.At3D(2, 0, 0, 2, 3, 4));
-    Assert.Throws<IndexOutOfRangeException>(() => grid.At3D(0, -1, 0, 2, 3, 4));
-    Assert.Throws<IndexOutOfRangeException>(() => grid.At3D(0, 3, 0, 2, 3, 4));
-    Assert.Throws<IndexOutOfRangeException>(() => grid.At3D(0, 0, -1, 2, 3, 4));
-    Assert.Throws<IndexOutOfRangeException>(() => grid.At3D(0, 0, 4, 2, 3, 4));
+    Assert.Throws<ArgumentOutOfRangeException>(() => grid.At3D(-1, 0, 0, 2, 3, 4));
+    Assert.Throws<ArgumentOutOfRangeException>(() => grid.At3D(2, 0, 0, 2, 3, 4));
+    Assert.Throws<ArgumentOutOfRangeException>(() => grid.At3D(0, -1, 0, 2, 3, 4));
+    Assert.Throws<ArgumentOutOfRangeException>(() => grid.At3D(0, 3, 0, 2, 3, 4));
+    Assert.Throws<ArgumentOutOfRangeException>(() => grid.At3D(0, 0, -1, 2, 3, 4));
+    Assert.Throws<ArgumentOutOfRangeException>(() => grid.At3D(0, 0, 4, 2, 3, 4));
   }
 
   [Test]

@@ -113,7 +113,7 @@ namespace FronkonGames.GameWork.Foundation
     {
       float sum = source.Values.Sum();
 
-      if (sum == 0.0f)
+      if (sum.IsZero() == true)
         throw new InvalidOperationException("Cannot normalize a dictionary whose values sum to zero.");
 
       return source.SelectDictionary(value => value / sum);

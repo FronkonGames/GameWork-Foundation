@@ -156,7 +156,7 @@ namespace FronkonGames.GameWork.Foundation
     /// <summary> Normalizes to 0-1 range. </summary>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static float Normalize(this float value, float min, float max)
-      => max - min > 0.0f ? (value - min) / (max - min) : 0.0f;
+      => max.NearlyEquals(min) == true ? 0.0f : (value - min) / (max - min);
 
     /// <summary> Converts to rounded int. </summary>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]

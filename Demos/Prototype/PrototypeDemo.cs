@@ -93,6 +93,12 @@ namespace FronkonGames.GameWork.Foundation.Prototype
           firstPersonCamera.gameObject.SetActive(false);
           currentCamera = CamerasCycle.Free;
           break;
+        default:
+          freeCamera.enabled = true;
+          thirdPersonCamera.enabled = false;
+          firstPersonCamera.gameObject.SetActive(false);
+          currentCamera = CamerasCycle.Free;
+          break;
       }
 
       switchCamerasButtonText.text = $"Switch cameras ({currentCamera})";

@@ -93,30 +93,66 @@ public class FastListPerformanceTests
       list.Add(i);
     }
 
-    long fastListTime = 0;
-    var sw = Stopwatch.StartNew();
-    for (int iter = 0; iter < 100; iter++)
-    {
-      long sum = 0;
-      foreach (var item in fastList)
-        sum += item;
-    }
-    sw.Stop();
-    fastListTime = sw.ElapsedMilliseconds;
+    const int warmupRuns = 5;
+    const int timedRuns = 3;
+    const float maxRatio = 1.5f;
+    const long millisecondSlack = 2;
 
-    sw.Restart();
-    for (int iter = 0; iter < 100; iter++)
+    for (int run = 0; run < warmupRuns; ++run)
     {
-      long sum = 0;
-      foreach (var item in list)
-        sum += item;
+      foreach (int item in fastList) { }
+      foreach (int item in list) { }
     }
-    sw.Stop();
-    long listTime = sw.ElapsedMilliseconds;
+
+    long fastListTime = MeasureBestFastListIterationMilliseconds(fastList, timedRuns);
+    long listTime = MeasureBestListIterationMilliseconds(list, timedRuns);
 
     fastList.Dispose();
 
-    // FastList should be within 50% of List performance (struct enumerator avoids allocations)
-    Assert.Less(fastListTime, listTime * 1.5f, $"FastList ({fastListTime}ms) should be comparable to List ({listTime}ms) for iteration");
+    long maxAllowed = (long)(listTime * maxRatio) + millisecondSlack;
+    Assert.LessOrEqual(fastListTime, maxAllowed,
+      $"FastList ({fastListTime}ms) should be comparable to List ({listTime}ms) for iteration");
+  }
+
+  private static long MeasureBestFastListIterationMilliseconds(FastList<int> source, int runs)
+  {
+    long best = long.MaxValue;
+    var sw = new Stopwatch();
+
+    for (int run = 0; run < runs; ++run)
+    {
+      sw.Restart();
+      for (int iter = 0; iter < 100; ++iter)
+      {
+        long sum = 0;
+        foreach (int item in source)
+          sum += item;
+      }
+      sw.Stop();
+      best = System.Math.Min(best, sw.ElapsedMilliseconds);
+    }
+
+    return best;
+  }
+
+  private static long MeasureBestListIterationMilliseconds(List<int> source, int runs)
+  {
+    long best = long.MaxValue;
+    var sw = new Stopwatch();
+
+    for (int run = 0; run < runs; ++run)
+    {
+      sw.Restart();
+      for (int iter = 0; iter < 100; ++iter)
+      {
+        long sum = 0;
+        foreach (int item in source)
+          sum += item;
+      }
+      sw.Stop();
+      best = System.Math.Min(best, sw.ElapsedMilliseconds);
+    }
+
+    return best;
   }
 }

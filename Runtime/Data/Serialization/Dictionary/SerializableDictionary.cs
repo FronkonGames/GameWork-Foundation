@@ -68,7 +68,7 @@ namespace FronkonGames.GameWork.Foundation
     {
       SerializableDictionary<TKey, TValue> dict = new();
       foreach (SerializableKeyValuePair<TKey, TValue> pair in data)
-        dict.Add(pair.key, pair.value);
+        dict.Add(pair.Key, pair.Value);
       return dict;
     }
   }

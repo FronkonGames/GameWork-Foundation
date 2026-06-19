@@ -265,7 +265,8 @@ namespace FronkonGames.GameWork.Foundation
     /// <summary> Struct enumerator for zero-allocation iteration. </summary>
     public struct Enumerator : IEnumerator<T>
     {
-      private readonly FastList<T> list;
+      private readonly T[] items;
+      private readonly int count;
       private int index;
 
       /// <summary> Current element. </summary>
@@ -273,7 +274,8 @@ namespace FronkonGames.GameWork.Foundation
 
       internal Enumerator(FastList<T> list)
       {
-        this.list = list;
+        items = list.items;
+        count = list.Count;
         index = -1;
         Current = default;
       }
@@ -283,10 +285,11 @@ namespace FronkonGames.GameWork.Foundation
       [MethodImpl(MethodImplOptions.AggressiveInlining)]
       public bool MoveNext()
       {
-        index++;
-        if (index < list.Count)
+        int next = index + 1;
+        if (next < count)
         {
-          Current = list.items[index];
+          index = next;
+          Current = items[next];
           return true;
         }
 

@@ -16,6 +16,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace FronkonGames.GameWork.Foundation
 {
@@ -67,7 +68,7 @@ namespace FronkonGames.GameWork.Foundation
 
       string[] args = GetArguments();
       for (int i = 0; i < args.Length && found == false; ++i)
-        found = args[i].ToLower() == $"-{argument.ToLower()}";
+        found = IsArgumentFlag(args[i], argument);
 
       return found;
     }
@@ -81,14 +82,17 @@ namespace FronkonGames.GameWork.Foundation
       string[] args = GetArguments();
       for (int i = 0; i < args.Length; ++i)
       {
-        if (args[i].ToLower() == $"-{argument.ToLower()}")
+        if (IsArgumentFlag(args[i], argument) == true)
         {
-          if (i + 1 < args.Length && args[i + 1].StartsWith("-") == false)
+          if (i + 1 < args.Length && args[i + 1].StartsWith("-", StringComparison.Ordinal) == false)
             return args[i + 1];
         }
       }
 
       return defaultValue;
     }
+
+    private static bool IsArgumentFlag(string arg, string argument)
+      => arg.ToLower(CultureInfo.InvariantCulture) == $"-{argument.ToLower(CultureInfo.InvariantCulture)}";
   }
 }
