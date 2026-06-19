@@ -116,46 +116,25 @@ Check the comments for each file for more information.
 
 ### Documentation
 
-#### Runtime
-
-| Topic | Documentation |
-|---|---|
-| Attributes | [Runtime/Attributes/README.md](./Runtime/Attributes/README.md) |
-| Check | [Runtime/Development/Check/README.md](./Runtime/Development/Check/README.md) |
-| Draw | [Runtime/Development/Draw/README.md](./Runtime/Development/Draw/README.md) |
-| Prototype | [Runtime/Development/Prototype/README.md](./Runtime/Development/Prototype/README.md) |
-| Development Console | [Runtime/Development/Console/README.md](./Runtime/Development/Console/README.md) |
-| Profiling | [Runtime/Development/Profiling/README.md](./Runtime/Development/Profiling/README.md) |
-| Algorithms | [Runtime/Algorithms/README.md](./Runtime/Algorithms/README.md) |
-| Math | [Runtime/Math/README.md](./Runtime/Math/README.md) |
-| Utils | [Runtime/Utils/README.md](./Runtime/Utils/README.md) |
-| Behavioral patterns | [Runtime/Patterns/Behavioral/README.md](./Runtime/Patterns/Behavioral/README.md) |
-| Creational patterns | [Runtime/Patterns/Creational/README.md](./Runtime/Patterns/Creational/README.md) |
-| Structural patterns | [Runtime/Patterns/Structural/README.md](./Runtime/Patterns/Structural/README.md) |
-| Optimization patterns | [Runtime/Patterns/Optimization/README.md](./Runtime/Patterns/Optimization/README.md) |
-| Data Holders | [Runtime/Data/Holders/README.md](./Runtime/Data/Holders/README.md) |
-| Serialization | [Runtime/Data/Serialization/README.md](./Runtime/Data/Serialization/README.md) |
-| System extensions | [Runtime/Extensions/System/README.md](./Runtime/Extensions/System/README.md) |
-| Unity extensions | [Runtime/Extensions/Unity/README.md](./Runtime/Extensions/Unity/README.md) |
-
-#### Editor
-
-| Topic | Documentation |
-|---|---|
-| Custom Inspector | [Editor/Inspector/README.md](./Editor/Inspector/README.md) |
-| Property Drawers | [Editor/Drawers/README.md](./Editor/Drawers/README.md) |
-
-#### Tools
-
-| Topic | Documentation |
-|---|---|
-| Editor Tools | [Editor/Tools/README.md](./Editor/Tools/README.md) |
-
-#### Tests
-
-| Topic | Documentation |
-|---|---|
-| Unit tests | [Test/README.md](./Test/README.md) |
+| Runtime | Editor | Tools | Tests |
+|---|---|---|---|
+| [Attributes](./Runtime/Attributes/README.md) | [Custom Inspector](./Editor/Inspector/README.md) | [Editor Tools](./Editor/Tools/README.md) | [Unit tests](./Test/README.md) |
+| [Check](./Runtime/Development/Check/README.md) | [Property Drawers](./Editor/Drawers/README.md) | | |
+| [Draw](./Runtime/Development/Draw/README.md) | | | |
+| [Prototype](./Runtime/Development/Prototype/README.md) | | | |
+| [Development Console](./Runtime/Development/Console/README.md) | | | |
+| [Profiling](./Runtime/Development/Profiling/README.md) | | | |
+| [Algorithms](./Runtime/Algorithms/README.md) | | | |
+| [Math](./Runtime/Math/README.md) | | | |
+| [Utils](./Runtime/Utils/README.md) | | | |
+| [Behavioral patterns](./Runtime/Patterns/Behavioral/README.md) | | | |
+| [Creational patterns](./Runtime/Patterns/Creational/README.md) | | | |
+| [Structural patterns](./Runtime/Patterns/Structural/README.md) | | | |
+| [Optimization patterns](./Runtime/Patterns/Optimization/README.md) | | | |
+| [Data Holders](./Runtime/Data/Holders/README.md) | | | |
+| [Serialization](./Runtime/Data/Serialization/README.md) | | | |
+| [System extensions](./Runtime/Extensions/System/README.md) | | | |
+| [Unity extensions](./Runtime/Extensions/Unity/README.md) | | | |
 
 ## 📜 License
 
