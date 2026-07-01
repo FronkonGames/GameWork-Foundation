@@ -11,7 +11,7 @@ More than 400 automated tests for Foundation runtime APIs. Tests live under `Tes
 | Unity Editor | **6000.0** or higher (same as the package) |
 | Universal RP | **14.0.11** or higher (project dependency) |
 | Test Framework | **1.1.31** or higher (`com.unity.test-framework`) |
-| Platform | **Editor only** — test assemblies use `includePlatforms: ["Editor"]` |
+| Platform | **Editor only**, test assemblies use `includePlatforms: ["Editor"]` |
 | Frameworks | `NUnit.Framework`, `UnityEngine.TestTools` |
 
 There is **no CLI or batch test runner** configured for this package. Run tests inside the Unity Editor with the Test Runner window.
@@ -37,7 +37,7 @@ Tests mirror runtime folders. Each area has its own `.asmdef` with `optionalUnit
 | [Patterns](./Patterns/) | `FronkonGames.GameWork.Foundation.Patterns.Test` | Design patterns |
 | [Unity](./Unity/) | `FronkonGames.GameWork.Foundation.Unity.Test` | Unity-specific helpers |
 
-**Naming** — test files follow `{Feature}.{Method}.Test.cs` (e.g. `Patterns.Singleton.Test.cs`). Test methods use `[Test]` or `[UnityTest]` (coroutine / play-mode style checks that still run in the Editor).
+**Naming**, test files follow `{Feature}.{Method}.Test.cs` (e.g. `Patterns.Singleton.Test.cs`). Test methods use `[Test]` or `[UnityTest]` (coroutine / play-mode style checks that still run in the Editor).
 
 ---
 

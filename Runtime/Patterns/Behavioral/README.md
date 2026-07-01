@@ -9,6 +9,7 @@ Behavioral patterns in `FronkonGames.GameWork.Foundation` for communication, sta
 | Mediator | [Mediator](./Mediator/) | Centralize communication between components |
 | Memento | [Memento](./Memento/) | Capture and restore object state |
 | Observer | [Observer](./Observer/) | Notify subscribers when something changes |
+| Signal | [Signal](./Signal/) | ScriptableObject-based event bus with auto-wiring |
 | State | [State](./State/) | Finite state machine with transitions |
 | Strategy | [Strategy](./Strategy/) | Swap algorithms at runtime |
 | Visitor | [Visitor](./Visitor/) | Add operations to visitable types without modifying them |
@@ -60,17 +61,17 @@ int remaining = shield.Handle(incomingDamage);
 
 ## Command
 
-**Why use it:** Turn an action into an object you can store, queue, replay, or reverse. The invoker does not need to know how the action works — only that it can `Execute`, `Undo`, and `Redo`. Ideal for level editors, turn-based undo, input replay, macro recording, and deferred action queues where the same operation must be triggered from UI, AI, or network code.
+**Why use it:** Turn an action into an object you can store, queue, replay, or reverse. The invoker does not need to know how the action works, only that it can `Execute`, `Undo`, and `Redo`. Ideal for level editors, turn-based undo, input replay, macro recording, and deferred action queues where the same operation must be triggered from UI, AI, or network code.
 
 [Command.cs](./Command/Command.cs), [CommandInvoker.cs](./Command/CommandInvoker.cs)
 
 | Type | Parameters | Description |
 |---|---|---|
-| `Command` | — | No-arg command |
+| `Command` |, | No-arg command |
 | `Command<T>` | 1 | Single-parameter command |
 | `Command<T0, T1>` | 2 | Two-parameter command |
 | `Command<T0, T1, T2>` | 3 | Three-parameter command |
-| `CommandInvoker` | — | Execute, undo, redo stacks |
+| `CommandInvoker` |, | Execute, undo, redo stacks |
 
 Receivers implement `ICommandReceiver` (and generic variants) with `DoAction` / `UndoAction`.
 
@@ -230,6 +231,106 @@ scoreBoard.RemoveObserver(hudLabel);
 
 ---
 
+## Signal
+
+**Why use it:** Decouple senders from receivers using ScriptableObject assets as the event channel. Unlike Observer (code-level), signals are project-wide assets that any MonoBehaviour can reference in the Inspector, no direct references needed. Auto-wiring via `[SignalSubscribe]` eliminates manual Subscribe/Unsubscribe boilerplate. Ideal for cross-system communication (player events → HUD, damage → audio, flooding → visual effects) where the sender should not know who is listening.
+
+[ScriptableSignal.cs](./Signal/ScriptableSignal.cs), [SignalRegistry.cs](./Signal/SignalRegistry.cs), [SignalBinding.cs](./Signal/SignalBinding.cs), [SignalSubscribeAttribute.cs](./Signal/SignalSubscribeAttribute.cs), [ISignalSource.cs](./Signal/ISignalSource.cs)
+
+| Type | Description |
+|---|---|
+| `ScriptableSignal` | Parameter-less event asset. Emit with `Emit()`, subscribe with `Subscribe(Action)` |
+| `ScriptableSignal<T>` | 1-parameter event asset. Emit with `Emit(T)`, subscribe with `Subscribe(Action<T>)` |
+| `ScriptableSignal<T0, T1>` | 2-parameter event asset |
+| `ScriptableSignal<T0, T1, T2>` | 3-parameter event asset |
+| `SignalRegistry` | Runtime lookup mapping signal types to their ScriptableObject assets |
+| `SignalBinding` | Scans `[SignalSubscribe]` fields and auto-subscribes them via the registry |
+| `SignalSubscribeAttribute` | Marks a field for auto-wiring to a signal asset |
+| `ISignalSource` | Interface for bootstraps/managers that register signals into the registry |
+
+**Workflow:**
+1. Create a concrete signal class (e.g. `class PlayerJumpedSignal : ScriptableSignal {}`).
+2. Create the ScriptableObject asset via **Create → FronkonGames → Signal**.
+3. Create a manager MonoBehaviour implementing `ISignalSource`, assign the asset in the Inspector.
+4. In consumers, mark a field with `[SignalSubscribe(typeof(PlayerJumpedSignal))]`.
+5. Call `Bind(this)` in `OnEnable`, `Unbind(this)` in `OnDisable`.
+
+```c#
+using FronkonGames.GameWork.Foundation;
+
+// 1. Define signal types (plain classes, no logic)
+public class PlayerJumpedSignal : ScriptableSignal { }
+public class HealthChangedSignal : ScriptableSignal<float> { }
+
+// 2. Manager registers signals
+public class SignalManager : MonoBehaviour, ISignalSource
+{
+  [SerializeField] private PlayerJumpedSignal playerJumped;
+  [SerializeField] private HealthChangedSignal healthChanged;
+
+  public void RegisterSignals(SignalRegistry registry)
+  {
+    registry.Register(playerJumped);
+    registry.Register(healthChanged);
+  }
+}
+
+// 3. Consumers auto-wire via attribute
+public class PlayerHUD : MonoBehaviour
+{
+  [SignalSubscribe(typeof(PlayerJumpedSignal))]
+  private bool jumped;
+
+  [SignalSubscribe(typeof(HealthChangedSignal))]
+  private float health;
+
+  void OnEnable()  => SignalBinding.Instance.Bind(this);
+  void OnDisable() => SignalBinding.Instance.Unbind(this);
+
+  void Update()
+  {
+    if (jumped == true)
+    {
+      jumped = false; // reset flag
+      ShowJumpEffect();
+    }
+  }
+}
+
+// 4. Player emits signals
+public class Player : MonoBehaviour
+{
+  [SerializeField] private PlayerJumpedSignal playerJumped;
+  [SerializeField] private HealthChangedSignal healthChanged;
+
+  public void Jump()
+  {
+    playerJumped.Emit();
+  }
+
+  public void TakeDamage(float amount)
+  {
+    healthChanged.Emit(currentHealth);
+  }
+}
+```
+
+**Manual subscription** (without attributes):
+
+```c#
+public class AudioManager : MonoBehaviour
+{
+  [SerializeField] private PlayerJumpedSignal playerJumped;
+
+  void OnEnable()  => playerJumped.Subscribe(OnPlayerJumped);
+  void OnDisable() => playerJumped.Unsubscribe(OnPlayerJumped);
+
+  private void OnPlayerJumped() => AudioSource.PlayOneShot(jumpClip);
+}
+```
+
+---
+
 ## State
 
 **Why use it:** Replace growing `switch` / `if-else` blocks with isolated state classes, each owning its own enter/update/exit logic. Transitions are declared separately with conditions, making AI and flow logic readable and testable. Use for enemy behavior (patrol → chase → flee), player states (idle → run → jump), UI flows (menu → settings → confirm), and game phases (intro → play → game over).
@@ -282,7 +383,7 @@ Set `Running = false` to pause automatic transition evaluation while still calli
 
 ## Strategy
 
-**Why use it:** Swap an algorithm at runtime without changing the class that uses it. The client holds a strategy reference and calls `OnExecute` — weapon type, movement mode, or AI decision logic can change on equip, buff, or difficulty toggle. Avoids subclass explosion (`SwordAttack`, `BowAttack`, `MagicAttack`…) in favor of composable, interchangeable behaviors.
+**Why use it:** Swap an algorithm at runtime without changing the class that uses it. The client holds a strategy reference and calls `OnExecute`, weapon type, movement mode, or AI decision logic can change on equip, buff, or difficulty toggle. Avoids subclass explosion (`SwordAttack`, `BowAttack`, `MagicAttack`…) in favor of composable, interchangeable behaviors.
 
 [IStrategy.cs](./Strategy/IStrategy.cs), interface only; no base class.
 
@@ -323,7 +424,7 @@ int damage = sword.Attack(10); // 20
 
 ## Visitor
 
-**Why use it:** Add new operations to existing types without modifying their source code. Each visitor implements what happens when it meets a visitable (heal, poison, inspect, serialize). New item types only need `Accept`; new effects only need a new visitor class. Useful when you have stable entity types but frequently add new interactions — potions, traps, power-ups, debug tools.
+**Why use it:** Add new operations to existing types without modifying their source code. Each visitor implements what happens when it meets a visitable (heal, poison, inspect, serialize). New item types only need `Accept`; new effects only need a new visitor class. Useful when you have stable entity types but frequently add new interactions, potions, traps, power-ups, debug tools.
 
 [IVisitor.cs](./Visitor/IVisitor.cs), [IVisitable.cs](./Visitor/IVisitable.cs)
 
@@ -373,6 +474,7 @@ hero.Accept(new DamageTrap());
 - [Patterns.Mediator.Test.cs](../../../Test/Patterns/Patterns.Mediator.Test.cs)
 - [Patterns.Memento.Test.cs](../../../Test/Patterns/Patterns.Memento.Test.cs)
 - [Patterns.Observer.Test.cs](../../../Test/Patterns/Patterns.Observer.Test.cs)
+- [Patterns.Signal.Test.cs](../../../Test/Patterns/Patterns.Signal.Test.cs)
 - [Patterns.State.Test.cs](../../../Test/Patterns/Patterns.State.Test.cs)
 - [Patterns.Strategy.Test.cs](../../../Test/Patterns/Patterns.Strategy.Test.cs)
 - [Patterns.Visitor.Test.cs](../../../Test/Patterns/Patterns.Visitor.Test.cs)

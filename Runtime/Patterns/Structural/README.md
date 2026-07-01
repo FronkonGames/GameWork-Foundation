@@ -11,7 +11,7 @@ Structural patterns in `FronkonGames.GameWork.Foundation` for composing objects 
 
 ## Composite
 
-**Why use it:** Treat a single item and a group of items the same way. A menu node and a menu subtree both support `Add`, `Remove`, and traversal — callers work with the root without knowing how deep the tree goes. Avoids duplicating parent/child logic in every node type. Use for UI menus, behavior-tree nodes, quest hierarchies, inventory folders, or any structure where components nest inside components.
+**Why use it:** Treat a single item and a group of items the same way. A menu node and a menu subtree both support `Add`, `Remove`, and traversal, callers work with the root without knowing how deep the tree goes. Avoids duplicating parent/child logic in every node type. Use for UI menus, behavior-tree nodes, quest hierarchies, inventory folders, or any structure where components nest inside components.
 
 [Composite.cs](./Composite/Composite.cs)
 
@@ -68,7 +68,7 @@ Use `Composite<T>` when children share the same interface but you need a lightwe
 
 ## Decorator
 
-**Why use it:** Change what an object *does* at runtime without subclassing it for every variant. Assign a different `Decorator` to swap behavior — critical hits, armor penetration, speed boosts — while the host class stays unchanged. This implementation swaps one decorator at a time (not a nested stack), which fits buffs and modifiers that replace each other rather than accumulate.
+**Why use it:** Change what an object *does* at runtime without subclassing it for every variant. Assign a different `Decorator` to swap behavior, critical hits, armor penetration, speed boosts, while the host class stays unchanged. This implementation swaps one decorator at a time (not a nested stack), which fits buffs and modifiers that replace each other rather than accumulate.
 
 [Decorable.cs](./Decorator/Decorable.cs), [IDecorator.cs](./Decorator/IDecorator.cs)
 

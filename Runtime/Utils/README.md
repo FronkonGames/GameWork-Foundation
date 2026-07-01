@@ -54,7 +54,7 @@ In the Unity Editor Test Runner, `GetArguments()` returns a fixed test set so un
 
 Internal key format: `{Application.productName}.{yourKey}`
 
-If `productName` is empty, the raw key is used. Use short logical names (`"music_volume"`) — the prefix is applied automatically.
+If `productName` is empty, the raw key is used. Use short logical names (`"music_volume"`), the prefix is applied automatically.
 
 ### API
 
@@ -71,7 +71,7 @@ If `productName` is empty, the raw key is used. Use short logical names (`"music
 using FronkonGames.GameWork.Foundation;
 using UnityEngine;
 
-// Scene: Bootstrap — restore settings on load
+// Scene: Bootstrap, restore settings on load
 if (PlayerPrefsUtils.HasKey("music_volume") == true)
   audioMixer.SetFloat("Music", PlayerPrefsUtils.GetFloat("music_volume", 0.8f));
 else
@@ -85,7 +85,7 @@ PlayerPrefsUtils.SetColor("ui_accent", accentColor);
 PlayerPrefsUtils.SetDateTime("last_save", System.DateTime.UtcNow);
 ```
 
-Call `PlayerPrefs.Save()` from Unity when you need to flush to disk immediately — these helpers delegate to `PlayerPrefs` and do not call `Save()` for you.
+Call `PlayerPrefs.Save()` from Unity when you need to flush to disk immediately, these helpers delegate to `PlayerPrefs` and do not call `Save()` for you.
 
 ---
 
@@ -100,4 +100,4 @@ Call `PlayerPrefs.Save()` from Unity when you need to flush to disk immediately 
 
 ## Tests
 
-- [Unity.Test.cs](../../Test/Unity/Unity.Test.cs) — `CommandLine` and `PlayerPrefsUtils` tests
+- [Unity.Test.cs](../../Test/Unity/Unity.Test.cs), `CommandLine` and `PlayerPrefsUtils` tests

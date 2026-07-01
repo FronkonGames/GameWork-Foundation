@@ -13,7 +13,7 @@ Creational patterns in `FronkonGames.GameWork.Foundation` for object constructio
 
 ## Builder
 
-**Why use it:** Construct complex objects step by step with readable, self-documenting code. Optional fields, defaults, and validation can live in fluent methods instead of constructors with many overloads. Use when a type has many configurable properties — spells, quests, dialogue lines, procedural room configs — and you want `Create().WithX().WithY().Build()` instead of a 12-parameter constructor.
+**Why use it:** Construct complex objects step by step with readable, self-documenting code. Optional fields, defaults, and validation can live in fluent methods instead of constructors with many overloads. Use when a type has many configurable properties, spells, quests, dialogue lines, procedural room configs, and you want `Create().WithX().WithY().Build()` instead of a 12-parameter constructor.
 
 [Builder.cs](./Builder/Builder.cs)
 
@@ -71,7 +71,7 @@ FireballSpell fireball = FireballBuilder.Create()
 
 ## Factory
 
-**Why use it:** Hide concrete types behind a key and a shared interface. Callers ask for `EnemyType.Grunt` or `"bolt"` without knowing which class gets instantiated. Centralizes creation logic — register new types in one place when content expands. Ideal for wave spawners, loot tables, ability systems, and any code that creates objects from data (JSON, ScriptableObjects, network messages).
+**Why use it:** Hide concrete types behind a key and a shared interface. Callers ask for `EnemyType.Grunt` or `"bolt"` without knowing which class gets instantiated. Centralizes creation logic, register new types in one place when content expands. Ideal for wave spawners, loot tables, ability systems, and any code that creates objects from data (JSON, ScriptableObjects, network messages).
 
 [Factory.cs](./Factory/Factory.cs)
 
@@ -179,7 +179,7 @@ For `ScriptableService`, create assets in the project and register them the same
 
 ## Singleton
 
-**Why use it:** Guarantee a single, lazily created instance with thread-safe access. Useful when exactly one object should exist — game session state, input routing, global config. The four variants cover plain C#, scene-bound `MonoBehaviour`, persistent across loads, and `ScriptableObject` assets. Use sparingly: global access is convenient but makes testing and dependencies harder to trace.
+**Why use it:** Guarantee a single, lazily created instance with thread-safe access. Useful when exactly one object should exist, game session state, input routing, global config. The four variants cover plain C#, scene-bound `MonoBehaviour`, persistent across loads, and `ScriptableObject` assets. Use sparingly: global access is convenient but makes testing and dependencies harder to trace.
 
 Four lazy, thread-safe variants for different Unity lifetimes.
 

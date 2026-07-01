@@ -33,7 +33,7 @@ These are the foundations on which [Game:Work Core](https://github.com/FronkonGa
 
 ## 🔧 Requisites
 
-- Unity 6000.0 or higher.
+- Unity 6000.3 or higher.
 - Universal RP 14.0.11 or higher.
 - Test Framework 1.1.31 or higher.
 
@@ -116,25 +116,23 @@ Check the comments for each file for more information.
 
 ### Documentation
 
-| Runtime | Editor | Tools | Tests |
-|---|---|---|---|
-| [Attributes](./Runtime/Attributes/README.md) | [Custom Inspector](./Editor/Inspector/README.md) | [Editor Tools](./Editor/Tools/README.md) | [Unit tests](./Test/README.md) |
-| [Check](./Runtime/Development/Check/README.md) | [Property Drawers](./Editor/Drawers/README.md) | | |
-| [Draw](./Runtime/Development/Draw/README.md) | | | |
-| [Prototype](./Runtime/Development/Prototype/README.md) | | | |
-| [Development Console](./Runtime/Development/Console/README.md) | | | |
-| [Profiling](./Runtime/Development/Profiling/README.md) | | | |
-| [Algorithms](./Runtime/Algorithms/README.md) | | | |
-| [Math](./Runtime/Math/README.md) | | | |
-| [Utils](./Runtime/Utils/README.md) | | | |
-| [Behavioral patterns](./Runtime/Patterns/Behavioral/README.md) | | | |
-| [Creational patterns](./Runtime/Patterns/Creational/README.md) | | | |
-| [Structural patterns](./Runtime/Patterns/Structural/README.md) | | | |
-| [Optimization patterns](./Runtime/Patterns/Optimization/README.md) | | | |
-| [Data Holders](./Runtime/Data/Holders/README.md) | | | |
-| [Serialization](./Runtime/Data/Serialization/README.md) | | | |
-| [System extensions](./Runtime/Extensions/System/README.md) | | | |
-| [Unity extensions](./Runtime/Extensions/Unity/README.md) | | | |
+#### Runtime
+
+| | | |
+|---|---|---|
+| [Attributes](./Runtime/Attributes/README.md) | [Check](./Runtime/Development/Check/README.md) | [Draw](./Runtime/Development/Draw/README.md) |
+| [Prototype](./Runtime/Development/Prototype/README.md) | [Development Console](./Runtime/Development/Console/README.md) | [Profiling](./Runtime/Development/Profiling/README.md) |
+| [Algorithms](./Runtime/Algorithms/README.md) | [Math](./Runtime/Math/README.md) | [Utils](./Runtime/Utils/README.md) |
+| [Behavioral patterns](./Runtime/Patterns/Behavioral/README.md) | [Creational patterns](./Runtime/Patterns/Creational/README.md) | [Structural patterns](./Runtime/Patterns/Structural/README.md) |
+| [Optimization patterns](./Runtime/Patterns/Optimization/README.md) | [Data Holders](./Runtime/Data/Holders/README.md) | [Serialization](./Runtime/Data/Serialization/README.md) |
+| [System extensions](./Runtime/Extensions/System/README.md) | [Unity extensions](./Runtime/Extensions/Unity/README.md) | |
+
+#### Editor
+
+| | | |
+|---|---|---|
+| [Custom Inspector](./Editor/Inspector/README.md) | [Property Drawers](./Editor/Drawers/README.md) | [Editor Tools](./Editor/Tools/README.md) |
+| [Unit tests](./Test/README.md) | | |
 
 ## 📜 License
 
